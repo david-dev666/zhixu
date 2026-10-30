@@ -1,13 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, useWindowDimensions, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { questions } from './src/bank';
 import { QuestionTutor } from './src/QuestionTutor';
+import { useAndroidBack, type AppPage } from './src/useAndroidBack';
 import { isCorrect, shuffle, topics, validQuestion } from './src/domain';
 import type { PracticeRecord, QuizQuestion } from './src/types';
-type Page = 'home' | 'quiz' | 'review' | 'settings';
+type Page = AppPage;
 const STORE = 'zhixu.practice.v2';
 const EXTRAS = 'zhixu.extra.v2';
 const KEY = 'zhixu.key.v2';
@@ -67,7 +68,8 @@ function AppContent() {
         fetch('http://127.0.0.1:8082/status', { signal: AbortSignal.timeout(4000) }).then(r => r.json()).then(x => setConnected(x.configured === true)).catch(() => setConnected(false)); }, [page]);
     useEffect(() => { if (ready)
         AsyncStorage.setItem(STORE, JSON.stringify(records)).catch(() => setNotice('练习记录保存失败，请检查设备存储。')); }, [records, ready]);
-    const navigate = (p: Page) => { setPage(p); setNotice(''); scroll.current?.scrollTo({ y: 0, animated: false }); };
+    const navigate = useCallback((p: Page) => { setPage(p); setNotice(''); scroll.current?.scrollTo({ y: 0, animated: false }); }, []);
+    useAndroidBack(page, navigate);
     const latest = new Map<string, boolean>();
     records.forEach(r => latest.set(r.questionId, r.correct));
     const wrong = bank.filter(q => latest.get(q.id) === false);
