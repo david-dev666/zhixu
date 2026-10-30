@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { questions } from './src/bank';
+import { bankPolicy, generationGuidance, isCurrentExtra, supportsHardwareScope } from './src/bankPolicy';
 import { EMBEDDED_API_KEY } from './src/embeddedKey';
 import { QuestionTutor } from './src/QuestionTutor';
 import { useAndroidBack, type AppPage } from './src/useAndroidBack';
@@ -52,7 +53,7 @@ function AppContent() {
         if (extra) {
             const list = JSON.parse(extra);
             if (Array.isArray(list))
-                setBank([...questions, ...list.filter(q => validQuestion(q) && typeof q.id === 'string' && Array.isArray(q.tags) && q.tags.every((t: unknown) => typeof t === 'string'))]);
+                setBank([...questions, ...list.filter(q => validQuestion(q) && typeof q.id === 'string' && Array.isArray(q.tags) && q.tags.every((t: unknown) => typeof t === 'string') && isCurrentExtra(q))]);
         }
         if (savedKey)
             setKey(savedKey);
@@ -71,11 +72,13 @@ function AppContent() {
         AsyncStorage.setItem(STORE, JSON.stringify(records)).catch(() => setNotice('练习记录保存失败，请检查设备存储。')); }, [records, ready]);
     const navigate = useCallback((p: Page) => { setPage(p); setNotice(''); scroll.current?.scrollTo({ y: 0, animated: false }); }, []);
     useAndroidBack(page, navigate);
+    const currentIds = new Set(bank.map(q => q.id));
+    const activeRecords = records.filter(r => currentIds.has(r.questionId));
     const latest = new Map<string, boolean>();
-    records.forEach(r => latest.set(r.questionId, r.correct));
+    activeRecords.forEach(r => latest.set(r.questionId, r.correct));
     const wrong = bank.filter(q => latest.get(q.id) === false);
-    const studied = new Set(records.map(r => r.questionId)).size;
-    const accuracy = records.length ? Math.round(records.filter(r => r.correct).length / records.length * 100) : 0;
+    const studied = new Set(activeRecords.map(r => r.questionId)).size;
+    const accuracy = activeRecords.length ? Math.round(activeRecords.filter(r => r.correct).length / activeRecords.length * 100) : 0;
     const start = (name: string, review = false) => { const pool = review ? wrong : name === '全部' ? bank : bank.filter(q => q.tags.includes(name)); if (!pool.length) {
         setNotice(review ? '错题已全部巩固，回到知识领域继续探索。' : '这个领域还没有题目，请到设置中更新题库。');
         return;
@@ -110,7 +113,7 @@ function AppContent() {
                 raw = data.questions;
             }
             else {
-                const res = await fetch('https://api.deepseek.com/chat/completions', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key.trim()}` }, signal: AbortSignal.timeout(180000), body: JSON.stringify({ model: 'deepseek-flash', thinking: { type: 'disabled' }, max_tokens: 8192, response_format: { type: 'json_object' }, messages: [{ role: 'system', content: '输出中文 JSON：{"questions":[{"type":"single","question":"题干","options":[{"text":"选项","correct":true}],"explanation":"解析"}]}。生成10道有深度的选择题，每题4个选项，单选只有1个正确项，多选有2到3个正确项。答案准确、无歧义。' }, { role: 'user', content: `主题：${topic}` }] }) });
+                const res = await fetch('https://api.deepseek.com/chat/completions', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key.trim()}` }, signal: AbortSignal.timeout(180000), body: JSON.stringify({ model: 'deepseek-flash', thinking: { type: 'disabled' }, max_tokens: 8192, response_format: { type: 'json_object' }, messages: [{ role: 'system', content: '输出中文 JSON：{"questions":[{"type":"single","question":"题干","options":[{"text":"选项","correct":true}],"explanation":"解析"}]}。生成10道有深度的选择题，每题4个选项，单选只有1个正确项，多选有2到3个正确项。答案准确、无歧义。' }, { role: 'user', content: generationGuidance(topic) + `主题：${topic}` }] }) });
                 if (!res.ok)
                     throw Error(`DeepSeek 请求失败（${res.status}）`);
                 const data = await res.json();
@@ -121,8 +124,8 @@ function AppContent() {
             if (!Array.isArray(raw))
                 throw Error('题目格式不正确');
             const existing = new Set(bank.map(x => x.question.trim()));
-            const added = raw.filter(validQuestion).filter(x => { if (existing.has(x.question.trim()))
-                return false; existing.add(x.question.trim()); return true; }).map((x, i) => ({ ...x, id: `extra-${Date.now()}-${i}`, tags: [topic] }));
+            const added = raw.filter(validQuestion).filter(x => supportsHardwareScope(x, topic)).filter(x => { if (existing.has(x.question.trim()))
+                return false; existing.add(x.question.trim()); return true; }).map((x, i) => ({ ...x, id: `extra-${Date.now()}-${i}`, tags: [topic], ...(topic === '硬件' ? {policyVersion: bankPolicy.hardwareRevision} : {}) }));
             if (!added.length)
                 throw Error('没有通过校验的新题，请重试');
             const extras = [...bank.slice(questions.length), ...added];

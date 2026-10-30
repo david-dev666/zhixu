@@ -8,7 +8,7 @@ export const topics = [
     { id: 'harness', name: 'Harness 框架', en: 'AGENT HARNESS', symbol: '⌗', color: '#E2E9E8', description: '工具、上下文与执行循环' },
     { id: 'scheduling', name: 'Agent 项目调度', en: 'ORCHESTRATION', symbol: '⋈', color: '#EAE5F1', description: '把复杂目标拆成可靠的协作' },
     { id: 'llm', name: 'LLM', en: 'LARGE LANGUAGE MODELS', symbol: '≋', color: '#E4E8F5', description: '从注意力到推理与部署' },
-    { id: 'hardware', name: '硬件', en: 'COMPUTER HARDWARE', symbol: '▣', color: '#F1E4DA', description: '理解每一份算力的来处' },
+    { id: 'hardware', name: '硬件', en: 'COMPUTE HARDWARE', symbol: '▣', color: '#F1E4DA', description: 'CPU、GPU、显存与计算性能' },
 ];
 export function shuffle<T>(items: T[]): T[] { const a = [...items]; for (let i = a.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));

@@ -2,6 +2,7 @@ import http from 'node:http';
 import {readFileSync} from 'node:fs';
 import {pathToFileURL} from 'node:url';
 import {tutorPayload} from '../src/tutor.mjs';
+const bankPolicy=JSON.parse(readFileSync(new URL('../src/bank-policy.json',import.meta.url),'utf8'));
 const origins=new Set(['http://localhost:8081','http://127.0.0.1:8081']);
 export function createApiServer({apiKey,fetchImpl=fetch}) {
  return http.createServer(async(req,res)=>{
@@ -16,7 +17,7 @@ export function createApiServer({apiKey,fetchImpl=fetch}) {
   try {
    let body='';for await(const chunk of req){body+=chunk;if(Buffer.byteLength(body)>131072)throw Error('请求太大');}const data=JSON.parse(body);
    if(req.url==='/chat')payload=tutorPayload(data);
-   else {const {topic}=data;if(!['操作系统','计算机网络','C','Python','Agent','Harness 框架','Agent 项目调度','LLM','硬件'].includes(topic))throw Error('请选择领域');payload={model:'deepseek-flash',thinking:{type:'disabled'},max_tokens:8192,response_format:{type:'json_object'},messages:[{role:'system',content:'输出中文JSON：{"questions":[{"type":"single或multiple","question":"题干","options":[{"text":"选项","correct":true}],"explanation":"解析"}]}。生成10道严谨多样的技术选择题，每题4个选项。单选恰好1个正确，多选2到3个正确，解析解释关键机制，避免歧义和易变化的版本细节。'},{role:'user',content:`领域：${topic}`}]};}
+   else {const {topic}=data;if(!['操作系统','计算机网络','C','Python','Agent','Harness 框架','Agent 项目调度','LLM','硬件'].includes(topic))throw Error('请选择领域');payload={model:'deepseek-flash',thinking:{type:'disabled'},max_tokens:8192,response_format:{type:'json_object'},messages:[{role:'system',content:'输出中文JSON：{"questions":[{"type":"single或multiple","question":"题干","options":[{"text":"选项","correct":true}],"explanation":"解析"}]}。生成10道严谨多样的技术选择题，每题4个选项。单选恰好1个正确，多选2到3个正确，解析解释关键机制，避免歧义和易变化的版本细节。'},{role:'user',content:`出题对象：${bankPolicy.audience}。${topic==='硬件'?bankPolicy.hardwareScope:'以算法开发和软件工程实践为背景。'}领域：${topic}`}]};}
   } catch(e){res.writeHead(400);res.end(JSON.stringify({error:e instanceof SyntaxError?'请求格式不正确':e.message}));return;}
   const abort=new AbortController();const timeout=setTimeout(()=>abort.abort(),180000);res.on('close',()=>{if(!res.writableEnded)abort.abort();});
   try {

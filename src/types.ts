@@ -10,6 +10,7 @@ export interface QuizQuestion {
     explanation: string;
     tags: string[];
     section?: string;
+    policyVersion?: string;
 }
 export interface PracticeRecord {
     questionId: string;

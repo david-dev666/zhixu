@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import ts from 'typescript';
+import vm from 'node:vm';
+const policy=JSON.parse(readFileSync(new URL('../src/bank-policy.json',import.meta.url),'utf8'));
+const module={exports:{}};vm.runInNewContext(ts.transpileModule(readFileSync(new URL('../src/bankPolicy.ts',import.meta.url),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS}}).outputText,{exports:module.exports,module,require(){return policy;}});
+const {isCurrentExtra,supportsHardwareScope}=module.exports;
+assert.equal(isCurrentExtra({tags:['硬件']}),false);
+assert.equal(isCurrentExtra({tags:['硬件'],policyVersion:policy.hardwareRevision}),true);
+assert.equal(isCurrentExtra({tags:['Python']}),true);
+const sample={question:'GPU矩阵计算需要多少显存？',options:[{text:'按张量大小计算'}],explanation:'元素数量乘数据类型字节数。'};
+assert.equal(supportsHardwareScope(sample,'硬件'),true);
+assert.equal(supportsHardwareScope({...sample,question:'热阻与芯片结温如何计算？'},'硬件'),false);
+assert.equal(supportsHardwareScope({...sample,options:[{text:'PCB设计'}]},'硬件'),false);
+assert.equal(supportsHardwareScope({...sample,explanation:'LDO电源设计'},'硬件'),false);
+console.log('PASS: retired hardware extras excluded, current hardware and other topics retained, engineering content rejected');
