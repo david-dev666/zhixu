@@ -9,3 +9,8 @@ ios/
 .DS_Store
 __pycache__/
 *.pyc
+*.apk
+*.aab
+*.jks
+*.keystore
+!.env.example
