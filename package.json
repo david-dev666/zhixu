@@ -26,14 +26,14 @@
   },
   "scripts": {
     "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "web": "expo start --web",
     "typecheck": "tsc --noEmit",
     "api": "node scripts/api.mjs",
     "generate:bank": "python3 scripts/generate.py",
     "check:bank": "node scripts/check-bank.mjs",
-    "test": "node scripts/test-domain.mjs",
+    "test": "node scripts/test-domain.mjs && node scripts/test-tutor.mjs",
     "review:bank": "python3 scripts/review.py"
   },
   "private": true
