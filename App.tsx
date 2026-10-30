@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { questions } from './src/bank';
+import { EMBEDDED_API_KEY } from './src/embeddedKey';
 import { QuestionTutor } from './src/QuestionTutor';
 import { useAndroidBack, type AppPage } from './src/useAndroidBack';
 import { isCorrect, shuffle, topics, validQuestion } from './src/domain';
@@ -33,7 +34,7 @@ function AppContent() {
     const [answered, setAnswered] = useState(false);
     const [score, setScore] = useState(0);
     const [reviewSession, setReviewSession] = useState(false);
-    const [key, setKey] = useState('');
+    const [key, setKey] = useState(EMBEDDED_API_KEY);
     const [connected, setConnected] = useState(false);
     const [busy, setBusy] = useState(false);
     const [notice, setNotice] = useState('');
@@ -173,7 +174,7 @@ function AppContent() {
  </> : page === 'review' ? <><Text style={s.eyebrow}>LEARN FROM EVERY MISTAKE</Text><Text style={s.pageTitle}>错过的，再理解一遍。</Text><Text style={s.subtitle}>最近一次答错的题目会留在这里，答对后自动移出。</Text><View style={s.reviewSummary}><Text style={s.statNumber}>{wrong.length}<Text style={s.small}> 道待巩固</Text></Text><View style={{ width: 190 }}><Action title="开始错题练习" disabled={!wrong.length} onPress={() => start('全部', true)}/></View></View>{wrong.length === 0 ? <View style={s.empty}><Text style={s.emptySymbol}>✳</Text><Text style={s.sectionTitle}>这里很干净。</Text><Text style={s.subtitle}>开始一组练习，把理解变成积累。</Text><Action title="去练习" onPress={() => navigate('home')}/></View> : wrong.map(q => <View key={q.id} style={s.reviewCard}><Text style={s.eyebrow}>{q.tags[0]} · {q.type === 'single' ? '单选' : '多选'}</Text><Text style={s.reviewQuestion}>{q.question}</Text></View>)}</> : <>
  <Text style={s.eyebrow}>YOUR LEARNING WORKSPACE</Text><Text style={s.pageTitle}>为下一次探索，做好准备。</Text><Text style={s.subtitle}>管理题库，持续补充新的知识点。</Text>
  <View style={s.settingsCard}><View style={s.sectionHeading}><Text style={s.sectionTitle}>题库更新</Text><Text style={s.modelBadge}>DeepSeek Flash</Text></View><Text style={s.body}>选择一个领域，每次补充 10 道新题。新题保存在这台设备，原有题目会保留。</Text><View style={s.pills}>{topics.map(t => <Pressable accessibilityRole="button" key={t.id} onPress={() => setTopic(t.name)} style={[s.pill, topic === t.name && s.pillActive]}><Text style={[s.pillText, topic === t.name && { color: 'white' }]}>{t.name}</Text></Pressable>)}</View><View style={s.settingsBottom}><Text style={s.small}>调用会产生 API 费用 · 生成答案建议核对</Text><View style={{minWidth:180,...(!desktop?{width:'100%' as const}:{})}}><Action title={busy ? '生成中…' : '生成新题'} onPress={() => void updateBank()} disabled={busy || topic === '全部' || (Platform.OS === 'web' && !connected)}/></View></View></View>
- <View style={s.settingsCard}><Text style={s.sectionTitle}>连接与隐私</Text>{Platform.OS === 'web' ? <><View style={s.connection}><View style={[s.dot, { backgroundColor: connected ? '#6D8E62' : '#C77849' }]}/><Text style={s.body}>{connected ? '本地服务已连接，API Key 已配置' : '本地服务未连接，请启动 npm run api'}</Text></View><Text style={s.small}>Key 仅由本机服务读取，不写入网页代码或 Git 仓库。</Text></> : <><Text style={s.subtitle}>在这台设备配置你的 DeepSeek API Key。</Text><TextInput style={s.input} secureTextEntry autoCapitalize="none" autoCorrect={false} value={key} onChangeText={setKey} placeholder="输入 API Key" placeholderTextColor="#8B928B"/><Action title="保存配置" onPress={() => void saveKey()}/><Text style={s.small}>配置保存在本机应用存储中。</Text></>}<View style={s.divider}/><Text style={s.body}>当前题库　{bank.length} 道 · 9 个领域</Text><Text style={[s.small, { marginTop: 8 }]}>模型：deepseek-flash · 最新 Flash 服务</Text></View>
+ <View style={s.settingsCard}><Text style={s.sectionTitle}>连接与隐私</Text>{Platform.OS === 'web' ? <><View style={s.connection}><View style={[s.dot, { backgroundColor: connected ? '#6D8E62' : '#C77849' }]}/><Text style={s.body}>{connected ? '本地服务已连接，API Key 已配置' : '本地服务未连接，请启动 npm run api'}</Text></View><Text style={s.small}>Key 仅由本机服务读取，不写入网页代码或 Git 仓库。</Text></> : <><Text style={s.subtitle}>{EMBEDDED_API_KEY ? '已内置本地 Key，可直接提问，也可以在这里更换。' : '在这台设备配置你的 DeepSeek API Key。'}</Text><TextInput style={s.input} secureTextEntry autoCapitalize="none" autoCorrect={false} value={key} onChangeText={setKey} placeholder="输入 API Key" placeholderTextColor="#8B928B"/><Action title="保存配置" onPress={() => void saveKey()}/><Text style={s.small}>配置保存在本机应用存储中。</Text></>}<View style={s.divider}/><Text style={s.body}>当前题库　{bank.length} 道 · 9 个领域</Text><Text style={[s.small, { marginTop: 8 }]}>模型：deepseek-flash · 最新 Flash 服务</Text></View>
  </>}
  </View></ScrollView>{!desktop && <View style={s.bottomNav}>{navItems.map(([id, label, icon]) => <Pressable accessibilityRole="button" key={id} onPress={() => navigate(id)} style={s.bottomItem}><Text style={[s.bottomIcon, (page === id || (id === 'home' && page === 'quiz')) && { color: '#294D3B' }]}>{icon}</Text><Text style={[s.bottomLabel, page === id && { color: '#294D3B', fontWeight: '700' }]}>{label}</Text></Pressable>)}</View>}</View>
  </View></SafeAreaView>;

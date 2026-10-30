@@ -19,7 +19,7 @@ npm run web -- --host localhost --port 8081
 
 ## 安卓预览
 
-`npm start` 后使用兼容 Expo SDK 57 的 Expo Go 扫码。内置题库离线可用。安卓端如需追加题目，在设置中填写 Key；该配置保存在设备本地应用存储，卸载应用会清除。
+`npm start` 后使用兼容 Expo SDK 57 的 Expo Go 扫码。内置题库离线可用。本机私用安卓包可内置 `.env.local` 中的 Key，安装后无需再填。`npm install` 或 `npm run provision:key` 会生成被 Git 忽略的 `src/embedded-key.local.ts`，仅原生端引用；网页始终使用空的前端配置和本地服务。设置中仍可更换 Key。手动保存的配置和学习记录保存在设备本地应用存储，卸载应用会清除。
 
 ## 题库与验证
 

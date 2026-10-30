@@ -1,6 +1,6 @@
 {
   "name": "choice-practice",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "index.ts",
   "dependencies": {
     "@react-native-async-storage/async-storage": "2.2.0",
@@ -34,7 +34,9 @@
     "generate:bank": "python3 scripts/generate.py",
     "check:bank": "node scripts/check-bank.mjs",
     "test": "node scripts/test-domain.mjs && node scripts/test-tutor.mjs && node scripts/test-android-back.mjs",
-    "review:bank": "python3 scripts/review.py"
+    "review:bank": "python3 scripts/review.py",
+    "postinstall": "node scripts/provision-local-key.mjs",
+    "provision:key": "node scripts/provision-local-key.mjs"
   },
   "private": true
 }
