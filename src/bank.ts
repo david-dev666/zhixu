@@ -1,0 +1,11 @@
+import os from './data/os.json';
+import network from './data/network.json';
+import c from './data/c.json';
+import python from './data/python.json';
+import agent from './data/agent.json';
+import harness from './data/harness.json';
+import scheduling from './data/scheduling.json';
+import llm from './data/llm.json';
+import hardware from './data/hardware.json';
+import type { QuizQuestion } from './types';
+export const questions = [...os, ...network, ...c, ...python, ...agent, ...harness, ...scheduling, ...llm, ...hardware] as QuizQuestion[];

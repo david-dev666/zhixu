@@ -1,0 +1,11 @@
+import ts from 'typescript';
+import {readFileSync} from 'node:fs';
+import vm from 'node:vm';
+import assert from 'node:assert/strict';
+const code=ts.transpileModule(readFileSync(new URL('../src/domain.ts',import.meta.url),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS}}).outputText;
+const module={exports:{}};vm.runInNewContext(code,{exports:module.exports,module});const {validQuestion,isCorrect,shuffle}=module.exports;
+const q={type:'single',question:'测试题',options:[{text:'a',correct:true},{text:'b',correct:false},{text:'c',correct:false},{text:'d',correct:false}],explanation:'解析'};
+assert.equal(validQuestion(q),true);assert.equal(validQuestion({...q,options:q.options.slice(0,2)}),false);assert.equal(validQuestion({...q,type:'multiple'}),false);assert.equal(validQuestion({...q,question:''}),false);
+assert.equal(isCorrect(q,[0]),true);assert.equal(isCorrect(q,[1]),false);assert.equal(isCorrect(q,[0,1]),false);assert.equal(isCorrect(q,[]),false);
+const multi={...q,type:'multiple',options:q.options.map((o,i)=>({...o,correct:i<2}))};assert.equal(validQuestion(multi),true);assert.equal(isCorrect(multi,[1,0]),true);assert.equal(isCorrect(multi,[0]),false);assert.equal(isCorrect(multi,[0,0]),false);
+const source=[1,2,3,4];assert.equal(JSON.stringify([...shuffle(source)].sort()),JSON.stringify(source));assert.equal(source.join(','),'1,2,3,4');console.log('PASS: validation, single/multiple scoring, duplicate selection, shuffle');

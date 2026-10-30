@@ -1,0 +1,8402 @@
+[
+  {
+    "type": "single",
+    "question": "在OSI参考模型中，负责为数据包选择路由并实现拥塞控制的是哪一层？",
+    "options": [
+      {
+        "text": "物理层",
+        "correct": false
+      },
+      {
+        "text": "数据链路层",
+        "correct": false
+      },
+      {
+        "text": "网络层",
+        "correct": true
+      },
+      {
+        "text": "传输层",
+        "correct": false
+      }
+    ],
+    "explanation": "网络层负责逻辑寻址、路由选择和拥塞控制。物理层传输比特，数据链路层处理帧和MAC地址，传输层提供端到端通信。正确选项是网络层。",
+    "id": "network-001",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "分层与封装"
+  },
+  {
+    "type": "single",
+    "question": "TCP/IP模型中，应用层数据向下传递时，最先添加的头部通常来自哪一层？",
+    "options": [
+      {
+        "text": "应用层",
+        "correct": false
+      },
+      {
+        "text": "传输层",
+        "correct": true
+      },
+      {
+        "text": "网络层",
+        "correct": false
+      },
+      {
+        "text": "数据链路层",
+        "correct": false
+      }
+    ],
+    "explanation": "应用层数据封装时，首先由传输层添加TCP或UDP头部，然后网络层添加IP头部，最后数据链路层添加帧头帧尾。因此最先添加的是传输层头部。",
+    "id": "network-002",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "分层与封装"
+  },
+  {
+    "type": "single",
+    "question": "以下哪种设备在转发数据时通常需要解封装到网络层以读取目的IP地址？",
+    "options": [
+      {
+        "text": "集线器",
+        "correct": false
+      },
+      {
+        "text": "交换机",
+        "correct": false
+      },
+      {
+        "text": "路由器",
+        "correct": true
+      },
+      {
+        "text": "中继器",
+        "correct": false
+      }
+    ],
+    "explanation": "路由器工作在网络层，转发分组时需要解封装到网络层，读取目的IP地址进行路由选择。集线器和中继器工作在物理层，交换机通常工作在数据链路层。",
+    "id": "network-003",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "分层与封装"
+  },
+  {
+    "type": "single",
+    "question": "在数据封装过程中，PDU（协议数据单元）从上层到下层顺序正确的是？",
+    "options": [
+      {
+        "text": "数据→段→包→帧→比特",
+        "correct": true
+      },
+      {
+        "text": "比特→帧→包→段→数据",
+        "correct": false
+      },
+      {
+        "text": "段→数据→包→帧→比特",
+        "correct": false
+      },
+      {
+        "text": "包→段→帧→比特→数据",
+        "correct": false
+      }
+    ],
+    "explanation": "封装是自上而下添加头部的过程，应用层数据、传输层段、网络层包、数据链路层帧、物理层比特。选项A正确描述了这一顺序。",
+    "id": "network-004",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "分层与封装"
+  },
+  {
+    "type": "single",
+    "question": "下列哪一项是传输层封装时添加的信息？",
+    "options": [
+      {
+        "text": "目的MAC地址",
+        "correct": false
+      },
+      {
+        "text": "源IP地址",
+        "correct": false
+      },
+      {
+        "text": "源端口和目的端口",
+        "correct": true
+      },
+      {
+        "text": "帧校验序列",
+        "correct": false
+      }
+    ],
+    "explanation": "传输层头部包含源端口和目的端口，用于标识应用进程。目的MAC地址由数据链路层添加，源IP地址由网络层添加，帧校验序列由数据链路层添加。",
+    "id": "network-005",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "分层与封装"
+  },
+  {
+    "type": "single",
+    "question": "关于网络分层设计，以下描述错误的是？",
+    "options": [
+      {
+        "text": "分层有助于降低网络设计的复杂性",
+        "correct": false
+      },
+      {
+        "text": "分层使各层独立演进，便于标准化",
+        "correct": false
+      },
+      {
+        "text": "分层后相邻层之间通过接口通信",
+        "correct": false
+      },
+      {
+        "text": "分层后每一层必须了解其他所有层的内部实现",
+        "correct": true
+      }
+    ],
+    "explanation": "分层的重要原则是每层只关心相邻层的接口，无需了解其他层的内部实现。因此选项D错误，其余选项均为分层的优点。",
+    "id": "network-006",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "分层与封装"
+  },
+  {
+    "type": "single",
+    "question": "在以太网中，当IP数据报封装成帧时，MTU限制主要影响什么？",
+    "options": [
+      {
+        "text": "传输层端口号的选择",
+        "correct": false
+      },
+      {
+        "text": "网络层数据报的最大长度",
+        "correct": true
+      },
+      {
+        "text": "应用层协议的编码方式",
+        "correct": false
+      },
+      {
+        "text": "物理层的信号编码",
+        "correct": false
+      }
+    ],
+    "explanation": "MTU是数据链路层帧可承载的最大数据量，限制了网络层数据报的长度。若IP数据报超过MTU，需要分片。端口号、编码方式等与MTU无直接关系。",
+    "id": "network-007",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "分层与封装"
+  },
+  {
+    "type": "single",
+    "question": "某主机通过PPP链路发送UDP数据报，网络层使用IPv4。该PPP帧从帧头到帧尾的字段顺序应为？",
+    "options": [
+      {
+        "text": "PPP帧头→UDP首部→IP首部→应用数据→PPP帧尾",
+        "correct": false
+      },
+      {
+        "text": "PPP帧头→IP首部→UDP首部→应用数据→PPP帧尾",
+        "correct": true
+      },
+      {
+        "text": "IP首部→PPP帧头→UDP首部→应用数据→PPP帧尾",
+        "correct": false
+      },
+      {
+        "text": "UDP首部→IP首部→PPP帧头→应用数据→PPP帧尾",
+        "correct": false
+      }
+    ],
+    "explanation": "发送方从应用数据开始封装：传输层先添加UDP首部，网络层再添加IPv4首部，数据链路层最后添加PPP帧头和帧尾。因此在线路上从帧头到帧尾依次为PPP帧头、IP首部、UDP首部、应用数据和PPP帧尾。",
+    "id": "network-008",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "分层与封装"
+  },
+  {
+    "type": "single",
+    "question": "以下哪一层负责将比特流转换为电信号或光信号进行传输？",
+    "options": [
+      {
+        "text": "数据链路层",
+        "correct": false
+      },
+      {
+        "text": "物理层",
+        "correct": true
+      },
+      {
+        "text": "网络层",
+        "correct": false
+      },
+      {
+        "text": "传输层",
+        "correct": false
+      }
+    ],
+    "explanation": "物理层负责在物理媒介上传输原始比特流，包括信号的编码、调制等。数据链路层负责成帧和差错检测，网络层负责路由，传输层负责端到端通信。",
+    "id": "network-009",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "分层与封装"
+  },
+  {
+    "type": "single",
+    "question": "在TCP/IP模型中，ICMP协议属于哪一层？",
+    "options": [
+      {
+        "text": "应用层",
+        "correct": false
+      },
+      {
+        "text": "传输层",
+        "correct": false
+      },
+      {
+        "text": "网络层",
+        "correct": true
+      },
+      {
+        "text": "数据链路层",
+        "correct": false
+      }
+    ],
+    "explanation": "ICMP（互联网控制报文协议）封装在IP数据报中，用于传递差错和控制信息，属于网络层协议。虽然它使用IP，但本身不是传输层或应用层协议。",
+    "id": "network-010",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "分层与封装"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些功能通常由数据链路层完成？",
+    "options": [
+      {
+        "text": "成帧",
+        "correct": true
+      },
+      {
+        "text": "差错检测",
+        "correct": true
+      },
+      {
+        "text": "路由选择",
+        "correct": false
+      },
+      {
+        "text": "介质访问控制",
+        "correct": true
+      }
+    ],
+    "explanation": "数据链路层负责成帧、差错检测和介质访问控制。路由选择是网络层的功能。因此正确选项为A、B、D。",
+    "id": "network-011",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "分层与封装"
+  },
+  {
+    "type": "multiple",
+    "question": "关于封装和解封装，以下说法正确的是？",
+    "options": [
+      {
+        "text": "封装是发送方自上而下添加控制信息的过程",
+        "correct": true
+      },
+      {
+        "text": "解封装是接收方自下而上移除控制信息的过程",
+        "correct": true
+      },
+      {
+        "text": "封装过程中每一层都会添加头部和尾部",
+        "correct": false
+      },
+      {
+        "text": "解封装需要根据协议类型逐层处理",
+        "correct": true
+      }
+    ],
+    "explanation": "封装是发送方每层添加头部（有时加尾部）的过程，解封装是接收方逐层移除并处理。并非每层都加尾部，通常数据链路层加帧尾，其他层只加头部。",
+    "id": "network-012",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "分层与封装"
+  },
+  {
+    "type": "multiple",
+    "question": "下列哪些协议属于应用层？",
+    "options": [
+      {
+        "text": "HTTP",
+        "correct": true
+      },
+      {
+        "text": "TCP",
+        "correct": false
+      },
+      {
+        "text": "FTP",
+        "correct": true
+      },
+      {
+        "text": "IP",
+        "correct": false
+      }
+    ],
+    "explanation": "HTTP和FTP是应用层协议，TCP是传输层协议，IP是网络层协议。因此正确选项为A、C。",
+    "id": "network-013",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "分层与封装"
+  },
+  {
+    "type": "multiple",
+    "question": "在网络分层体系中，以下哪些是分层的优点？",
+    "options": [
+      {
+        "text": "各层可以独立设计和修改",
+        "correct": true
+      },
+      {
+        "text": "促进标准化工作",
+        "correct": true
+      },
+      {
+        "text": "提高数据传输的绝对安全性",
+        "correct": false
+      },
+      {
+        "text": "易于学习和理解网络功能",
+        "correct": true
+      }
+    ],
+    "explanation": "分层使各层独立、便于标准化、易于学习。但分层本身不保证绝对安全，安全性需额外机制。因此正确选项为A、B、D。",
+    "id": "network-014",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "分层与封装"
+  },
+  {
+    "type": "single",
+    "question": "某公司采用五层协议栈，主机A向主机B发送HTTP请求。在A侧应用层生成HTTP报文后，第一段真正添加端口号信息发生在哪一层？",
+    "options": [
+      {
+        "text": "应用层",
+        "correct": false
+      },
+      {
+        "text": "传输层",
+        "correct": true
+      },
+      {
+        "text": "网络层",
+        "correct": false
+      },
+      {
+        "text": "数据链路层",
+        "correct": false
+      }
+    ],
+    "explanation": "端口号由传输层（TCP/UDP）头部携带，应用层只生成应用数据。应用层可能自带应用标识但非传输端口。网络层加IP地址，链路层加MAC地址。故正确为传输层。",
+    "id": "network-015",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "分层与封装"
+  },
+  {
+    "type": "single",
+    "question": "封装过程中，某层收到上层交来的数据单元后，为其添加本层首部。关于本层首部的作用，下列描述最准确的是？",
+    "options": [
+      {
+        "text": "首部总是保存应用层用户数据完整副本",
+        "correct": false
+      },
+      {
+        "text": "首部用于本层协议控制与对等层通信所需的信息",
+        "correct": true
+      },
+      {
+        "text": "首部只负责校验物理线路电压",
+        "correct": false
+      },
+      {
+        "text": "首部必须包含所有上层首部字段",
+        "correct": false
+      }
+    ],
+    "explanation": "每层首部承载本层对等通信所需的控制信息，如地址、序号、校验等，并不复制应用数据或包含全部上层首部。物理线路电压属于物理层职责。故正确选项强调本层协议控制信息。",
+    "id": "network-016",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "分层与封装"
+  },
+  {
+    "type": "single",
+    "question": "接收方收到以太网帧后，依次去掉以太网首部、IP首部、TCP首部，最终把数据交给HTTP进程。这一过程称为？",
+    "options": [
+      {
+        "text": "路由选择",
+        "correct": false
+      },
+      {
+        "text": "分段与重组",
+        "correct": false
+      },
+      {
+        "text": "解封装",
+        "correct": true
+      },
+      {
+        "text": "流量控制",
+        "correct": false
+      }
+    ],
+    "explanation": "接收方从下层到上层逐层剥离首部并把数据交给上层协议，称为解封装。路由选择发生在网络层转发路径决策；分段重组是传输层处理；流量控制是传输层机制。故正确为解封装。",
+    "id": "network-017",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "分层与封装"
+  },
+  {
+    "type": "single",
+    "question": "交换机在转发以太网帧时，通常根据帧中的哪个字段决定从哪个端口发出？",
+    "options": [
+      {
+        "text": "目的IP地址",
+        "correct": false
+      },
+      {
+        "text": "目的MAC地址",
+        "correct": true
+      },
+      {
+        "text": "目的端口号",
+        "correct": false
+      },
+      {
+        "text": "URL主机名",
+        "correct": false
+      }
+    ],
+    "explanation": "二层交换机依据以太网帧首部的目的MAC地址查MAC地址表转发，通常不需解封装到网络层读取IP。IP地址供路由器使用，端口号供传输层复用，URL属于应用层。故正确为目的MAC地址。",
+    "id": "network-018",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "分层与封装"
+  },
+  {
+    "type": "single",
+    "question": "同一台主机上，浏览器访问网页与邮件客户端发送邮件同时进行，传输层仍能区分二者数据流。主要依靠什么机制？",
+    "options": [
+      {
+        "text": "IP地址分类",
+        "correct": false
+      },
+      {
+        "text": "MAC地址过滤",
+        "correct": false
+      },
+      {
+        "text": "端口号复用",
+        "correct": true
+      },
+      {
+        "text": "MTU协商",
+        "correct": false
+      }
+    ],
+    "explanation": "传输层用端口号标识不同应用进程，实现复用与分用，使同一主机的多个应用数据流可共存。IP负责主机寻址，MAC用于链路寻址，MTU影响分片。故正确为端口号复用。",
+    "id": "network-019",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "分层与封装"
+  },
+  {
+    "type": "single",
+    "question": "路由器收到一个IP分组后，需要将其转发到下一跳。路由器在转发决策中主要使用IP首部中的哪个信息？",
+    "options": [
+      {
+        "text": "源MAC地址",
+        "correct": false
+      },
+      {
+        "text": "目的IP地址",
+        "correct": true
+      },
+      {
+        "text": "源端口号",
+        "correct": false
+      },
+      {
+        "text": "帧前导码",
+        "correct": false
+      }
+    ],
+    "explanation": "路由器工作在网络层，依据目的IP地址查路由表确定下一跳与出接口。源MAC和帧前导码属于链路层，源端口号属于传输层，均不是路由转发的核心依据。故正确为目的IP地址。",
+    "id": "network-020",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "分层与封装"
+  },
+  {
+    "type": "single",
+    "question": "在以太网中，数据链路层对网络层交来的IP分组进行封装时，通常会添加的字段是？",
+    "options": [
+      {
+        "text": "源端口和目的端口",
+        "correct": false
+      },
+      {
+        "text": "源MAC地址和目的MAC地址",
+        "correct": true
+      },
+      {
+        "text": "源IP地址和目的IP地址",
+        "correct": false
+      },
+      {
+        "text": "HTTP请求方法",
+        "correct": false
+      }
+    ],
+    "explanation": "以太网封装IP分组时，帧首部通常包含目的MAC地址和源MAC地址以及类型等字段，帧尾包含FCS；端口号属于传输层，IP地址属于网络层，HTTP方法属于应用层。因此数据链路层添加的典型地址字段是源MAC地址和目的MAC地址。",
+    "id": "network-021",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "分层与封装"
+  },
+  {
+    "type": "single",
+    "question": "某网络路径MTU为1500字节，主机发送一个较大的IP分组。若允许分片，分片主要发生在哪一层？",
+    "options": [
+      {
+        "text": "应用层",
+        "correct": false
+      },
+      {
+        "text": "传输层",
+        "correct": false
+      },
+      {
+        "text": "网络层",
+        "correct": true
+      },
+      {
+        "text": "物理层",
+        "correct": false
+      }
+    ],
+    "explanation": "当IP数据报大于链路MTU且允许分片时，由网络层（IPv4）对IP数据报进行分片，接收端网络层重组。应用层和传输层不直接按链路MTU分片，物理层只负责比特传输。故正确为网络层。",
+    "id": "network-022",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "分层与封装"
+  },
+  {
+    "type": "single",
+    "question": "在层次化网络体系结构中，对等层之间通信所遵循的规则集合通常称为？",
+    "options": [
+      {
+        "text": "接口",
+        "correct": false
+      },
+      {
+        "text": "协议",
+        "correct": true
+      },
+      {
+        "text": "服务原语参数表",
+        "correct": false
+      },
+      {
+        "text": "拓扑结构",
+        "correct": false
+      }
+    ],
+    "explanation": "协议是通信双方对等层之间交换数据与控制信息所遵循的规则集合，包括语法、语义和时序。接口描述相邻层之间交互，拓扑描述网络连接形态。故正确为协议。",
+    "id": "network-023",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "分层与封装"
+  },
+  {
+    "type": "single",
+    "question": "关于相邻层之间关系，下列表述正确的是？",
+    "options": [
+      {
+        "text": "上层只能使用下层提供的服务，并通过接口交互",
+        "correct": true
+      },
+      {
+        "text": "下层必须知道上层应用的具体业务内容",
+        "correct": false
+      },
+      {
+        "text": "每层协议必须直接与所有其他层协议通信",
+        "correct": false
+      },
+      {
+        "text": "上层可直接修改下层的对等协议首部格式",
+        "correct": false
+      }
+    ],
+    "explanation": "分层设计中，相邻层通过接口交互，上层使用下层服务，下层向上层提供服务，通常不必关心上层应用语义。对等通信发生在同层之间，跨层直接修改首部会破坏封装与协议独立性。故正确。",
+    "id": "network-024",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "分层与封装"
+  },
+  {
+    "type": "single",
+    "question": "在OSI参考模型中，实现端到端可靠传输、分段与重组的是哪一层？",
+    "options": [
+      {
+        "text": "物理层",
+        "correct": false
+      },
+      {
+        "text": "数据链路层",
+        "correct": false
+      },
+      {
+        "text": "网络层",
+        "correct": false
+      },
+      {
+        "text": "传输层",
+        "correct": true
+      }
+    ],
+    "explanation": "传输层负责端到端通信，提供分段与重组、可靠传输等机制。物理层传比特，数据链路层负责相邻结点间帧传输，网络层负责路由与分组转发，均不直接提供端到端可靠性。",
+    "id": "network-025",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "分层与封装"
+  },
+  {
+    "type": "single",
+    "question": "TCP/IP模型中，HTTP报文从应用层向下传递到网络接口层，封装顺序正确的是？",
+    "options": [
+      {
+        "text": "HTTP→TCP→IP→以太网帧",
+        "correct": true
+      },
+      {
+        "text": "HTTP→IP→TCP→以太网帧",
+        "correct": false
+      },
+      {
+        "text": "HTTP→以太网帧→IP→TCP",
+        "correct": false
+      },
+      {
+        "text": "HTTP→TCP→以太网帧→IP",
+        "correct": false
+      }
+    ],
+    "explanation": "TCP/IP封装自顶向下：应用层HTTP数据交给传输层加TCP首部，再交网络层加IP首部，最后交网络接口层封装成帧。B将TCP与IP顺序颠倒，C、D将链路层封装提前，均错误。",
+    "id": "network-026",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "分层与封装"
+  },
+  {
+    "type": "single",
+    "question": "主机甲向主机乙发送数据时，传输层使用UDP，网络层使用IP，数据链路层使用以太网。以下关于封装与解封装的说法正确的是？",
+    "options": [
+      {
+        "text": "甲侧封装顺序为UDP首部→IP首部→以太网首部",
+        "correct": true
+      },
+      {
+        "text": "甲侧封装顺序为以太网首部→IP首部→UDP首部",
+        "correct": false
+      },
+      {
+        "text": "乙侧解封装时先去掉IP首部再去掉以太网首部",
+        "correct": false
+      },
+      {
+        "text": "UDP首部会在IP层被添加",
+        "correct": false
+      }
+    ],
+    "explanation": "发送方自顶向下封装：先加UDP首部，再加IP首部，最后加以太网首部。接收方自底向上解封装：先去以太网首部，再去IP首部，最后去UDP首部。UDP首部由传输层添加。",
+    "id": "network-027",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "分层与封装"
+  },
+  {
+    "type": "single",
+    "question": "某主机通过Wi-Fi接入网络，发送一个HTTP请求。关于该请求在协议栈中的封装，下列描述最准确的是？",
+    "options": [
+      {
+        "text": "HTTP报文在传输层被加上TCP首部，形成TCP报文段",
+        "correct": true
+      },
+      {
+        "text": "HTTP报文直接交给网络层封装成IP分组",
+        "correct": false
+      },
+      {
+        "text": "TCP首部由数据链路层在封装成帧时添加",
+        "correct": false
+      },
+      {
+        "text": "IP首部由应用层在生成HTTP报文时添加",
+        "correct": false
+      }
+    ],
+    "explanation": "HTTP基于TCP，应用层数据先交传输层加TCP首部形成报文段，再交网络层加IP首部形成分组。HTTP不直接交网络层，TCP首部不由链路层添加，IP首部不由应用层添加。",
+    "id": "network-028",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "分层与封装"
+  },
+  {
+    "type": "multiple",
+    "question": "关于网络分层与封装，以下说法正确的有？",
+    "options": [
+      {
+        "text": "每一层通常只关注本层功能，并利用下层提供的服务",
+        "correct": true
+      },
+      {
+        "text": "发送方封装时逐层添加首部，接收方解封装时逐层去除首部",
+        "correct": true
+      },
+      {
+        "text": "对等层通信时，实际数据直接通过该层协议在物理介质中传输",
+        "correct": false
+      },
+      {
+        "text": "分层增加了层间接口开销，因此不会带来任何好处",
+        "correct": false
+      }
+    ],
+    "explanation": "分层使各层关注点分离，下层为上层提供服务，封装与解封装逐层处理首部。对等层通信是逻辑上的，实际数据需经下层逐层封装传输。分层虽带来开销，但提高了灵活性与可维护性。",
+    "id": "network-029",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "分层与封装"
+  },
+  {
+    "type": "multiple",
+    "question": "在以太网中，当IP数据报封装成帧时，下列哪些字段通常由数据链路层添加？",
+    "options": [
+      {
+        "text": "源MAC地址",
+        "correct": true
+      },
+      {
+        "text": "目的MAC地址",
+        "correct": true
+      },
+      {
+        "text": "源IP地址",
+        "correct": false
+      },
+      {
+        "text": "帧检验序列FCS",
+        "correct": true
+      }
+    ],
+    "explanation": "以太网帧首部包含源MAC地址和目的MAC地址，帧尾包含FCS用于差错检测，这些由数据链路层添加。源IP地址属于网络层IP首部，由网络层添加，不在数据链路层封装时添加。",
+    "id": "network-030",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "分层与封装"
+  },
+  {
+    "type": "single",
+    "question": "以太网使用CSMA/CD协议，其基本工作原理可以概括为：",
+    "options": [
+      {
+        "text": "先监听信道，空闲则发送，冲突则停止并重发",
+        "correct": true
+      },
+      {
+        "text": "先发送数据，同时监听冲突，冲突后继续发送",
+        "correct": false
+      },
+      {
+        "text": "由中心节点轮询各站点是否发送",
+        "correct": false
+      },
+      {
+        "text": "采用令牌传递机制控制发送权",
+        "correct": false
+      }
+    ],
+    "explanation": "CSMA/CD即载波监听多路访问/冲突检测：发送前先监听信道，空闲则发送；发送中检测冲突，一旦冲突立即停止并等待随机时间重发。选项B错误在于冲突后继续发送；C是轮询协议；D是令牌环网机制。",
+    "id": "network-031",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "以太网与ARP"
+  },
+  {
+    "type": "single",
+    "question": "ARP协议的主要作用是：",
+    "options": [
+      {
+        "text": "将IP地址解析为MAC地址",
+        "correct": true
+      },
+      {
+        "text": "将MAC地址解析为IP地址",
+        "correct": false
+      },
+      {
+        "text": "将域名解析为IP地址",
+        "correct": false
+      },
+      {
+        "text": "将IP地址解析为端口号",
+        "correct": false
+      }
+    ],
+    "explanation": "ARP（地址解析协议）用于在局域网内根据已知的IP地址查询对应的MAC地址。选项B是RARP的功能；C是DNS的功能；D是端口映射，不属于ARP。",
+    "id": "network-032",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "以太网与ARP"
+  },
+  {
+    "type": "single",
+    "question": "以太网MAC地址的长度是：",
+    "options": [
+      {
+        "text": "48位",
+        "correct": true
+      },
+      {
+        "text": "32位",
+        "correct": false
+      },
+      {
+        "text": "64位",
+        "correct": false
+      },
+      {
+        "text": "128位",
+        "correct": false
+      }
+    ],
+    "explanation": "以太网MAC地址通常为48位（6字节），全球唯一。32位是IPv4地址长度，128位是IPv6地址长度，64位常见于扩展唯一标识符（EUI-64）。",
+    "id": "network-033",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "以太网与ARP"
+  },
+  {
+    "type": "single",
+    "question": "在以太网中，最小帧长规定为64字节，其主要目的是：",
+    "options": [
+      {
+        "text": "确保发送站在发送完毕前能检测到冲突",
+        "correct": true
+      },
+      {
+        "text": "提高网络传输效率",
+        "correct": false
+      },
+      {
+        "text": "减少帧头部开销",
+        "correct": false
+      },
+      {
+        "text": "适应不同速率的设备",
+        "correct": false
+      }
+    ],
+    "explanation": "最小帧长确保帧的发送时间不小于信号在网络上往返传播的时间，这样发送站才能在发送过程中检测到冲突。选项B、C、D并非最小帧长的设计目的。",
+    "id": "network-034",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "以太网与ARP"
+  },
+  {
+    "type": "single",
+    "question": "ARP请求报文在以太网中的发送方式是：",
+    "options": [
+      {
+        "text": "广播发送",
+        "correct": true
+      },
+      {
+        "text": "单播发送",
+        "correct": false
+      },
+      {
+        "text": "组播发送",
+        "correct": false
+      },
+      {
+        "text": "任意播发送",
+        "correct": false
+      }
+    ],
+    "explanation": "ARP请求需要询问局域网内所有主机，因此目的MAC地址为广播地址FF:FF:FF:FF:FF:FF，采用广播发送。ARP应答则是单播发送。",
+    "id": "network-035",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "以太网与ARP"
+  },
+  {
+    "type": "single",
+    "question": "主机A需要向同一局域网内的主机B发送数据，但A的ARP缓存中没有B的MAC地址。此时A会：",
+    "options": [
+      {
+        "text": "发送ARP请求广播，等待B的ARP应答",
+        "correct": true
+      },
+      {
+        "text": "直接向默认网关发送数据",
+        "correct": false
+      },
+      {
+        "text": "发送ICMP重定向报文",
+        "correct": false
+      },
+      {
+        "text": "丢弃数据并等待B主动发送ARP请求",
+        "correct": false
+      }
+    ],
+    "explanation": "同一局域网内通信，若ARP缓存缺失，A会广播ARP请求，B收到后以单播ARP应答回复。选项B适用于跨网段通信；C是路由器的功能；D不符合ARP协议行为。",
+    "id": "network-036",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "以太网与ARP"
+  },
+  {
+    "type": "single",
+    "question": "ARP缓存表的主要作用是：",
+    "options": [
+      {
+        "text": "减少ARP广播请求，提高效率",
+        "correct": true
+      },
+      {
+        "text": "存储IP路由表",
+        "correct": false
+      },
+      {
+        "text": "记录DNS域名解析结果",
+        "correct": false
+      },
+      {
+        "text": "保存TCP连接状态",
+        "correct": false
+      }
+    ],
+    "explanation": "ARP缓存表存储IP地址与MAC地址的映射，避免每次通信都发送ARP请求，从而减少广播、提高效率。B是路由表，C是DNS缓存，D是TCP连接表。",
+    "id": "network-037",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "以太网与ARP"
+  },
+  {
+    "type": "single",
+    "question": "以太网交换机在收到一个未知单播帧时，会采取什么动作？",
+    "options": [
+      {
+        "text": "向除接收端口外的所有端口转发",
+        "correct": true
+      },
+      {
+        "text": "直接丢弃该帧",
+        "correct": false
+      },
+      {
+        "text": "向所有端口转发，包括接收端口",
+        "correct": false
+      },
+      {
+        "text": "修改帧的目的MAC地址后转发",
+        "correct": false
+      }
+    ],
+    "explanation": "交换机收到未知单播帧（目的MAC不在转发表中）时，会执行泛洪，即向除接收端口外的所有端口转发。选项C错误在于包括接收端口；A正确。B、D不符合交换机行为。",
+    "id": "network-038",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "以太网与ARP"
+  },
+  {
+    "type": "single",
+    "question": "在以太网中，冲突域和广播域的说法正确的是：",
+    "options": [
+      {
+        "text": "交换机每个端口是一个冲突域，默认所有端口属于同一广播域",
+        "correct": true
+      },
+      {
+        "text": "集线器每个端口是一个冲突域",
+        "correct": false
+      },
+      {
+        "text": "路由器不隔离广播域",
+        "correct": false
+      },
+      {
+        "text": "交换机每个端口是一个广播域",
+        "correct": false
+      }
+    ],
+    "explanation": "交换机每个端口隔离冲突域，但默认所有端口在同一个广播域；集线器所有端口在同一个冲突域；路由器隔离广播域；交换机端口不隔离广播域（除非划分VLAN）。",
+    "id": "network-039",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "以太网与ARP"
+  },
+  {
+    "type": "single",
+    "question": "某主机要发送数据给另一个网段的主机，它需要获取的MAC地址是：",
+    "options": [
+      {
+        "text": "默认网关的MAC地址",
+        "correct": true
+      },
+      {
+        "text": "目的主机的MAC地址",
+        "correct": false
+      },
+      {
+        "text": "源主机的MAC地址",
+        "correct": false
+      },
+      {
+        "text": "DNS服务器的MAC地址",
+        "correct": false
+      }
+    ],
+    "explanation": "跨网段通信时，主机将数据包发给默认网关，因此需要解析网关的MAC地址，而不是目的主机的MAC地址。目的主机的MAC地址由最后一跳路由器解析。",
+    "id": "network-040",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "以太网与ARP"
+  },
+  {
+    "type": "multiple",
+    "question": "以下关于ARP协议的说法正确的有：",
+    "options": [
+      {
+        "text": "ARP请求通常以广播方式发送",
+        "correct": true
+      },
+      {
+        "text": "ARP应答通常以单播方式发送",
+        "correct": true
+      },
+      {
+        "text": "ARP缓存表项可以通过收到ARP报文动态学习",
+        "correct": true
+      },
+      {
+        "text": "ARP请求可以由路由器转发到其他子网",
+        "correct": false
+      }
+    ],
+    "explanation": "ARP用于本地链路的IPv4地址到MAC地址解析。请求方在未知目标MAC时广播ARP请求，目标主机以单播应答；主机收到ARP报文可动态更新IP-MAC缓存。ARP广播不跨路由器转发，因此不能靠路由器把ARP请求送到其他子网。",
+    "id": "network-041",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "以太网与ARP"
+  },
+  {
+    "type": "multiple",
+    "question": "以太网交换机在转发帧时，可能采取的行为包括：",
+    "options": [
+      {
+        "text": "对未知单播帧进行泛洪",
+        "correct": true
+      },
+      {
+        "text": "按MAC地址表转发已知单播帧",
+        "correct": true
+      },
+      {
+        "text": "当目的端口与入端口相同时丢弃该帧",
+        "correct": true
+      },
+      {
+        "text": "对广播帧仅从入端口回送",
+        "correct": false
+      }
+    ],
+    "explanation": "交换机根据目的MAC查表：未知单播帧向除入端口外的其他端口泛洪；已知单播帧按表转发；若查表得到的出端口就是入端口，则不转发该帧。广播帧应泛洪到除入端口外的其他端口，而不是只回送入端口。",
+    "id": "network-042",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "以太网与ARP"
+  },
+  {
+    "type": "multiple",
+    "question": "关于CSMA/CD协议，以下描述正确的有：",
+    "options": [
+      {
+        "text": "发送前先监听信道",
+        "correct": true
+      },
+      {
+        "text": "发送过程中检测冲突",
+        "correct": true
+      },
+      {
+        "text": "冲突后立即重发",
+        "correct": false
+      },
+      {
+        "text": "采用二进制指数退避算法",
+        "correct": true
+      }
+    ],
+    "explanation": "CSMA/CD包括载波监听、冲突检测和冲突后随机退避重发。冲突后不是立即重发，而是等待随机时间，采用二进制指数退避算法。",
+    "id": "network-043",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "以太网与ARP"
+  },
+  {
+    "type": "multiple",
+    "question": "以下情况中，主机可能发送ARP请求的有：",
+    "options": [
+      {
+        "text": "ARP缓存中没有目的IP对应的MAC地址",
+        "correct": true
+      },
+      {
+        "text": "ARP缓存表项过期",
+        "correct": true
+      },
+      {
+        "text": "主机刚启动，缓存为空",
+        "correct": true
+      },
+      {
+        "text": "需要解析域名对应的IP地址",
+        "correct": false
+      }
+    ],
+    "explanation": "ARP用于解析IP到MAC，当缓存缺失、过期或初始为空时会发送ARP请求。解析域名对应IP是DNS的功能，不是ARP。",
+    "id": "network-044",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "以太网与ARP"
+  },
+  {
+    "type": "multiple",
+    "question": "以太网帧结构中包含以下哪些字段？",
+    "options": [
+      {
+        "text": "目的MAC地址",
+        "correct": true
+      },
+      {
+        "text": "源MAC地址",
+        "correct": true
+      },
+      {
+        "text": "帧校验序列FCS",
+        "correct": true
+      },
+      {
+        "text": "IP地址",
+        "correct": false
+      }
+    ],
+    "explanation": "以太网帧头部包含目的MAC、源MAC和类型/长度字段，尾部有FCS。IP地址是网络层字段，不在以太网帧头部中。",
+    "id": "network-045",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "以太网与ARP"
+  },
+  {
+    "type": "single",
+    "question": "以太网交换机收到一个目的MAC地址为广播地址的帧时，会如何处理？",
+    "options": [
+      {
+        "text": "仅转发到除接收端口外的所有端口",
+        "correct": true
+      },
+      {
+        "text": "仅转发到接收端口",
+        "correct": false
+      },
+      {
+        "text": "丢弃该帧",
+        "correct": false
+      },
+      {
+        "text": "根据MAC地址表转发到特定端口",
+        "correct": false
+      }
+    ],
+    "explanation": "交换机对广播帧执行泛洪，即转发到除接收端口外的所有端口。选项B错误，不会发回源端口；选项C错误，广播帧需要送达所有设备；选项D错误，广播地址不用于查表。",
+    "id": "network-046",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "以太网与ARP"
+  },
+  {
+    "type": "single",
+    "question": "在以太网上封装ARP请求时，以太网帧头部的目的MAC地址是：",
+    "options": [
+      {
+        "text": "FF-FF-FF-FF-FF-FF",
+        "correct": true
+      },
+      {
+        "text": "00-00-00-00-00-00",
+        "correct": false
+      },
+      {
+        "text": "目标主机的单播MAC地址",
+        "correct": false
+      },
+      {
+        "text": "本机的MAC地址",
+        "correct": false
+      }
+    ],
+    "explanation": "以太网上的ARP请求需要让本地链路所有主机收到，因此封装它的以太网帧使用全F广播目的MAC。此时请求方通常还不知道目标主机MAC；本机MAC出现在源MAC字段，而全0不是有效广播目的地址。",
+    "id": "network-047",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "以太网与ARP"
+  },
+  {
+    "type": "single",
+    "question": "以太网MAC地址中，用于标识该地址是单播还是组播的是：",
+    "options": [
+      {
+        "text": "第一个字节的最低位",
+        "correct": true
+      },
+      {
+        "text": "第一个字节的最高位",
+        "correct": false
+      },
+      {
+        "text": "最后一个字节的最低位",
+        "correct": false
+      },
+      {
+        "text": "最后一个字节的最高位",
+        "correct": false
+      }
+    ],
+    "explanation": "MAC地址第一个字节的最低位（I/G位）为0表示单播，为1表示组播。最高位是U/L位，用于本地管理标识。选项C、D位置错误，与单播/组播判断无关。",
+    "id": "network-048",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "以太网与ARP"
+  },
+  {
+    "type": "single",
+    "question": "ARP缓存表中的表项通常包含：",
+    "options": [
+      {
+        "text": "IP地址与MAC地址的映射",
+        "correct": true
+      },
+      {
+        "text": "IP地址与端口号的映射",
+        "correct": false
+      },
+      {
+        "text": "MAC地址与VLAN ID的映射",
+        "correct": false
+      },
+      {
+        "text": "域名与IP地址的映射",
+        "correct": false
+      }
+    ],
+    "explanation": "ARP缓存表用于存储IP地址到MAC地址的映射，以减少广播。选项B是传输层概念；选项C是交换机VLAN表内容；选项D是DNS的功能。",
+    "id": "network-049",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "以太网与ARP"
+  },
+  {
+    "type": "single",
+    "question": "当主机收到一个ARP请求，但请求中的目标IP地址不是本机时，主机的标准行为是：",
+    "options": [
+      {
+        "text": "不发送ARP响应，并可能更新自己的ARP缓存",
+        "correct": true
+      },
+      {
+        "text": "回复自己的MAC地址",
+        "correct": false
+      },
+      {
+        "text": "将该请求转发到其他网段",
+        "correct": false
+      },
+      {
+        "text": "向请求方发送ICMP重定向",
+        "correct": false
+      }
+    ],
+    "explanation": "ARP请求是本地链路广播，只有目标IP所有者负责发送ARP应答。非目标主机不回复，但可根据请求中的发送方IP与MAC更新或建立缓存条目。ARP请求不会被主机转发到其他网段，也不触发ICMP重定向。",
+    "id": "network-050",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "以太网与ARP"
+  },
+  {
+    "type": "single",
+    "question": "以太网帧的FCS字段的作用是：",
+    "options": [
+      {
+        "text": "检测帧在传输过程中是否出现差错",
+        "correct": true
+      },
+      {
+        "text": "指示帧的长度",
+        "correct": false
+      },
+      {
+        "text": "标识上层协议类型",
+        "correct": false
+      },
+      {
+        "text": "提供帧的优先级",
+        "correct": false
+      }
+    ],
+    "explanation": "FCS是帧检验序列，通过CRC校验检测传输差错。长度由长度/类型字段或Gap决定；类型字段标识上层协议；优先级由VLAN标签中的PCP字段提供。",
+    "id": "network-051",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "以太网与ARP"
+  },
+  {
+    "type": "single",
+    "question": "某主机需要向同一局域网内另一主机发送数据，但在ARP缓存中未找到对方MAC地址，该主机会：",
+    "options": [
+      {
+        "text": "发送ARP请求广播，等待ARP响应",
+        "correct": true
+      },
+      {
+        "text": "直接将数据帧发送到默认网关",
+        "correct": false
+      },
+      {
+        "text": "使用广播MAC地址发送数据帧",
+        "correct": false
+      },
+      {
+        "text": "丢弃数据并报告错误",
+        "correct": false
+      }
+    ],
+    "explanation": "同一局域网内通信需要目的MAC，未知时先广播ARP请求获取映射。选项B错误，同网段不经过网关；选项C错误，数据帧不能以广播MAC发送；选项D错误，会先解析。",
+    "id": "network-052",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "以太网与ARP"
+  },
+  {
+    "type": "single",
+    "question": "从CSMA/CD介质访问控制的角度看，使用集线器连接的多台主机处于同一个：",
+    "options": [
+      {
+        "text": "冲突域",
+        "correct": true
+      },
+      {
+        "text": "独立的冲突域",
+        "correct": false
+      },
+      {
+        "text": "VLAN",
+        "correct": false
+      },
+      {
+        "text": "IP子网",
+        "correct": false
+      }
+    ],
+    "explanation": "集线器是物理层设备，所有端口共享同一传输介质，因此连接的主机处于同一个冲突域，CSMA/CD的冲突检测范围覆盖这些端口。交换机才隔离冲突域；VLAN和IP子网不是由集线器划分的。",
+    "id": "network-053",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "以太网与ARP"
+  },
+  {
+    "type": "single",
+    "question": "ARP响应报文在以太网中的发送方式是：",
+    "options": [
+      {
+        "text": "单播",
+        "correct": true
+      },
+      {
+        "text": "广播",
+        "correct": false
+      },
+      {
+        "text": "组播",
+        "correct": false
+      },
+      {
+        "text": "任播",
+        "correct": false
+      }
+    ],
+    "explanation": "ARP响应是直接发给请求方的单播帧，因为请求方MAC地址已知。选项B是ARP请求的方式；选项C、D不是ARP使用的发送方式。",
+    "id": "network-054",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "以太网与ARP"
+  },
+  {
+    "type": "single",
+    "question": "以太网交换机中，MAC地址表的作用是：",
+    "options": [
+      {
+        "text": "根据目的MAC地址决定帧的转发端口",
+        "correct": true
+      },
+      {
+        "text": "根据目的IP地址决定帧的转发端口",
+        "correct": false
+      },
+      {
+        "text": "记录IP地址与MAC地址的映射",
+        "correct": false
+      },
+      {
+        "text": "定义VLAN之间的路由规则",
+        "correct": false
+      }
+    ],
+    "explanation": "交换机MAC地址表记录MAC地址与端口的对应关系，用于二层转发。选项B是路由器的功能；选项C是ARP表；选项D是三层交换机或路由器的功能。",
+    "id": "network-055",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "以太网与ARP"
+  },
+  {
+    "type": "single",
+    "question": "以太网中，MAC地址为FF-FF-FF-FF-FF-FF的帧属于哪种类型？",
+    "options": [
+      {
+        "text": "单播帧",
+        "correct": false
+      },
+      {
+        "text": "组播帧",
+        "correct": false
+      },
+      {
+        "text": "广播帧",
+        "correct": true
+      },
+      {
+        "text": "无效帧",
+        "correct": false
+      }
+    ],
+    "explanation": "全1的MAC地址是广播地址，用于向局域网内所有设备发送帧。单播帧目的地址为具体设备MAC；组播帧使用特定组播地址（首字节最低位为1但非全1）。该地址有效且专门表示广播。",
+    "id": "network-056",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "以太网与ARP"
+  },
+  {
+    "type": "single",
+    "question": "ARP协议在IPv4网络中用于解析什么？",
+    "options": [
+      {
+        "text": "域名到IP地址",
+        "correct": false
+      },
+      {
+        "text": "IP地址到MAC地址",
+        "correct": true
+      },
+      {
+        "text": "MAC地址到IP地址",
+        "correct": false
+      },
+      {
+        "text": "端口号到进程",
+        "correct": false
+      }
+    ],
+    "explanation": "ARP（地址解析协议）根据已知的IPv4地址查询对应的MAC地址，以便在以太网中封装帧。域名到IP由DNS完成；MAC到IP是RARP（已淘汰）；端口到进程由传输层机制处理。",
+    "id": "network-057",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "以太网与ARP"
+  },
+  {
+    "type": "single",
+    "question": "主机A要向IP地址不在本子网内的主机B发送IP数据报，A已配置默认网关，且A的ARP缓存中没有网关的MAC地址。A会如何处理ARP请求？",
+    "options": [
+      {
+        "text": "广播ARP请求询问B的MAC地址",
+        "correct": false
+      },
+      {
+        "text": "广播ARP请求询问默认网关的MAC地址",
+        "correct": true
+      },
+      {
+        "text": "直接使用B的IP地址作为目的MAC地址",
+        "correct": false
+      },
+      {
+        "text": "不发送ARP请求，直接丢弃数据报",
+        "correct": false
+      }
+    ],
+    "explanation": "目的IP不在本子网时，主机A需要把数据报交给默认网关，因此先在本链路广播ARP请求解析默认网关的MAC地址。获得网关MAC后，帧的目的MAC填网关地址，IP目的地址仍是B；A不会直接ARP不在本链路的B。",
+    "id": "network-058",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "以太网与ARP"
+  },
+  {
+    "type": "single",
+    "question": "以太网交换机收到一个目的MAC地址为未知单播地址的帧时，默认会执行什么操作？",
+    "options": [
+      {
+        "text": "丢弃该帧",
+        "correct": false
+      },
+      {
+        "text": "从所有端口（除接收端口外）泛洪转发",
+        "correct": true
+      },
+      {
+        "text": "仅从接收端口回送",
+        "correct": false
+      },
+      {
+        "text": "修改目的MAC后转发",
+        "correct": false
+      }
+    ],
+    "explanation": "交换机根据MAC地址表转发帧，若目的MAC不在表中，则向除入端口外的所有其他端口泛洪，以尝试送达目的设备。丢弃或修改MAC均不符合标准转发行为。",
+    "id": "network-059",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "以太网与ARP"
+  },
+  {
+    "type": "single",
+    "question": "在以太网中，使用集线器连接多台主机时，所有主机处于同一个什么范围？",
+    "options": [
+      {
+        "text": "广播域，但各自独立的冲突域",
+        "correct": false
+      },
+      {
+        "text": "冲突域，但各自独立的广播域",
+        "correct": false
+      },
+      {
+        "text": "冲突域和广播域",
+        "correct": true
+      },
+      {
+        "text": "既不是冲突域也不是广播域",
+        "correct": false
+      }
+    ],
+    "explanation": "集线器是物理层设备，所有端口共享同一传输介质，因此所有连接的主机处于同一个冲突域，同时也处于同一个广播域。交换机才隔离冲突域，路由器隔离广播域。",
+    "id": "network-060",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "以太网与ARP"
+  },
+  {
+    "type": "single",
+    "question": "主机配置 IP 地址 192.168.1.10/26，其所在子网的广播地址是？",
+    "options": [
+      {
+        "text": "192.168.1.63",
+        "correct": true
+      },
+      {
+        "text": "192.168.1.64",
+        "correct": false
+      },
+      {
+        "text": "192.168.1.126",
+        "correct": false
+      },
+      {
+        "text": "192.168.1.127",
+        "correct": false
+      }
+    ],
+    "explanation": "/26 的子网块大小为 64，192.168.1.10 属于 192.168.1.0/26，主机位全 1 得到广播地址 192.168.1.63；192.168.1.64 是下一子网的网络地址。",
+    "id": "network-061",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "IP与路由"
+  },
+  {
+    "type": "multiple",
+    "question": "关于 IPv4 地址与子网划分，下列说法正确的有？",
+    "options": [
+      {
+        "text": "/30 子网通常只有 2 个可用主机地址",
+        "correct": true
+      },
+      {
+        "text": "子网掩码中 1 的个数对应前缀长度",
+        "correct": true
+      },
+      {
+        "text": "私有地址 10.0.0.0/8 可在公网上被路由",
+        "correct": false
+      },
+      {
+        "text": "主机位全 1 的地址是网络地址",
+        "correct": false
+      }
+    ],
+    "explanation": "/30 有 4 个地址，去掉网络和广播剩 2 个可用；掩码 1 的个数即前缀长度。10.0.0.0/8 是私有地址，不应在公网路由；主机位全 1 是广播地址，全 0 才是网络地址。",
+    "id": "network-062",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "IP与路由"
+  },
+  {
+    "type": "single",
+    "question": "在 IPv4 中，私有地址范围不包括以下哪一项？",
+    "options": [
+      {
+        "text": "10.0.0.0/8",
+        "correct": false
+      },
+      {
+        "text": "172.16.0.0/12",
+        "correct": false
+      },
+      {
+        "text": "192.168.0.0/16",
+        "correct": false
+      },
+      {
+        "text": "169.254.0.0/16",
+        "correct": true
+      }
+    ],
+    "explanation": "169.254.0.0/16 是链路本地地址（APIPA），不属于 RFC 1918 定义的私有地址。私有地址包括 10.0.0.0/8、172.16.0.0/12 和 192.168.0.0/16。",
+    "id": "network-063",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "IP与路由"
+  },
+  {
+    "type": "single",
+    "question": "主机 IP 地址为 172.16.66.10，子网掩码为 255.255.192.0，该主机所在子网的网络地址是？",
+    "options": [
+      {
+        "text": "172.16.0.0",
+        "correct": false
+      },
+      {
+        "text": "172.16.64.0",
+        "correct": true
+      },
+      {
+        "text": "172.16.66.0",
+        "correct": false
+      },
+      {
+        "text": "172.16.128.0",
+        "correct": false
+      }
+    ],
+    "explanation": "掩码 255.255.192.0 对应 /18，第三字节块大小为 64。66 落在 64~127 区间，网络地址为 172.16.64.0。",
+    "id": "network-064",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "IP与路由"
+  },
+  {
+    "type": "single",
+    "question": "某主机的 IP 地址为 192.168.1.130，子网掩码为 255.255.255.192，该主机所在子网可分配的主机地址数量是？",
+    "options": [
+      {
+        "text": "62",
+        "correct": true
+      },
+      {
+        "text": "64",
+        "correct": false
+      },
+      {
+        "text": "126",
+        "correct": false
+      },
+      {
+        "text": "30",
+        "correct": false
+      }
+    ],
+    "explanation": "掩码 255.255.255.192 为 /26，主机位 6 位，总地址数 64，扣除网络地址和广播地址后可用主机地址为 62 个。",
+    "id": "network-065",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "IP与路由"
+  },
+  {
+    "type": "single",
+    "question": "路由器在转发 IP 数据包时，主要依据什么进行路由决策？",
+    "options": [
+      {
+        "text": "数据包的源 IP 地址",
+        "correct": false
+      },
+      {
+        "text": "数据包的目的 IP 地址",
+        "correct": true
+      },
+      {
+        "text": "数据包的源 MAC 地址",
+        "correct": false
+      },
+      {
+        "text": "数据包的目的 MAC 地址",
+        "correct": false
+      }
+    ],
+    "explanation": "路由器根据目的 IP 地址查找路由表，选择最优路径转发。源 IP 用于策略路由等特殊场景，MAC 地址用于本地链路交付。",
+    "id": "network-066",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "IP与路由"
+  },
+  {
+    "type": "single",
+    "question": "在 Linux 系统中，使用 route 命令查看路由表时，Flags 列中的 G 标志表示什么？",
+    "options": [
+      {
+        "text": "该路由是直连路由",
+        "correct": false
+      },
+      {
+        "text": "该路由的下一跳是网关",
+        "correct": true
+      },
+      {
+        "text": "该路由已被拒绝",
+        "correct": false
+      },
+      {
+        "text": "该路由是主机路由",
+        "correct": false
+      }
+    ],
+    "explanation": "G 标志表示路由的下一跳是网关（gateway），需要经过路由器转发；直连路由没有 G 标志。",
+    "id": "network-067",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "IP与路由"
+  },
+  {
+    "type": "single",
+    "question": "以下关于 CIDR 路由聚合的说法，正确的是？",
+    "options": [
+      {
+        "text": "路由聚合会增加路由表条目数量",
+        "correct": false
+      },
+      {
+        "text": "路由聚合通常把连续且可汇总的地址块表示为更短前缀",
+        "correct": true
+      },
+      {
+        "text": "路由聚合要求所有被聚合网络的前缀长度必须相同",
+        "correct": false
+      },
+      {
+        "text": "路由聚合后前缀长度会变长",
+        "correct": false
+      }
+    ],
+    "explanation": "CIDR 聚合把连续且可汇总的地址块合并为更短前缀，从而减少路由表条目；被汇总路由的前缀长度不要求完全相同，聚合后前缀长度变短而不是变长。",
+    "id": "network-068",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "IP与路由"
+  },
+  {
+    "type": "single",
+    "question": "主机 IP 地址为 10.1.2.3/16，其所在子网的广播地址是？",
+    "options": [
+      {
+        "text": "10.1.0.255",
+        "correct": false
+      },
+      {
+        "text": "10.1.255.255",
+        "correct": true
+      },
+      {
+        "text": "10.255.255.255",
+        "correct": false
+      },
+      {
+        "text": "10.1.2.255",
+        "correct": false
+      }
+    ],
+    "explanation": "/16 掩码为 255.255.0.0，网络地址为 10.1.0.0，广播地址为网络地址的主机位全 1，即 10.1.255.255。",
+    "id": "network-069",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "IP与路由"
+  },
+  {
+    "type": "single",
+    "question": "当路由器收到一个目的 IP 地址为 192.168.1.1 的数据包，但路由表中没有匹配的路由条目（且没有默认路由），路由器会如何处理？",
+    "options": [
+      {
+        "text": "从所有接口广播该数据包",
+        "correct": false
+      },
+      {
+        "text": "丢弃该数据包并返回 ICMP 不可达",
+        "correct": true
+      },
+      {
+        "text": "将数据包发往最近的路由器",
+        "correct": false
+      },
+      {
+        "text": "使用 ARP 获取目的 MAC 后转发",
+        "correct": false
+      }
+    ],
+    "explanation": "无匹配路由且无默认路由时，路由器丢弃数据包，并向源端发送 ICMP 目的网络不可达消息。",
+    "id": "network-070",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "IP与路由"
+  },
+  {
+    "type": "single",
+    "question": "在 IP 数据包转发过程中，关于 TTL 字段，以下描述正确的是？",
+    "options": [
+      {
+        "text": "TTL 值在每经过一个路由器时加 1",
+        "correct": false
+      },
+      {
+        "text": "TTL 值在每经过一个路由器时减 1，减为 0 时丢弃",
+        "correct": true
+      },
+      {
+        "text": "TTL 值由目的主机设置",
+        "correct": false
+      },
+      {
+        "text": "TTL 值用于标识数据包的优先级",
+        "correct": false
+      }
+    ],
+    "explanation": "TTL 由源主机设置，每经过一个路由器减 1，减为 0 时路由器丢弃数据包并发送 ICMP 超时消息，防止环路。",
+    "id": "network-071",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "IP与路由"
+  },
+  {
+    "type": "single",
+    "question": "某公司网络使用 192.168.10.0/24，需要划分为至少 6 个子网，每个子网至少容纳 25 台主机，合适的子网掩码是？",
+    "options": [
+      {
+        "text": "255.255.255.128",
+        "correct": false
+      },
+      {
+        "text": "255.255.255.192",
+        "correct": false
+      },
+      {
+        "text": "255.255.255.224",
+        "correct": true
+      },
+      {
+        "text": "255.255.255.240",
+        "correct": false
+      }
+    ],
+    "explanation": "每个子网至少 25 台主机需要主机位至少 5 位（2^5-2=30），子网位 3 位可划分 8 个子网（≥6），掩码为 /27 即 255.255.255.224。",
+    "id": "network-072",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "IP与路由"
+  },
+  {
+    "type": "multiple",
+    "question": "关于 IPv4 地址，以下说法正确的有？",
+    "options": [
+      {
+        "text": "127.0.0.0/8 是环回地址，可用于本机测试",
+        "correct": true
+      },
+      {
+        "text": "169.254.0.0/16 是链路本地地址，通常由 DHCP 失败时自动配置",
+        "correct": true
+      },
+      {
+        "text": "224.0.0.0/4 是组播地址，用于一对多通信",
+        "correct": true
+      },
+      {
+        "text": "240.0.0.0/4 是私有地址，可用于内部网络",
+        "correct": false
+      }
+    ],
+    "explanation": "127.0.0.0/8 为环回，169.254.0.0/16 为链路本地，224.0.0.0/4 为组播；240.0.0.0/4 为保留地址，不是私有地址。",
+    "id": "network-073",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "IP与路由"
+  },
+  {
+    "type": "multiple",
+    "question": "关于路由表与最长前缀匹配，以下说法正确的有？",
+    "options": [
+      {
+        "text": "当多个路由条目匹配目的 IP 时，优先选择前缀最长的一条",
+        "correct": true
+      },
+      {
+        "text": "默认路由可以看作前缀长度为 0 的路由",
+        "correct": true
+      },
+      {
+        "text": "当多条路由的前缀长度相同时，还需根据管理距离或度量选择",
+        "correct": true
+      },
+      {
+        "text": "路由表中只能有一条默认路由",
+        "correct": false
+      }
+    ],
+    "explanation": "转发时先按最长前缀匹配，前缀长度相同时再依据管理距离、度量等选择；默认路由可表示为 0.0.0.0/0，不同路由来源可能产生多条默认路由。",
+    "id": "network-074",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "IP与路由"
+  },
+  {
+    "type": "multiple",
+    "question": "下列哪些技术或机制主要用于减少路由表规模？",
+    "options": [
+      {
+        "text": "CIDR 路由聚合",
+        "correct": true
+      },
+      {
+        "text": "在适当位置使用默认路由",
+        "correct": true
+      },
+      {
+        "text": "NAT 网络地址转换",
+        "correct": false
+      },
+      {
+        "text": "VLSM 可变长子网掩码",
+        "correct": false
+      }
+    ],
+    "explanation": "CIDR 聚合把连续地址块合并为更短前缀，默认路由可替代大量明细路由，二者能直接减少路由表条目；NAT 主要用于地址复用和隐藏内部地址，VLSM 主要用于高效分配地址空间，它们本身不是路由表规模缩减机制。",
+    "id": "network-075",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "IP与路由"
+  },
+  {
+    "type": "multiple",
+    "question": "关于 ARP 与路由转发，以下说法正确的有？",
+    "options": [
+      {
+        "text": "主机发送 IP 数据包前，若目的 IP 不在同一子网，则 ARP 请求默认网关的 MAC 地址",
+        "correct": true
+      },
+      {
+        "text": "路由器在转发数据包时，会修改数据包的源 MAC 地址和目的 MAC 地址",
+        "correct": true
+      },
+      {
+        "text": "ARP 请求是广播发送，ARP 响应是单播发送",
+        "correct": true
+      },
+      {
+        "text": "ARP 表项永久有效，除非手动清除",
+        "correct": false
+      }
+    ],
+    "explanation": "跨子网通信时主机 ARP 网关；路由器逐跳重写二层帧头；ARP 请求广播、响应单播；ARP 表项有老化时间。",
+    "id": "network-076",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "IP与路由"
+  },
+  {
+    "type": "multiple",
+    "question": "某主机 IP 为 172.16.5.100/20，以下关于该主机所在子网的说法正确的有？",
+    "options": [
+      {
+        "text": "该子网的网络地址是 172.16.0.0",
+        "correct": true
+      },
+      {
+        "text": "该子网的广播地址是 172.16.15.255",
+        "correct": true
+      },
+      {
+        "text": "该子网可用主机地址范围是 172.16.0.1 到 172.16.15.254",
+        "correct": true
+      },
+      {
+        "text": "该子网可分配的主机地址数量是 4096",
+        "correct": false
+      }
+    ],
+    "explanation": "/20 掩码为 255.255.240.0，第三字节块大小 16，网络地址 172.16.0.0，广播 172.16.15.255，可用地址数为 2^12-2=4094，不是 4096。",
+    "id": "network-077",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "IP与路由"
+  },
+  {
+    "type": "single",
+    "question": "在 IPv4 网络中，路由器进行路由选择时，以下哪项是主要依据？",
+    "options": [
+      {
+        "text": "数据包的源 IP 地址",
+        "correct": false
+      },
+      {
+        "text": "数据包的目的 IP 地址",
+        "correct": true
+      },
+      {
+        "text": "数据包的源 MAC 地址",
+        "correct": false
+      },
+      {
+        "text": "数据包的目的 MAC 地址",
+        "correct": false
+      }
+    ],
+    "explanation": "路由器根据目的 IP 地址查找路由表，决定下一跳。源 IP 用于策略路由等场景，不是默认依据。源/目的 MAC 地址在链路层使用，路由器转发时会重写 MAC 头，因此不是路由选择的主要依据。",
+    "id": "network-078",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "IP与路由"
+  },
+  {
+    "type": "single",
+    "question": "某公司的网络地址为 192.168.1.0/24，需要划分为至少 5 个子网，每个子网至少容纳 30 台主机。以下哪个子网掩码最合适？",
+    "options": [
+      {
+        "text": "255.255.255.128",
+        "correct": false
+      },
+      {
+        "text": "255.255.255.192",
+        "correct": false
+      },
+      {
+        "text": "255.255.255.224",
+        "correct": true
+      },
+      {
+        "text": "255.255.255.240",
+        "correct": false
+      }
+    ],
+    "explanation": "/27 提供 8 个子网（满足至少 5 个），每个子网有 32 个地址，扣除网络地址和广播地址后可用主机地址为 30 个（满足至少 30 台）。/26 只有 4 个子网且每个子网 62 台主机，子网数不足；/28 每个子网仅 14 台主机，主机数不足。",
+    "id": "network-079",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "IP与路由"
+  },
+  {
+    "type": "single",
+    "question": "IP 地址 10.0.0.0/8 经过 CIDR 聚合后，其对应的地址范围是？",
+    "options": [
+      {
+        "text": "10.0.0.0 至 10.255.255.255",
+        "correct": true
+      },
+      {
+        "text": "10.0.0.0 至 10.0.255.255",
+        "correct": false
+      },
+      {
+        "text": "10.0.0.0 至 10.255.0.255",
+        "correct": false
+      },
+      {
+        "text": "10.0.0.0 至 10.0.0.255",
+        "correct": false
+      }
+    ],
+    "explanation": "/8 表示前 8 位为网络前缀，后 24 位为主机位，因此地址范围从 10.0.0.0 到 10.255.255.255，共 2^24 个地址。其他选项对应的前缀长度分别为 /16、/16（非连续写法）、/24，与 /8 不符。",
+    "id": "network-080",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "IP与路由"
+  },
+  {
+    "type": "single",
+    "question": "在 Linux 系统中，执行 ip route 命令查看到一条路由条目“192.168.2.0/24 via 10.0.0.1 dev eth0”，以下说法正确的是？",
+    "options": [
+      {
+        "text": "发往 192.168.2.0/24 的数据包直接从 eth0 发出，不经过网关",
+        "correct": false
+      },
+      {
+        "text": "发往 192.168.2.0/24 的数据包下一跳是 10.0.0.1，从 eth0 接口发出",
+        "correct": true
+      },
+      {
+        "text": "该路由表示 10.0.0.1 是本地接口地址",
+        "correct": false
+      },
+      {
+        "text": "该路由表示目的地址为 192.168.2.0 的主机直接可达",
+        "correct": false
+      }
+    ],
+    "explanation": "via 指定下一跳网关地址，dev 指定出接口。该路由表示目的网络 192.168.2.0/24 的数据包需经网关 10.0.0.1 转发，并从 eth0 发出。直接可达路由通常不带 via。",
+    "id": "network-081",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "IP与路由"
+  },
+  {
+    "type": "single",
+    "question": "当路由器收到一个 IP 数据包，其目的地址在路由表中匹配到多条路由时，路由器通常根据什么原则选择路由？",
+    "options": [
+      {
+        "text": "选择度量值最小的路由",
+        "correct": false
+      },
+      {
+        "text": "选择管理距离最小的路由",
+        "correct": false
+      },
+      {
+        "text": "选择前缀最长（最具体）的路由",
+        "correct": true
+      },
+      {
+        "text": "选择最先学习到的路由",
+        "correct": false
+      }
+    ],
+    "explanation": "在无类别路由中，路由器采用最长前缀匹配原则，即选择网络前缀最长、最具体的路由。度量值和管理距离用于同前缀长度下的路由比较，不是跨前缀长度选择的首要原则。",
+    "id": "network-082",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "IP与路由"
+  },
+  {
+    "type": "single",
+    "question": "以下关于 NAT（网络地址转换）的说法，正确的是？",
+    "options": [
+      {
+        "text": "NAT 可以缓解 IPv4 地址短缺问题，但会破坏端到端连通性",
+        "correct": true
+      },
+      {
+        "text": "NAT 只能转换源 IP 地址，不能转换端口",
+        "correct": false
+      },
+      {
+        "text": "NAT 设备必须为每个内部主机分配一个全球唯一 IP 地址",
+        "correct": false
+      },
+      {
+        "text": "NAT 会自动加密转发的数据包",
+        "correct": false
+      }
+    ],
+    "explanation": "NAT 通过地址复用缓解 IPv4 地址短缺，但修改 IP 头后使外部主机难以主动连接内部主机，破坏端到端透明性。NAPT 可转换端口；NAT 不需要为每台内部主机分配全球地址；NAT 本身不提供加密。",
+    "id": "network-083",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "IP与路由"
+  },
+  {
+    "type": "single",
+    "question": "某主机 IP 地址为 192.168.100.200，子网掩码为 255.255.255.192，该主机所在子网的网络地址是？",
+    "options": [
+      {
+        "text": "192.168.100.0",
+        "correct": false
+      },
+      {
+        "text": "192.168.100.64",
+        "correct": false
+      },
+      {
+        "text": "192.168.100.128",
+        "correct": true
+      },
+      {
+        "text": "192.168.100.192",
+        "correct": false
+      }
+    ],
+    "explanation": "掩码 /26 将最后一个字节按 64 划分：0、64、128、192。主机地址 200 落在 128～191 区间，因此网络地址为 192.168.100.128，广播地址为 192.168.100.191。",
+    "id": "network-084",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "IP与路由"
+  },
+  {
+    "type": "single",
+    "question": "在 IP 数据包转发过程中，如果数据包的 TTL 值减为 0，路由器会采取什么操作？",
+    "options": [
+      {
+        "text": "继续转发，并将 TTL 重置为初始值",
+        "correct": false
+      },
+      {
+        "text": "丢弃该数据包，并向源主机发送 ICMP 超时消息",
+        "correct": true
+      },
+      {
+        "text": "将数据包广播到所有接口",
+        "correct": false
+      },
+      {
+        "text": "将数据包返回给上一跳路由器",
+        "correct": false
+      }
+    ],
+    "explanation": "TTL 每经过一个路由器减 1，减为 0 时路由器丢弃数据包，并通常向源主机发送 ICMP 时间超过消息，防止数据包无限循环。TTL 不会被路由器重置，也不会广播或返回上一跳。",
+    "id": "network-085",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "IP与路由"
+  },
+  {
+    "type": "multiple",
+    "question": "关于 IPv4 地址分类与私有地址，以下说法正确的有？",
+    "options": [
+      {
+        "text": "10.0.0.0/8 属于私有地址范围",
+        "correct": true
+      },
+      {
+        "text": "172.16.0.0/12 属于私有地址范围",
+        "correct": true
+      },
+      {
+        "text": "192.168.0.0/16 属于私有地址范围",
+        "correct": true
+      },
+      {
+        "text": "127.0.0.0/8 属于私有地址范围",
+        "correct": false
+      }
+    ],
+    "explanation": "RFC 1918 定义的私有地址包括 10.0.0.0/8、172.16.0.0/12 和 192.168.0.0/16。127.0.0.0/8 是环回地址，不属于私有地址。私有地址不可在公网上路由。",
+    "id": "network-086",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "IP与路由"
+  },
+  {
+    "type": "multiple",
+    "question": "关于路由表中的默认路由，以下说法正确的有？",
+    "options": [
+      {
+        "text": "默认路由的目的网络通常表示为 0.0.0.0/0",
+        "correct": true
+      },
+      {
+        "text": "当路由表中没有更具体匹配时，路由器会使用默认路由",
+        "correct": true
+      },
+      {
+        "text": "默认路由的优先级总是高于所有具体路由",
+        "correct": false
+      },
+      {
+        "text": "默认路由只能由静态路由配置，不能由动态路由协议产生",
+        "correct": false
+      }
+    ],
+    "explanation": "默认路由是 0.0.0.0/0，只有在没有更具体路由匹配时才使用。由于最长前缀匹配，具体路由优先于默认路由。动态路由协议如 OSPF 也可产生默认路由。",
+    "id": "network-087",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "IP与路由"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些技术或机制可用于减少路由表规模？",
+    "options": [
+      {
+        "text": "CIDR 路由聚合",
+        "correct": true
+      },
+      {
+        "text": "默认路由",
+        "correct": true
+      },
+      {
+        "text": "NAT 地址转换",
+        "correct": false
+      },
+      {
+        "text": "路由汇总（手动或自动）",
+        "correct": true
+      }
+    ],
+    "explanation": "CIDR 聚合和路由汇总将多个连续子网合并为一条路由，默认路由可替代大量明细路由，从而减小路由表。NAT 用于地址转换，不直接减少路由表条目。",
+    "id": "network-088",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "IP与路由"
+  },
+  {
+    "type": "multiple",
+    "question": "关于 ARP 与 IP 路由转发，以下说法正确的有？",
+    "options": [
+      {
+        "text": "主机发送 IP 数据包前，若下一跳 MAC 地址未知，会发送 ARP 请求",
+        "correct": true
+      },
+      {
+        "text": "路由器转发数据包到不同网段时，会修改数据包的源 MAC 和目的 MAC 地址",
+        "correct": true
+      },
+      {
+        "text": "ARP 请求是广播发送的，ARP 应答通常是单播发送的",
+        "correct": true
+      },
+      {
+        "text": "IP 数据包在转发过程中，源 IP 地址和目的 IP 地址每跳都会改变",
+        "correct": false
+      }
+    ],
+    "explanation": "ARP 用于解析下一跳的 MAC 地址，请求广播、应答单播。路由器转发时重写链路层 MAC 头，但 IP 地址通常不变（NAT 除外）。源和目的 IP 地址并非每跳都改变。",
+    "id": "network-089",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "IP与路由"
+  },
+  {
+    "type": "single",
+    "question": "某主机 IP 地址为 172.16.5.100/20，该主机所在子网的广播地址是？",
+    "options": [
+      {
+        "text": "172.16.15.255",
+        "correct": true
+      },
+      {
+        "text": "172.16.5.255",
+        "correct": false
+      },
+      {
+        "text": "172.16.31.255",
+        "correct": false
+      },
+      {
+        "text": "172.16.0.255",
+        "correct": false
+      }
+    ],
+    "explanation": "/20 的掩码为 255.255.240.0，第三个字节按 16 划分：0、16、32……主机地址 172.16.5.100 落在 172.16.0.0/20 子网，广播地址为 172.16.15.255。其他选项对应的前缀长度或子网不正确。",
+    "id": "network-090",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "IP与路由"
+  },
+  {
+    "type": "single",
+    "question": "TCP三次握手过程中，客户端发送的第一个SYN报文段最主要的作用是什么？",
+    "options": [
+      {
+        "text": "请求建立连接并告知自己的初始序列号",
+        "correct": true
+      },
+      {
+        "text": "确认服务器已收到之前的数据",
+        "correct": false
+      },
+      {
+        "text": "协商双方的最大报文段长度",
+        "correct": false
+      },
+      {
+        "text": "请求服务器立即发送数据",
+        "correct": false
+      }
+    ],
+    "explanation": "第一个SYN用于发起连接并携带客户端初始序列号（ISN），服务器据此确认并回复SYN+ACK。选项B是ACK的语义，C的MSS虽可携带在SYN中但并非首要作用，D不符合握手目的，均属常见混淆。",
+    "id": "network-091",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP连接"
+  },
+  {
+    "type": "single",
+    "question": "TCP连接建立时，服务器收到SYN后回复的报文段通常包含哪些标志位？",
+    "options": [
+      {
+        "text": "SYN和ACK",
+        "correct": true
+      },
+      {
+        "text": "仅SYN",
+        "correct": false
+      },
+      {
+        "text": "仅ACK",
+        "correct": false
+      },
+      {
+        "text": "FIN和ACK",
+        "correct": false
+      }
+    ],
+    "explanation": "服务器收到SYN后回复SYN+ACK：SYN表示同意建立连接并携带服务器ISN，ACK确认客户端SYN。仅SYN无法完成确认，仅ACK缺少序列号同步，FIN用于关闭连接，均不适用于握手第二步。",
+    "id": "network-092",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP连接"
+  },
+  {
+    "type": "single",
+    "question": "在TCP连接中，客户端收到SYN+ACK后发送的第三个报文段主要完成什么？",
+    "options": [
+      {
+        "text": "确认服务器序列号并完成连接建立",
+        "correct": true
+      },
+      {
+        "text": "请求关闭连接",
+        "correct": false
+      },
+      {
+        "text": "重新同步序列号",
+        "correct": false
+      },
+      {
+        "text": "通知服务器降低发送速率",
+        "correct": false
+      }
+    ],
+    "explanation": "第三个报文段为ACK，确认服务器的SYN并携带自己的确认号，至此双方序列号同步、连接建立。它不请求关闭、不重新同步序列号，也不是拥塞控制通知，选项B、C、D均偏离该步骤语义。",
+    "id": "network-093",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP连接"
+  },
+  {
+    "type": "single",
+    "question": "下列关于TCP四次挥手的描述，正确的是？",
+    "options": [
+      {
+        "text": "主动关闭方发送FIN后仍可继续接收数据",
+        "correct": true
+      },
+      {
+        "text": "主动关闭方发送FIN后立即不能再发送任何数据",
+        "correct": false
+      },
+      {
+        "text": "被动关闭方收到FIN后必须立即发送FIN",
+        "correct": false
+      },
+      {
+        "text": "四次挥手完成后连接立即彻底释放",
+        "correct": false
+      }
+    ],
+    "explanation": "发送FIN只表示主动关闭方不再发送数据，仍可接收对端数据，因此A正确。B混淆了半关闭状态；C中被动方可在发送完剩余数据后再发FIN；D中主动方需进入TIME_WAIT等待，并非立即彻底释放。",
+    "id": "network-094",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP连接"
+  },
+  {
+    "type": "single",
+    "question": "TCP连接中TIME_WAIT状态通常出现在哪一方？",
+    "options": [
+      {
+        "text": "主动关闭连接的一方",
+        "correct": true
+      },
+      {
+        "text": "被动关闭连接的一方",
+        "correct": false
+      },
+      {
+        "text": "连接中发送数据较多的一方",
+        "correct": false
+      },
+      {
+        "text": "服务器端固定出现",
+        "correct": false
+      }
+    ],
+    "explanation": "TIME_WAIT出现在主动关闭方发送最后一个ACK之后，等待2MSL以确保对端收到ACK并让旧报文消散。被动关闭方进入CLOSE_WAIT等状态。该状态与谁发送数据多、是否为服务器无关。",
+    "id": "network-095",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP连接"
+  },
+  {
+    "type": "single",
+    "question": "TCP半关闭状态（half-close）的含义是？",
+    "options": [
+      {
+        "text": "一方已停止发送数据但仍可接收对端数据",
+        "correct": true
+      },
+      {
+        "text": "双方都停止发送数据但连接未释放",
+        "correct": false
+      },
+      {
+        "text": "连接只建立了一半的序列号同步",
+        "correct": false
+      },
+      {
+        "text": "一方关闭了接收通道但继续发送",
+        "correct": false
+      }
+    ],
+    "explanation": "半关闭指通信一方发送FIN表示不再发送数据，但接收方向仍开放，对端可继续发送。B描述的是双方均关闭发送；C与序列号同步无关；D把收发方向弄反，关闭发送而非关闭接收。",
+    "id": "network-096",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP连接"
+  },
+  {
+    "type": "single",
+    "question": "客户端与服务器建立 TCP 连接后客户端异常断电，未发送 FIN。若服务器此后持续向该客户端发送数据，服务器端通常会因何最终释放该连接？",
+    "options": [
+      {
+        "text": "未收到数据确认，重传达到上限或超时后关闭连接",
+        "correct": true
+      },
+      {
+        "text": "收到客户端断电通知后立即关闭连接",
+        "correct": false
+      },
+      {
+        "text": "TCP 规定连接空闲超过固定毫秒数后立即关闭",
+        "correct": false
+      },
+      {
+        "text": "客户端重新上电后自动关闭旧连接",
+        "correct": false
+      }
+    ],
+    "explanation": "对端异常消失时不会发送 FIN；服务器若有数据持续发送，会因收不到确认而重传，超过重传或超时限制后释放连接。TCP 没有断电通知机制，也没有固定的空闲毫秒数自动关闭规则，重新上电也不会自动清除旧连接。",
+    "id": "network-097",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP连接"
+  },
+  {
+    "type": "single",
+    "question": "TCP 连接中，若客户端发送的 ACK 确认号小于服务器期望的序列号，服务器最可能如何处理？",
+    "options": [
+      {
+        "text": "丢弃该旧 ACK，不据此推进发送窗口",
+        "correct": true
+      },
+      {
+        "text": "接受该 ACK 并据此推进发送窗口",
+        "correct": false
+      },
+      {
+        "text": "立即关闭连接",
+        "correct": false
+      },
+      {
+        "text": "把确认号自动修正为期望值后继续",
+        "correct": false
+      }
+    ],
+    "explanation": "确认号小于发送方期望值表示该 ACK 已经过旧，发送方通常忽略，不推进窗口，也不会因单个旧 ACK 关闭连接或自动修正确认号。快速重传通常由多个重复 ACK（确认号等于当前期望值）触发，与过旧 ACK 不同。",
+    "id": "network-098",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP连接"
+  },
+  {
+    "type": "single",
+    "question": "关于TCP连接建立过程中的SYN洪泛攻击，下列描述正确的是？",
+    "options": [
+      {
+        "text": "攻击者发送大量SYN但不完成握手，耗尽服务器半连接资源",
+        "correct": true
+      },
+      {
+        "text": "攻击者伪造FIN报文快速关闭大量连接",
+        "correct": false
+      },
+      {
+        "text": "攻击者利用ACK报文耗尽服务器带宽",
+        "correct": false
+      },
+      {
+        "text": "攻击者通过TIME_WAIT状态占用服务器端口",
+        "correct": false
+      }
+    ],
+    "explanation": "SYN洪泛利用大量伪造源地址的SYN使服务器分配半连接资源并等待ACK，从而耗尽资源。它不以FIN或ACK为主要手段，也不是通过TIME_WAIT占用端口，后者通常是主动关闭方状态。",
+    "id": "network-099",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP连接"
+  },
+  {
+    "type": "single",
+    "question": "主动关闭 TCP 连接的一方在发送最后一个 ACK 后进入 TIME_WAIT 状态并等待 2MSL，其主要作用之一是？",
+    "options": [
+      {
+        "text": "确保最后一个 ACK 能到达对端，并让旧连接的残余报文在网络中消散",
+        "correct": true
+      },
+      {
+        "text": "协商连接关闭后的窗口缩放因子",
+        "correct": false
+      },
+      {
+        "text": "强制对端立即释放所有接收缓冲区",
+        "correct": false
+      },
+      {
+        "text": "把连接转换为半关闭状态以继续发送数据",
+        "correct": false
+      }
+    ],
+    "explanation": "TIME_WAIT 等待 2MSL 为最后一个 ACK 提供重传机会，并防止旧连接的迟到报文被新连接误收。它与窗口缩放协商、强制对端释放缓冲区无关；半关闭发生在发送 FIN 之后，而非 TIME_WAIT 阶段。",
+    "id": "network-100",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP连接"
+  },
+  {
+    "type": "multiple",
+    "question": "下列哪些情况可能导致TCP连接处于CLOSE_WAIT状态？",
+    "options": [
+      {
+        "text": "本端收到对端发送的FIN并回复ACK",
+        "correct": true
+      },
+      {
+        "text": "本端应用程序尚未调用close关闭套接字",
+        "correct": true
+      },
+      {
+        "text": "本端主动发送FIN后等待对端确认",
+        "correct": false
+      },
+      {
+        "text": "本端处于TIME_WAIT等待2MSL",
+        "correct": false
+      }
+    ],
+    "explanation": "CLOSE_WAIT状态出现在本端收到对端发送的FIN并回复ACK之后。如果本端应用程序尚未调用close关闭套接字，连接会停留在此状态。主动发送FIN后进入FIN_WAIT_1等状态，TIME_WAIT是主动关闭后的等待状态，均不会导致CLOSE_WAIT。",
+    "id": "network-101",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP连接"
+  },
+  {
+    "type": "multiple",
+    "question": "关于TCP三次握手，下列说法正确的有？",
+    "options": [
+      {
+        "text": "第三次握手可以携带应用数据",
+        "correct": true
+      },
+      {
+        "text": "前两次握手不能携带应用数据",
+        "correct": false
+      },
+      {
+        "text": "第三次握手的ACK确认号用于确认服务器SYN",
+        "correct": true
+      },
+      {
+        "text": "三次握手的主要目的是协商加密算法",
+        "correct": false
+      }
+    ],
+    "explanation": "第三次ACK可携带数据，且其确认号确认服务器SYN，故A、C正确。前两次握手通常不携带应用数据但SYN可带选项，B表述过于绝对；三次握手目的是同步序列号并确认双向可达，加密协商属于TLS等上层，D错误。",
+    "id": "network-102",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP连接"
+  },
+  {
+    "type": "multiple",
+    "question": "TCP连接释放过程中，主动关闭方可能经历的状态包括？",
+    "options": [
+      {
+        "text": "FIN_WAIT_1",
+        "correct": true
+      },
+      {
+        "text": "TIME_WAIT",
+        "correct": true
+      },
+      {
+        "text": "CLOSE_WAIT",
+        "correct": false
+      },
+      {
+        "text": "LAST_ACK",
+        "correct": false
+      }
+    ],
+    "explanation": "主动关闭方发送FIN后进入FIN_WAIT_1，最终在发送最后一个ACK后进入TIME_WAIT，故A、B正确。CLOSE_WAIT是收到FIN且应用未关闭时被动方的状态，LAST_ACK是被动关闭方发送FIN后等待最后ACK的状态。",
+    "id": "network-103",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP连接"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些因素会导致TCP连接建立失败或明显延迟？",
+    "options": [
+      {
+        "text": "网络路径丢包导致SYN或SYN+ACK重传",
+        "correct": true
+      },
+      {
+        "text": "服务器半连接队列已满而丢弃新SYN",
+        "correct": true
+      },
+      {
+        "text": "客户端与服务器时钟不同步",
+        "correct": false
+      },
+      {
+        "text": "中间设备过滤掉SYN报文",
+        "correct": true
+      }
+    ],
+    "explanation": "SYN/SYN+ACK丢包会触发重传延迟，半连接队列满会丢弃新SYN，过滤SYN则握手无法推进，故A、B、D正确。TCP序列号与确认机制不依赖两端绝对时钟同步，时钟不同步本身不会导致握手失败。",
+    "id": "network-104",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP连接"
+  },
+  {
+    "type": "single",
+    "question": "某服务器上出现大量CLOSE_WAIT连接，最可能的原因是什么？",
+    "options": [
+      {
+        "text": "应用程序收到对端FIN后未及时关闭套接字",
+        "correct": true
+      },
+      {
+        "text": "服务器主动发起大量连接关闭",
+        "correct": false
+      },
+      {
+        "text": "网络中存在大量SYN洪泛攻击",
+        "correct": false
+      },
+      {
+        "text": "客户端处于TIME_WAIT状态过多",
+        "correct": false
+      }
+    ],
+    "explanation": "CLOSE_WAIT表示本端已收到对端FIN并回复ACK，但本地应用尚未调用close。大量堆积通常说明应用未正确关闭连接。主动关闭方不会停留在CLOSE_WAIT；SYN洪泛影响半连接；TIME_WAIT在主动关闭方。",
+    "id": "network-105",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP连接"
+  },
+  {
+    "type": "single",
+    "question": "TCP连接建立过程中，客户端发送SYN报文段后进入什么状态？",
+    "options": [
+      {
+        "text": "SYN_SENT",
+        "correct": true
+      },
+      {
+        "text": "SYN_RCVD",
+        "correct": false
+      },
+      {
+        "text": "ESTABLISHED",
+        "correct": false
+      },
+      {
+        "text": "LISTEN",
+        "correct": false
+      }
+    ],
+    "explanation": "客户端发送SYN后进入SYN_SENT状态，等待服务器回应SYN+ACK。SYN_RCVD是服务器收到SYN后的状态，ESTABLISHED是握手完成后的状态，LISTEN是服务器监听状态。",
+    "id": "network-106",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP连接"
+  },
+  {
+    "type": "single",
+    "question": "服务器收到SYN并回复SYN+ACK后，在未收到客户端ACK之前，该连接处于什么状态？",
+    "options": [
+      {
+        "text": "SYN_RCVD",
+        "correct": true
+      },
+      {
+        "text": "SYN_SENT",
+        "correct": false
+      },
+      {
+        "text": "ESTABLISHED",
+        "correct": false
+      },
+      {
+        "text": "CLOSE_WAIT",
+        "correct": false
+      }
+    ],
+    "explanation": "服务器收到SYN后发送SYN+ACK，并进入SYN_RCVD状态，等待客户端的ACK。收到ACK后才进入ESTABLISHED。SYN_SENT是客户端状态，CLOSE_WAIT是关闭阶段状态。",
+    "id": "network-107",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP连接"
+  },
+  {
+    "type": "single",
+    "question": "TCP三次握手中，第三个报文段（客户端发送的ACK）的确认号字段应设置为多少？",
+    "options": [
+      {
+        "text": "服务器初始序列号加1",
+        "correct": true
+      },
+      {
+        "text": "客户端初始序列号加1",
+        "correct": false
+      },
+      {
+        "text": "服务器初始序列号",
+        "correct": false
+      },
+      {
+        "text": "客户端初始序列号",
+        "correct": false
+      }
+    ],
+    "explanation": "第三个报文段是对服务器SYN的确认，确认号应为服务器初始序列号加1，表示期望收到服务器的下一个字节。客户端初始序列号用于自己的序列号字段。",
+    "id": "network-108",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP连接"
+  },
+  {
+    "type": "single",
+    "question": "TCP连接释放过程中，主动关闭方发送FIN后进入什么状态？",
+    "options": [
+      {
+        "text": "FIN_WAIT_1",
+        "correct": true
+      },
+      {
+        "text": "FIN_WAIT_2",
+        "correct": false
+      },
+      {
+        "text": "CLOSE_WAIT",
+        "correct": false
+      },
+      {
+        "text": "LAST_ACK",
+        "correct": false
+      }
+    ],
+    "explanation": "主动关闭方发送FIN后进入FIN_WAIT_1，等待对方ACK。收到ACK后进入FIN_WAIT_2。CLOSE_WAIT是被动关闭方收到FIN后的状态，LAST_ACK是被动关闭方发送FIN后的状态。",
+    "id": "network-109",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP连接"
+  },
+  {
+    "type": "single",
+    "question": "TCP连接中，被动关闭方收到FIN并发送ACK后，会进入什么状态？",
+    "options": [
+      {
+        "text": "CLOSE_WAIT",
+        "correct": true
+      },
+      {
+        "text": "LAST_ACK",
+        "correct": false
+      },
+      {
+        "text": "FIN_WAIT_1",
+        "correct": false
+      },
+      {
+        "text": "TIME_WAIT",
+        "correct": false
+      }
+    ],
+    "explanation": "被动关闭方收到FIN后发送ACK，并进入CLOSE_WAIT状态，此时应用程序可能还有数据要发送。当应用程序关闭连接时才发送FIN，进入LAST_ACK。",
+    "id": "network-110",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP连接"
+  },
+  {
+    "type": "single",
+    "question": "TCP连接中，LAST_ACK状态出现在哪一方？",
+    "options": [
+      {
+        "text": "被动关闭方发送FIN后等待最后一个ACK",
+        "correct": true
+      },
+      {
+        "text": "主动关闭方发送FIN后等待ACK",
+        "correct": false
+      },
+      {
+        "text": "主动关闭方收到ACK后等待对方FIN",
+        "correct": false
+      },
+      {
+        "text": "被动关闭方收到FIN后等待应用关闭",
+        "correct": false
+      }
+    ],
+    "explanation": "被动关闭方在应用程序关闭后发送FIN，并进入LAST_ACK状态，等待主动关闭方对FIN的确认。主动关闭方发送FIN后进入FIN_WAIT_1。",
+    "id": "network-111",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP连接"
+  },
+  {
+    "type": "single",
+    "question": "TCP连接中，TIME_WAIT状态通常持续多长时间？",
+    "options": [
+      {
+        "text": "2倍报文段最大生存时间（2MSL）",
+        "correct": true
+      },
+      {
+        "text": "1倍报文段最大生存时间（1MSL）",
+        "correct": false
+      },
+      {
+        "text": "固定30秒",
+        "correct": false
+      },
+      {
+        "text": "直到收到对端FIN",
+        "correct": false
+      }
+    ],
+    "explanation": "TIME_WAIT状态持续2MSL，即报文段最大生存时间的两倍，以确保最后一个ACK能到达对端，并让旧连接的重复报文段在网络中消失。",
+    "id": "network-112",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP连接"
+  },
+  {
+    "type": "single",
+    "question": "TCP连接中，同时打开（simultaneous open）时，双方发送SYN后进入什么状态？",
+    "options": [
+      {
+        "text": "SYN_SENT",
+        "correct": true
+      },
+      {
+        "text": "SYN_RCVD",
+        "correct": false
+      },
+      {
+        "text": "ESTABLISHED",
+        "correct": false
+      },
+      {
+        "text": "LISTEN",
+        "correct": false
+      }
+    ],
+    "explanation": "同时打开时，双方都主动发送SYN，因此都从CLOSED进入SYN_SENT状态。收到对方的SYN后，双方都进入SYN_RCVD，再发送SYN+ACK，最终建立连接。",
+    "id": "network-113",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP连接"
+  },
+  {
+    "type": "single",
+    "question": "TCP连接中，若服务器收到一个目的端口未监听的SYN报文段，通常会如何响应？",
+    "options": [
+      {
+        "text": "发送RST报文段",
+        "correct": true
+      },
+      {
+        "text": "发送SYN+ACK报文段",
+        "correct": false
+      },
+      {
+        "text": "丢弃报文段不响应",
+        "correct": false
+      },
+      {
+        "text": "发送ICMP端口不可达",
+        "correct": false
+      }
+    ],
+    "explanation": "当SYN到达未监听的端口时，TCP协议规定发送RST报文段拒绝连接。发送SYN+ACK表示端口监听；丢弃不响应可能导致客户端超时重传；ICMP端口不可达通常用于UDP。",
+    "id": "network-114",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP连接"
+  },
+  {
+    "type": "single",
+    "question": "TCP连接中，客户端收到服务器的SYN+ACK后，发现确认号不正确，最可能采取什么动作？",
+    "options": [
+      {
+        "text": "发送RST报文段终止连接",
+        "correct": true
+      },
+      {
+        "text": "发送ACK并继续",
+        "correct": false
+      },
+      {
+        "text": "重传SYN",
+        "correct": false
+      },
+      {
+        "text": "忽略该报文段",
+        "correct": false
+      }
+    ],
+    "explanation": "如果SYN+ACK的确认号不是客户端期望的（即不是客户端初始序列号加1），客户端认为连接异常，发送RST终止握手。继续或忽略可能导致状态不一致。",
+    "id": "network-115",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP连接"
+  },
+  {
+    "type": "single",
+    "question": "某服务器上出现大量SYN_RCVD状态的连接，最可能遭受了什么攻击？",
+    "options": [
+      {
+        "text": "SYN洪泛攻击",
+        "correct": true
+      },
+      {
+        "text": "UDP洪泛攻击",
+        "correct": false
+      },
+      {
+        "text": "ICMP洪泛攻击",
+        "correct": false
+      },
+      {
+        "text": "ACK洪泛攻击",
+        "correct": false
+      }
+    ],
+    "explanation": "SYN洪泛攻击中，攻击者发送大量伪造源地址的SYN，服务器回复SYN+ACK后进入SYN_RCVD，但收不到最终ACK，导致半开连接堆积。其他洪泛不直接产生大量SYN_RCVD。",
+    "id": "network-116",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP连接"
+  },
+  {
+    "type": "multiple",
+    "question": "TCP连接释放过程中，主动关闭方可能经历的状态有？",
+    "options": [
+      {
+        "text": "FIN_WAIT_1",
+        "correct": true
+      },
+      {
+        "text": "FIN_WAIT_2",
+        "correct": true
+      },
+      {
+        "text": "TIME_WAIT",
+        "correct": true
+      },
+      {
+        "text": "CLOSE_WAIT",
+        "correct": false
+      }
+    ],
+    "explanation": "主动关闭方发送FIN后进入FIN_WAIT_1，收到ACK后进入FIN_WAIT_2，收到对方FIN并发送ACK后进入TIME_WAIT。CLOSE_WAIT是被动关闭方收到的状态。",
+    "id": "network-117",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP连接"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些因素可能导致TCP连接建立失败或明显延迟？",
+    "options": [
+      {
+        "text": "服务器端SYN队列已满",
+        "correct": true
+      },
+      {
+        "text": "网络路径中存在防火墙丢弃SYN报文",
+        "correct": true
+      },
+      {
+        "text": "客户端发送的SYN确认号错误",
+        "correct": false
+      },
+      {
+        "text": "服务器未监听目标端口",
+        "correct": true
+      }
+    ],
+    "explanation": "SYN队列满会导致新SYN被丢弃；防火墙丢弃SYN会使握手无法完成；未监听端口会回复RST使连接失败。SYN报文段没有确认号字段，因此客户端发送的SYN确认号错误不成立。",
+    "id": "network-118",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP连接"
+  },
+  {
+    "type": "single",
+    "question": "某客户端与服务器建立TCP连接后，客户端进程崩溃且其套接字被操作系统关闭。服务器启用了TCP保活机制，此时服务器端会如何处理该连接？",
+    "options": [
+      {
+        "text": "服务器会立即发送FIN报文段主动关闭连接",
+        "correct": false
+      },
+      {
+        "text": "服务器会认为连接仍然有效并继续维持",
+        "correct": false
+      },
+      {
+        "text": "服务器会发送RST报文段强制复位连接",
+        "correct": false
+      },
+      {
+        "text": "服务器会收到对端FIN并进入CLOSE_WAIT状态等待应用关闭",
+        "correct": true
+      }
+    ],
+    "explanation": "客户端进程崩溃后，操作系统会关闭其套接字，TCP层向服务器发送FIN。服务器收到FIN后回复ACK并进入CLOSE_WAIT状态，等待本地应用调用close。保活机制不会在连接已收到FIN的情况下继续维持连接。",
+    "id": "network-119",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP连接"
+  },
+  {
+    "type": "multiple",
+    "question": "关于TCP连接中同时打开（simultaneous open）的情形，下列描述正确的有？",
+    "options": [
+      {
+        "text": "双方几乎同时发送SYN报文段，均进入SYN_SENT状态",
+        "correct": true
+      },
+      {
+        "text": "双方收到对方的SYN后，均回复SYN+ACK报文段",
+        "correct": true
+      },
+      {
+        "text": "双方在收到SYN+ACK后均发送ACK，连接建立完成",
+        "correct": true
+      },
+      {
+        "text": "同时打开需要一方先进入LISTEN状态才能完成",
+        "correct": false
+      }
+    ],
+    "explanation": "同时打开时双方同时发送SYN进入SYN_SENT，收到对方SYN后各自回复SYN+ACK，再发送ACK完成握手。该过程不需要任何一方先进入LISTEN状态。",
+    "id": "network-120",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP连接"
+  },
+  {
+    "type": "single",
+    "question": "TCP 使用三次握手建立连接，其主要目的是什么？",
+    "options": [
+      {
+        "text": "确保双方都具备发送和接收能力，并同步初始序列号",
+        "correct": true
+      },
+      {
+        "text": "协商最大报文段长度（MSS）",
+        "correct": false
+      },
+      {
+        "text": "交换窗口缩放因子",
+        "correct": false
+      },
+      {
+        "text": "选择拥塞控制算法",
+        "correct": false
+      }
+    ],
+    "explanation": "三次握手核心是同步初始序列号并确认双方收发能力。MSS 和窗口缩放通常在 SYN 报文的选项中协商，但不是三次握手的根本目的；拥塞控制算法不在连接建立时选择。",
+    "id": "network-121",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP可靠性与拥塞"
+  },
+  {
+    "type": "single",
+    "question": "TCP 接收端收到乱序到达的报文段时，通常采取什么措施？",
+    "options": [
+      {
+        "text": "立即丢弃该报文段",
+        "correct": false
+      },
+      {
+        "text": "缓存该报文段并发送重复 ACK 确认期望的序号",
+        "correct": true
+      },
+      {
+        "text": "发送 NAK 请求重传缺失的报文段",
+        "correct": false
+      },
+      {
+        "text": "降低发送速率并等待超时",
+        "correct": false
+      }
+    ],
+    "explanation": "TCP 接收端会缓存乱序报文，并对按序到达的最后一个字节发送重复 ACK，以触发快速重传。TCP 没有 NAK；丢弃乱序报文会降低效率；降低速率不是接收端的直接动作。",
+    "id": "network-122",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP可靠性与拥塞"
+  },
+  {
+    "type": "single",
+    "question": "在无延迟确认、每个 ACK 确认一个新报文段的简化模型中，TCP 慢启动阶段拥塞窗口（cwnd）每经过一个 RTT 的典型变化是什么？",
+    "options": [
+      {
+        "text": "约翻倍，因为每收到一个 ACK 增加一个 MSS",
+        "correct": true
+      },
+      {
+        "text": "每个 RTT 增加一个 MSS",
+        "correct": false
+      },
+      {
+        "text": "每个 RTT 减少一半",
+        "correct": false
+      },
+      {
+        "text": "保持不变直到超时",
+        "correct": false
+      }
+    ],
+    "explanation": "慢启动的核心机制是每收到一个确认新数据的 ACK，就把 cwnd 增加一个 MSS；在无延迟确认且每个 ACK 确认一个新报文段的简化模型中，一个 RTT 内可确认约 cwnd 个报文段，因此 cwnd 约翻倍。每 RTT 只增加一个 MSS 是拥塞避免的线性增长特征。",
+    "id": "network-123",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP可靠性与拥塞"
+  },
+  {
+    "type": "single",
+    "question": "TCP 发送端收到三个重复 ACK 时，通常执行什么操作？",
+    "options": [
+      {
+        "text": "立即重传丢失的报文段并进入快速恢复",
+        "correct": true
+      },
+      {
+        "text": "将拥塞窗口减半并进入慢启动",
+        "correct": false
+      },
+      {
+        "text": "等待超时后重传",
+        "correct": false
+      },
+      {
+        "text": "发送 RST 重置连接",
+        "correct": false
+      }
+    ],
+    "explanation": "三个重复 ACK 表明报文段可能丢失，触发快速重传，并进入快速恢复，将 ssthresh 设为 cwnd 一半，cwnd 设为 ssthresh+3 MSS。超时重传是后备机制；RST 用于异常终止。",
+    "id": "network-124",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP可靠性与拥塞"
+  },
+  {
+    "type": "single",
+    "question": "TCP 的 Karn 算法主要解决什么问题？",
+    "options": [
+      {
+        "text": "避免使用重传报文的 RTT 样本计算超时时间",
+        "correct": true
+      },
+      {
+        "text": "动态调整接收窗口大小",
+        "correct": false
+      },
+      {
+        "text": "选择拥塞控制算法",
+        "correct": false
+      },
+      {
+        "text": "计算校验和",
+        "correct": false
+      }
+    ],
+    "explanation": "Karn 算法指出不能使用重传报文的 RTT 样本计算超时时间，因为无法区分 ACK 对应原始报文还是重传报文，避免 RTT 估计不准确。接收窗口调整、拥塞控制算法选择与 Karn 算法无关。",
+    "id": "network-125",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP可靠性与拥塞"
+  },
+  {
+    "type": "single",
+    "question": "TCP 的糊涂窗口综合征（Silly Window Syndrome）可能由哪一方引起？",
+    "options": [
+      {
+        "text": "仅接收方",
+        "correct": false
+      },
+      {
+        "text": "仅发送方",
+        "correct": false
+      },
+      {
+        "text": "接收方或发送方",
+        "correct": true
+      },
+      {
+        "text": "仅网络中间路由器",
+        "correct": false
+      }
+    ],
+    "explanation": "接收方通告小窗口或发送方发送小报文段都会导致糊涂窗口综合征。解决方法包括接收方等待窗口足够大再通告，发送方使用 Nagle 算法。路由器不直接参与 TCP 窗口管理。",
+    "id": "network-126",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP可靠性与拥塞"
+  },
+  {
+    "type": "single",
+    "question": "TCP 拥塞避免阶段，拥塞窗口（cwnd）通常如何增长？",
+    "options": [
+      {
+        "text": "每经过一个 RTT 增加一个 MSS",
+        "correct": true
+      },
+      {
+        "text": "每收到一个 ACK 增加一个 MSS",
+        "correct": false
+      },
+      {
+        "text": "每经过一个 RTT 翻倍",
+        "correct": false
+      },
+      {
+        "text": "指数增长直到达到 ssthresh",
+        "correct": false
+      }
+    ],
+    "explanation": "拥塞避免阶段采用线性增长，每个 RTT 增加约一个 MSS（具体实现可能每个 ACK 增加 MSS*MSS/cwnd）。翻倍和指数增长是慢启动阶段；每 ACK 加一个 MSS 会导致过快增长。",
+    "id": "network-127",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP可靠性与拥塞"
+  },
+  {
+    "type": "single",
+    "question": "TCP 超时重传时间（RTO）计算中，平滑 RTT 估计值（EstimatedRTT）使用哪个公式？",
+    "options": [
+      {
+        "text": "EstimatedRTT = (1-α)*EstimatedRTT + α*SampleRTT",
+        "correct": true
+      },
+      {
+        "text": "EstimatedRTT = α*EstimatedRTT + (1-α)*SampleRTT",
+        "correct": false
+      },
+      {
+        "text": "EstimatedRTT = (EstimatedRTT + SampleRTT)/2",
+        "correct": false
+      },
+      {
+        "text": "EstimatedRTT = SampleRTT",
+        "correct": false
+      }
+    ],
+    "explanation": "标准公式为 EstimatedRTT = (1-α)*EstimatedRTT + α*SampleRTT，α 通常取 0.125。选项 B 权重分配错误；C 是简单平均；D 未考虑历史。",
+    "id": "network-128",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP可靠性与拥塞"
+  },
+  {
+    "type": "single",
+    "question": "TCP 快速恢复阶段，收到重复 ACK 时拥塞窗口（cwnd）如何变化？",
+    "options": [
+      {
+        "text": "每收到一个重复 ACK，cwnd 增加 1 个 MSS",
+        "correct": true
+      },
+      {
+        "text": "每收到一个重复 ACK，cwnd 减少 1 个 MSS",
+        "correct": false
+      },
+      {
+        "text": "cwnd 保持不变",
+        "correct": false
+      },
+      {
+        "text": "cwnd 减半",
+        "correct": false
+      }
+    ],
+    "explanation": "在快速恢复阶段，每收到一个重复 ACK，cwnd 增加 1 MSS，以允许发送新报文段（因为一个报文段已离开网络）。减半发生在进入快速恢复时；保持不变不符合算法。",
+    "id": "network-129",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP可靠性与拥塞"
+  },
+  {
+    "type": "single",
+    "question": "TCP 使用选择确认（SACK）选项的主要好处是什么？",
+    "options": [
+      {
+        "text": "允许接收方告知已收到的非连续数据块，减少不必要的重传",
+        "correct": true
+      },
+      {
+        "text": "加密 TCP 载荷",
+        "correct": false
+      },
+      {
+        "text": "协商最大窗口大小",
+        "correct": false
+      },
+      {
+        "text": "加速连接建立",
+        "correct": false
+      }
+    ],
+    "explanation": "SACK 使接收方能报告不连续的已接收数据块，发送方据此只重传真正丢失的部分，提高效率。SACK 不提供加密，窗口缩放是独立选项，连接建立加速与 SACK 无关。",
+    "id": "network-130",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP可靠性与拥塞"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些情况可能触发 TCP 发送端进行重传？",
+    "options": [
+      {
+        "text": "重传定时器超时",
+        "correct": true
+      },
+      {
+        "text": "收到三个重复 ACK",
+        "correct": true
+      },
+      {
+        "text": "收到零窗口通知",
+        "correct": false
+      },
+      {
+        "text": "收到 SACK 信息显示存在未确认空洞，发送方据此判断缺失段",
+        "correct": true
+      }
+    ],
+    "explanation": "超时和三个重复 ACK 是经典重传触发条件；SACK 本身报告已收到的非连续数据块，发送方可据此识别未确认空洞并重传缺失段。零窗口通知表示接收方暂时没有缓冲区，发送方应暂停发送并启动零窗口探测，不会因此触发数据段重传。",
+    "id": "network-131",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP可靠性与拥塞"
+  },
+  {
+    "type": "multiple",
+    "question": "关于 TCP 拥塞控制算法，以下说法正确的有？",
+    "options": [
+      {
+        "text": "慢启动阶段 cwnd 指数增长",
+        "correct": true
+      },
+      {
+        "text": "拥塞避免阶段 cwnd 线性增长",
+        "correct": true
+      },
+      {
+        "text": "快速重传后一定进入慢启动",
+        "correct": false
+      },
+      {
+        "text": "超时后 ssthresh 设为当前 cwnd 的一半",
+        "correct": true
+      }
+    ],
+    "explanation": "慢启动指数增长、拥塞避免线性增长正确；超时后 ssthresh 设为当前 cwnd 一半（且 cwnd 重置为 1 MSS）。快速重传后通常进入快速恢复，而非慢启动。",
+    "id": "network-132",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP可靠性与拥塞"
+  },
+  {
+    "type": "multiple",
+    "question": "TCP 接收端在什么情况下可能发送重复 ACK？",
+    "options": [
+      {
+        "text": "收到期望序号之后的乱序报文段",
+        "correct": true
+      },
+      {
+        "text": "收到期望序号之前的重复报文段",
+        "correct": true
+      },
+      {
+        "text": "接收窗口满时收到新数据",
+        "correct": false
+      },
+      {
+        "text": "收到不携带数据的纯 ACK",
+        "correct": false
+      }
+    ],
+    "explanation": "收到乱序或重复报文段时，接收端会发送重复 ACK 告知期望序号。窗口满时可能丢弃数据或通告零窗口，不会因此发重复 ACK；纯 ACK 不需要确认。",
+    "id": "network-133",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP可靠性与拥塞"
+  },
+  {
+    "type": "multiple",
+    "question": "TCP 的流量控制与拥塞控制有哪些区别？",
+    "options": [
+      {
+        "text": "流量控制防止接收方缓冲区溢出",
+        "correct": true
+      },
+      {
+        "text": "拥塞控制防止网络过载",
+        "correct": true
+      },
+      {
+        "text": "流量控制通过接收窗口字段实现",
+        "correct": true
+      },
+      {
+        "text": "拥塞控制通过接收窗口字段实现",
+        "correct": false
+      }
+    ],
+    "explanation": "流量控制关注接收方能力，通过接收窗口字段通告可用缓冲区；拥塞控制关注网络状况，通过 cwnd 等机制调整发送速率。拥塞控制不直接依赖接收窗口字段。",
+    "id": "network-134",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP可靠性与拥塞"
+  },
+  {
+    "type": "single",
+    "question": "TCP 连接中，如果发送方收到一个 ACK，其确认号为 1000，窗口字段为 0，发送方应如何理解？",
+    "options": [
+      {
+        "text": "接收方已收到序号 1000 之前的所有数据，但当前无法接收更多数据",
+        "correct": true
+      },
+      {
+        "text": "接收方已收到序号 1000 及之后的数据",
+        "correct": false
+      },
+      {
+        "text": "发送方可以继续发送数据直到窗口更新",
+        "correct": false
+      },
+      {
+        "text": "连接应被立即终止",
+        "correct": false
+      }
+    ],
+    "explanation": "ACK 1000 表示期望下一个字节序号为 1000，即 1000 之前的数据已确认；窗口为 0 表示接收方暂时无法接收，发送方应启动零窗口探测。不能继续发送数据，也不应终止连接。",
+    "id": "network-135",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP可靠性与拥塞"
+  },
+  {
+    "type": "single",
+    "question": "TCP 发送方在未收到 ACK 的情况下，最多可以发送的数据量主要受什么限制？",
+    "options": [
+      {
+        "text": "接收方通告窗口和拥塞窗口中的较小值",
+        "correct": true
+      },
+      {
+        "text": "仅受接收方通告窗口限制",
+        "correct": false
+      },
+      {
+        "text": "仅受拥塞窗口限制",
+        "correct": false
+      },
+      {
+        "text": "仅受发送方缓冲区大小限制",
+        "correct": false
+      }
+    ],
+    "explanation": "发送窗口取接收窗口与拥塞窗口的较小值，同时受两者约束，而非单一因素。",
+    "id": "network-136",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP可靠性与拥塞"
+  },
+  {
+    "type": "single",
+    "question": "TCP 慢启动阶段，拥塞窗口 cwnd 的典型增长方式是什么？",
+    "options": [
+      {
+        "text": "每收到一个 ACK 增加一个 MSS",
+        "correct": true
+      },
+      {
+        "text": "每个 RTT 增加一个 MSS",
+        "correct": false
+      },
+      {
+        "text": "每收到一个 ACK 增加 1/cwnd 个 MSS",
+        "correct": false
+      },
+      {
+        "text": "每收到三个重复 ACK 增加一个 MSS",
+        "correct": false
+      }
+    ],
+    "explanation": "慢启动每收到一个 ACK 将 cwnd 增加一个 MSS，呈指数增长；拥塞避免才是每 RTT 增加一个 MSS。",
+    "id": "network-137",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP可靠性与拥塞"
+  },
+  {
+    "type": "single",
+    "question": "TCP 拥塞避免阶段，cwnd 每经过一个 RTT 通常增加多少？",
+    "options": [
+      {
+        "text": "增加一个 MSS",
+        "correct": true
+      },
+      {
+        "text": "翻倍",
+        "correct": false
+      },
+      {
+        "text": "增加一个 ACK 对应的 MSS",
+        "correct": false
+      },
+      {
+        "text": "减半",
+        "correct": false
+      }
+    ],
+    "explanation": "拥塞避免阶段每 RTT 将 cwnd 增加一个 MSS（线性增长），而非翻倍或减半。",
+    "id": "network-138",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP可靠性与拥塞"
+  },
+  {
+    "type": "single",
+    "question": "TCP 发送方收到三个重复 ACK 时，通常执行什么操作？",
+    "options": [
+      {
+        "text": "执行快速重传并进入快速恢复",
+        "correct": true
+      },
+      {
+        "text": "立即将 cwnd 置为 1 并进入慢启动",
+        "correct": false
+      },
+      {
+        "text": "忽略重复 ACK 并继续发送",
+        "correct": false
+      },
+      {
+        "text": "立即断开连接",
+        "correct": false
+      }
+    ],
+    "explanation": "三个重复 ACK 触发快速重传，并进入快速恢复，而非慢启动或断开连接。",
+    "id": "network-139",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP可靠性与拥塞"
+  },
+  {
+    "type": "single",
+    "question": "TCP 超时重传时，通常如何调整拥塞窗口和慢启动阈值？",
+    "options": [
+      {
+        "text": "ssthresh 减半，cwnd 置为 1 并进入慢启动",
+        "correct": true
+      },
+      {
+        "text": "ssthresh 减半，cwnd 减半并进入拥塞避免",
+        "correct": false
+      },
+      {
+        "text": "ssthresh 不变，cwnd 置为 1",
+        "correct": false
+      },
+      {
+        "text": "ssthresh 置为 0，cwnd 加倍",
+        "correct": false
+      }
+    ],
+    "explanation": "超时表明严重拥塞，ssthresh 设为当前 cwnd 的一半，cwnd 重置为 1 并重新慢启动。",
+    "id": "network-140",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP可靠性与拥塞"
+  },
+  {
+    "type": "single",
+    "question": "TCP 快速恢复阶段，收到重复 ACK 时 cwnd 如何变化？",
+    "options": [
+      {
+        "text": "每收到一个重复 ACK 增加一个 MSS",
+        "correct": true
+      },
+      {
+        "text": "每收到一个重复 ACK 减半",
+        "correct": false
+      },
+      {
+        "text": "每收到一个重复 ACK 增加 1/cwnd 个 MSS",
+        "correct": false
+      },
+      {
+        "text": "保持不变",
+        "correct": false
+      }
+    ],
+    "explanation": "快速恢复中每收到一个重复 ACK，cwnd 增加一个 MSS，以允许发送新数据；收到新 ACK 后退出快速恢复。",
+    "id": "network-141",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP可靠性与拥塞"
+  },
+  {
+    "type": "single",
+    "question": "TCP 接收方收到乱序到达的报文段时，通常采取什么措施？",
+    "options": [
+      {
+        "text": "立即发送重复 ACK，确认号指向期望的下一个字节",
+        "correct": true
+      },
+      {
+        "text": "丢弃乱序报文段并发送 RST",
+        "correct": false
+      },
+      {
+        "text": "缓存乱序报文段并等待超时重传",
+        "correct": false
+      },
+      {
+        "text": "发送携带当前窗口的 ACK，确认号指向已收到的最高字节",
+        "correct": false
+      }
+    ],
+    "explanation": "接收方对乱序报文段发送重复 ACK，确认号仍为期望的下一个字节，以触发快速重传。",
+    "id": "network-142",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP可靠性与拥塞"
+  },
+  {
+    "type": "single",
+    "question": "TCP 选择确认（SACK）选项的主要作用是什么？",
+    "options": [
+      {
+        "text": "告知发送方已收到的非连续数据块，减少不必要的重传",
+        "correct": true
+      },
+      {
+        "text": "替代累积确认机制",
+        "correct": false
+      },
+      {
+        "text": "用于协商最大报文段长度",
+        "correct": false
+      },
+      {
+        "text": "用于流量控制窗口缩放",
+        "correct": false
+      }
+    ],
+    "explanation": "SACK 允许接收方报告已收到的非连续数据块，发送方据此只重传缺失部分，提高效率。",
+    "id": "network-143",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP可靠性与拥塞"
+  },
+  {
+    "type": "single",
+    "question": "TCP 糊涂窗口综合征可能由哪一方引起？",
+    "options": [
+      {
+        "text": "发送方和接收方均可能引起",
+        "correct": true
+      },
+      {
+        "text": "仅发送方",
+        "correct": false
+      },
+      {
+        "text": "仅接收方",
+        "correct": false
+      },
+      {
+        "text": "仅网络中间设备",
+        "correct": false
+      }
+    ],
+    "explanation": "发送方可能发送小报文段，接收方可能通告小窗口，两者均可导致糊涂窗口综合征。",
+    "id": "network-144",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP可靠性与拥塞"
+  },
+  {
+    "type": "single",
+    "question": "TCP 流量控制与拥塞控制的主要区别是什么？",
+    "options": [
+      {
+        "text": "流量控制防止接收方缓冲区溢出，拥塞控制防止网络过载",
+        "correct": true
+      },
+      {
+        "text": "流量控制防止网络过载，拥塞控制防止接收方溢出",
+        "correct": false
+      },
+      {
+        "text": "两者都只由接收方窗口决定",
+        "correct": false
+      },
+      {
+        "text": "两者都只由网络状况决定",
+        "correct": false
+      }
+    ],
+    "explanation": "流量控制基于接收方窗口，避免接收缓冲区溢出；拥塞控制基于网络状况，避免网络过载。",
+    "id": "network-145",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP可靠性与拥塞"
+  },
+  {
+    "type": "single",
+    "question": "TCP 发送方收到确认号为 1000、窗口字段为 0 的 ACK，应如何理解？",
+    "options": [
+      {
+        "text": "接收方已收到 1000 之前的所有字节，但当前窗口为 0，暂停发送",
+        "correct": true
+      },
+      {
+        "text": "接收方期望下一个字节序号为 0",
+        "correct": false
+      },
+      {
+        "text": "连接已关闭",
+        "correct": false
+      },
+      {
+        "text": "发送方可以继续发送任意数据",
+        "correct": false
+      }
+    ],
+    "explanation": "确认号 1000 表示 1000 之前字节已确认，窗口 0 表示接收方暂无空间，发送方应暂停并定期探测。",
+    "id": "network-146",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP可靠性与拥塞"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些情况可能触发 TCP 发送方重传？",
+    "options": [
+      {
+        "text": "重传定时器超时",
+        "correct": true
+      },
+      {
+        "text": "收到三个重复 ACK",
+        "correct": true
+      },
+      {
+        "text": "收到窗口更新 ACK",
+        "correct": false
+      },
+      {
+        "text": "收到选择性确认（SACK）指示数据缺失",
+        "correct": true
+      }
+    ],
+    "explanation": "超时、三个重复 ACK 以及 SACK 指示缺失均可触发重传；窗口更新 ACK 只调整发送窗口，不触发重传。",
+    "id": "network-147",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP可靠性与拥塞"
+  },
+  {
+    "type": "multiple",
+    "question": "关于 TCP 拥塞控制，以下说法正确的有？",
+    "options": [
+      {
+        "text": "慢启动阶段 cwnd 呈指数增长",
+        "correct": true
+      },
+      {
+        "text": "拥塞避免阶段 cwnd 呈线性增长",
+        "correct": true
+      },
+      {
+        "text": "快速重传由超时定时器触发",
+        "correct": false
+      },
+      {
+        "text": "超时后 ssthresh 通常按当前在途数据量减半，且不小于 2 个 MSS",
+        "correct": true
+      }
+    ],
+    "explanation": "慢启动每经过一个 RTT 窗口约翻倍，呈指数增长；拥塞避免每 RTT 约增加一个 MSS，呈线性增长。快速重传由重复 ACK 触发，超时触发的是重传定时器路径。超时后按在途数据量计算并减半 ssthresh，同时保证至少为 2 个 MSS，然后进入慢启动。",
+    "id": "network-148",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP可靠性与拥塞"
+  },
+  {
+    "type": "multiple",
+    "question": "TCP 接收方在哪些情况下可能发送重复 ACK？",
+    "options": [
+      {
+        "text": "收到乱序报文段",
+        "correct": true
+      },
+      {
+        "text": "收到填充窗口的报文段但确认号不变",
+        "correct": true
+      },
+      {
+        "text": "收到期望序号的报文段",
+        "correct": false
+      },
+      {
+        "text": "收到重复的报文段",
+        "correct": true
+      }
+    ],
+    "explanation": "乱序、重复报文段或填充窗口但确认号未前移时，接收方会发送重复 ACK；收到期望序号报文段则发送新 ACK。",
+    "id": "network-149",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP可靠性与拥塞"
+  },
+  {
+    "type": "single",
+    "question": "TCP 发送方在未收到 ACK 时，实际可发送的数据量受哪两个因素的共同限制？",
+    "options": [
+      {
+        "text": "接收窗口和拥塞窗口",
+        "correct": true
+      },
+      {
+        "text": "发送缓冲区和接收缓冲区",
+        "correct": false
+      },
+      {
+        "text": "MSS 和 RTT",
+        "correct": false
+      },
+      {
+        "text": "慢启动阈值和超时重传时间",
+        "correct": false
+      }
+    ],
+    "explanation": "发送方未收到 ACK 时可发送的数据量取接收窗口与拥塞窗口的较小值：接收窗口体现接收方处理能力，拥塞窗口体现网络承载能力。发送/接收缓冲区是队列空间，MSS、RTT、ssthresh、RTO 是参数或计时因素，不直接构成窗口上限。",
+    "id": "network-150",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "TCP可靠性与拥塞"
+  },
+  {
+    "type": "single",
+    "question": "UDP协议在传输层提供的主要服务特征是？",
+    "options": [
+      {
+        "text": "面向连接、可靠传输、提供流量控制",
+        "correct": false
+      },
+      {
+        "text": "无连接、尽最大努力交付、不保证顺序",
+        "correct": true
+      },
+      {
+        "text": "面向连接、可靠传输、不保证顺序",
+        "correct": false
+      },
+      {
+        "text": "无连接、可靠传输、提供拥塞控制",
+        "correct": false
+      }
+    ],
+    "explanation": "UDP 不建立连接，不确认重传，不保证有序可靠交付，也没有拥塞控制；它主要提供基于端口的多路复用和可选校验和。实时性应用常利用其低开销，并在应用层实现可靠性或抗丢包。",
+    "id": "network-151",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "UDP与QUIC"
+  },
+  {
+    "type": "single",
+    "question": "UDP首部中校验和字段的作用范围是？",
+    "options": [
+      {
+        "text": "仅校验 UDP 首部",
+        "correct": false
+      },
+      {
+        "text": "仅校验 UDP 数据部分",
+        "correct": false
+      },
+      {
+        "text": "校验 UDP 首部与数据，计算时包含 IP 伪首部",
+        "correct": true
+      },
+      {
+        "text": "校验 IP 首部与 UDP 数据，不含 UDP 首部",
+        "correct": false
+      }
+    ],
+    "explanation": "UDP 校验和覆盖 UDP 首部和数据，计算时还引入 IP 伪首部，把部分 IP 地址、协议号等信息纳入校验范围；它不校验整个 IP 首部。IPv4 中校验和可关闭，IPv6 中通常必须使用。",
+    "id": "network-152",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "UDP与QUIC"
+  },
+  {
+    "type": "single",
+    "question": "QUIC协议在协议栈中的承载方式通常是？",
+    "options": [
+      {
+        "text": "直接承载于IP之上，协议号与TCP相同",
+        "correct": false
+      },
+      {
+        "text": "承载于TCP之上，作为应用层协议",
+        "correct": false
+      },
+      {
+        "text": "承载于UDP之上，在用户态实现可靠传输",
+        "correct": true
+      },
+      {
+        "text": "承载于TLS之上，不需要传输层协议",
+        "correct": false
+      }
+    ],
+    "explanation": "QUIC 运行在 UDP 之上，在用户态实现可靠传输、拥塞控制和加密握手，避免依赖内核 TCP 的固化处理。它并非直接承载于 IP，也不以 TCP 或 TLS 作为传输层承载。",
+    "id": "network-153",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "UDP与QUIC"
+  },
+  {
+    "type": "single",
+    "question": "QUIC相比TCP+TLS 1.3在连接建立上的主要优势是？",
+    "options": [
+      {
+        "text": "首次连接即可零RTT完成，无需任何握手",
+        "correct": false
+      },
+      {
+        "text": "将传输握手与加密握手合并，首次连接通常1-RTT，恢复连接可0-RTT",
+        "correct": true
+      },
+      {
+        "text": "完全不需要密钥交换，因此没有握手延迟",
+        "correct": false
+      },
+      {
+        "text": "依赖TCP快速打开，因此首次连接为0-RTT",
+        "correct": false
+      }
+    ],
+    "explanation": "QUIC 将传输参数协商与 TLS 1.3 握手合并，首次连接一般需要 1-RTT；若客户端保存了恢复信息，可发送 0-RTT 早期数据。0-RTT 并非无握手，也不是依赖 TCP 快速打开。",
+    "id": "network-154",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "UDP与QUIC"
+  },
+  {
+    "type": "single",
+    "question": "QUIC使用连接ID（Connection ID）而非仅靠四元组标识连接，主要解决什么问题？",
+    "options": [
+      {
+        "text": "解决UDP校验和计算错误的问题",
+        "correct": false
+      },
+      {
+        "text": "支持连接迁移，如客户端IP或端口变化后连接仍可延续",
+        "correct": true
+      },
+      {
+        "text": "保证同一连接内所有流按全局顺序交付",
+        "correct": false
+      },
+      {
+        "text": "替代TLS证书，完成身份认证",
+        "correct": false
+      }
+    ],
+    "explanation": "连接 ID 使连接标识不依赖源/目的 IP 和端口，客户端切换网络后仍可延续同一连接。它不负责校验和、不保证跨流全局有序，也不替代 TLS 的身份认证。",
+    "id": "network-155",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "UDP与QUIC"
+  },
+  {
+    "type": "single",
+    "question": "关于QUIC多路复用的描述，正确的是？",
+    "options": [
+      {
+        "text": "所有流共享同一字节流，因此存在队头阻塞",
+        "correct": false
+      },
+      {
+        "text": "每条流独立编号与流控，某条流丢包不影响其他流交付",
+        "correct": true
+      },
+      {
+        "text": "多路复用依赖TCP按序交付，故仍受TCP队头阻塞影响",
+        "correct": false
+      },
+      {
+        "text": "QUIC不允许在同一连接上并发多条流",
+        "correct": false
+      }
+    ],
+    "explanation": "QUIC 在一条连接上承载多条独立流，各流有独立编号、流控和重传；某条流的数据缺失不会迫使其他流按全局顺序等待。它不把所有流合并成单一有序字节流，也不依赖 TCP 交付。",
+    "id": "network-156",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "UDP与QUIC"
+  },
+  {
+    "type": "single",
+    "question": "QUIC中0-RTT数据的典型安全限制是？",
+    "options": [
+      {
+        "text": "0-RTT数据不具备前向保密性且可能被重放，服务器需限制其使用",
+        "correct": true
+      },
+      {
+        "text": "0-RTT数据使用与1-RTT完全相同的密钥，因此可无限重放",
+        "correct": false
+      },
+      {
+        "text": "0-RTT只能用于服务器到客户端方向",
+        "correct": false
+      },
+      {
+        "text": "0-RTT数据不需要任何会话恢复信息即可使用",
+        "correct": false
+      }
+    ],
+    "explanation": "0-RTT 数据使用恢复会话派生的早期密钥，缺少前向保密，且服务器可能无法区分重放请求，因此只宜用于幂等操作并限制使用。它需要先前的会话恢复信息，方向是客户端到服务器。",
+    "id": "network-157",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "UDP与QUIC"
+  },
+  {
+    "type": "single",
+    "question": "UDP数据报在网络层被分片后，若任一分片丢失，通常结果是？",
+    "options": [
+      {
+        "text": "UDP自动重传丢失分片并重组",
+        "correct": false
+      },
+      {
+        "text": "接收端无法重组完整数据报，整个UDP数据报被丢弃",
+        "correct": true
+      },
+      {
+        "text": "仅丢失分片对应字节被置零，其余部分交付",
+        "correct": false
+      },
+      {
+        "text": "网络层保证分片可靠交付，不会丢失",
+        "correct": false
+      }
+    ],
+    "explanation": "IP 分片重组要求所有分片到齐；任一分片丢失都会导致整个 UDP 数据报无法重组而被丢弃。UDP 本身不重传，IP 层也不提供可靠交付。",
+    "id": "network-158",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "UDP与QUIC"
+  },
+  {
+    "type": "single",
+    "question": "某实时语音应用对时延敏感、可容忍少量丢包，最合适的传输选择是？",
+    "options": [
+      {
+        "text": "TCP，因为可靠交付能保证语音质量",
+        "correct": false
+      },
+      {
+        "text": "UDP配合应用层抗丢包与自适应码率",
+        "correct": true
+      },
+      {
+        "text": "仅用ICMP承载语音数据",
+        "correct": false
+      },
+      {
+        "text": "TCP加队头阻塞以平滑时延抖动",
+        "correct": false
+      }
+    ],
+    "explanation": "实时语音更重视低时延和抖动控制，可容忍少量丢包，因此适合使用 UDP，并在应用层做丢包隐藏、纠错与自适应码率。TCP 的重传和按序交付会造成队头阻塞和时延累积。",
+    "id": "network-159",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "UDP与QUIC"
+  },
+  {
+    "type": "single",
+    "question": "QUIC的拥塞控制实现位置与可扩展性特点是？",
+    "options": [
+      {
+        "text": "固化在内核中，只能使用一种算法",
+        "correct": false
+      },
+      {
+        "text": "在用户态实现，可较方便地更新和部署新算法",
+        "correct": true
+      },
+      {
+        "text": "完全由UDP协议强制规定，应用无法选择",
+        "correct": false
+      },
+      {
+        "text": "由IP层完成，与传输协议无关",
+        "correct": false
+      }
+    ],
+    "explanation": "QUIC 的拥塞控制位于用户态，应用可随协议栈更新算法而无需等待内核升级，部署更灵活。它并非由 UDP 或 IP 强制规定，也不固化在内核中只能使用单一算法。",
+    "id": "network-160",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "UDP与QUIC"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些是UDP相比TCP的特点？",
+    "options": [
+      {
+        "text": "无需建立连接，首部开销较小",
+        "correct": true
+      },
+      {
+        "text": "不提供确认重传机制，不保证可靠交付",
+        "correct": true
+      },
+      {
+        "text": "提供字节流式服务并保证顺序",
+        "correct": false
+      },
+      {
+        "text": "不实现拥塞控制，发送速率不受网络拥塞反馈调节",
+        "correct": true
+      }
+    ],
+    "explanation": "UDP无连接、首部仅8字节、不确认重传、无拥塞控制。C描述的是TCP的字节流与有序交付，不属UDP。正确项为A、B、D。",
+    "id": "network-161",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "UDP与QUIC"
+  },
+  {
+    "type": "multiple",
+    "question": "QUIC协议包含或集成了哪些机制？",
+    "options": [
+      {
+        "text": "基于TLS 1.3的加密握手",
+        "correct": true
+      },
+      {
+        "text": "独立的流级流控与连接级流控",
+        "correct": true
+      },
+      {
+        "text": "在UDP之上实现可靠传输与重传",
+        "correct": true
+      },
+      {
+        "text": "直接使用TCP的拥塞控制内核模块",
+        "correct": false
+      }
+    ],
+    "explanation": "QUIC集成TLS 1.3、在UDP上实现可靠传输，并具备流级和连接级流控。D错误，QUIC拥塞控制在用户态自行实现，不直接调用TCP内核模块。正确项为A、B、C。",
+    "id": "network-162",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "UDP与QUIC"
+  },
+  {
+    "type": "multiple",
+    "question": "QUIC能够缓解或避免TCP队头阻塞，原因包括？",
+    "options": [
+      {
+        "text": "多条流各自按序重组，某流丢包不阻塞其他流交付",
+        "correct": true
+      },
+      {
+        "text": "传输层不再使用单一全局有序字节流",
+        "correct": true
+      },
+      {
+        "text": "QUIC完全取消了丢包重传，因此不会等待",
+        "correct": false
+      },
+      {
+        "text": "加密层与传输层合并，减少跨层等待",
+        "correct": false
+      }
+    ],
+    "explanation": "QUIC以独立流为单位重组与重传，避免TCP单一有序字节流造成的跨流队头阻塞。C错误，QUIC仍有重传；D的合并握手主要影响建立延迟，不是避免队头阻塞的原因。正确项为A、B。",
+    "id": "network-163",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "UDP与QUIC"
+  },
+  {
+    "type": "multiple",
+    "question": "关于UDP校验和，下列说法正确的有？",
+    "options": [
+      {
+        "text": "发送端可将其置为全0表示不计算校验和（IPv4下）",
+        "correct": true
+      },
+      {
+        "text": "计算时使用IP伪首部，可检测部分地址错误",
+        "correct": true
+      },
+      {
+        "text": "校验和能保证数据在传输中绝不丢失",
+        "correct": false
+      },
+      {
+        "text": "接收端校验失败时通常静默丢弃该数据报",
+        "correct": true
+      }
+    ],
+    "explanation": "IPv4中UDP校验和可选，全0表示未计算；计算引入伪首部以覆盖地址信息；校验失败通常丢弃且不通知。C错误，校验和只能检错，不能防丢失。正确项为A、B、D。",
+    "id": "network-164",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "UDP与QUIC"
+  },
+  {
+    "type": "multiple",
+    "question": "部署基于QUIC的服务时，运营者可能关注的问题包括？",
+    "options": [
+      {
+        "text": "部分网络对UDP的限速或封锁会影响可达性",
+        "correct": true
+      },
+      {
+        "text": "0-RTT重放风险要求对非幂等操作加以限制",
+        "correct": true
+      },
+      {
+        "text": "QUIC加密使中间设备难以做传统明文深度检测",
+        "correct": true
+      },
+      {
+        "text": "QUIC必须依赖TCP 443端口才能工作",
+        "correct": false
+      }
+    ],
+    "explanation": "QUIC依赖UDP，可能遭遇UDP封锁或限速；0-RTT有重放风险；加密与传输合并增加中间设备检测难度。D错误，QUIC通常使用UDP 443，不依赖TCP。正确项为A、B、C。",
+    "id": "network-165",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "UDP与QUIC"
+  },
+  {
+    "type": "single",
+    "question": "在不使用IPv6 jumbogram的普通UDP数据报中，首部长度字段的最小合法值是多少字节？",
+    "options": [
+      {
+        "text": "0",
+        "correct": false
+      },
+      {
+        "text": "8",
+        "correct": true
+      },
+      {
+        "text": "16",
+        "correct": false
+      },
+      {
+        "text": "20",
+        "correct": false
+      }
+    ],
+    "explanation": "普通UDP长度字段表示UDP首部与数据的总长度，首部固定8字节，因此最小合法值为8。字段值0在IPv6 jumbogram中有特殊含义，不是普通UDP数据报的长度；16和20分别混淆了字段位宽和IP首部长度。",
+    "id": "network-166",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "UDP与QUIC"
+  },
+  {
+    "type": "single",
+    "question": "QUIC的包号（Packet Number）在单个连接中如何变化？",
+    "options": [
+      {
+        "text": "按不同包号空间分别编号，同一空间内单调递增且不回绕",
+        "correct": true
+      },
+      {
+        "text": "在连接内全局单调递增且不回绕",
+        "correct": false
+      },
+      {
+        "text": "每个新包随机生成",
+        "correct": false
+      },
+      {
+        "text": "按每条流独立编号",
+        "correct": false
+      }
+    ],
+    "explanation": "QUIC把包号划分为Initial、Handshake、Application Data等包号空间，每个空间独立维护包号；在同一空间内新包号单调递增且不能回绕，接近上限时必须关闭连接。包号不是连接内全局唯一，也不是按流编号或随机生成。",
+    "id": "network-167",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "UDP与QUIC"
+  },
+  {
+    "type": "single",
+    "question": "QUIC中流（Stream）的流量控制作用于什么范围？",
+    "options": [
+      {
+        "text": "仅连接级总字节数",
+        "correct": false
+      },
+      {
+        "text": "仅单条流内字节数",
+        "correct": false
+      },
+      {
+        "text": "连接级和每条流分别限制",
+        "correct": true
+      },
+      {
+        "text": "仅数据包数量",
+        "correct": false
+      }
+    ],
+    "explanation": "QUIC同时实施连接级和流级流量控制，接收方分别通告可接收的字节上限。只限连接级无法防单流占满；只限流级无法防总资源耗尽；流量控制按字节而非包数。",
+    "id": "network-168",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "UDP与QUIC"
+  },
+  {
+    "type": "single",
+    "question": "QUIC的ACK帧中，ACK Delay字段的主要用途是什么？",
+    "options": [
+      {
+        "text": "通知对端延迟发送确认",
+        "correct": false
+      },
+      {
+        "text": "帮助发送方更准确计算RTT",
+        "correct": true
+      },
+      {
+        "text": "表示接收方拥塞程度",
+        "correct": false
+      },
+      {
+        "text": "用于重放保护",
+        "correct": false
+      }
+    ],
+    "explanation": "接收方在ACK帧中报告从收到包到发送ACK的延迟，发送方计算RTT时扣除该延迟，得到更准确的网络往返时间，从而改进超时与拥塞控制。",
+    "id": "network-169",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "UDP与QUIC"
+  },
+  {
+    "type": "single",
+    "question": "QUIC要求TLS 1.3握手提供什么以保证握手完整性？",
+    "options": [
+      {
+        "text": "对握手消息的签名",
+        "correct": false
+      },
+      {
+        "text": "对握手 transcript 的完整性校验",
+        "correct": true
+      },
+      {
+        "text": "对连接ID的加密",
+        "correct": false
+      },
+      {
+        "text": "对包号的哈希",
+        "correct": false
+      }
+    ],
+    "explanation": "QUIC将TLS握手消息封装在CRYPTO帧中，并要求TLS 1.3对握手 transcript 做完整性校验，防止握手消息被篡改。签名用于证书验证，连接ID和包号另有用途。",
+    "id": "network-170",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "UDP与QUIC"
+  },
+  {
+    "type": "single",
+    "question": "QUIC的连接迁移（Connection Migration）在什么条件下可安全进行？",
+    "options": [
+      {
+        "text": "客户端IP变化后直接使用原连接ID",
+        "correct": false
+      },
+      {
+        "text": "路径验证成功且使用非零长度连接ID",
+        "correct": true
+      },
+      {
+        "text": "服务端IP变化后无需验证",
+        "correct": false
+      },
+      {
+        "text": "只要TLS会话未过期即可",
+        "correct": false
+      }
+    ],
+    "explanation": "QUIC迁移需通过路径验证确认新路径可达且对端拥有地址，并使用对端签发的非零长度连接ID标识连接。直接迁移易受放大攻击，服务端变化也需验证。",
+    "id": "network-171",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "UDP与QUIC"
+  },
+  {
+    "type": "single",
+    "question": "QUIC的版本协商（Version Negotiation）包的主要作用是什么？",
+    "options": [
+      {
+        "text": "加密协商后续密钥",
+        "correct": false
+      },
+      {
+        "text": "告知客户端服务端支持的版本列表",
+        "correct": true
+      },
+      {
+        "text": "确认连接迁移",
+        "correct": false
+      },
+      {
+        "text": "请求0-RTT数据",
+        "correct": false
+      }
+    ],
+    "explanation": "当服务端不支持客户端初始包版本时，发送版本协商包列出支持的版本，客户端据此选择共同版本重试。它不加密、不协商密钥、不涉及迁移或0-RTT。",
+    "id": "network-172",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "UDP与QUIC"
+  },
+  {
+    "type": "single",
+    "question": "QUIC的流ID中最低两位比特的主要作用是什么？",
+    "options": [
+      {
+        "text": "表示流的优先级",
+        "correct": false
+      },
+      {
+        "text": "标识流的发起方和方向",
+        "correct": true
+      },
+      {
+        "text": "表示流的状态",
+        "correct": false
+      },
+      {
+        "text": "用于流量控制窗口",
+        "correct": false
+      }
+    ],
+    "explanation": "QUIC流ID最低两位标识发起方（客户端/服务端）和方向（单向/双向），其余位为流序号。优先级、状态、流控窗口由其他机制表示。",
+    "id": "network-173",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "UDP与QUIC"
+  },
+  {
+    "type": "single",
+    "question": "QUIC的PATH_CHALLENGE帧和PATH_RESPONSE帧用于什么？",
+    "options": [
+      {
+        "text": "测量路径MTU",
+        "correct": false
+      },
+      {
+        "text": "验证路径可达性与地址所有权",
+        "correct": true
+      },
+      {
+        "text": "协商拥塞控制算法",
+        "correct": false
+      },
+      {
+        "text": "交换连接ID",
+        "correct": false
+      }
+    ],
+    "explanation": "PATH_CHALLENGE携带随机数据，对端须在PATH_RESPONSE中原样返回，以证明该路径可达且对端拥有所声称地址。它不用于MTU测量、拥塞协商或交换连接ID。",
+    "id": "network-174",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "UDP与QUIC"
+  },
+  {
+    "type": "single",
+    "question": "QUIC的NEW_CONNECTION_ID帧中，Retire Prior To字段的作用是什么？",
+    "options": [
+      {
+        "text": "指定新连接ID的过期时间",
+        "correct": false
+      },
+      {
+        "text": "要求对端停用序号小于该值的连接ID",
+        "correct": true
+      },
+      {
+        "text": "表示连接迁移的优先级",
+        "correct": false
+      },
+      {
+        "text": "用于路径验证超时",
+        "correct": false
+      }
+    ],
+    "explanation": "Retire Prior To字段告知对端：序号小于该值的连接ID应停用，以控制连接ID数量并推动旧ID退役。它不表示时间、迁移优先级或路径验证超时。",
+    "id": "network-175",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "UDP与QUIC"
+  },
+  {
+    "type": "multiple",
+    "question": "QUIC相比UDP，在传输层之上额外提供了哪些能力？",
+    "options": [
+      {
+        "text": "可靠有序的流数据传输",
+        "correct": true
+      },
+      {
+        "text": "连接级和流级流量控制",
+        "correct": true
+      },
+      {
+        "text": "内置TLS 1.3加密握手",
+        "correct": true
+      },
+      {
+        "text": "网络层路由与分片",
+        "correct": false
+      }
+    ],
+    "explanation": "QUIC在UDP之上实现可靠流、流量控制和集成TLS 1.3。网络层路由与分片仍由IP完成，不属于QUIC额外提供的能力。",
+    "id": "network-176",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "UDP与QUIC"
+  },
+  {
+    "type": "multiple",
+    "question": "关于QUIC的丢包检测，下列说法正确的有？",
+    "options": [
+      {
+        "text": "使用包号而非字节序列号检测丢包",
+        "correct": true
+      },
+      {
+        "text": "ACK帧可携带多个ACK Range",
+        "correct": true
+      },
+      {
+        "text": "依赖TCP的SACK机制",
+        "correct": false
+      },
+      {
+        "text": "包号加密可防止网络中间人观察丢包模式",
+        "correct": true
+      }
+    ],
+    "explanation": "QUIC用单调递增包号检测丢包，ACK帧支持多个ACK Range高效确认，包号加密防止路径上观察丢包模式。它不依赖TCP的SACK。",
+    "id": "network-177",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "UDP与QUIC"
+  },
+  {
+    "type": "multiple",
+    "question": "QUIC的0-RTT数据可能面临哪些安全风险？",
+    "options": [
+      {
+        "text": "重放攻击",
+        "correct": true
+      },
+      {
+        "text": "前向保密性弱于1-RTT数据",
+        "correct": true
+      },
+      {
+        "text": "完全不具备加密保护",
+        "correct": false
+      },
+      {
+        "text": "无法与1-RTT数据区分",
+        "correct": false
+      }
+    ],
+    "explanation": "0-RTT数据使用早期密钥，可被重放且前向保密性较弱。它仍受加密保护，且与1-RTT数据在加密级别上可区分。",
+    "id": "network-178",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "UDP与QUIC"
+  },
+  {
+    "type": "multiple",
+    "question": "QUIC的连接ID（Connection ID）具有哪些特性？",
+    "options": [
+      {
+        "text": "可由端点协商长度",
+        "correct": true
+      },
+      {
+        "text": "用于在四元组变化后仍标识连接",
+        "correct": true
+      },
+      {
+        "text": "必须全局唯一且不可更改",
+        "correct": false
+      },
+      {
+        "text": "可包含路由信息以支持负载均衡",
+        "correct": true
+      }
+    ],
+    "explanation": "连接ID长度可协商，用于迁移后标识连接，并可编码路由信息供负载均衡器使用。它不要求全局唯一，连接中可更换。",
+    "id": "network-179",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "UDP与QUIC"
+  },
+  {
+    "type": "multiple",
+    "question": "在QUIC中，哪些机制有助于减少队头阻塞？",
+    "options": [
+      {
+        "text": "不同流独立重组和重传，某条流丢包不阻塞其他流交付",
+        "correct": true
+      },
+      {
+        "text": "包号与流偏移分离，接收端不以单一全局字节序阻塞其他流",
+        "correct": true
+      },
+      {
+        "text": "所有流共享同一重传队列",
+        "correct": false
+      },
+      {
+        "text": "同一流内允许把后到的字节乱序交付给应用层",
+        "correct": false
+      }
+    ],
+    "explanation": "QUIC为每条流维护独立的偏移、重组与重传，某条流等待丢失数据时其他流仍可交付；包号用于丢包检测和加密，不承担全局字节流排序，因此不会因全局字节序造成跨流阻塞。QUIC仍保证同一流内有序交付，乱序到达的帧会缓存而不会越过缺失字节交给应用；共享重传队列反而会引入跨流队头阻塞。",
+    "id": "network-180",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "UDP与QUIC"
+  },
+  {
+    "type": "single",
+    "question": "客户端向本地DNS服务器发起递归查询后，若本地缓存无记录，本地DNS服务器的典型行为是？",
+    "options": [
+      {
+        "text": "直接返回NXDOMAIN",
+        "correct": false
+      },
+      {
+        "text": "代替客户端依次向根、顶级域、权威服务器迭代查询",
+        "correct": true
+      },
+      {
+        "text": "要求客户端自行向根服务器查询",
+        "correct": false
+      },
+      {
+        "text": "向客户端返回根服务器地址列表",
+        "correct": false
+      }
+    ],
+    "explanation": "递归查询中本地DNS承担解析责任，缓存未命中时通常以迭代方式逐级查询根、TLD、权威服务器，再把最终结果返回客户端。A、C、D混淆了递归与迭代分工。",
+    "id": "network-181",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "DNS"
+  },
+  {
+    "type": "single",
+    "question": "某域名同时配置了A记录和AAAA记录；仅支持IPv4的主机通过操作系统名称解析、并把请求地址族限定为IPv4来获取该域名的地址时，通常会得到什么结果？",
+    "options": [
+      {
+        "text": "返回A记录中的IPv4地址，不返回AAAA记录中的IPv6地址",
+        "correct": true
+      },
+      {
+        "text": "同时返回A记录和AAAA记录",
+        "correct": false
+      },
+      {
+        "text": "仅返回AAAA记录中的IPv6地址",
+        "correct": false
+      },
+      {
+        "text": "返回该域名的CNAME记录",
+        "correct": false
+      }
+    ],
+    "explanation": "名称解析接口限定为IPv4地址族时，主机通常向递归解析器发起A记录查询，解析器返回该域名对应的IPv4地址。AAAA记录用于IPv6地址查询，因此不会作为该次IPv4地址族查询的结果返回。CNAME是别名记录，不能替代地址记录给出最终IPv4地址。",
+    "id": "network-182",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "DNS"
+  },
+  {
+    "type": "single",
+    "question": "关于DNS的TTL字段，下列说法正确的是？",
+    "options": [
+      {
+        "text": "TTL决定域名注册有效期",
+        "correct": false
+      },
+      {
+        "text": "TTL是资源记录可被缓存的最长时间，由权威服务器设置",
+        "correct": true
+      },
+      {
+        "text": "TTL由客户端操作系统强制覆盖",
+        "correct": false
+      },
+      {
+        "text": "TTL越大解析一定越准确",
+        "correct": false
+      }
+    ],
+    "explanation": "TTL表示该资源记录允许被缓存器保留的秒数，由权威区数据配置。它不影响域名注册期限，也不保证准确性；过大TTL会延长变更生效时间。",
+    "id": "network-183",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "DNS"
+  },
+  {
+    "type": "single",
+    "question": "DNS响应中AA标志位被置位，表示？",
+    "options": [
+      {
+        "text": "该响应来自权威服务器",
+        "correct": true
+      },
+      {
+        "text": "该响应经过DNSSEC验证",
+        "correct": false
+      },
+      {
+        "text": "该查询被递归服务器拒绝",
+        "correct": false
+      },
+      {
+        "text": "该响应包含附加记录",
+        "correct": false
+      }
+    ],
+    "explanation": "AA即Authoritative Answer，表示应答由该区的权威服务器给出。DNSSEC验证对应AD标志，附加记录对应ARCOUNT，拒绝查询通常用RCODE表示。",
+    "id": "network-184",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "DNS"
+  },
+  {
+    "type": "single",
+    "question": "某网站将www.example.com配置为CNAME指向example.com，又在www.example.com上配置了MX记录，这通常会导致？",
+    "options": [
+      {
+        "text": "完全正常，CNAME与MX可共存",
+        "correct": false
+      },
+      {
+        "text": "违反DNS规范，CNAME不能与其他类型记录共存于同一名称",
+        "correct": true
+      },
+      {
+        "text": "自动合并为一条记录",
+        "correct": false
+      },
+      {
+        "text": "仅MX记录生效",
+        "correct": false
+      }
+    ],
+    "explanation": "CNAME所在名称不能同时存在其他数据记录，因为别名会独占该名称。若需邮件服务应把MX配置在规范名称或其他子域上，避免与CNAME冲突。",
+    "id": "network-185",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "DNS"
+  },
+  {
+    "type": "single",
+    "question": "递归DNS服务器缓存了一条记录，在TTL到期前收到同一查询，通常？",
+    "options": [
+      {
+        "text": "必须重新向权威服务器查询",
+        "correct": false
+      },
+      {
+        "text": "可直接用缓存应答，并可递减TTL返回",
+        "correct": true
+      },
+      {
+        "text": "返回SERVFAIL",
+        "correct": false
+      },
+      {
+        "text": "转发给根服务器",
+        "correct": false
+      }
+    ],
+    "explanation": "缓存目的在于减少上游查询，TTL未到期时递归服务器可直接应答，通常把剩余TTL返回给客户端。只有缓存未命中或过期才重新解析。",
+    "id": "network-186",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "DNS"
+  },
+  {
+    "type": "single",
+    "question": "使用dig查询时，若只看最终解析结果而不看完整报文，常关注哪个部分？",
+    "options": [
+      {
+        "text": "QUESTION SECTION",
+        "correct": false
+      },
+      {
+        "text": "ANSWER SECTION",
+        "correct": true
+      },
+      {
+        "text": "OPT PSEUDOSECTION",
+        "correct": false
+      },
+      {
+        "text": ";; Query time",
+        "correct": false
+      }
+    ],
+    "explanation": "ANSWER SECTION包含解析得到的资源记录，是最终结果所在。QUESTION是查询问题，OPT用于EDNS扩展，Query time是统计信息。",
+    "id": "network-187",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "DNS"
+  },
+  {
+    "type": "single",
+    "question": "某企业内网DNS服务器只允许内部客户端递归查询，对外部客户端应拒绝递归，主要目的是？",
+    "options": [
+      {
+        "text": "提高域名注册速度",
+        "correct": false
+      },
+      {
+        "text": "防止被利用为DNS放大攻击的反射器",
+        "correct": true
+      },
+      {
+        "text": "强制所有查询走TCP",
+        "correct": false
+      },
+      {
+        "text": "禁用DNSSEC",
+        "correct": false
+      }
+    ],
+    "explanation": "开放递归会被攻击者伪造源IP利用，形成DNS放大反射攻击。限制递归服务范围是基本安全实践，与注册速度、TCP或DNSSEC无直接关系。",
+    "id": "network-188",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "DNS"
+  },
+  {
+    "type": "single",
+    "question": "DNS根提示文件（root hints）的作用是？",
+    "options": [
+      {
+        "text": "列出本区所有主机名",
+        "correct": false
+      },
+      {
+        "text": "为递归服务器提供根服务器地址，作为迭代查询起点",
+        "correct": true
+      },
+      {
+        "text": "保存客户端浏览器历史",
+        "correct": false
+      },
+      {
+        "text": "定义域名注册价格",
+        "correct": false
+      }
+    ],
+    "explanation": "root hints提供根权威服务器名称和地址，递归服务器从根开始迭代查询。它不包含本区主机数据，也不涉及客户端历史或价格。",
+    "id": "network-189",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "DNS"
+  },
+  {
+    "type": "single",
+    "question": "PTR记录通常用于？",
+    "options": [
+      {
+        "text": "由IP地址反查域名",
+        "correct": true
+      },
+      {
+        "text": "由域名查IPv4地址",
+        "correct": false
+      },
+      {
+        "text": "指定邮件服务器",
+        "correct": false
+      },
+      {
+        "text": "声明授权机构",
+        "correct": false
+      }
+    ],
+    "explanation": "PTR位于反向解析区（如in-addr.arpa），用于IP到域名的反向查询。A记录做正向解析，MX指定邮件服务器，NS声明授权机构。",
+    "id": "network-190",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "DNS"
+  },
+  {
+    "type": "single",
+    "question": "浏览器访问www.example.com时，若本地hosts文件已有该域名映射，通常解析顺序是？",
+    "options": [
+      {
+        "text": "先查DNS服务器，再查hosts",
+        "correct": false
+      },
+      {
+        "text": "先查hosts文件，未命中再查DNS",
+        "correct": true
+      },
+      {
+        "text": "只查根服务器",
+        "correct": false
+      },
+      {
+        "text": "直接返回NXDOMAIN",
+        "correct": false
+      }
+    ],
+    "explanation": "多数操作系统的名称解析会先检查本地hosts等静态配置，未命中才向DNS服务器查询。这属于客户端解析顺序，不是权威DNS行为。",
+    "id": "network-191",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "DNS"
+  },
+  {
+    "type": "single",
+    "question": "DNS服务器返回的响应中，RCODE字段的值为3（NXDOMAIN）表示什么？",
+    "options": [
+      {
+        "text": "查询的域名不存在",
+        "correct": true
+      },
+      {
+        "text": "服务器无法处理该查询",
+        "correct": false
+      },
+      {
+        "text": "查询被策略拒绝",
+        "correct": false
+      },
+      {
+        "text": "服务器发生内部错误",
+        "correct": false
+      }
+    ],
+    "explanation": "RCODE=3（NXDOMAIN）明确表示查询的域名不存在，是权威否定应答。RCODE=2（SERVFAIL）表示服务器处理失败，RCODE=5（REFUSED）表示策略拒绝，RCODE=1（FORMERR）表示格式错误，因此选A。",
+    "id": "network-192",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "DNS"
+  },
+  {
+    "type": "single",
+    "question": "DNS的SOA记录中，'refresh'字段的作用是什么？",
+    "options": [
+      {
+        "text": "指定从服务器检查主服务器序列号的时间间隔",
+        "correct": true
+      },
+      {
+        "text": "指定从服务器在无法联系主服务器时重试的时间间隔",
+        "correct": false
+      },
+      {
+        "text": "指定从服务器在放弃前重试的次数",
+        "correct": false
+      },
+      {
+        "text": "指定负缓存的有效时长",
+        "correct": false
+      }
+    ],
+    "explanation": "SOA记录中refresh定义从服务器向主服务器检查序列号更新的周期。retry是失败后重试间隔，expire是放弃前最长重试时间，minimum用于负缓存TTL。因此选A。",
+    "id": "network-193",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "DNS"
+  },
+  {
+    "type": "single",
+    "question": "在DNS查询中，EDNS0的主要作用是什么？",
+    "options": [
+      {
+        "text": "扩展UDP报文大小并支持新选项",
+        "correct": true
+      },
+      {
+        "text": "强制使用TCP进行查询",
+        "correct": false
+      },
+      {
+        "text": "提供查询加密功能",
+        "correct": false
+      },
+      {
+        "text": "实现递归查询的认证",
+        "correct": false
+      }
+    ],
+    "explanation": "EDNS0通过OPT伪记录扩展DNS报文，允许UDP载荷超过512字节，并支持DNSSEC等新选项。它不强制TCP、不提供加密，也不是递归认证机制，因此选A。",
+    "id": "network-194",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "DNS"
+  },
+  {
+    "type": "single",
+    "question": "客户端收到DNS响应后，若响应中TC标志位为1，通常应如何处理？",
+    "options": [
+      {
+        "text": "使用TCP重新发送查询",
+        "correct": true
+      },
+      {
+        "text": "直接丢弃响应并超时重试",
+        "correct": false
+      },
+      {
+        "text": "仅使用响应中的部分记录",
+        "correct": false
+      },
+      {
+        "text": "向另一个服务器发送相同查询",
+        "correct": false
+      }
+    ],
+    "explanation": "TC=1表示响应因UDP长度限制被截断，客户端通常改用TCP重发查询以获得完整响应。丢弃、部分使用或盲目换服务器都不是标准做法，因此选A。",
+    "id": "network-195",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "DNS"
+  },
+  {
+    "type": "single",
+    "question": "关于DNS的A记录与AAAA记录，下列说法正确的是？",
+    "options": [
+      {
+        "text": "A记录将域名映射到IPv4地址，AAAA记录映射到IPv6地址",
+        "correct": true
+      },
+      {
+        "text": "A记录用于邮件路由，AAAA记录用于IPv4地址解析",
+        "correct": false
+      },
+      {
+        "text": "A记录和AAAA记录都只能有一个值",
+        "correct": false
+      },
+      {
+        "text": "AAAA记录是A记录的加密版本",
+        "correct": false
+      }
+    ],
+    "explanation": "A记录存储IPv4地址，AAAA记录存储IPv6地址，两者均可有多个值以实现负载均衡。A记录不用于邮件路由（MX负责），AAAA也不加密，因此选A。",
+    "id": "network-196",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "DNS"
+  },
+  {
+    "type": "single",
+    "question": "DNS区域传送（AXFR）主要用于什么场景？",
+    "options": [
+      {
+        "text": "主服务器向从服务器同步整个区域数据",
+        "correct": true
+      },
+      {
+        "text": "客户端向递归服务器查询域名",
+        "correct": false
+      },
+      {
+        "text": "服务器之间转发单个查询",
+        "correct": false
+      },
+      {
+        "text": "动态更新区域中的单条记录",
+        "correct": false
+      }
+    ],
+    "explanation": "AXFR是完整区域传送，用于主从服务器间同步整个区域。单条查询是常规解析，转发是forwarding，动态更新使用UPDATE操作。因此选A。",
+    "id": "network-197",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "DNS"
+  },
+  {
+    "type": "single",
+    "question": "关于DNS的NS记录，下列说法正确的是？",
+    "options": [
+      {
+        "text": "NS记录指定该区域的权威DNS服务器",
+        "correct": true
+      },
+      {
+        "text": "NS记录将域名映射到IP地址",
+        "correct": false
+      },
+      {
+        "text": "NS记录用于邮件服务器优先级",
+        "correct": false
+      },
+      {
+        "text": "NS记录只能出现在根区域",
+        "correct": false
+      }
+    ],
+    "explanation": "NS记录声明某个区域的权威服务器，可出现在各级区域中。域名到IP是A/AAAA，邮件优先级是MX，因此选A。",
+    "id": "network-198",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "DNS"
+  },
+  {
+    "type": "single",
+    "question": "DNS反向解析使用的记录类型是什么？",
+    "options": [
+      {
+        "text": "PTR",
+        "correct": true
+      },
+      {
+        "text": "CNAME",
+        "correct": false
+      },
+      {
+        "text": "MX",
+        "correct": false
+      },
+      {
+        "text": "SRV",
+        "correct": false
+      }
+    ],
+    "explanation": "PTR记录用于反向解析，将IP地址映射回域名，通常位于in-addr.arpa或ip6.arpa区域。CNAME是别名，MX是邮件交换，SRV是服务定位，因此选A。",
+    "id": "network-199",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "DNS"
+  },
+  {
+    "type": "single",
+    "question": "在DNS解析中，迭代查询与递归查询的主要区别是什么？",
+    "options": [
+      {
+        "text": "迭代查询由客户端自行跟进 referral，递归查询由服务器完成全部解析",
+        "correct": true
+      },
+      {
+        "text": "迭代查询使用TCP，递归查询使用UDP",
+        "correct": false
+      },
+      {
+        "text": "迭代查询只能查询A记录，递归查询可查询所有类型",
+        "correct": false
+      },
+      {
+        "text": "迭代查询不缓存结果，递归查询缓存结果",
+        "correct": false
+      }
+    ],
+    "explanation": "递归查询中服务器负责完成整个解析并返回最终答案；迭代查询中服务器返回最佳 referral，由客户端继续查询。传输协议和记录类型并非区别，因此选A。",
+    "id": "network-200",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "DNS"
+  },
+  {
+    "type": "single",
+    "question": "某管理员希望为同一域名配置多个邮件服务器并指定优先级，应使用哪种记录？",
+    "options": [
+      {
+        "text": "MX记录，数值越小优先级越高",
+        "correct": true
+      },
+      {
+        "text": "A记录，数值越小优先级越高",
+        "correct": false
+      },
+      {
+        "text": "CNAME记录，数值越大优先级越高",
+        "correct": false
+      },
+      {
+        "text": "SRV记录，数值越大优先级越高",
+        "correct": false
+      }
+    ],
+    "explanation": "MX记录专门用于邮件路由，其优先级字段数值越小优先级越高。A记录不携带优先级，CNAME不能与MX共存，SRV用于服务定位且优先级规则不同，因此选A。",
+    "id": "network-201",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "DNS"
+  },
+  {
+    "type": "multiple",
+    "question": "关于DNS缓存，下列说法正确的有哪些？",
+    "options": [
+      {
+        "text": "缓存可以显著减少解析延迟和上游查询流量",
+        "correct": true
+      },
+      {
+        "text": "缓存记录在TTL到期后应被视为过期",
+        "correct": true
+      },
+      {
+        "text": "权威服务器通常不缓存递归查询结果",
+        "correct": true
+      },
+      {
+        "text": "缓存中的记录一旦写入就永久有效",
+        "correct": false
+      }
+    ],
+    "explanation": "缓存降低延迟和流量，记录受TTL约束，权威服务器通常只提供权威数据而不做递归缓存。记录并非永久有效，因此A、B、C正确，D错误。",
+    "id": "network-202",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "DNS"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些措施有助于提升DNS解析的安全性？",
+    "options": [
+      {
+        "text": "部署DNSSEC以验证响应完整性",
+        "correct": true
+      },
+      {
+        "text": "限制递归查询仅对内部客户端开放",
+        "correct": true
+      },
+      {
+        "text": "随机化查询ID和源端口",
+        "correct": true
+      },
+      {
+        "text": "对所有查询强制使用UDP并禁用TCP",
+        "correct": false
+      }
+    ],
+    "explanation": "DNSSEC防篡改，限制递归防放大攻击，随机化ID和端口防缓存投毒。禁用TCP会妨碍区域传送和截断响应处理，不是安全措施，因此A、B、C正确。",
+    "id": "network-203",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "DNS"
+  },
+  {
+    "type": "multiple",
+    "question": "关于DNS的CNAME记录，下列说法正确的有哪些？",
+    "options": [
+      {
+        "text": "CNAME记录将别名指向规范名称",
+        "correct": true
+      },
+      {
+        "text": "CNAME记录不能与同名的其他数据记录共存（DNSSEC例外）",
+        "correct": true
+      },
+      {
+        "text": "CNAME记录可以指向另一个CNAME形成链",
+        "correct": true
+      },
+      {
+        "text": "CNAME记录可以直接指向一个IP地址",
+        "correct": false
+      }
+    ],
+    "explanation": "CNAME将别名映射到规范名，通常不允许同名其他记录共存，且可形成链。CNAME的值必须是域名而非IP地址，IP地址应使用A/AAAA记录，因此A、B、C正确。",
+    "id": "network-204",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "DNS"
+  },
+  {
+    "type": "multiple",
+    "question": "关于DNS的SOA记录，下列说法正确的有哪些？",
+    "options": [
+      {
+        "text": "SOA记录包含序列号，用于区域传送判断更新",
+        "correct": true
+      },
+      {
+        "text": "SOA记录中的minimum字段可用于负缓存TTL",
+        "correct": true
+      },
+      {
+        "text": "每个区域在区域顶点必须有一条SOA记录",
+        "correct": true
+      },
+      {
+        "text": "SOA记录用于指定邮件服务器优先级",
+        "correct": false
+      }
+    ],
+    "explanation": "SOA记录是区域权威数据的一部分，包含序列号、刷新间隔及minimum等字段，序列号用于传送判断。邮件优先级由MX记录负责，因此A、B、C正确。",
+    "id": "network-205",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "DNS"
+  },
+  {
+    "type": "multiple",
+    "question": "某客户端使用DNS查询www.example.com，以下哪些情况可能导致解析失败？",
+    "options": [
+      {
+        "text": "权威服务器未配置该名称的记录且返回NXDOMAIN",
+        "correct": true
+      },
+      {
+        "text": "递归服务器无法访问根服务器且无缓存",
+        "correct": true
+      },
+      {
+        "text": "客户端与递归服务器之间UDP 53端口被防火墙阻断且未启用TCP回退",
+        "correct": true
+      },
+      {
+        "text": "域名配置了有效的A记录但TTL为0",
+        "correct": false
+      }
+    ],
+    "explanation": "NXDOMAIN表示域名不存在，递归服务器无法访问根且无缓存会导致SERVFAIL，UDP 53被阻断且无TCP回退则查询超时。TTL=0仅表示不缓存，不影响解析成功，因此A、B、C正确。",
+    "id": "network-206",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "DNS"
+  },
+  {
+    "type": "single",
+    "question": "DNS服务器收到权威服务器返回的响应：RCODE为0（NOERROR），Answer部分为空，Authority部分包含该区域的SOA记录。通常表示什么？",
+    "options": [
+      {
+        "text": "该域名不存在",
+        "correct": false
+      },
+      {
+        "text": "该域名存在但无请求类型的记录",
+        "correct": true
+      },
+      {
+        "text": "服务器无法处理该查询",
+        "correct": false
+      },
+      {
+        "text": "响应被截断",
+        "correct": false
+      }
+    ],
+    "explanation": "RCODE为0且Answer为空、Authority部分包含SOA记录，是NODATA响应的典型表现：名称存在，但没有所查询类型的记录。域名不存在通常对应NXDOMAIN，即RCODE为3；服务器无法处理通常对应SERVFAIL，即RCODE为2；TC标志置位才表示响应被截断。",
+    "id": "network-207",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "DNS"
+  },
+  {
+    "type": "single",
+    "question": "某客户端使用DNS查询某域名，收到响应中RCODE为2（SERVFAIL），最可能的原因是？",
+    "options": [
+      {
+        "text": "域名不存在",
+        "correct": false
+      },
+      {
+        "text": "权威服务器故障或超时",
+        "correct": true
+      },
+      {
+        "text": "查询被拒绝",
+        "correct": false
+      },
+      {
+        "text": "查询格式错误",
+        "correct": false
+      }
+    ],
+    "explanation": "RCODE=2表示SERVFAIL，通常因权威服务器故障、超时或DNSSEC验证失败导致。NXDOMAIN对应RCODE=3，REFUSED对应RCODE=5，FORMERR对应RCODE=1。",
+    "id": "network-208",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "DNS"
+  },
+  {
+    "type": "multiple",
+    "question": "关于DNS的NS记录，下列说法正确的有哪些？",
+    "options": [
+      {
+        "text": "NS记录用于指定域名的权威DNS服务器",
+        "correct": true
+      },
+      {
+        "text": "NS记录可以出现在区域文件中的任意所有者名称处，无需形成委派",
+        "correct": false
+      },
+      {
+        "text": "NS记录的值必须是主机名而非IP地址",
+        "correct": true
+      },
+      {
+        "text": "NS记录用于将域名映射到IP地址",
+        "correct": false
+      }
+    ],
+    "explanation": "NS记录用于指定域名的权威DNS服务器，其RDATA是主机名，不能直接写IP地址。NS记录通常出现在区域顶点或委派点，并不允许在区域文件任意所有者名称处随意放置而不形成委派。把域名映射到IP地址的是A或AAAA记录。",
+    "id": "network-209",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "DNS"
+  },
+  {
+    "type": "single",
+    "question": "某权威DNS服务器在启用DNSSEC时返回的响应中，RCODE为0，Answer部分为空，Authority部分包含该区域的SOA记录以及NSEC记录。这最可能表示什么？",
+    "options": [
+      {
+        "text": "查询名称不存在，且需要通配符合成答案",
+        "correct": false
+      },
+      {
+        "text": "查询名称存在，但所查询的记录类型不存在（NODATA）",
+        "correct": true
+      },
+      {
+        "text": "权威服务器无法处理该查询，需要重试",
+        "correct": false
+      },
+      {
+        "text": "响应未通过DNSSEC验证",
+        "correct": false
+      }
+    ],
+    "explanation": "RCODE为0且Answer为空、Authority部分包含SOA和NSEC记录，是NODATA响应的典型形式：名称存在，但没有所查询类型的RRset，NSEC的类型位图用于证明该类型不存在。NXDOMAIN通常对应RCODE为3；服务器故障或DNSSEC验证失败通常表现为SERVFAIL；TC标志置位表示响应被截断。",
+    "id": "network-210",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "DNS"
+  },
+  {
+    "type": "single",
+    "question": "HTTP/1.1 中，持久连接（Persistent Connection）的主要作用是什么？",
+    "options": [
+      {
+        "text": "允许在同一个 TCP 连接上发送多个 HTTP 请求和响应",
+        "correct": true
+      },
+      {
+        "text": "强制服务器为每个请求建立新的 TCP 连接",
+        "correct": false
+      },
+      {
+        "text": "对 HTTP 报文进行压缩以减少传输数据量",
+        "correct": false
+      },
+      {
+        "text": "提供端到端的加密传输通道",
+        "correct": false
+      }
+    ],
+    "explanation": "持久连接允许在同一个 TCP 连接上发送多个 HTTP 请求和响应，减少连接建立开销。误选可能混淆连接复用与报文压缩或加密功能。",
+    "id": "network-211",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "HTTP与TLS"
+  },
+  {
+    "type": "single",
+    "question": "在 HTTP/1.1 中，下列哪个首部字段用于客户端告知服务器其支持的媒体类型？",
+    "options": [
+      {
+        "text": "Accept",
+        "correct": true
+      },
+      {
+        "text": "Content-Type",
+        "correct": false
+      },
+      {
+        "text": "User-Agent",
+        "correct": false
+      },
+      {
+        "text": "Host",
+        "correct": false
+      }
+    ],
+    "explanation": "Accept 首部用于告知服务器客户端能够处理的媒体类型。Content-Type 描述实体主体的媒体类型，User-Agent 标识客户端，Host 指定请求的主机。",
+    "id": "network-212",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "HTTP与TLS"
+  },
+  {
+    "type": "single",
+    "question": "HTTP 状态码 301 和 302 的主要区别是什么？",
+    "options": [
+      {
+        "text": "301 表示永久重定向，302 表示临时重定向",
+        "correct": true
+      },
+      {
+        "text": "301 表示临时重定向，302 表示永久重定向",
+        "correct": false
+      },
+      {
+        "text": "301 表示请求成功，302 表示请求被拒绝",
+        "correct": false
+      },
+      {
+        "text": "301 用于 HTTPS，302 用于 HTTP",
+        "correct": false
+      }
+    ],
+    "explanation": "301 表示资源永久移动到新位置，302 表示临时重定向。误选可能颠倒两者语义或混淆状态码类别。",
+    "id": "network-213",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "HTTP与TLS"
+  },
+  {
+    "type": "single",
+    "question": "TLS 握手过程中，ClientHello 消息不包含以下哪项？",
+    "options": [
+      {
+        "text": "服务器证书",
+        "correct": true
+      },
+      {
+        "text": "客户端支持的加密套件列表",
+        "correct": false
+      },
+      {
+        "text": "客户端随机数",
+        "correct": false
+      },
+      {
+        "text": "TLS 协议版本",
+        "correct": false
+      }
+    ],
+    "explanation": "ClientHello 包含协议版本、随机数、加密套件等，而服务器证书在 ServerHello 之后由服务器发送。误选可能混淆握手消息的发送方向。",
+    "id": "network-214",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "HTTP与TLS"
+  },
+  {
+    "type": "single",
+    "question": "在 HTTPS 中，TLS 记录协议的主要职责是什么？",
+    "options": [
+      {
+        "text": "对应用层数据分片、压缩、加密和完整性保护",
+        "correct": true
+      },
+      {
+        "text": "协商加密算法和交换密钥",
+        "correct": false
+      },
+      {
+        "text": "处理 HTTP 请求和响应报文",
+        "correct": false
+      },
+      {
+        "text": "进行 DNS 域名解析",
+        "correct": false
+      }
+    ],
+    "explanation": "TLS 记录协议负责将上层数据分片、压缩（已不推荐）、加密并添加 MAC。握手协议负责算法协商和密钥交换。",
+    "id": "network-215",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "HTTP与TLS"
+  },
+  {
+    "type": "single",
+    "question": "HTTP/2 中，多路复用（Multiplexing）解决了 HTTP/1.1 的什么问题？",
+    "options": [
+      {
+        "text": "队头阻塞问题",
+        "correct": true
+      },
+      {
+        "text": "明文传输安全问题",
+        "correct": false
+      },
+      {
+        "text": "DNS 解析延迟问题",
+        "correct": false
+      },
+      {
+        "text": "IP 地址不足问题",
+        "correct": false
+      }
+    ],
+    "explanation": "HTTP/2 多路复用允许在单个连接上并行交错多个请求和响应，避免 HTTP/1.1 的队头阻塞。误选可能将多路复用与加密或 DNS 优化混淆。",
+    "id": "network-216",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "HTTP与TLS"
+  },
+  {
+    "type": "single",
+    "question": "关于 HTTP Cookie 的 Secure 属性，以下描述正确的是？",
+    "options": [
+      {
+        "text": "指示浏览器仅通过 HTTPS 发送该 Cookie",
+        "correct": true
+      },
+      {
+        "text": "对 Cookie 内容进行加密存储",
+        "correct": false
+      },
+      {
+        "text": "防止 Cookie 被 JavaScript 读取",
+        "correct": false
+      },
+      {
+        "text": "设置 Cookie 的有效期",
+        "correct": false
+      }
+    ],
+    "explanation": "Secure 属性要求 Cookie 仅在 HTTPS 连接中发送，防止明文传输。HttpOnly 防止 JavaScript 读取，Expires/Max-Age 控制有效期。",
+    "id": "network-217",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "HTTP与TLS"
+  },
+  {
+    "type": "single",
+    "question": "在 TLS 1.2 中，服务器证书的主要作用是什么？",
+    "options": [
+      {
+        "text": "向客户端证明服务器身份并传递公钥",
+        "correct": true
+      },
+      {
+        "text": "加密客户端与服务器之间的对称密钥",
+        "correct": false
+      },
+      {
+        "text": "提供会话密钥的生成算法",
+        "correct": false
+      },
+      {
+        "text": "确保服务器无法否认通信内容",
+        "correct": false
+      }
+    ],
+    "explanation": "服务器证书由可信 CA 签名，绑定服务器身份与其公钥，供客户端验证。对称密钥通过密钥交换算法协商，证书不直接加密对称密钥。",
+    "id": "network-218",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "HTTP与TLS"
+  },
+  {
+    "type": "single",
+    "question": "HTTP/1.1 的 Host 首部字段的主要作用是什么？",
+    "options": [
+      {
+        "text": "指定请求的目标主机和端口，支持虚拟主机",
+        "correct": true
+      },
+      {
+        "text": "标识客户端的 IP 地址",
+        "correct": false
+      },
+      {
+        "text": "声明请求体的媒体类型",
+        "correct": false
+      },
+      {
+        "text": "指定服务器的软件版本",
+        "correct": false
+      }
+    ],
+    "explanation": "Host 首部用于在共享 IP 的服务器上区分不同的虚拟主机。它不用于标识客户端 IP 或声明媒体类型。",
+    "id": "network-219",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "HTTP与TLS"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些是 HTTP/2 相对于 HTTP/1.1 的改进？",
+    "options": [
+      {
+        "text": "二进制分帧层",
+        "correct": true
+      },
+      {
+        "text": "头部压缩",
+        "correct": true
+      },
+      {
+        "text": "服务器推送",
+        "correct": true
+      },
+      {
+        "text": "内置加密传输",
+        "correct": false
+      }
+    ],
+    "explanation": "HTTP/2 引入了二进制分帧、头部压缩和服务器推送等特性。加密并非 HTTP/2 内置，HTTPS 由 TLS 提供。误选可能混淆 HTTP/2 与 HTTPS。",
+    "id": "network-220",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "HTTP与TLS"
+  },
+  {
+    "type": "multiple",
+    "question": "在 TLS 握手过程中，以下哪些消息可能由服务器发送？",
+    "options": [
+      {
+        "text": "ServerHello",
+        "correct": true
+      },
+      {
+        "text": "Certificate",
+        "correct": true
+      },
+      {
+        "text": "ClientKeyExchange",
+        "correct": false
+      },
+      {
+        "text": "Finished",
+        "correct": true
+      }
+    ],
+    "explanation": "服务器发送 ServerHello、Certificate 和 Finished 等消息；ClientKeyExchange 由客户端发送。误选可能混淆握手消息的发送方。",
+    "id": "network-221",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "HTTP与TLS"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些 HTTP 首部字段与缓存控制相关？",
+    "options": [
+      {
+        "text": "Cache-Control",
+        "correct": true
+      },
+      {
+        "text": "ETag",
+        "correct": true
+      },
+      {
+        "text": "Last-Modified",
+        "correct": true
+      },
+      {
+        "text": "Authorization",
+        "correct": false
+      }
+    ],
+    "explanation": "Cache-Control 直接控制缓存策略，ETag 和 Last-Modified 用于缓存验证。Authorization 用于身份认证，与缓存控制无关。",
+    "id": "network-222",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "HTTP与TLS"
+  },
+  {
+    "type": "multiple",
+    "question": "关于 HTTP 状态码，以下哪些属于客户端错误（4xx）？",
+    "options": [
+      {
+        "text": "400 Bad Request",
+        "correct": true
+      },
+      {
+        "text": "404 Not Found",
+        "correct": true
+      },
+      {
+        "text": "500 Internal Server Error",
+        "correct": false
+      },
+      {
+        "text": "403 Forbidden",
+        "correct": true
+      }
+    ],
+    "explanation": "4xx 状态码表示客户端错误，如 400、403、404。500 属于服务器错误（5xx）。误选可能混淆错误类别。",
+    "id": "network-223",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "HTTP与TLS"
+  },
+  {
+    "type": "multiple",
+    "question": "TLS 协议可以提供以下哪些安全属性？",
+    "options": [
+      {
+        "text": "机密性",
+        "correct": true
+      },
+      {
+        "text": "完整性",
+        "correct": true
+      },
+      {
+        "text": "身份认证",
+        "correct": true
+      },
+      {
+        "text": "不可否认性",
+        "correct": false
+      }
+    ],
+    "explanation": "TLS 通过加密提供机密性，通过 MAC 提供完整性，通过证书提供身份认证。不可否认性需要数字签名等机制，TLS 通常不提供。",
+    "id": "network-224",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "HTTP与TLS"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些措施可以缓解 HTTP 明文传输带来的安全风险？",
+    "options": [
+      {
+        "text": "使用 HTTPS 替代 HTTP",
+        "correct": true
+      },
+      {
+        "text": "设置 HSTS 强制使用 HTTPS",
+        "correct": true
+      },
+      {
+        "text": "对敏感数据使用应用层加密",
+        "correct": true
+      },
+      {
+        "text": "使用 HTTP/2 明文传输",
+        "correct": false
+      }
+    ],
+    "explanation": "HTTPS、HSTS 和应用层加密均可提升安全性。HTTP/2 明文传输（h2c）仍不提供加密，无法缓解窃听风险。",
+    "id": "network-225",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "HTTP与TLS"
+  },
+  {
+    "type": "single",
+    "question": "HTTP/1.1 中，客户端在收到 100 Continue 状态码后，最合理的后续行为是什么？",
+    "options": [
+      {
+        "text": "立即关闭连接，因为服务器已拒绝请求主体",
+        "correct": false
+      },
+      {
+        "text": "继续发送请求主体，因为服务器已表示愿意接收",
+        "correct": true
+      },
+      {
+        "text": "重新发送完整的请求头，不包含请求主体",
+        "correct": false
+      },
+      {
+        "text": "将请求方法改为 GET 后重试",
+        "correct": false
+      }
+    ],
+    "explanation": "100 Continue 表示服务器已收到请求头且愿意接收主体，客户端应继续发送主体。关闭连接或改方法均不符合语义，重发请求头会破坏流程。",
+    "id": "network-226",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "HTTP与TLS"
+  },
+  {
+    "type": "single",
+    "question": "TLS 1.3 中，服务器在收到 ClientHello 后，通常会在第一个飞行消息中发送什么？",
+    "options": [
+      {
+        "text": "ServerHello、EncryptedExtensions、Certificate、CertificateVerify、Finished 等",
+        "correct": true
+      },
+      {
+        "text": "仅 ServerHello 和 CertificateRequest",
+        "correct": false
+      },
+      {
+        "text": "ChangeCipherSpec 和 NewSessionTicket",
+        "correct": false
+      },
+      {
+        "text": "ClientKeyExchange 和 Finished",
+        "correct": false
+      }
+    ],
+    "explanation": "TLS 1.3 服务器通常将 ServerHello 及后续握手消息合并发送，减少往返。ChangeCipherSpec 仅为兼容，ClientKeyExchange 是 TLS 1.2 消息。",
+    "id": "network-227",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "HTTP与TLS"
+  },
+  {
+    "type": "single",
+    "question": "关于 HTTP/1.1 的 Transfer-Encoding: chunked，以下描述正确的是？",
+    "options": [
+      {
+        "text": "它要求服务器必须同时发送 Content-Length 首部",
+        "correct": false
+      },
+      {
+        "text": "它允许服务器在不知道最终内容长度时分块发送响应主体",
+        "correct": true
+      },
+      {
+        "text": "它只能用于 HTTP 请求，不能用于响应",
+        "correct": false
+      },
+      {
+        "text": "它表示响应主体使用 gzip 压缩",
+        "correct": false
+      }
+    ],
+    "explanation": "chunked 用于分块传输，适合长度未知的响应主体，且不能与 Content-Length 同时使用。压缩由 Content-Encoding 表示。",
+    "id": "network-228",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "HTTP与TLS"
+  },
+  {
+    "type": "single",
+    "question": "在 HTTPS 中，若客户端使用会话恢复（Session Resumption），其主要目的是什么？",
+    "options": [
+      {
+        "text": "减少 TLS 握手的计算和往返开销",
+        "correct": true
+      },
+      {
+        "text": "绕过服务器证书的有效性验证",
+        "correct": false
+      },
+      {
+        "text": "将 HTTP 明文升级为 WebSocket",
+        "correct": false
+      },
+      {
+        "text": "强制服务器使用更长的 RSA 密钥",
+        "correct": false
+      }
+    ],
+    "explanation": "会话恢复复用已有会话参数，减少完整握手开销。它不跳过证书验证，也不改变应用层协议或强制密钥长度。",
+    "id": "network-229",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "HTTP与TLS"
+  },
+  {
+    "type": "single",
+    "question": "某网站响应头包含 Cache-Control: no-store，以下解释正确的是？",
+    "options": [
+      {
+        "text": "响应可以被缓存，但使用前必须向源服务器验证",
+        "correct": false
+      },
+      {
+        "text": "响应不得被任何缓存存储",
+        "correct": true
+      },
+      {
+        "text": "响应只能被私有缓存存储 60 秒",
+        "correct": false
+      },
+      {
+        "text": "响应只能被共享缓存存储",
+        "correct": false
+      }
+    ],
+    "explanation": "no-store 指示缓存不得存储该响应。no-cache 才要求使用前验证，max-age 控制新鲜期，private/public 控制缓存范围。",
+    "id": "network-230",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "HTTP与TLS"
+  },
+  {
+    "type": "single",
+    "question": "TLS 记录层使用 AEAD 算法时，通常提供哪两项安全保证？",
+    "options": [
+      {
+        "text": "机密性和完整性",
+        "correct": true
+      },
+      {
+        "text": "可用性和不可否认性",
+        "correct": false
+      },
+      {
+        "text": "身份认证和访问控制",
+        "correct": false
+      },
+      {
+        "text": "压缩率和低延迟",
+        "correct": false
+      }
+    ],
+    "explanation": "AEAD 同时提供加密（机密性）和认证（完整性）。身份认证由证书和签名机制完成，不可否认性不属于 TLS 记录层保证。",
+    "id": "network-231",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "HTTP与TLS"
+  },
+  {
+    "type": "single",
+    "question": "HTTP/1.1 中，客户端发送 Expect: 100-continue 的主要意图是什么？",
+    "options": [
+      {
+        "text": "要求服务器在接收主体前先返回最终响应",
+        "correct": false
+      },
+      {
+        "text": "在发送较大请求主体前询问服务器是否愿意接收",
+        "correct": true
+      },
+      {
+        "text": "要求服务器启用 TLS 加密",
+        "correct": false
+      },
+      {
+        "text": "要求服务器忽略所有请求首部",
+        "correct": false
+      }
+    ],
+    "explanation": "客户端用 Expect: 100-continue 避免在服务器可能拒绝时发送大主体。服务器可回 100 Continue 或直接回最终状态码。",
+    "id": "network-232",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "HTTP与TLS"
+  },
+  {
+    "type": "single",
+    "question": "关于 TLS 证书链验证，以下做法最符合安全实践的是？",
+    "options": [
+      {
+        "text": "只检查服务器证书是否在有效期内",
+        "correct": false
+      },
+      {
+        "text": "验证证书链到受信任根、检查主机名并检查吊销状态",
+        "correct": true
+      },
+      {
+        "text": "接受任何由服务器自签名的证书",
+        "correct": false
+      },
+      {
+        "text": "仅比较证书公钥长度是否足够",
+        "correct": false
+      }
+    ],
+    "explanation": "完整验证需构建并验证证书链、确认主机名匹配，并检查吊销状态。仅看有效期或密钥长度不足以防中间人攻击。",
+    "id": "network-233",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "HTTP与TLS"
+  },
+  {
+    "type": "single",
+    "question": "HTTP/2 中，HPACK 首部压缩的主要机制是什么？",
+    "options": [
+      {
+        "text": "使用 gzip 压缩整个首部块",
+        "correct": false
+      },
+      {
+        "text": "通过静态表、动态表和哈夫曼编码减少首部冗余",
+        "correct": true
+      },
+      {
+        "text": "将首部转换为二进制 JSON",
+        "correct": false
+      },
+      {
+        "text": "对所有首部字段进行 Base64 编码",
+        "correct": false
+      }
+    ],
+    "explanation": "HPACK 利用静态表、动态表和哈夫曼编码压缩首部。它不是 gzip、JSON 或 Base64 编码，旨在减少冗余和传输量。",
+    "id": "network-234",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "HTTP与TLS"
+  },
+  {
+    "type": "single",
+    "question": "HTTP/1.1 中，响应状态码 304 表示什么？",
+    "options": [
+      {
+        "text": "所请求的资源已永久移动到新位置",
+        "correct": false
+      },
+      {
+        "text": "条件请求所验证的缓存副本仍然有效，服务器不发送响应主体",
+        "correct": true
+      },
+      {
+        "text": "服务器内部错误，客户端应重试",
+        "correct": false
+      },
+      {
+        "text": "请求缺少认证凭据",
+        "correct": false
+      }
+    ],
+    "explanation": "304 Not Modified 用于条件请求。当 If-None-Match 或 If-Modified-Since 等条件表明客户端已有副本仍有效时，服务器返回 304 且不发送响应主体；它不表示永久重定向、服务器内部错误或认证失败。",
+    "id": "network-235",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "HTTP与TLS"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些属于 TLS 提供的安全属性？",
+    "options": [
+      {
+        "text": "机密性",
+        "correct": true
+      },
+      {
+        "text": "完整性",
+        "correct": true
+      },
+      {
+        "text": "对服务器身份进行认证",
+        "correct": true
+      },
+      {
+        "text": "保证应用层数据永久不可篡改",
+        "correct": false
+      }
+    ],
+    "explanation": "TLS 提供机密性、完整性和服务器身份认证。它不能保证数据永久不可篡改，只能检测传输过程中的篡改。",
+    "id": "network-236",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "HTTP与TLS"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些 HTTP 首部字段与条件请求相关？",
+    "options": [
+      {
+        "text": "If-Modified-Since",
+        "correct": true
+      },
+      {
+        "text": "If-None-Match",
+        "correct": true
+      },
+      {
+        "text": "If-Range",
+        "correct": true
+      },
+      {
+        "text": "Accept-Encoding",
+        "correct": false
+      }
+    ],
+    "explanation": "If-Modified-Since、If-None-Match 和 If-Range 都用于条件请求。Accept-Encoding 用于内容协商，与条件请求无关。",
+    "id": "network-237",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "HTTP与TLS"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些措施有助于缓解 HTTP 明文传输的风险？",
+    "options": [
+      {
+        "text": "部署 HTTPS 并正确配置 TLS",
+        "correct": true
+      },
+      {
+        "text": "使用 HSTS 强制浏览器后续使用 HTTPS",
+        "correct": true
+      },
+      {
+        "text": "将敏感信息放在 URL 查询参数中",
+        "correct": false
+      },
+      {
+        "text": "为 Cookie 设置 Secure 属性",
+        "correct": true
+      }
+    ],
+    "explanation": "HTTPS、HSTS 和 Secure Cookie 可降低明文泄露风险。把敏感信息放 URL 中反而可能被日志或历史记录泄露。",
+    "id": "network-238",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "HTTP与TLS"
+  },
+  {
+    "type": "multiple",
+    "question": "在 HTTP/2 中，以下哪些描述是正确的？",
+    "options": [
+      {
+        "text": "使用二进制分帧层传输帧",
+        "correct": true
+      },
+      {
+        "text": "多个请求和响应可以在同一连接上并发交错",
+        "correct": true
+      },
+      {
+        "text": "首部压缩使用 HPACK",
+        "correct": true
+      },
+      {
+        "text": "默认强制使用 TLS 1.3",
+        "correct": false
+      }
+    ],
+    "explanation": "HTTP/2 使用二进制分帧、多路复用和 HPACK。它不默认强制 TLS 1.3；TLS 并非协议本身强制要求。",
+    "id": "network-239",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "HTTP与TLS"
+  },
+  {
+    "type": "multiple",
+    "question": "关于 HTTP/1.1 的持久连接与管线化（Pipelining），以下哪些说法正确？",
+    "options": [
+      {
+        "text": "持久连接允许在同一 TCP 连接上发送多个请求",
+        "correct": true
+      },
+      {
+        "text": "管线化允许客户端连续发送多个请求而不等待响应",
+        "correct": true
+      },
+      {
+        "text": "管线化要求响应必须按请求顺序返回",
+        "correct": true
+      },
+      {
+        "text": "管线化可以完全消除队头阻塞",
+        "correct": false
+      }
+    ],
+    "explanation": "持久连接复用 TCP；管线化连续发请求但响应仍按序返回，因此不能消除队头阻塞。HTTP/2 的多路复用才缓解该问题。",
+    "id": "network-240",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "HTTP与TLS"
+  },
+  {
+    "type": "single",
+    "question": "在Linux中使用ping测试同一局域网内的某台主机时，若收到“Destination Host Unreachable”而不是超时，最可能的原因是？",
+    "options": [
+      {
+        "text": "目标主机防火墙丢弃了ICMP Echo请求",
+        "correct": false
+      },
+      {
+        "text": "本地无法通过ARP解析到目标主机的MAC地址，例如目标主机未开机或不在同一链路",
+        "correct": true
+      },
+      {
+        "text": "目标主机禁用了ICMP Echo应答",
+        "correct": false
+      },
+      {
+        "text": "本地路由表中没有到达目标网段的路由",
+        "correct": false
+      }
+    ],
+    "explanation": "同一链路内发送ICMP Echo前需要ARP解析目标MAC；ARP失败时本地协议栈可能返回Destination Host Unreachable。防火墙丢弃或禁用ICMP应答通常表现为请求超时；缺少路由通常报Network unreachable。",
+    "id": "network-241",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "网络诊断"
+  },
+  {
+    "type": "single",
+    "question": "使用traceroute命令跟踪到某服务器的路径时，中间有几跳显示为“* * *”，以下解释最合理的是？",
+    "options": [
+      {
+        "text": "这些路由器不响应TTL超时的ICMP消息",
+        "correct": true
+      },
+      {
+        "text": "这些路由器发生了故障",
+        "correct": false
+      },
+      {
+        "text": "目标服务器禁止了traceroute",
+        "correct": false
+      },
+      {
+        "text": "本地网络配置错误",
+        "correct": false
+      }
+    ],
+    "explanation": "traceroute依赖路由器在TTL减为0时返回ICMP超时消息。若路由器配置为不发送此类消息，则显示星号。这不一定表示故障或目标禁止。",
+    "id": "network-242",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "网络诊断"
+  },
+  {
+    "type": "single",
+    "question": "在Windows系统中，使用ipconfig /all命令的主要目的是什么？",
+    "options": [
+      {
+        "text": "显示所有网络适配器的详细配置信息",
+        "correct": true
+      },
+      {
+        "text": "释放所有网络适配器的IP地址",
+        "correct": false
+      },
+      {
+        "text": "刷新DNS解析缓存",
+        "correct": false
+      },
+      {
+        "text": "重新注册DNS名称",
+        "correct": false
+      }
+    ],
+    "explanation": "ipconfig /all用于显示所有适配器的完整TCP/IP配置，包括MAC地址、DHCP、DNS等。释放IP用/release，刷新DNS用/flushdns。",
+    "id": "network-243",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "网络诊断"
+  },
+  {
+    "type": "single",
+    "question": "使用nslookup查询域名www.example.com时，返回“Non-authoritative answer”，这意味着？",
+    "options": [
+      {
+        "text": "该应答来自本地DNS服务器的缓存，而非权威服务器",
+        "correct": true
+      },
+      {
+        "text": "该域名不存在",
+        "correct": false
+      },
+      {
+        "text": "DNS服务器拒绝回答",
+        "correct": false
+      },
+      {
+        "text": "查询超时",
+        "correct": false
+      }
+    ],
+    "explanation": "“Non-authoritative answer”表示应答来自缓存，不是直接来自该域名的权威DNS服务器，但记录仍可能有效。域名不存在通常返回NXDOMAIN。",
+    "id": "network-244",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "网络诊断"
+  },
+  {
+    "type": "single",
+    "question": "使用netstat -ano命令时，参数“-o”的作用是？",
+    "options": [
+      {
+        "text": "显示与每个连接关联的进程ID",
+        "correct": true
+      },
+      {
+        "text": "以数字形式显示地址和端口",
+        "correct": false
+      },
+      {
+        "text": "显示所有监听端口",
+        "correct": false
+      },
+      {
+        "text": "显示以太网统计信息",
+        "correct": false
+      }
+    ],
+    "explanation": "netstat -o显示进程ID，-n显示数字形式，-a显示所有连接和监听端口。需结合-a和-n才能查看所有数字形式的连接及进程。",
+    "id": "network-245",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "网络诊断"
+  },
+  {
+    "type": "single",
+    "question": "在TCP连接中，使用tcpdump抓包时看到大量重复的ACK，可能表明什么？",
+    "options": [
+      {
+        "text": "网络中存在重复ACK，可能由于丢包引起",
+        "correct": true
+      },
+      {
+        "text": "TCP连接正常关闭",
+        "correct": false
+      },
+      {
+        "text": "接收方处理速度过快",
+        "correct": false
+      },
+      {
+        "text": "发送方窗口过大",
+        "correct": false
+      }
+    ],
+    "explanation": "重复ACK通常由接收方收到乱序报文触发，往往意味着中间有丢包，是快速重传机制的一部分。正常关闭不会导致大量重复ACK。",
+    "id": "network-246",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "网络诊断"
+  },
+  {
+    "type": "single",
+    "question": "使用pathping命令时，它的主要优势是什么？",
+    "options": [
+      {
+        "text": "结合了ping和tracert的功能，并提供丢包统计",
+        "correct": true
+      },
+      {
+        "text": "能够直接修复网络路由",
+        "correct": false
+      },
+      {
+        "text": "可以加密网络流量",
+        "correct": false
+      },
+      {
+        "text": "自动配置IP地址",
+        "correct": false
+      }
+    ],
+    "explanation": "pathping先像tracert一样跟踪路径，然后在一段时间内统计各跳的丢包率，帮助定位网络问题。它不修复路由或加密流量。",
+    "id": "network-247",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "网络诊断"
+  },
+  {
+    "type": "single",
+    "question": "在Linux中，使用dig命令查询MX记录，应使用哪个选项？",
+    "options": [
+      {
+        "text": "dig MX example.com",
+        "correct": true
+      },
+      {
+        "text": "dig -x example.com",
+        "correct": false
+      },
+      {
+        "text": "dig +short example.com",
+        "correct": false
+      },
+      {
+        "text": "dig any example.com",
+        "correct": false
+      }
+    ],
+    "explanation": "dig MX example.com直接查询MX记录；-x用于反向查询；+short简化输出；any查询所有记录。正确选项明确指定了记录类型。",
+    "id": "network-248",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "网络诊断"
+  },
+  {
+    "type": "single",
+    "question": "使用curl -I http://example.com时，主要获取什么信息？",
+    "options": [
+      {
+        "text": "HTTP响应头",
+        "correct": true
+      },
+      {
+        "text": "网页内容",
+        "correct": false
+      },
+      {
+        "text": "SSL证书详情",
+        "correct": false
+      },
+      {
+        "text": "DNS解析结果",
+        "correct": false
+      }
+    ],
+    "explanation": "curl -I发送HEAD请求，只获取响应头，不下载正文。要获取网页内容用curl不带-I；查看SSL证书可用openssl s_client。",
+    "id": "network-249",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "网络诊断"
+  },
+  {
+    "type": "single",
+    "question": "在Windows中，使用route print命令显示路由表时，0.0.0.0目标网络通常代表什么？",
+    "options": [
+      {
+        "text": "默认路由",
+        "correct": true
+      },
+      {
+        "text": "本地环回网络",
+        "correct": false
+      },
+      {
+        "text": "广播地址",
+        "correct": false
+      },
+      {
+        "text": "多播地址",
+        "correct": false
+      }
+    ],
+    "explanation": "0.0.0.0/0表示默认路由，当没有更具体匹配时使用。127.0.0.0/8是环回，广播地址通常为255.255.255.255。",
+    "id": "network-250",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "网络诊断"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些工具可以用于检测网络连通性？（多选）",
+    "options": [
+      {
+        "text": "ping",
+        "correct": true
+      },
+      {
+        "text": "traceroute",
+        "correct": true
+      },
+      {
+        "text": "netstat",
+        "correct": false
+      },
+      {
+        "text": "pathping",
+        "correct": true
+      }
+    ],
+    "explanation": "ping测试基本连通性，traceroute跟踪路径，pathping结合两者并统计丢包。netstat显示连接状态，不主动检测连通性。",
+    "id": "network-251",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "网络诊断"
+  },
+  {
+    "type": "multiple",
+    "question": "使用nslookup进行DNS诊断时，可能遇到的常见错误有哪些？（多选）",
+    "options": [
+      {
+        "text": "DNS request timed out",
+        "correct": true
+      },
+      {
+        "text": "Non-existent domain",
+        "correct": true
+      },
+      {
+        "text": "Server failed",
+        "correct": true
+      },
+      {
+        "text": "Connection refused",
+        "correct": false
+      }
+    ],
+    "explanation": "超时、域名不存在、服务器失败是DNS查询常见错误。Connection refused通常指TCP连接被拒绝，不是DNS典型错误。",
+    "id": "network-252",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "网络诊断"
+  },
+  {
+    "type": "multiple",
+    "question": "在Linux中，tcpdump命令可以用于哪些网络诊断场景？（多选）",
+    "options": [
+      {
+        "text": "捕获特定端口的流量",
+        "correct": true
+      },
+      {
+        "text": "分析TCP握手过程",
+        "correct": true
+      },
+      {
+        "text": "修改网络接口配置",
+        "correct": false
+      },
+      {
+        "text": "保存抓包文件供后续分析",
+        "correct": true
+      }
+    ],
+    "explanation": "tcpdump可过滤端口、分析握手、写文件。它不能修改接口配置，那是ifconfig或ip命令的功能。",
+    "id": "network-253",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "网络诊断"
+  },
+  {
+    "type": "multiple",
+    "question": "以下关于ping命令的说法，哪些是正确的？（多选）",
+    "options": [
+      {
+        "text": "ping使用ICMP协议",
+        "correct": true
+      },
+      {
+        "text": "ping可以测试网络层连通性",
+        "correct": true
+      },
+      {
+        "text": "ping默认发送TCP SYN包",
+        "correct": false
+      },
+      {
+        "text": "ping可以指定发送次数",
+        "correct": true
+      }
+    ],
+    "explanation": "ping基于ICMP，测试网络层连通性，可通过-c或-n指定次数。它默认不发送TCP SYN包。",
+    "id": "network-254",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "网络诊断"
+  },
+  {
+    "type": "multiple",
+    "question": "使用netstat查看TCP套接字时，以下哪些状态与已经发起、已经建立或正在关闭的TCP连接相关，而不是仅处于被动监听？",
+    "options": [
+      {
+        "text": "ESTABLISHED",
+        "correct": true
+      },
+      {
+        "text": "LISTEN",
+        "correct": false
+      },
+      {
+        "text": "TIME_WAIT",
+        "correct": true
+      },
+      {
+        "text": "SYN_SENT",
+        "correct": true
+      }
+    ],
+    "explanation": "ESTABLISHED表示连接已建立；SYN_SENT表示本端已发出SYN等待对端响应；TIME_WAIT表示连接关闭后等待2MSL以处理残留报文。LISTEN只是服务端被动等待新连接，尚不对应已发起的连接。",
+    "id": "network-255",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "网络诊断"
+  },
+  {
+    "type": "single",
+    "question": "在Linux中使用traceroute时，某一跳返回“!H”，该标记表示什么？",
+    "options": [
+      {
+        "text": "ICMP主机不可达（Host Unreachable）",
+        "correct": true
+      },
+      {
+        "text": "ICMP网络不可达（Network Unreachable）",
+        "correct": false
+      },
+      {
+        "text": "ICMP协议不可达（Protocol Unreachable）",
+        "correct": false
+      },
+      {
+        "text": "ICMP端口不可达（Port Unreachable）",
+        "correct": false
+      }
+    ],
+    "explanation": "traceroute中的!H对应ICMP Destination Unreachable的Host Unreachable代码，表示路由器或主机无法把报文送达目标主机；!N对应网络不可达，!P对应协议不可达。",
+    "id": "network-256",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "网络诊断"
+  },
+  {
+    "type": "single",
+    "question": "使用mtr命令进行网络诊断时，它结合了哪两个工具的功能？",
+    "options": [
+      {
+        "text": "ping和traceroute",
+        "correct": true
+      },
+      {
+        "text": "ping和netstat",
+        "correct": false
+      },
+      {
+        "text": "traceroute和tcpdump",
+        "correct": false
+      },
+      {
+        "text": "nslookup和dig",
+        "correct": false
+      }
+    ],
+    "explanation": "mtr（My Traceroute）持续发送探测包并动态更新路径中每一跳的丢包和延迟统计，兼具ping的连续探测和traceroute的路径发现功能。",
+    "id": "network-257",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "网络诊断"
+  },
+  {
+    "type": "single",
+    "question": "在Windows命令提示符中执行“nslookup -type=PTR 8.8.8.8”的作用是什么？",
+    "options": [
+      {
+        "text": "查询8.8.8.8的A记录",
+        "correct": false
+      },
+      {
+        "text": "查询8.8.8.8的PTR记录",
+        "correct": true
+      },
+      {
+        "text": "查询8.8.8.8的MX记录",
+        "correct": false
+      },
+      {
+        "text": "查询8.8.8.8的CNAME记录",
+        "correct": false
+      }
+    ],
+    "explanation": "PTR记录用于反向DNS解析，将IP地址映射到域名。命令指定-type=PTR并给出IP地址，是查询该IP对应域名的标准方式。",
+    "id": "network-258",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "网络诊断"
+  },
+  {
+    "type": "single",
+    "question": "使用tcpdump抓包时，表达式“tcp port 80”的含义是？",
+    "options": [
+      {
+        "text": "仅捕获源端口为80的TCP包",
+        "correct": false
+      },
+      {
+        "text": "仅捕获目的端口为80的TCP包",
+        "correct": false
+      },
+      {
+        "text": "捕获源或目的端口为80的TCP包",
+        "correct": true
+      },
+      {
+        "text": "捕获所有HTTP协议包，包括UDP",
+        "correct": false
+      }
+    ],
+    "explanation": "tcpdump中“port 80”等价于“src port 80 or dst port 80”，因此会捕获源或目的端口为80的TCP流量。HTTP通常使用TCP 80，但该表达式不涉及UDP。",
+    "id": "network-259",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "网络诊断"
+  },
+  {
+    "type": "single",
+    "question": "在Linux中，使用ss命令查看TCP连接状态时，选项“-t”和“-a”组合的作用是？",
+    "options": [
+      {
+        "text": "显示所有TCP套接字，包括监听和非监听",
+        "correct": true
+      },
+      {
+        "text": "仅显示已建立的TCP连接",
+        "correct": false
+      },
+      {
+        "text": "仅显示监听的TCP端口",
+        "correct": false
+      },
+      {
+        "text": "显示TCP连接及其对应的进程名",
+        "correct": false
+      }
+    ],
+    "explanation": "ss的-t表示TCP，-a表示all（包括监听和非监听套接字）。要显示进程需加-p选项。仅显示监听需用-l，仅显示已建立可用state established。",
+    "id": "network-260",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "网络诊断"
+  },
+  {
+    "type": "single",
+    "question": "使用curl命令访问https://example.com时，若需显示详细的请求和响应头信息以辅助诊断，应添加哪个选项？",
+    "options": [
+      {
+        "text": "-I",
+        "correct": false
+      },
+      {
+        "text": "-v",
+        "correct": true
+      },
+      {
+        "text": "-O",
+        "correct": false
+      },
+      {
+        "text": "-s",
+        "correct": false
+      }
+    ],
+    "explanation": "curl的-v（verbose）选项输出详细的通信过程，包括请求头、响应头及SSL握手信息，适合诊断。选项-I仅获取响应头，-O将内容保存为文件，-s静默模式不输出进度和错误。",
+    "id": "network-261",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "网络诊断"
+  },
+  {
+    "type": "single",
+    "question": "在Linux中，使用dig命令查询域名时，若希望指定使用8.8.8.8作为DNS服务器，应使用哪个选项？",
+    "options": [
+      {
+        "text": "@8.8.8.8",
+        "correct": true
+      },
+      {
+        "text": "-s 8.8.8.8",
+        "correct": false
+      },
+      {
+        "text": "--server=8.8.8.8",
+        "correct": false
+      },
+      {
+        "text": "-n 8.8.8.8",
+        "correct": false
+      }
+    ],
+    "explanation": "dig通过“@服务器地址”指定DNS服务器，如“dig @8.8.8.8 example.com”。其他选项均非dig的合法服务器指定方式。",
+    "id": "network-262",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "网络诊断"
+  },
+  {
+    "type": "single",
+    "question": "在Windows中，使用“tracert -d www.example.com”时，选项“-d”的作用是？",
+    "options": [
+      {
+        "text": "不将IP地址解析为主机名",
+        "correct": true
+      },
+      {
+        "text": "指定最大跳数为d",
+        "correct": false
+      },
+      {
+        "text": "使用ICMP协议进行探测",
+        "correct": false
+      },
+      {
+        "text": "显示详细的路由信息",
+        "correct": false
+      }
+    ],
+    "explanation": "tracert的-d选项表示不解析主机名，直接显示IP地址，可加快输出速度。tracert默认使用ICMP，最大跳数由-h指定。",
+    "id": "network-263",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "网络诊断"
+  },
+  {
+    "type": "single",
+    "question": "在Linux中，使用“ip route get 203.0.113.5”命令的主要目的是什么？",
+    "options": [
+      {
+        "text": "添加一条到203.0.113.5的路由",
+        "correct": false
+      },
+      {
+        "text": "删除到203.0.113.5的路由",
+        "correct": false
+      },
+      {
+        "text": "查询到达203.0.113.5时使用的路由",
+        "correct": true
+      },
+      {
+        "text": "显示所有路由表项",
+        "correct": false
+      }
+    ],
+    "explanation": "ip route get用于查询特定目的地址实际使用的路由，显示出口接口和下一跳，不修改路由表。添加/删除分别用add/del，显示所有路由用ip route show。",
+    "id": "network-264",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "网络诊断"
+  },
+  {
+    "type": "single",
+    "question": "在Linux中，使用tcpdump抓包时，若只想捕获ICMP回显请求（ping请求），应使用哪个过滤表达式？",
+    "options": [
+      {
+        "text": "icmp[0] == 8",
+        "correct": true
+      },
+      {
+        "text": "icmp[0] == 0",
+        "correct": false
+      },
+      {
+        "text": "icmp[0] == 3",
+        "correct": false
+      },
+      {
+        "text": "icmp[0] == 11",
+        "correct": false
+      }
+    ],
+    "explanation": "tcpdump的BPF过滤中可直接比较ICMP类型字段；ICMP回显请求的类型值为8。类型0是回显应答，类型3是目的不可达，类型11是超时。",
+    "id": "network-265",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "网络诊断"
+  },
+  {
+    "type": "single",
+    "question": "使用traceroute跟踪到某服务器的路径时，中间有几跳显示为“* * *”，以下解释最合理的是？",
+    "options": [
+      {
+        "text": "该跳路由器禁止了ICMP超时报文或UDP探测包",
+        "correct": true
+      },
+      {
+        "text": "该跳路由器完全宕机",
+        "correct": false
+      },
+      {
+        "text": "目标服务器未开放任何端口",
+        "correct": false
+      },
+      {
+        "text": "本地DNS解析失败",
+        "correct": false
+      }
+    ],
+    "explanation": "traceroute依赖中间路由器返回ICMP超时报文，若路由器配置为不响应或不返回该报文，则显示“* * *”。路由器宕机通常会影响后续跳，而DNS失败影响的是域名解析而非路径追踪。",
+    "id": "network-266",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "网络诊断"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些工具可以用于检测网络连通性？",
+    "options": [
+      {
+        "text": "ping",
+        "correct": true
+      },
+      {
+        "text": "traceroute",
+        "correct": true
+      },
+      {
+        "text": "nslookup",
+        "correct": false
+      },
+      {
+        "text": "netstat",
+        "correct": false
+      }
+    ],
+    "explanation": "ping通过ICMP回显请求测试连通性，traceroute通过逐跳探测路径检测连通性；nslookup用于DNS查询，netstat用于查看连接状态和统计，不直接检测连通性。",
+    "id": "network-267",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "网络诊断"
+  },
+  {
+    "type": "multiple",
+    "question": "在Linux中，tcpdump命令可以用于哪些网络诊断场景？",
+    "options": [
+      {
+        "text": "捕获指定网卡上的数据包",
+        "correct": true
+      },
+      {
+        "text": "按端口或协议过滤数据包",
+        "correct": true
+      },
+      {
+        "text": "修改路由表以修复网络故障",
+        "correct": false
+      },
+      {
+        "text": "将捕获的数据包保存到文件供后续分析",
+        "correct": true
+      }
+    ],
+    "explanation": "tcpdump可指定网卡捕获、按表达式过滤、用-w保存抓包文件；它不能修改路由表，修改路由需用route或ip route命令。",
+    "id": "network-268",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "网络诊断"
+  },
+  {
+    "type": "single",
+    "question": "在Linux主机上，若路由表中存在默认路由且能正常到达网关，但ping 203.0.113.5时收到“Destination Host Unreachable”错误。以下关于该错误来源的判断，正确的是？",
+    "options": [
+      {
+        "text": "该ICMP错误一定由目标主机203.0.113.5发出，说明目标主机的防火墙拒绝了请求",
+        "correct": false
+      },
+      {
+        "text": "该ICMP错误可能由本地主机或路径中的路由器发出，表示无法找到到达目标网络或主机的路由",
+        "correct": true
+      },
+      {
+        "text": "该错误是DNS解析失败导致的，应先检查/etc/resolv.conf",
+        "correct": false
+      },
+      {
+        "text": "该错误表示TCP连接被重置，与ICMP协议无关",
+        "correct": false
+      }
+    ],
+    "explanation": "“Destination Host Unreachable”是ICMP差错报文，可能由本地协议栈（路由查找失败，如无匹配路由）或路径中的路由器（ARP解析失败等）发出，并非一定来自目标主机。DNS失败通常报“unknown host”，TCP重置则是RST而非ICMP。",
+    "id": "network-269",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "网络诊断"
+  },
+  {
+    "type": "single",
+    "question": "在排查一台Linux主机的网络故障时，执行“ping -c 4 192.168.1.1”后，输出显示“4 packets transmitted, 0 received, 100% packet loss”，同时同网段另一台主机能正常ping通该地址。以下最合理的诊断结论是？",
+    "options": [
+      {
+        "text": "本机到目标主机的链路、本机ARP/防火墙或目标主机针对本机的过滤规则可能阻断了ICMP请求或响应",
+        "correct": true
+      },
+      {
+        "text": "本机的默认网关配置错误，导致无法到达同网段地址",
+        "correct": false
+      },
+      {
+        "text": "本机的DNS解析失败，无法将192.168.1.1解析为MAC地址",
+        "correct": false
+      },
+      {
+        "text": "目标主机一定处于关机状态",
+        "correct": false
+      }
+    ],
+    "explanation": "同网段通信使用ARP和二层转发，不依赖默认网关；DNS不负责IP到MAC解析。另一台主机能ping通说明目标主机未关机且未对所有来源禁用ICMP，故障更可能出在本机接口、ARP、防火墙、交换机端口或目标主机针对本源的过滤规则。",
+    "id": "network-270",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "网络诊断"
+  },
+  {
+    "type": "single",
+    "question": "在四层负载均衡中，负责转发决策的主要依据是？",
+    "options": [
+      {
+        "text": "TCP/UDP 端口号和 IP 地址",
+        "correct": true
+      },
+      {
+        "text": "HTTP 请求头中的 Cookie",
+        "correct": false
+      },
+      {
+        "text": "应用层 URL 路径",
+        "correct": false
+      },
+      {
+        "text": "TLS 握手过程中的 SNI",
+        "correct": false
+      }
+    ],
+    "explanation": "四层负载均衡基于传输层信息（IP 和端口）进行转发，不解析应用层内容。Cookie、URL 路径和 SNI 属于应用层或 TLS 层信息，通常用于七层负载均衡。",
+    "id": "network-271",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "负载均衡与代理"
+  },
+  {
+    "type": "single",
+    "question": "关于反向代理，下列说法正确的是？",
+    "options": [
+      {
+        "text": "反向代理代表客户端向服务器发送请求",
+        "correct": false
+      },
+      {
+        "text": "反向代理代表服务器接收客户端请求",
+        "correct": true
+      },
+      {
+        "text": "反向代理要求客户端配置代理地址",
+        "correct": false
+      },
+      {
+        "text": "反向代理只能代理 HTTP 协议",
+        "correct": false
+      }
+    ],
+    "explanation": "反向代理部署在服务器侧，代表服务器接收并转发客户端请求。正向代理才需要客户端配置，且代理协议不限于 HTTP。",
+    "id": "network-272",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "负载均衡与代理"
+  },
+  {
+    "type": "single",
+    "question": "以下哪种负载均衡算法适合后端服务器处理能力不同的场景？",
+    "options": [
+      {
+        "text": "轮询（Round Robin）",
+        "correct": false
+      },
+      {
+        "text": "加权轮询（Weighted Round Robin）",
+        "correct": true
+      },
+      {
+        "text": "源地址哈希（Source Hashing）",
+        "correct": false
+      },
+      {
+        "text": "随机（Random）",
+        "correct": false
+      }
+    ],
+    "explanation": "加权轮询根据服务器权重分配请求，权重可反映处理能力。轮询和随机不考虑能力差异，源地址哈希主要用于会话保持。",
+    "id": "network-273",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "负载均衡与代理"
+  },
+  {
+    "type": "single",
+    "question": "在四层负载均衡中，哪种模式要求负载均衡器具有后端服务器的 IP 地址并修改数据包目的地址？",
+    "options": [
+      {
+        "text": "透明代理模式",
+        "correct": false
+      },
+      {
+        "text": "直接路由模式（DR）",
+        "correct": false
+      },
+      {
+        "text": "网络地址转换模式（NAT）",
+        "correct": true
+      },
+      {
+        "text": "IP 隧道模式",
+        "correct": false
+      }
+    ],
+    "explanation": "NAT 模式下负载均衡器修改目的 IP 为后端服务器地址，并可能修改源 IP。DR 模式修改目的 MAC 地址，IP 隧道模式封装原数据包。",
+    "id": "network-274",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "负载均衡与代理"
+  },
+  {
+    "type": "single",
+    "question": "HTTP 反向代理中，用于传递客户端真实 IP 的常见请求头是？",
+    "options": [
+      {
+        "text": "X-Forwarded-For",
+        "correct": true
+      },
+      {
+        "text": "Host",
+        "correct": false
+      },
+      {
+        "text": "User-Agent",
+        "correct": false
+      },
+      {
+        "text": "Accept-Encoding",
+        "correct": false
+      }
+    ],
+    "explanation": "X-Forwarded-For 记录客户端 IP 和经过的代理 IP。Host 表示目标主机，User-Agent 标识客户端，Accept-Encoding 用于内容编码协商。",
+    "id": "network-275",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "负载均衡与代理"
+  },
+  {
+    "type": "single",
+    "question": "以下关于 LVS 的 DR 模式描述正确的是？",
+    "options": [
+      {
+        "text": "负载均衡器修改请求的目的 IP 地址",
+        "correct": false
+      },
+      {
+        "text": "后端服务器将响应直接返回给客户端",
+        "correct": true
+      },
+      {
+        "text": "负载均衡器需要和后端服务器处于不同网段",
+        "correct": false
+      },
+      {
+        "text": "负载均衡器负责将后端服务器的响应转发给客户端",
+        "correct": false
+      }
+    ],
+    "explanation": "DR模式中调度器仅修改目的MAC地址并转发请求，后端真实服务器保留VIP并将响应直接返回客户端，避免响应经过调度器形成瓶颈。调度器与真实服务器通常需要处于同一广播域；由于DR不修改IP和端口，不能实现端口映射。",
+    "id": "network-276",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "负载均衡与代理"
+  },
+  {
+    "type": "single",
+    "question": "在七层负载均衡中，利用 HTTP 应用层信息实现会话保持的常见方法是？",
+    "options": [
+      {
+        "text": "基于 Cookie 插入或重写",
+        "correct": true
+      },
+      {
+        "text": "基于源 IP 哈希",
+        "correct": false
+      },
+      {
+        "text": "基于轮询算法",
+        "correct": false
+      },
+      {
+        "text": "基于最小连接数",
+        "correct": false
+      }
+    ],
+    "explanation": "七层负载均衡可解析HTTP，通过插入或重写Cookie把同一会话绑定到同一后端。源IP哈希属于按网络层地址保持会话的方式，不依赖HTTP应用层信息；轮询和最小连接数本身不保证会话保持。",
+    "id": "network-277",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "负载均衡与代理"
+  },
+  {
+    "type": "single",
+    "question": "关于健康检查，下列说法错误的是？",
+    "options": [
+      {
+        "text": "健康检查可基于 TCP 端口探测",
+        "correct": false
+      },
+      {
+        "text": "健康检查可基于 HTTP 状态码",
+        "correct": false
+      },
+      {
+        "text": "健康检查失败后负载均衡器应立即将服务器移出集群并永久不再加入",
+        "correct": true
+      },
+      {
+        "text": "健康检查可配置检查间隔和超时时间",
+        "correct": false
+      }
+    ],
+    "explanation": "健康检查失败通常临时将服务器标记为不可用，恢复后重新加入。A、B、D 均为健康检查的常见实现方式或配置项。",
+    "id": "network-278",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "负载均衡与代理"
+  },
+  {
+    "type": "single",
+    "question": "在正向代理中，客户端配置代理后访问 HTTPS 网站时，代理通常看到的是什么？",
+    "options": [
+      {
+        "text": "完整的 HTTP 请求内容",
+        "correct": false
+      },
+      {
+        "text": "TLS 加密的流量，无法解密内容",
+        "correct": true
+      },
+      {
+        "text": "仅 DNS 查询",
+        "correct": false
+      },
+      {
+        "text": "仅 TCP 握手包",
+        "correct": false
+      }
+    ],
+    "explanation": "正向代理默认不解密 HTTPS，只能看到 TLS 加密流量。若代理进行中间人解密需客户端信任代理证书，但常规场景下内容不可见。",
+    "id": "network-279",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "负载均衡与代理"
+  },
+  {
+    "type": "single",
+    "question": "以下哪种情况最适合使用七层负载均衡而非四层？",
+    "options": [
+      {
+        "text": "需要根据 URL 路径将请求分发到不同后端",
+        "correct": true
+      },
+      {
+        "text": "需要处理非 HTTP 的 TCP 协议",
+        "correct": false
+      },
+      {
+        "text": "需要极低的转发延迟",
+        "correct": false
+      },
+      {
+        "text": "需要基于源 IP 进行会话保持",
+        "correct": false
+      }
+    ],
+    "explanation": "七层负载均衡可解析 HTTP 请求，根据 URL 路径等应用层信息分发。非 HTTP 协议、极低延迟和源 IP 保持通常四层即可实现。",
+    "id": "network-280",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "负载均衡与代理"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些属于负载均衡的常见算法？",
+    "options": [
+      {
+        "text": "轮询",
+        "correct": true
+      },
+      {
+        "text": "最小连接数",
+        "correct": true
+      },
+      {
+        "text": "源地址哈希",
+        "correct": true
+      },
+      {
+        "text": "先进先出",
+        "correct": false
+      }
+    ],
+    "explanation": "轮询、最小连接数和源地址哈希都是常见负载均衡算法。先进先出是队列调度概念，并非负载均衡算法。",
+    "id": "network-281",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "负载均衡与代理"
+  },
+  {
+    "type": "multiple",
+    "question": "关于反向代理与正向代理的区别，正确的是？",
+    "options": [
+      {
+        "text": "正向代理需要客户端显式配置",
+        "correct": true
+      },
+      {
+        "text": "反向代理通常对客户端透明",
+        "correct": true
+      },
+      {
+        "text": "正向代理常用于保护服务器安全",
+        "correct": false
+      },
+      {
+        "text": "反向代理可以隐藏后端服务器",
+        "correct": true
+      }
+    ],
+    "explanation": "正向代理需客户端配置，反向代理对客户端透明。反向代理保护后端服务器并隐藏其细节，正向代理主要用于客户端访问控制或匿名。",
+    "id": "network-282",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "负载均衡与代理"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些是四层负载均衡可能使用的转发模式？",
+    "options": [
+      {
+        "text": "NAT 模式",
+        "correct": true
+      },
+      {
+        "text": "DR 模式",
+        "correct": true
+      },
+      {
+        "text": "IP 隧道模式",
+        "correct": true
+      },
+      {
+        "text": "HTTP 重定向模式",
+        "correct": false
+      }
+    ],
+    "explanation": "NAT、DR 和 IP 隧道是四层负载均衡常见转发模式。HTTP 重定向属于七层重定向机制，并非四层转发模式。",
+    "id": "network-283",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "负载均衡与代理"
+  },
+  {
+    "type": "multiple",
+    "question": "健康检查在负载均衡中的作用包括？",
+    "options": [
+      {
+        "text": "检测后端服务器是否可用",
+        "correct": true
+      },
+      {
+        "text": "自动将故障服务器从转发池中移除",
+        "correct": true
+      },
+      {
+        "text": "保证所有请求都被处理",
+        "correct": false
+      },
+      {
+        "text": "提高系统的整体可用性",
+        "correct": true
+      }
+    ],
+    "explanation": "健康检查用于检测后端可用性并自动隔离故障节点，从而提高整体可用性。它不能保证所有请求都被处理，故障时仍可能失败。",
+    "id": "network-284",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "负载均衡与代理"
+  },
+  {
+    "type": "multiple",
+    "question": "七层负载均衡相比四层负载均衡的优势包括？",
+    "options": [
+      {
+        "text": "可以根据 HTTP 头部内容路由",
+        "correct": true
+      },
+      {
+        "text": "支持 SSL 卸载",
+        "correct": true
+      },
+      {
+        "text": "转发性能通常更高",
+        "correct": false
+      },
+      {
+        "text": "可以提供应用层安全防护",
+        "correct": true
+      }
+    ],
+    "explanation": "七层负载均衡可解析应用层内容，支持基于头部的路由、SSL 卸载和应用层安全防护。由于解析开销，转发性能通常低于四层。",
+    "id": "network-285",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "负载均衡与代理"
+  },
+  {
+    "type": "single",
+    "question": "负载均衡器在四层转发时，主要依据哪个信息进行后端选择？",
+    "options": [
+      {
+        "text": "TCP/UDP 五元组",
+        "correct": true
+      },
+      {
+        "text": "HTTP 请求头",
+        "correct": false
+      },
+      {
+        "text": "应用层 URL 路径",
+        "correct": false
+      },
+      {
+        "text": "Cookie 内容",
+        "correct": false
+      }
+    ],
+    "explanation": "四层负载均衡工作于传输层，基于 IP 和端口等五元组信息决策，不解析应用层内容。HTTP 头、URL 和 Cookie 属于七层信息，因此其他选项错误。",
+    "id": "network-286",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "负载均衡与代理"
+  },
+  {
+    "type": "single",
+    "question": "关于透明代理，下列说法正确的是？",
+    "options": [
+      {
+        "text": "客户端需显式设置代理地址",
+        "correct": false
+      },
+      {
+        "text": "代理通过拦截网络流量实现，客户端无感知",
+        "correct": true
+      },
+      {
+        "text": "仅支持 HTTP 协议",
+        "correct": false
+      },
+      {
+        "text": "代理服务器必须与客户端在同一子网",
+        "correct": false
+      }
+    ],
+    "explanation": "透明代理通过网关重定向或策略路由拦截流量，客户端无需配置。客户端显式设置是普通代理特征；透明代理可支持多种协议，且不要求同子网。",
+    "id": "network-287",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "负载均衡与代理"
+  },
+  {
+    "type": "single",
+    "question": "在负载均衡中，源地址哈希算法的主要目的是？",
+    "options": [
+      {
+        "text": "保证同一客户端请求落到同一后端",
+        "correct": true
+      },
+      {
+        "text": "使各后端连接数严格相等",
+        "correct": false
+      },
+      {
+        "text": "优先选择响应最快的后端",
+        "correct": false
+      },
+      {
+        "text": "根据后端权重分配请求",
+        "correct": false
+      }
+    ],
+    "explanation": "源地址哈希根据客户端 IP 计算哈希值选择后端，实现会话保持。它不保证连接数严格相等，也不考虑响应时间或权重，故其他选项错误。",
+    "id": "network-288",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "负载均衡与代理"
+  },
+  {
+    "type": "single",
+    "question": "四层负载均衡的 NAT 转发模式中，负载均衡器需要做以下哪项操作？",
+    "options": [
+      {
+        "text": "仅修改源 MAC 地址",
+        "correct": false
+      },
+      {
+        "text": "修改目的 IP 地址并可能修改目的端口",
+        "correct": true
+      },
+      {
+        "text": "解析 HTTP 请求并重写 URL",
+        "correct": false
+      },
+      {
+        "text": "仅修改源 IP 地址",
+        "correct": false
+      }
+    ],
+    "explanation": "NAT 模式中负载均衡器将目的 IP 改为后端地址，可能改端口，并做反向转换。仅改 MAC 是 DR 模式特征；解析 HTTP 是七层功能；改源 IP 是 SNAT 场景。",
+    "id": "network-289",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "负载均衡与代理"
+  },
+  {
+    "type": "single",
+    "question": "HTTP 反向代理中，X-Forwarded-For 头的主要作用是？",
+    "options": [
+      {
+        "text": "标识代理服务器自身地址",
+        "correct": false
+      },
+      {
+        "text": "记录客户端原始 IP 地址",
+        "correct": true
+      },
+      {
+        "text": "指定后端服务器地址",
+        "correct": false
+      },
+      {
+        "text": "加密客户端与代理间的通信",
+        "correct": false
+      }
+    ],
+    "explanation": "X-Forwarded-For 用于追加客户端 IP，使后端获取真实来源。它不标识代理自身，不指定后端地址，也不提供加密功能，因此其他选项错误。",
+    "id": "network-290",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "负载均衡与代理"
+  },
+  {
+    "type": "single",
+    "question": "关于 LVS 的 TUN 模式，下列说法正确的是？",
+    "options": [
+      {
+        "text": "后端服务器需将响应经负载均衡器返回",
+        "correct": false
+      },
+      {
+        "text": "负载均衡器通过 IP 隧道将请求封装后发给后端",
+        "correct": true
+      },
+      {
+        "text": "要求负载均衡器与后端在同一广播域",
+        "correct": false
+      },
+      {
+        "text": "仅支持 UDP 协议",
+        "correct": false
+      }
+    ],
+    "explanation": "TUN 模式用 IP 隧道封装原请求发往后端，后端可直接回应客户端。后端无需响应经负载均衡器；不要求同广播域；支持 TCP 等多种协议。",
+    "id": "network-291",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "负载均衡与代理"
+  },
+  {
+    "type": "single",
+    "question": "在七层负载均衡中，基于 Cookie 实现会话保持的常见方式是？",
+    "options": [
+      {
+        "text": "负载均衡器插入或重写 Cookie 标识后端",
+        "correct": true
+      },
+      {
+        "text": "客户端浏览器自动选择后端",
+        "correct": false
+      },
+      {
+        "text": "后端服务器修改客户端 IP",
+        "correct": false
+      },
+      {
+        "text": "使用 DNS 轮询固定后端",
+        "correct": false
+      }
+    ],
+    "explanation": "七层负载均衡可解析 HTTP Cookie，插入或重写包含后端标识的 Cookie，后续请求据此定向。浏览器不选择后端；后端不能改客户端 IP；DNS 轮询不基于 Cookie。",
+    "id": "network-292",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "负载均衡与代理"
+  },
+  {
+    "type": "single",
+    "question": "关于负载均衡健康检查，下列说法错误的是？",
+    "options": [
+      {
+        "text": "健康检查可检测后端服务是否可用",
+        "correct": false
+      },
+      {
+        "text": "健康检查失败的后端通常会被移出调度",
+        "correct": false
+      },
+      {
+        "text": "健康检查失败的后端仍会继续接收调度流量",
+        "correct": true
+      },
+      {
+        "text": "健康检查间隔和超时会影响故障发现速度",
+        "correct": false
+      }
+    ],
+    "explanation": "健康检查用于探测后端服务是否可用；探测失败时，负载均衡器通常将节点从调度池中摘除，避免继续转发新请求，因此“失败后仍继续接收调度流量”是错误的。检查间隔与超时会影响故障发现和摘除的及时性。",
+    "id": "network-293",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "负载均衡与代理"
+  },
+  {
+    "type": "single",
+    "question": "客户端配置正向代理访问 HTTPS 网站时，代理通常能看到什么？",
+    "options": [
+      {
+        "text": "完整的 HTTP 请求头和响应体",
+        "correct": false
+      },
+      {
+        "text": "TLS 握手后的明文内容",
+        "correct": false
+      },
+      {
+        "text": "目的域名和端口等连接信息",
+        "correct": true
+      },
+      {
+        "text": "客户端与服务器的会话密钥",
+        "correct": false
+      }
+    ],
+    "explanation": "正向代理处理 HTTPS 时通常仅建立 TCP 隧道，只能看到目的域名、端口等连接信息，无法解密内容。完整请求头和明文内容需中间人解密；代理无法获得会话密钥。",
+    "id": "network-294",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "负载均衡与代理"
+  },
+  {
+    "type": "single",
+    "question": "以下哪种场景最适合使用七层负载均衡而非四层？",
+    "options": [
+      {
+        "text": "需要根据 URL 路径将请求分发到不同后端",
+        "correct": true
+      },
+      {
+        "text": "仅需按 TCP 端口转发数据库连接",
+        "correct": false
+      },
+      {
+        "text": "需要转发非 HTTP 的私有协议",
+        "correct": false
+      },
+      {
+        "text": "要求极低转发延迟且不解析内容",
+        "correct": false
+      }
+    ],
+    "explanation": "七层负载均衡能解析 HTTP 并基于 URL 路径路由，适合该场景。按 TCP 端口转发、非 HTTP 私有协议、极低延迟不解析内容均更适合四层。",
+    "id": "network-295",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "负载均衡与代理"
+  },
+  {
+    "type": "single",
+    "question": "在反向代理中，后端服务器看到的连接来源通常是？",
+    "options": [
+      {
+        "text": "客户端真实 IP",
+        "correct": false
+      },
+      {
+        "text": "反向代理的 IP 地址",
+        "correct": true
+      },
+      {
+        "text": "DNS 服务器 IP",
+        "correct": false
+      },
+      {
+        "text": "负载均衡算法生成的虚拟 IP",
+        "correct": false
+      }
+    ],
+    "explanation": "反向代理作为客户端与后端建连，后端看到的源 IP 通常是代理地址。真实客户端 IP 需通过 X-Forwarded-For 等头传递；DNS 服务器和虚拟 IP 不参与该连接。",
+    "id": "network-296",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "负载均衡与代理"
+  },
+  {
+    "type": "single",
+    "question": "加权轮询算法中，权重较高的后端服务器会怎样？",
+    "options": [
+      {
+        "text": "被分配更多请求",
+        "correct": true
+      },
+      {
+        "text": "被完全排除在调度外",
+        "correct": false
+      },
+      {
+        "text": "仅处理健康检查请求",
+        "correct": false
+      },
+      {
+        "text": "始终第一个被选择",
+        "correct": false
+      }
+    ],
+    "explanation": "加权轮询按权重比例分配请求，权重越高获得请求越多。权重高不等于排除或仅健康检查；也不保证始终第一个被选，因此其他选项错误。",
+    "id": "network-297",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "负载均衡与代理"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些属于负载均衡的常见调度算法？",
+    "options": [
+      {
+        "text": "轮询",
+        "correct": true
+      },
+      {
+        "text": "最少连接",
+        "correct": true
+      },
+      {
+        "text": "源地址哈希",
+        "correct": true
+      },
+      {
+        "text": "冒泡排序",
+        "correct": false
+      }
+    ],
+    "explanation": "轮询、最少连接和源地址哈希均为常见负载均衡算法。冒泡排序是排序算法，不属于请求调度方法，因此为错误选项。",
+    "id": "network-298",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "负载均衡与代理"
+  },
+  {
+    "type": "multiple",
+    "question": "关于正向代理与反向代理的区别，以下说法正确的有？",
+    "options": [
+      {
+        "text": "正向代理代表客户端访问外部资源",
+        "correct": true
+      },
+      {
+        "text": "反向代理代表服务器接收客户端请求",
+        "correct": true
+      },
+      {
+        "text": "正向代理通常由客户端显式配置",
+        "correct": true
+      },
+      {
+        "text": "反向代理必须部署在客户端本地",
+        "correct": false
+      }
+    ],
+    "explanation": "正向代理面向客户端、可显式配置；反向代理面向服务器、接收外部请求。反向代理通常部署在服务端而非客户端本地，故最后一项错误。",
+    "id": "network-299",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "负载均衡与代理"
+  },
+  {
+    "type": "multiple",
+    "question": "四层负载均衡可能使用的转发模式包括哪些？",
+    "options": [
+      {
+        "text": "NAT 模式",
+        "correct": true
+      },
+      {
+        "text": "DR 直接路由模式",
+        "correct": true
+      },
+      {
+        "text": "TUN 隧道模式",
+        "correct": true
+      },
+      {
+        "text": "基于 URL 重写模式",
+        "correct": false
+      }
+    ],
+    "explanation": "NAT、DR 和 TUN 均是四层负载均衡常见转发模式。基于 URL 重写需要解析应用层内容，属于七层功能，不是四层转发模式。",
+    "id": "network-300",
+    "tags": [
+      "计算机网络"
+    ],
+    "section": "负载均衡与代理"
+  }
+]

@@ -1,0 +1,8402 @@
+[
+  {
+    "type": "single",
+    "question": "进程与线程的主要区别是什么？",
+    "options": [
+      {
+        "text": "进程是资源分配的基本单位，线程是CPU调度的基本单位",
+        "correct": true
+      },
+      {
+        "text": "进程是CPU调度的基本单位，线程是资源分配的基本单位",
+        "correct": false
+      },
+      {
+        "text": "进程和线程都是资源分配的基本单位",
+        "correct": false
+      },
+      {
+        "text": "进程和线程都是CPU调度的基本单位",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项强调进程作为资源分配单位、线程作为调度单位。其他选项混淆了二者角色，这是操作系统经典定义，需清晰区分。",
+    "id": "os-001",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "进程与线程"
+  },
+  {
+    "type": "single",
+    "question": "同一进程内的多个线程共享哪些资源？",
+    "options": [
+      {
+        "text": "地址空间、全局变量、打开的文件",
+        "correct": true
+      },
+      {
+        "text": "栈指针、寄存器、程序计数器",
+        "correct": false
+      },
+      {
+        "text": "线程ID、错误返回码、信号屏蔽字",
+        "correct": false
+      },
+      {
+        "text": "栈、寄存器、程序计数器",
+        "correct": false
+      }
+    ],
+    "explanation": "线程共享进程的地址空间和全局资源，但每个线程有独立的栈、寄存器和程序计数器。选项B和D包含线程私有内容，C也含私有项。",
+    "id": "os-002",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "进程与线程"
+  },
+  {
+    "type": "single",
+    "question": "在支持线程的操作系统中，进程控制块（PCB）中通常不包含以下哪项？",
+    "options": [
+      {
+        "text": "线程的寄存器值",
+        "correct": true
+      },
+      {
+        "text": "进程ID",
+        "correct": false
+      },
+      {
+        "text": "进程状态",
+        "correct": false
+      },
+      {
+        "text": "内存管理信息",
+        "correct": false
+      }
+    ],
+    "explanation": "PCB存储进程级信息，而寄存器值属于线程上下文，通常保存在线程控制块（TCB）中。其他选项是PCB典型内容，需区分进程与线程控制块。",
+    "id": "os-003",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "进程与线程"
+  },
+  {
+    "type": "single",
+    "question": "以下哪种操作会导致进程从运行态变为阻塞态？",
+    "options": [
+      {
+        "text": "等待I/O完成",
+        "correct": true
+      },
+      {
+        "text": "时间片用完",
+        "correct": false
+      },
+      {
+        "text": "被更高优先级进程抢占",
+        "correct": false
+      },
+      {
+        "text": "进程执行完毕",
+        "correct": false
+      }
+    ],
+    "explanation": "等待I/O是主动阻塞。时间片用完或抢占导致就绪态，执行完毕导致终止态。需根据进程状态转换条件判断。",
+    "id": "os-004",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "进程与线程"
+  },
+  {
+    "type": "single",
+    "question": "在纯用户级线程模型与内核级线程模型的比较中，以下说法正确的是？",
+    "options": [
+      {
+        "text": "用户级线程的切换通常不需要内核介入",
+        "correct": true
+      },
+      {
+        "text": "内核级线程的调度完全由用户库完成",
+        "correct": false
+      },
+      {
+        "text": "纯用户级线程执行阻塞系统调用时，内核仍可调度同进程的其他用户级线程运行",
+        "correct": false
+      },
+      {
+        "text": "内核级线程中一个线程阻塞必然导致整个进程阻塞",
+        "correct": false
+      }
+    ],
+    "explanation": "纯用户级线程由用户库管理，线程切换通常无需陷入内核；但内核只识别进程，某线程执行阻塞系统调用会使整个进程阻塞，同进程其他用户级线程不能运行。内核级线程由内核调度，一个线程阻塞时内核可运行同进程其他线程，而不是由用户库调度。",
+    "id": "os-005",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "进程与线程"
+  },
+  {
+    "type": "single",
+    "question": "在Linux系统中，创建新进程通常使用哪个系统调用？",
+    "options": [
+      {
+        "text": "fork()",
+        "correct": true
+      },
+      {
+        "text": "pthread_create()",
+        "correct": false
+      },
+      {
+        "text": "exec()",
+        "correct": false
+      },
+      {
+        "text": "clone()",
+        "correct": false
+      }
+    ],
+    "explanation": "fork()创建新进程，pthread_create()创建线程，exec()替换进程映像，clone()可用于创建进程或线程但通常用于线程。fork是最典型进程创建调用。",
+    "id": "os-006",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "进程与线程"
+  },
+  {
+    "type": "single",
+    "question": "进程处于就绪态时，意味着？",
+    "options": [
+      {
+        "text": "进程已获得除CPU外的所有所需资源，等待调度",
+        "correct": true
+      },
+      {
+        "text": "进程正在等待某个事件发生",
+        "correct": false
+      },
+      {
+        "text": "进程正在CPU上执行",
+        "correct": false
+      },
+      {
+        "text": "进程已执行完毕",
+        "correct": false
+      }
+    ],
+    "explanation": "就绪态是进程具备运行条件，只差CPU。等待事件是阻塞态，正在执行是运行态，执行完毕是终止态。",
+    "id": "os-007",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "进程与线程"
+  },
+  {
+    "type": "single",
+    "question": "以下哪项是线程独立的资源？",
+    "options": [
+      {
+        "text": "栈",
+        "correct": true
+      },
+      {
+        "text": "代码段",
+        "correct": false
+      },
+      {
+        "text": "数据段",
+        "correct": false
+      },
+      {
+        "text": "打开的文件描述符",
+        "correct": false
+      }
+    ],
+    "explanation": "线程拥有独立的栈和寄存器上下文，而代码段、数据段、文件描述符由同进程内线程共享。需区分线程私有与共享资源。",
+    "id": "os-008",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "进程与线程"
+  },
+  {
+    "type": "single",
+    "question": "一个进程从阻塞态被唤醒后，通常进入什么状态？",
+    "options": [
+      {
+        "text": "就绪态",
+        "correct": true
+      },
+      {
+        "text": "运行态",
+        "correct": false
+      },
+      {
+        "text": "阻塞态",
+        "correct": false
+      },
+      {
+        "text": "终止态",
+        "correct": false
+      }
+    ],
+    "explanation": "阻塞态进程等待的事件发生后，变为就绪态，等待调度器分配CPU后才能运行。直接进入运行态通常不可能，除非采用特定调度策略但非一般情况。",
+    "id": "os-009",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "进程与线程"
+  },
+  {
+    "type": "single",
+    "question": "关于进程上下文切换，以下描述正确的是？",
+    "options": [
+      {
+        "text": "切换时需要保存当前进程的CPU寄存器状态",
+        "correct": true
+      },
+      {
+        "text": "切换开销比线程切换小",
+        "correct": false
+      },
+      {
+        "text": "切换只发生在时间片用完时",
+        "correct": false
+      },
+      {
+        "text": "切换不需要内核参与",
+        "correct": false
+      }
+    ],
+    "explanation": "上下文切换需保存和恢复寄存器等状态。进程切换涉及地址空间，开销比线程大；切换可由中断、阻塞等触发；必须由内核完成。",
+    "id": "os-010",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "进程与线程"
+  },
+  {
+    "type": "single",
+    "question": "以下哪个场景适合使用多线程而非多进程？",
+    "options": [
+      {
+        "text": "需要频繁共享大量数据并快速通信的任务",
+        "correct": true
+      },
+      {
+        "text": "需要高可靠性和故障隔离的任务",
+        "correct": false
+      },
+      {
+        "text": "不同任务需要独立地址空间的任务",
+        "correct": false
+      },
+      {
+        "text": "需要避免一个任务崩溃影响其他任务",
+        "correct": false
+      }
+    ],
+    "explanation": "多线程共享地址空间，通信高效；但隔离性差。多进程适合高可靠性和隔离需求。应根据共享与隔离权衡选择。",
+    "id": "os-011",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "进程与线程"
+  },
+  {
+    "type": "multiple",
+    "question": "下列哪些属于进程与线程的区别？",
+    "options": [
+      {
+        "text": "进程有独立的地址空间，线程共享所属进程的地址空间",
+        "correct": true
+      },
+      {
+        "text": "进程切换开销通常大于线程切换开销",
+        "correct": true
+      },
+      {
+        "text": "一个进程崩溃通常不会影响其他进程，而一个线程崩溃可能影响同进程的其他线程",
+        "correct": true
+      },
+      {
+        "text": "进程是CPU调度的基本单位，线程是资源分配的基本单位",
+        "correct": false
+      }
+    ],
+    "explanation": "前三项正确描述了地址空间、切换开销和故障影响。D项颠倒资源分配与调度单位，进程是资源分配单位，线程是调度单位。",
+    "id": "os-012",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "进程与线程"
+  },
+  {
+    "type": "multiple",
+    "question": "关于用户级线程与内核级线程，以下说法正确的有？",
+    "options": [
+      {
+        "text": "用户级线程的创建和切换开销较小",
+        "correct": true
+      },
+      {
+        "text": "内核级线程中一个线程阻塞不会导致整个进程阻塞",
+        "correct": true
+      },
+      {
+        "text": "用户级线程的调度由内核直接管理",
+        "correct": false
+      },
+      {
+        "text": "多对一模型可能因一个线程阻塞导致整个进程阻塞",
+        "correct": true
+      }
+    ],
+    "explanation": "用户级线程开销小，但调度靠用户库；内核级线程可独立阻塞。多对一模型中一个线程阻塞可能阻塞整个进程。C项错误，用户级线程调度不由内核管理。",
+    "id": "os-013",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "进程与线程"
+  },
+  {
+    "type": "multiple",
+    "question": "下列哪些操作可能引起进程切换？",
+    "options": [
+      {
+        "text": "当前进程时间片用完",
+        "correct": true
+      },
+      {
+        "text": "当前进程等待I/O",
+        "correct": true
+      },
+      {
+        "text": "当前进程创建新线程",
+        "correct": false
+      },
+      {
+        "text": "更高优先级进程就绪",
+        "correct": true
+      }
+    ],
+    "explanation": "时间片用完、等待I/O、高优先级进程就绪均可导致调度器切换进程。创建线程不必然引起进程切换，除非同时触发调度。",
+    "id": "os-014",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "进程与线程"
+  },
+  {
+    "type": "multiple",
+    "question": "关于Linux的clone()系统调用，以下说法正确的有？",
+    "options": [
+      {
+        "text": "clone()可用于创建新进程或新线程",
+        "correct": true
+      },
+      {
+        "text": "通过指定CLONE_VM标志可共享地址空间",
+        "correct": true
+      },
+      {
+        "text": "clone()总是创建新进程",
+        "correct": false
+      },
+      {
+        "text": "clone()可指定共享文件描述符等资源",
+        "correct": true
+      }
+    ],
+    "explanation": "clone()灵活，通过标志控制共享资源，可创建进程或线程。CLONE_VM共享地址空间，CLONE_FILES共享文件描述符。C项错误，它也可创建线程。",
+    "id": "os-015",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "进程与线程"
+  },
+  {
+    "type": "single",
+    "question": "进程上下文切换恢复用户态指令执行流时，必须保存和恢复的核心CPU现场是什么？",
+    "options": [
+      {
+        "text": "进程的完整页表内容",
+        "correct": false
+      },
+      {
+        "text": "程序计数器与通用寄存器组",
+        "correct": true
+      },
+      {
+        "text": "进程打开的文件描述符表",
+        "correct": false
+      },
+      {
+        "text": "进程的信号处理函数指针表",
+        "correct": false
+      }
+    ],
+    "explanation": "恢复用户态指令执行流依赖保存和恢复CPU现场，其中程序计数器和通用寄存器是关键。页表基址寄存器在切换地址空间时会更新，但完整页表内容不需要随每次上下文切换保存和恢复；文件描述符表和信号处理表属于进程资源，不是恢复执行流的核心CPU现场。",
+    "id": "os-016",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "进程与线程"
+  },
+  {
+    "type": "single",
+    "question": "某进程执行系统调用读取磁盘文件时被阻塞，此时该进程的PCB通常被放入哪个队列？",
+    "options": [
+      {
+        "text": "就绪队列",
+        "correct": false
+      },
+      {
+        "text": "运行队列",
+        "correct": false
+      },
+      {
+        "text": "等待队列（阻塞队列）",
+        "correct": true
+      },
+      {
+        "text": "僵尸队列",
+        "correct": false
+      }
+    ],
+    "explanation": "进程因I/O等待进入阻塞态，PCB挂入对应事件的等待队列。就绪队列存放可运行进程，运行队列指当前占用CPU的进程，僵尸队列存放已终止但未回收的进程。",
+    "id": "os-017",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "进程与线程"
+  },
+  {
+    "type": "single",
+    "question": "一个多线程进程中的线程T1调用pthread_exit()退出，而进程中其他线程仍在运行。以下说法正确的是？",
+    "options": [
+      {
+        "text": "整个进程立即终止，所有线程被销毁",
+        "correct": false
+      },
+      {
+        "text": "仅T1终止，进程和其他线程继续运行",
+        "correct": true
+      },
+      {
+        "text": "T1进入僵尸态，等待其他线程回收",
+        "correct": false
+      },
+      {
+        "text": "操作系统自动将T1的资源并入主线程",
+        "correct": false
+      }
+    ],
+    "explanation": "pthread_exit使调用线程终止，不影响同进程其他线程。线程终止后资源由系统回收，无僵尸线程概念。进程终止需调用exit或主线程返回等。",
+    "id": "os-018",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "进程与线程"
+  },
+  {
+    "type": "single",
+    "question": "在Linux中，使用fork()创建子进程后，父子进程对同一全局变量count的修改结果如何？",
+    "options": [
+      {
+        "text": "父子进程共享同一份count，修改互相可见",
+        "correct": false
+      },
+      {
+        "text": "子进程继承count的副本，修改互不影响",
+        "correct": true
+      },
+      {
+        "text": "只有父进程能修改count，子进程只读",
+        "correct": false
+      },
+      {
+        "text": "count被复制到内核空间供双方访问",
+        "correct": false
+      }
+    ],
+    "explanation": "fork采用写时复制（COW），子进程获得父进程地址空间的独立副本，全局变量修改互不影响。共享内存需显式使用shmget或mmap等机制。",
+    "id": "os-019",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "进程与线程"
+  },
+  {
+    "type": "single",
+    "question": "某系统采用用户级线程，一个线程执行阻塞式read系统调用。对进程内其他线程的影响是？",
+    "options": [
+      {
+        "text": "其他线程可继续运行，因为内核直接调度线程",
+        "correct": false
+      },
+      {
+        "text": "整个进程被阻塞，其他线程无法运行",
+        "correct": true
+      },
+      {
+        "text": "仅该线程被阻塞，内核切换到其他线程",
+        "correct": false
+      },
+      {
+        "text": "其他线程被迁移到其他进程继续执行",
+        "correct": false
+      }
+    ],
+    "explanation": "用户级线程由用户库管理，内核只感知进程。一个线程阻塞式系统调用会使整个进程阻塞，同进程其他线程均无法运行。内核级线程才能独立阻塞。",
+    "id": "os-020",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "进程与线程"
+  },
+  {
+    "type": "single",
+    "question": "进程P调用waitpid()等待其子进程结束。若子进程尚未终止，P的状态和waitpid()的行为是？",
+    "options": [
+      {
+        "text": "P保持运行态，waitpid()忙等待子进程结束",
+        "correct": false
+      },
+      {
+        "text": "P进入阻塞态，子进程终止后被唤醒并回收",
+        "correct": true
+      },
+      {
+        "text": "P立即返回错误，子进程稍后自动回收",
+        "correct": false
+      },
+      {
+        "text": "P转为僵尸态，等待子进程先退出",
+        "correct": false
+      }
+    ],
+    "explanation": "waitpid默认阻塞调用：子进程未终止时父进程进入阻塞态，子进程终止后内核唤醒父进程并回收其PCB。忙等待非默认行为，僵尸态属于子进程。",
+    "id": "os-021",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "进程与线程"
+  },
+  {
+    "type": "single",
+    "question": "关于进程的写时复制（Copy-on-Write）机制，以下描述正确的是？",
+    "options": [
+      {
+        "text": "fork时立即复制父进程全部物理页",
+        "correct": false
+      },
+      {
+        "text": "任一进程写共享页时才复制该页",
+        "correct": true
+      },
+      {
+        "text": "写时复制仅用于线程间共享数据",
+        "correct": false
+      },
+      {
+        "text": "写时复制导致父子进程写操作互相可见",
+        "correct": false
+      }
+    ],
+    "explanation": "COW在fork时让父子共享物理页并标记只读，任一方写入触发缺页异常，内核复制该页后恢复可写。它减少复制开销，写操作仍相互隔离。",
+    "id": "os-022",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "进程与线程"
+  },
+  {
+    "type": "single",
+    "question": "某进程的时间片用完，但仍有可执行代码待运行。调度器将该进程置于何种状态？",
+    "options": [
+      {
+        "text": "阻塞态",
+        "correct": false
+      },
+      {
+        "text": "就绪态",
+        "correct": true
+      },
+      {
+        "text": "终止态",
+        "correct": false
+      },
+      {
+        "text": "新建态",
+        "correct": false
+      }
+    ],
+    "explanation": "时间片用完并非等待事件，进程仍具备运行条件，只是暂时让出CPU，应进入就绪态等待下次调度。阻塞态需等待I/O或信号等事件。",
+    "id": "os-023",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "进程与线程"
+  },
+  {
+    "type": "single",
+    "question": "在Linux中，fork创建的新进程继承父进程的文件描述符，父子进程对应的文件描述符表项指向同一打开文件表项，这意味着？",
+    "options": [
+      {
+        "text": "父子进程各自拥有独立的文件偏移量",
+        "correct": false
+      },
+      {
+        "text": "父子进程共享同一文件偏移量",
+        "correct": true
+      },
+      {
+        "text": "父进程关闭文件后子进程描述符自动失效",
+        "correct": false
+      },
+      {
+        "text": "必须使用O_CLOEXEC标志才能共享偏移量",
+        "correct": false
+      }
+    ],
+    "explanation": "fork后子进程获得父进程文件描述符表的副本，但两个表项指向同一打开文件表项，因此共享文件偏移量和状态标志。关闭某一方的描述符只减少引用计数，不影响另一方的描述符。O_CLOEXEC只控制exec时是否关闭描述符。",
+    "id": "os-024",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "进程与线程"
+  },
+  {
+    "type": "single",
+    "question": "一个进程调用execve()成功加载新程序后，以下哪项描述正确？",
+    "options": [
+      {
+        "text": "进程ID保持不变，用户栈和代码段被替换",
+        "correct": true
+      },
+      {
+        "text": "进程创建新进程，旧进程变为父进程",
+        "correct": false
+      },
+      {
+        "text": "原进程的线程全部保留并继续运行",
+        "correct": false
+      },
+      {
+        "text": "文件描述符表被全部关闭且不可继承",
+        "correct": false
+      }
+    ],
+    "explanation": "execve在当前进程上下文中替换程序映像，PID不变，代码段、数据段、栈等被新程序覆盖。原多线程仅执行线程保留。无FD_CLOEXEC标志的描述符保持打开。",
+    "id": "os-025",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "进程与线程"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些情况会导致进程从运行态切换到其他状态？",
+    "options": [
+      {
+        "text": "时间片用完",
+        "correct": true
+      },
+      {
+        "text": "请求I/O而阻塞",
+        "correct": true
+      },
+      {
+        "text": "调用fork创建子进程",
+        "correct": false
+      },
+      {
+        "text": "等待的I/O操作完成",
+        "correct": false
+      }
+    ],
+    "explanation": "时间片用完进入就绪态，请求I/O进入阻塞态，均离开运行态。fork后父进程通常继续运行；等待I/O完成是阻塞态到就绪态，不涉及运行态。",
+    "id": "os-026",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "进程与线程"
+  },
+  {
+    "type": "multiple",
+    "question": "关于同一进程内线程的同步与通信，以下说法正确的有？",
+    "options": [
+      {
+        "text": "线程间可直接读写共享全局变量",
+        "correct": true
+      },
+      {
+        "text": "互斥锁可用于保护共享数据",
+        "correct": true
+      },
+      {
+        "text": "线程间通信必须经过内核系统调用",
+        "correct": false
+      },
+      {
+        "text": "条件变量可替代互斥锁实现原子计数",
+        "correct": false
+      }
+    ],
+    "explanation": "同进程线程共享地址空间，可直接访问全局变量，并用互斥锁等用户态同步原语保护。线程通信无需内核中转。条件变量需配合互斥锁，不能单独保证原子性。",
+    "id": "os-027",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "进程与线程"
+  },
+  {
+    "type": "multiple",
+    "question": "在支持内核级线程的系统中，以下哪些资源由同一进程内的线程独立拥有？",
+    "options": [
+      {
+        "text": "线程ID",
+        "correct": true
+      },
+      {
+        "text": "寄存器上下文",
+        "correct": true
+      },
+      {
+        "text": "进程地址空间",
+        "correct": false
+      },
+      {
+        "text": "已打开文件描述符表",
+        "correct": false
+      }
+    ],
+    "explanation": "线程独立拥有线程ID、寄存器上下文、栈和线程局部存储等。地址空间、文件描述符表、信号处理方式等由进程内线程共享。",
+    "id": "os-028",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "进程与线程"
+  },
+  {
+    "type": "multiple",
+    "question": "某服务器程序需要同时处理大量并发连接，以下设计考虑合理的有？",
+    "options": [
+      {
+        "text": "为每个连接创建线程，需控制线程数量防止资源耗尽",
+        "correct": true
+      },
+      {
+        "text": "使用线程池复用工作线程以减少创建开销",
+        "correct": true
+      },
+      {
+        "text": "多个线程共享同一监听套接字时必须由应用层加锁，否则同一连接会被多个线程重复接受",
+        "correct": false
+      },
+      {
+        "text": "线程数越多，系统吞吐量必然线性增长",
+        "correct": false
+      }
+    ],
+    "explanation": "线程可提高并发，但数量过多会耗尽内存并增加调度开销；线程池可复用线程降低创建销毁开销。多个线程并发accept同一监听套接字是允许的，内核保证一个连接只交给一个accept调用，通常不需要应用层加锁。吞吐量受CPU、I/O和同步开销限制，不会随线程数线性增长。",
+    "id": "os-029",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "进程与线程"
+  },
+  {
+    "type": "multiple",
+    "question": "关于僵尸进程与孤儿进程，以下说法正确的有？",
+    "options": [
+      {
+        "text": "僵尸进程是已终止但父进程尚未回收的进程",
+        "correct": true
+      },
+      {
+        "text": "孤儿进程会被init或subreaper进程收养",
+        "correct": true
+      },
+      {
+        "text": "僵尸进程仍占用CPU资源参与调度",
+        "correct": false
+      },
+      {
+        "text": "父进程调用wait()可回收孤儿进程",
+        "correct": false
+      }
+    ],
+    "explanation": "僵尸进程保留PCB等待父进程wait回收，不参与调度。孤儿进程父进程先退出，被init或subreaper收养。wait只能回收调用者的直接子进程。",
+    "id": "os-030",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "进程与线程"
+  },
+  {
+    "type": "multiple",
+    "question": "在多级反馈队列中，为防止低优先级队列进程饥饿，常见机制包括哪些？",
+    "options": [
+      {
+        "text": "周期性将所有进程提升到最高优先级队列",
+        "correct": true
+      },
+      {
+        "text": "按累计CPU使用量降低进程优先级",
+        "correct": false
+      },
+      {
+        "text": "使用老化（aging）逐步提高等待过久进程的优先级",
+        "correct": true
+      },
+      {
+        "text": "永久禁止高优先级进程让出CPU",
+        "correct": false
+      }
+    ],
+    "explanation": "周期性提升和老化可让低优先级队列中等待过久的进程重新获得CPU，防止饥饿。按累计CPU使用量降低优先级是MLFQ的降级规则，可能加剧低优先级进程饥饿；永久禁止高优先级进程让出CPU破坏抢占与响应性，不是防饥饿机制。",
+    "id": "os-031",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "CPU调度"
+  },
+  {
+    "type": "single",
+    "question": "某系统采用时间片轮转调度，时间片为4ms，当前就绪队列依次为P1(需8ms)、P2(需3ms)、P3(需5ms)，均在同一时刻到达。从开始到P2首次完成需要多长时间？",
+    "options": [
+      {
+        "text": "7ms",
+        "correct": true
+      },
+      {
+        "text": "11ms",
+        "correct": false
+      },
+      {
+        "text": "15ms",
+        "correct": false
+      },
+      {
+        "text": "19ms",
+        "correct": false
+      }
+    ],
+    "explanation": "时间片轮转按就绪队列顺序执行。第一个时间片运行P1 4ms，随后P2运行3ms即完成，因此从开始到P2首次完成共4+3=7ms。之后才轮到P3等进程。",
+    "id": "os-032",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "CPU调度"
+  },
+  {
+    "type": "single",
+    "question": "关于先来先服务(FCFS)调度算法，下列说法正确的是？",
+    "options": [
+      {
+        "text": "FCFS对短作业有利，平均等待时间通常最小",
+        "correct": false
+      },
+      {
+        "text": "FCFS是非抢占式的，可能导致长作业后的短作业等待时间过长",
+        "correct": true
+      },
+      {
+        "text": "FCFS必须按进程优先级排序运行",
+        "correct": false
+      },
+      {
+        "text": "FCFS适合交互式系统，响应时间短",
+        "correct": false
+      }
+    ],
+    "explanation": "FCFS按到达顺序调度且不可抢占，对短作业不利，会产生护航效应；它不考虑优先级，也不适合交互式系统，响应时间可能很长。正确选项指出其非抢占及护航效应。",
+    "id": "os-033",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "CPU调度"
+  },
+  {
+    "type": "single",
+    "question": "某进程调度采用最短剩余时间优先(SRT)算法，当前有P1(剩余10ms)、P2(剩余4ms)、P3(剩余2ms)，若此时新到达P4(需6ms)，则接下来应调度哪个进程？",
+    "options": [
+      {
+        "text": "P1",
+        "correct": false
+      },
+      {
+        "text": "P2",
+        "correct": false
+      },
+      {
+        "text": "P3",
+        "correct": true
+      },
+      {
+        "text": "P4",
+        "correct": false
+      }
+    ],
+    "explanation": "SRT选择剩余运行时间最短者。P3剩余2ms最小，故调度P3。新到达P4需6ms，比P3长，不抢占。注意比较的是剩余时间而非总需时间。",
+    "id": "os-034",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "CPU调度"
+  },
+  {
+    "type": "single",
+    "question": "在优先级调度中，采用老化(aging)技术的主要目的是什么？",
+    "options": [
+      {
+        "text": "提高系统吞吐量",
+        "correct": false
+      },
+      {
+        "text": "防止低优先级进程长期得不到CPU",
+        "correct": true
+      },
+      {
+        "text": "减少上下文切换开销",
+        "correct": false
+      },
+      {
+        "text": "保证高优先级进程立即执行",
+        "correct": false
+      }
+    ],
+    "explanation": "老化通过逐步提高等待过久进程的优先级，避免低优先级进程饥饿。它与吞吐量、上下文切换无直接关系，也不是保证高优先级立即执行。",
+    "id": "os-035",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "CPU调度"
+  },
+  {
+    "type": "single",
+    "question": "下列哪种调度算法最可能导致进程饥饿？",
+    "options": [
+      {
+        "text": "时间片轮转",
+        "correct": false
+      },
+      {
+        "text": "先来先服务",
+        "correct": false
+      },
+      {
+        "text": "静态优先級调度",
+        "correct": true
+      },
+      {
+        "text": "多级队列且队列间固定时间片轮转",
+        "correct": false
+      }
+    ],
+    "explanation": "静态优先级调度中，低优先级进程可能因高优先级进程不断到达而长期得不到CPU，产生饥饿。FCFS按到达顺序不会饥饿；时间片轮转每个进程轮流执行。",
+    "id": "os-036",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "CPU调度"
+  },
+  {
+    "type": "single",
+    "question": "关于抢占式调度与非抢占式调度，下列描述正确的是？",
+    "options": [
+      {
+        "text": "非抢占式调度中，进程一旦运行就一直运行到完成或主动阻塞",
+        "correct": true
+      },
+      {
+        "text": "抢占式调度只能由时钟中断触发",
+        "correct": false
+      },
+      {
+        "text": "非抢占式调度一定比抢占式调度响应快",
+        "correct": false
+      },
+      {
+        "text": "抢占式调度不需要保存上下文",
+        "correct": false
+      }
+    ],
+    "explanation": "非抢占式调度中进程让出CPU只能因完成、阻塞或主动放弃；抢占可由时钟中断、更高优先级到达等触发；抢占需保存上下文，响应通常更快。",
+    "id": "os-037",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "CPU调度"
+  },
+  {
+    "type": "single",
+    "question": "某系统采用多级反馈队列，队列1时间片2ms，队列2时间片4ms，队列3采用FCFS。进程P在队列1用完2ms后未完成，应进入哪个队列？",
+    "options": [
+      {
+        "text": "队列1队尾",
+        "correct": false
+      },
+      {
+        "text": "队列2队尾",
+        "correct": true
+      },
+      {
+        "text": "队列3队尾",
+        "correct": false
+      },
+      {
+        "text": "直接完成",
+        "correct": false
+      }
+    ],
+    "explanation": "多级反馈队列中，进程在当前队列时间片内未完成则降入下一级队列的队尾。P在队列1未完成，应进入队列2队尾，而非留在原队列或直接完成。",
+    "id": "os-038",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "CPU调度"
+  },
+  {
+    "type": "single",
+    "question": "调度器进行上下文切换时，下列哪项通常不需要保存？",
+    "options": [
+      {
+        "text": "程序计数器",
+        "correct": false
+      },
+      {
+        "text": "通用寄存器",
+        "correct": false
+      },
+      {
+        "text": "进程的页表基址寄存器",
+        "correct": false
+      },
+      {
+        "text": "磁盘中该进程的可执行文件内容",
+        "correct": true
+      }
+    ],
+    "explanation": "上下文切换保存CPU现场，如PC、寄存器、页表基址等；磁盘中的可执行文件是静态程序映像，不属于运行时上下文，无需在切换时保存。",
+    "id": "os-039",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "CPU调度"
+  },
+  {
+    "type": "single",
+    "question": "关于时间片轮转调度中时间片大小的选择，下列说法正确的是？",
+    "options": [
+      {
+        "text": "时间片越小，上下文切换开销占比越大",
+        "correct": true
+      },
+      {
+        "text": "时间片越大，系统响应时间一定越短",
+        "correct": false
+      },
+      {
+        "text": "时间片应无限大以消除切换开销",
+        "correct": false
+      },
+      {
+        "text": "时间片大小与进程数量无关",
+        "correct": false
+      }
+    ],
+    "explanation": "时间片过小会导致频繁上下文切换，开销占比升高；过大则退化为FCFS，响应变差。时间片需折中，且与就绪进程数有关。",
+    "id": "os-040",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "CPU调度"
+  },
+  {
+    "type": "single",
+    "question": "某进程的到达时间为0，服务时间为6ms，在FCFS下若其前面有两个进程分别服务3ms和2ms，则该进程的周转时间是多少？",
+    "options": [
+      {
+        "text": "6ms",
+        "correct": false
+      },
+      {
+        "text": "11ms",
+        "correct": true
+      },
+      {
+        "text": "5ms",
+        "correct": false
+      },
+      {
+        "text": "8ms",
+        "correct": false
+      }
+    ],
+    "explanation": "周转时间=完成时间-到达时间。前面两进程共耗时3+2=5ms，该进程从5ms开始运行6ms，完成于11ms，到达0，故周转时间11ms。",
+    "id": "os-041",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "CPU调度"
+  },
+  {
+    "type": "single",
+    "question": "实时调度中，若任务集可调度，下列哪项是必要条件？",
+    "options": [
+      {
+        "text": "CPU利用率不超过100%",
+        "correct": true
+      },
+      {
+        "text": "所有任务周期相同",
+        "correct": false
+      },
+      {
+        "text": "所有任务优先级相同",
+        "correct": false
+      },
+      {
+        "text": "必须使用时间片轮转",
+        "correct": false
+      }
+    ],
+    "explanation": "任何可调度任务集的CPU利用率必然不超过1，这是必要条件但非充分条件。任务周期可不同，优先级通常不同，实时调度不要求时间片轮转。",
+    "id": "os-042",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "CPU调度"
+  },
+  {
+    "type": "single",
+    "question": "在操作系统的CPU调度中，调度程序（dispatcher）的主要职责是什么？",
+    "options": [
+      {
+        "text": "选择下一个要执行的进程",
+        "correct": false
+      },
+      {
+        "text": "完成进程切换时的上下文保存与恢复",
+        "correct": true
+      },
+      {
+        "text": "决定进程优先级的高低",
+        "correct": false
+      },
+      {
+        "text": "管理进程的创建与终止",
+        "correct": false
+      }
+    ],
+    "explanation": "调度程序负责实际执行进程切换，包括保存当前进程上下文、恢复下一个进程上下文并移交CPU。选择下一个进程由调度器（scheduler）完成，优先级决定和进程创建管理不属于调度程序职责。",
+    "id": "os-043",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "CPU调度"
+  },
+  {
+    "type": "single",
+    "question": "下列关于非抢占式调度算法的描述，正确的是？",
+    "options": [
+      {
+        "text": "进程一旦获得CPU就会一直运行直到完成或主动放弃",
+        "correct": true
+      },
+      {
+        "text": "高优先级进程可以随时中断低优先级进程",
+        "correct": false
+      },
+      {
+        "text": "时间片用完时操作系统会强制切换进程",
+        "correct": false
+      },
+      {
+        "text": "非抢占式调度一定比抢占式调度响应更快",
+        "correct": false
+      }
+    ],
+    "explanation": "非抢占式调度中，进程获得CPU后不会被强制剥夺，直到运行结束或主动阻塞。抢占式才允许高优先级中断或时间片到期强制切换，且非抢占式通常响应更慢。",
+    "id": "os-044",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "CPU调度"
+  },
+  {
+    "type": "single",
+    "question": "某系统采用先来先服务（FCFS）调度，有P1、P2、P3三个进程同时到达，服务时间分别为8ms、4ms、2ms。若按P1、P2、P3顺序执行，则平均周转时间是多少？",
+    "options": [
+      {
+        "text": "8ms",
+        "correct": false
+      },
+      {
+        "text": "10ms",
+        "correct": false
+      },
+      {
+        "text": "11.33ms",
+        "correct": true
+      },
+      {
+        "text": "14ms",
+        "correct": false
+      }
+    ],
+    "explanation": "同时到达时周转时间等于完成时间。完成时刻依次为8ms、12ms、14ms，周转时间之和为34ms，平均为34/3≈11.33ms。",
+    "id": "os-045",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "CPU调度"
+  },
+  {
+    "type": "single",
+    "question": "在时间片轮转（RR）调度中，若时间片设置过大，会导致什么现象？",
+    "options": [
+      {
+        "text": "调度开销显著增加",
+        "correct": false
+      },
+      {
+        "text": "退化为先来先服务（FCFS）算法",
+        "correct": true
+      },
+      {
+        "text": "进程饥饿风险增大",
+        "correct": false
+      },
+      {
+        "text": "系统吞吐量必然下降",
+        "correct": false
+      }
+    ],
+    "explanation": "当时间片过大时，每个进程几乎都能在一个时间片内完成，轮转特性消失，算法行为趋近于FCFS。时间片过小才会增加调度开销，RR本身不会导致饥饿。",
+    "id": "os-046",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "CPU调度"
+  },
+  {
+    "type": "single",
+    "question": "某系统采用最短作业优先（SJF）调度，有四个进程同时到达，服务时间分别为6ms、2ms、8ms、3ms。若按SJF执行，第三个被调度的进程服务时间是多少？",
+    "options": [
+      {
+        "text": "2ms",
+        "correct": false
+      },
+      {
+        "text": "3ms",
+        "correct": false
+      },
+      {
+        "text": "6ms",
+        "correct": true
+      },
+      {
+        "text": "8ms",
+        "correct": false
+      }
+    ],
+    "explanation": "SJF按服务时间升序调度：2ms、3ms、6ms、8ms，因此第三个调度的是服务时间为6ms的进程。注意区分执行顺序与进程编号。",
+    "id": "os-047",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "CPU调度"
+  },
+  {
+    "type": "single",
+    "question": "在优先级调度中，若采用静态优先级且不采用老化机制，可能导致什么问题？",
+    "options": [
+      {
+        "text": "高优先级进程长期等待",
+        "correct": false
+      },
+      {
+        "text": "低优先级进程饥饿",
+        "correct": true
+      },
+      {
+        "text": "系统吞吐量急剧下降",
+        "correct": false
+      },
+      {
+        "text": "上下文切换次数增加",
+        "correct": false
+      }
+    ],
+    "explanation": "静态优先级下，低优先级进程可能因不断有高优先级进程到达而长期得不到CPU，导致饥饿。老化机制通过动态提升等待进程优先级来缓解此问题。",
+    "id": "os-048",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "CPU调度"
+  },
+  {
+    "type": "single",
+    "question": "关于抢占式调度，下列说法正确的是？",
+    "options": [
+      {
+        "text": "只能发生在进程由运行态转为阻塞态时",
+        "correct": false
+      },
+      {
+        "text": "可发生在时间片用完或更高优先级进程到达时",
+        "correct": true
+      },
+      {
+        "text": "抢占式调度不会增加上下文切换开销",
+        "correct": false
+      },
+      {
+        "text": "所有实时系统都必须采用非抢占式调度",
+        "correct": false
+      }
+    ],
+    "explanation": "抢占式调度可在时间片到期或更高优先级进程就绪时强制切换CPU。它不仅限于阻塞时，且会增加上下文切换开销，实时系统也可采用抢占式。",
+    "id": "os-049",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "CPU调度"
+  },
+  {
+    "type": "single",
+    "question": "某系统采用多级反馈队列（MLFQ），队列1时间片为2ms，队列2为4ms。进程P在队列1运行2ms后未完成，接下来会进入哪个队列？",
+    "options": [
+      {
+        "text": "继续留在队列1",
+        "correct": false
+      },
+      {
+        "text": "进入队列2",
+        "correct": true
+      },
+      {
+        "text": "进入队列3",
+        "correct": false
+      },
+      {
+        "text": "直接被终止",
+        "correct": false
+      }
+    ],
+    "explanation": "MLFQ中，进程在当前队列时间片用完仍未完成时，通常会被降入下一级队列。因此P从队列1降入队列2，而不是继续留在原队列或被终止。",
+    "id": "os-050",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "CPU调度"
+  },
+  {
+    "type": "single",
+    "question": "在CPU调度中，周转时间是指什么？",
+    "options": [
+      {
+        "text": "进程等待CPU的时间",
+        "correct": false
+      },
+      {
+        "text": "进程从提交到完成所经历的时间",
+        "correct": true
+      },
+      {
+        "text": "进程实际占用CPU的时间",
+        "correct": false
+      },
+      {
+        "text": "进程被阻塞的时间",
+        "correct": false
+      }
+    ],
+    "explanation": "周转时间定义为进程从提交时刻到完成时刻的时间间隔，包括等待时间、执行时间和阻塞时间。等待时间仅指在就绪队列中等待的时间。",
+    "id": "os-051",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "CPU调度"
+  },
+  {
+    "type": "single",
+    "question": "某进程到达时间为0，服务时间为5ms。在非抢占式SJF调度中，若其之前有两个进程分别服务2ms和3ms，则该进程的周转时间是多少？",
+    "options": [
+      {
+        "text": "5ms",
+        "correct": false
+      },
+      {
+        "text": "7ms",
+        "correct": false
+      },
+      {
+        "text": "10ms",
+        "correct": true
+      },
+      {
+        "text": "12ms",
+        "correct": false
+      }
+    ],
+    "explanation": "该进程在时刻0到达，前两个进程共执行2+3=5ms，因此它在时刻5开始执行，时刻10完成。周转时间=完成时刻-到达时刻=10-0=10ms。",
+    "id": "os-052",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "CPU调度"
+  },
+  {
+    "type": "single",
+    "question": "在实时调度中，速率单调调度（RMS）适用于什么类型的任务集？",
+    "options": [
+      {
+        "text": "周期任务且截止时间等于周期",
+        "correct": true
+      },
+      {
+        "text": "非周期任务且截止时间任意",
+        "correct": false
+      },
+      {
+        "text": "所有任务优先级相同",
+        "correct": false
+      },
+      {
+        "text": "任务执行时间可无限长",
+        "correct": false
+      }
+    ],
+    "explanation": "RMS是一种静态优先级调度算法，适用于周期任务，且假设任务截止时间等于其周期。优先级按周期长短分配，周期越短优先级越高。",
+    "id": "os-053",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "CPU调度"
+  },
+  {
+    "type": "multiple",
+    "question": "下列哪些因素会影响时间片轮转调度算法的性能？",
+    "options": [
+      {
+        "text": "时间片的大小",
+        "correct": true
+      },
+      {
+        "text": "就绪队列中进程的数量",
+        "correct": true
+      },
+      {
+        "text": "进程的上下文切换开销",
+        "correct": true
+      },
+      {
+        "text": "进程的优先级高低",
+        "correct": false
+      }
+    ],
+    "explanation": "RR性能受时间片大小、就绪进程数量和上下文切换开销影响。时间片过小导致切换频繁，过大则趋近FCFS。RR本身不依赖优先级，因此优先级高低不影响其性能。",
+    "id": "os-054",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "CPU调度"
+  },
+  {
+    "type": "multiple",
+    "question": "关于最短剩余时间优先（SRTF）调度，下列说法正确的有？",
+    "options": [
+      {
+        "text": "它是抢占式的调度算法",
+        "correct": true
+      },
+      {
+        "text": "它总是选择剩余执行时间最短的进程",
+        "correct": true
+      },
+      {
+        "text": "它可能导致长进程饥饿",
+        "correct": true
+      },
+      {
+        "text": "它保证所有进程的周转时间最短",
+        "correct": false
+      }
+    ],
+    "explanation": "SRTF是SJF的抢占式版本，每次选择剩余时间最短的进程，可能导致长进程饥饿。它优化平均周转时间，但不能保证每个进程的周转时间都最短。",
+    "id": "os-055",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "CPU调度"
+  },
+  {
+    "type": "multiple",
+    "question": "在CPU调度中，下列哪些属于调度算法可能追求的目标？",
+    "options": [
+      {
+        "text": "最大化CPU利用率",
+        "correct": true
+      },
+      {
+        "text": "最小化平均周转时间",
+        "correct": true
+      },
+      {
+        "text": "最小化响应时间",
+        "correct": true
+      },
+      {
+        "text": "最大化上下文切换次数",
+        "correct": false
+      }
+    ],
+    "explanation": "调度目标包括提高CPU利用率、减少平均周转时间和响应时间等。上下文切换次数应尽量减少而非最大化，因为切换本身有开销。",
+    "id": "os-056",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "CPU调度"
+  },
+  {
+    "type": "multiple",
+    "question": "关于多级反馈队列（MLFQ）调度，下列描述正确的有？",
+    "options": [
+      {
+        "text": "队列优先级通常从高到低排列",
+        "correct": true
+      },
+      {
+        "text": "进程可在不同队列之间移动",
+        "correct": true
+      },
+      {
+        "text": "高优先级队列通常分配较小的时间片",
+        "correct": true
+      },
+      {
+        "text": "所有队列必须采用相同的时间片",
+        "correct": false
+      }
+    ],
+    "explanation": "MLFQ设置多个优先级队列，高优先级队列时间片较小，进程可因用完时间片而降级，也可因等待过久而升级。各队列时间片通常不同，因此“必须相同”错误。",
+    "id": "os-057",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "CPU调度"
+  },
+  {
+    "type": "single",
+    "question": "某系统采用非抢占式最短作业优先调度，四个进程几乎同时到达，服务时间分别为7ms、3ms、5ms、1ms。若忽略切换开销，平均周转时间约为多少？",
+    "options": [
+      {
+        "text": "6.5ms",
+        "correct": false
+      },
+      {
+        "text": "7.5ms",
+        "correct": true
+      },
+      {
+        "text": "9ms",
+        "correct": false
+      },
+      {
+        "text": "11ms",
+        "correct": false
+      }
+    ],
+    "explanation": "非抢占式最短作业优先按服务时间升序执行：1ms、3ms、5ms、7ms。完成时刻依次为1ms、4ms、9ms、16ms，周转时间之和为30ms，平均为30/4=7.5ms。",
+    "id": "os-058",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "CPU调度"
+  },
+  {
+    "type": "single",
+    "question": "某交互式系统采用时间片轮转调度，时间片为10ms，进程P已连续运行了3个时间片但尚未完成，此时其剩余服务时间为15ms。若不考虑优先级变化，P下一次被调度前通常处于什么状态？",
+    "options": [
+      {
+        "text": "等待状态，等待I/O完成",
+        "correct": false
+      },
+      {
+        "text": "就绪状态，排在就绪队列尾部",
+        "correct": true
+      },
+      {
+        "text": "运行状态，继续占用CPU",
+        "correct": false
+      },
+      {
+        "text": "终止状态，释放全部资源",
+        "correct": false
+      }
+    ],
+    "explanation": "时间片轮转中，进程时间片用尽仍未完成时被剥夺CPU，转入就绪队列尾部等待下一次调度。它并未等待I/O，也未终止，更不会继续占用CPU。",
+    "id": "os-059",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "CPU调度"
+  },
+  {
+    "type": "single",
+    "question": "某实时系统采用速率单调调度，任务T1周期20ms、执行时间4ms，任务T2周期50ms、执行时间10ms。若不考虑阻塞和切换开销，该系统是否可调度？",
+    "options": [
+      {
+        "text": "可调度，因为CPU总利用率为40%",
+        "correct": false
+      },
+      {
+        "text": "可调度，因为利用率不超过速率单调调度的充分条件",
+        "correct": true
+      },
+      {
+        "text": "不可调度，因为T2执行时间超过T1周期",
+        "correct": false
+      },
+      {
+        "text": "不可调度，因为两个任务周期不同",
+        "correct": false
+      }
+    ],
+    "explanation": "利用率为4/20+10/50=0.2+0.2=0.4。n=2时RMS利用率上界为2(2^(1/2)-1)≈0.828，0.4低于上界，满足充分条件，故可调度。注意上界是充分非必要条件，但本题利用率明显较低，结论成立。",
+    "id": "os-060",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "CPU调度"
+  },
+  {
+    "type": "single",
+    "question": "在单处理器系统中，下列哪种情况可能导致死锁？",
+    "options": [
+      {
+        "text": "一个进程在释放其占用的资源后再次请求同一资源",
+        "correct": false
+      },
+      {
+        "text": "两个进程互相等待对方持有的资源",
+        "correct": true
+      },
+      {
+        "text": "进程在等待I/O时被抢占",
+        "correct": false
+      },
+      {
+        "text": "进程释放资源后再次请求",
+        "correct": false
+      }
+    ],
+    "explanation": "死锁需要多个条件同时成立，其中循环等待是典型表现。两个进程各自持有对方所需的资源并互相等待，会形成资源等待环路，可能导致死锁。释放资源后再请求同一资源不会形成这种环路；等待I/O时被抢占也不必然导致死锁。",
+    "id": "os-061",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "同步与互斥"
+  },
+  {
+    "type": "single",
+    "question": "关于信号量，以下说法正确的是？",
+    "options": [
+      {
+        "text": "信号量的值可以任意修改",
+        "correct": false
+      },
+      {
+        "text": "P操作可能使进程阻塞",
+        "correct": true
+      },
+      {
+        "text": "V操作可能使进程阻塞",
+        "correct": false
+      },
+      {
+        "text": "信号量只能用于互斥",
+        "correct": false
+      }
+    ],
+    "explanation": "P操作（wait）在信号量值小于等于0时可能阻塞进程；V操作（signal）通常唤醒等待进程，不会阻塞。信号量可用于互斥和同步。",
+    "id": "os-062",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "同步与互斥"
+  },
+  {
+    "type": "single",
+    "question": "在生产者-消费者问题中，若缓冲区大小为n，用于同步的信号量empty的初值应为？",
+    "options": [
+      {
+        "text": "0",
+        "correct": false
+      },
+      {
+        "text": "1",
+        "correct": false
+      },
+      {
+        "text": "n",
+        "correct": true
+      },
+      {
+        "text": "n-1",
+        "correct": false
+      }
+    ],
+    "explanation": "empty表示空闲缓冲区数量，初值应为缓冲区大小n；full初值为0，mutex初值为1。",
+    "id": "os-063",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "同步与互斥"
+  },
+  {
+    "type": "single",
+    "question": "在单处理器系统中，以下哪种机制不能用于实现互斥？",
+    "options": [
+      {
+        "text": "关中断",
+        "correct": false
+      },
+      {
+        "text": "Peterson算法",
+        "correct": false
+      },
+      {
+        "text": "信号量",
+        "correct": false
+      },
+      {
+        "text": "轮转调度",
+        "correct": true
+      }
+    ],
+    "explanation": "单处理器中关中断可防止进程切换进入临界区；Peterson算法和信号量都可提供互斥。轮转调度是CPU调度策略，不直接提供临界区互斥机制。",
+    "id": "os-064",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "同步与互斥"
+  },
+  {
+    "type": "single",
+    "question": "若系统中有5个并发进程共享某类资源，每个进程最多需要2个资源，则系统不会发生死锁的最小资源数是？",
+    "options": [
+      {
+        "text": "5",
+        "correct": false
+      },
+      {
+        "text": "6",
+        "correct": true
+      },
+      {
+        "text": "9",
+        "correct": false
+      },
+      {
+        "text": "10",
+        "correct": false
+      }
+    ],
+    "explanation": "最坏情况下，每个进程先占用1个资源并等待第2个资源。若资源总数为5，所有进程各占1个资源后全部等待，形成死锁；若资源总数为6，至少有一个进程能取得第2个资源并完成，随后释放资源，其他进程也能依次完成。因此不会发生死锁的最小资源数为 n×(m-1)+1 = 5×(2-1)+1 = 6。",
+    "id": "os-065",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "同步与互斥"
+  },
+  {
+    "type": "single",
+    "question": "关于管程，以下说法错误的是？",
+    "options": [
+      {
+        "text": "管程内的数据只能被管程内的过程访问",
+        "correct": false
+      },
+      {
+        "text": "管程保证了进程互斥地进入管程",
+        "correct": false
+      },
+      {
+        "text": "管程中可以使用条件变量进行同步",
+        "correct": false
+      },
+      {
+        "text": "管程必须由编译器实现，不能由程序员实现",
+        "correct": true
+      }
+    ],
+    "explanation": "管程可以由程序员使用语言机制实现，并非必须编译器实现。其他选项均为管程的正确特性。",
+    "id": "os-066",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "同步与互斥"
+  },
+  {
+    "type": "single",
+    "question": "下列哪项是优先级反转发生的直接原因？",
+    "options": [
+      {
+        "text": "高优先级进程等待低优先级进程持有的锁",
+        "correct": true
+      },
+      {
+        "text": "低优先级进程等待高优先级进程释放CPU",
+        "correct": false
+      },
+      {
+        "text": "高优先级进程直接抢占正在运行的低优先级进程",
+        "correct": false
+      },
+      {
+        "text": "低优先级进程长期得不到调度",
+        "correct": false
+      }
+    ],
+    "explanation": "优先级反转的直接原因是高优先级进程所需的资源被低优先级进程持有，导致高优先级进程被阻塞；若中优先级进程又抢占低优先级进程，会延长阻塞时间。高优先级进程直接抢占低优先级进程属于正常抢占，不会单独造成优先级反转；长期得不到调度属于饥饿。",
+    "id": "os-067",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "同步与互斥"
+  },
+  {
+    "type": "single",
+    "question": "在读者-写者问题中，若要求写者优先，则当有写者等待时，新的读者应该？",
+    "options": [
+      {
+        "text": "允许进入",
+        "correct": false
+      },
+      {
+        "text": "等待",
+        "correct": true
+      },
+      {
+        "text": "立即唤醒写者",
+        "correct": false
+      },
+      {
+        "text": "与写者竞争",
+        "correct": false
+      }
+    ],
+    "explanation": "写者优先策略下，一旦有写者等待，后续读者必须等待，以避免写者饥饿。",
+    "id": "os-068",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "同步与互斥"
+  },
+  {
+    "type": "single",
+    "question": "关于自旋锁，以下说法正确的是？",
+    "options": [
+      {
+        "text": "自旋锁适用于长时间等待",
+        "correct": false
+      },
+      {
+        "text": "自旋锁在单CPU上通常低效",
+        "correct": true
+      },
+      {
+        "text": "自旋锁会导致进程睡眠",
+        "correct": false
+      },
+      {
+        "text": "自旋锁不能保证互斥",
+        "correct": false
+      }
+    ],
+    "explanation": "自旋锁在等待时忙式轮询，适合短临界区；在单CPU上，自旋会浪费CPU时间，通常低效。",
+    "id": "os-069",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "同步与互斥"
+  },
+  {
+    "type": "single",
+    "question": "以下哪个是死锁预防措施？",
+    "options": [
+      {
+        "text": "银行家算法",
+        "correct": false
+      },
+      {
+        "text": "资源有序分配法",
+        "correct": true
+      },
+      {
+        "text": "死锁检测",
+        "correct": false
+      },
+      {
+        "text": "允许进程持有资源并等待",
+        "correct": false
+      }
+    ],
+    "explanation": "资源有序分配法通过规定资源申请顺序来破坏循环等待条件，属于死锁预防。银行家算法属于死锁避免，死锁检测用于发现已发生的死锁，允许进程持有资源并等待则保持请求与保持条件，不是预防措施。",
+    "id": "os-070",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "同步与互斥"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些是临界区管理应遵循的原则？",
+    "options": [
+      {
+        "text": "互斥",
+        "correct": true
+      },
+      {
+        "text": "前进",
+        "correct": true
+      },
+      {
+        "text": "有限等待",
+        "correct": true
+      },
+      {
+        "text": "无限等待",
+        "correct": false
+      }
+    ],
+    "explanation": "临界区管理需满足互斥、前进（空闲让进）和有限等待。无限等待违反有限等待原则。",
+    "id": "os-071",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "同步与互斥"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些情况可能破坏死锁的四个必要条件？",
+    "options": [
+      {
+        "text": "资源一次性分配",
+        "correct": true
+      },
+      {
+        "text": "允许资源抢占",
+        "correct": true
+      },
+      {
+        "text": "资源有序分配",
+        "correct": true
+      },
+      {
+        "text": "进程互斥使用资源",
+        "correct": false
+      }
+    ],
+    "explanation": "一次性分配破坏请求与保持条件；允许抢占破坏不可剥夺条件；有序分配破坏循环等待条件。互斥是资源固有属性，不能破坏。",
+    "id": "os-072",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "同步与互斥"
+  },
+  {
+    "type": "multiple",
+    "question": "关于条件变量，以下说法正确的有？",
+    "options": [
+      {
+        "text": "条件变量通常与互斥锁配合使用",
+        "correct": true
+      },
+      {
+        "text": "wait操作会释放锁并阻塞",
+        "correct": true
+      },
+      {
+        "text": "signal操作可能唤醒一个等待线程",
+        "correct": true
+      },
+      {
+        "text": "条件变量本身具有互斥性",
+        "correct": false
+      }
+    ],
+    "explanation": "条件变量用于线程同步，必须与互斥锁配合；wait释放锁并阻塞，signal唤醒等待者。条件变量本身不提供互斥。",
+    "id": "os-073",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "同步与互斥"
+  },
+  {
+    "type": "multiple",
+    "question": "下列哪些机制可用于实现进程同步？",
+    "options": [
+      {
+        "text": "信号量",
+        "correct": true
+      },
+      {
+        "text": "管程",
+        "correct": true
+      },
+      {
+        "text": "消息传递",
+        "correct": true
+      },
+      {
+        "text": "时间片轮转",
+        "correct": false
+      }
+    ],
+    "explanation": "信号量、管程和消息传递均可用于进程同步；时间片轮转是CPU调度算法，不直接用于同步。",
+    "id": "os-074",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "同步与互斥"
+  },
+  {
+    "type": "multiple",
+    "question": "在生产者-消费者问题中，若使用信号量，以下哪些操作需要放在循环中？",
+    "options": [
+      {
+        "text": "生产产品",
+        "correct": true
+      },
+      {
+        "text": "P(empty)",
+        "correct": true
+      },
+      {
+        "text": "V(full)",
+        "correct": true
+      },
+      {
+        "text": "初始化信号量",
+        "correct": false
+      }
+    ],
+    "explanation": "生产者在循环中重复生产产品，并执行P(empty)和V(full)进行同步；初始化信号量只在开始前执行一次。",
+    "id": "os-075",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "同步与互斥"
+  },
+  {
+    "type": "single",
+    "question": "在操作系统中，进程同步的主要目的是什么？",
+    "options": [
+      {
+        "text": "提高CPU利用率",
+        "correct": false
+      },
+      {
+        "text": "协调并发进程对共享资源的访问顺序",
+        "correct": true
+      },
+      {
+        "text": "减少内存占用",
+        "correct": false
+      },
+      {
+        "text": "加快进程创建速度",
+        "correct": false
+      }
+    ],
+    "explanation": "进程同步的核心是协调并发进程对共享资源的访问，避免竞态条件。提高CPU利用率、减少内存占用和加快进程创建均不是同步的主要目的，其中CPU利用率更多与调度相关。",
+    "id": "os-076",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "同步与互斥"
+  },
+  {
+    "type": "single",
+    "question": "若信号量S的当前值为-3，则表示有多个进程在等待？",
+    "options": [
+      {
+        "text": "0个",
+        "correct": false
+      },
+      {
+        "text": "1个",
+        "correct": false
+      },
+      {
+        "text": "3个",
+        "correct": true
+      },
+      {
+        "text": "无法确定",
+        "correct": false
+      }
+    ],
+    "explanation": "信号量值为负数时，其绝对值等于在该信号量上等待的进程数。因此S=-3表示有3个进程在等待。0个对应S≥0，1个对应S=-1，无法确定是错误的。",
+    "id": "os-077",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "同步与互斥"
+  },
+  {
+    "type": "single",
+    "question": "下列哪种情况不会引起进程死锁？",
+    "options": [
+      {
+        "text": "互斥使用资源",
+        "correct": false
+      },
+      {
+        "text": "持有并等待资源",
+        "correct": false
+      },
+      {
+        "text": "资源可抢占",
+        "correct": true
+      },
+      {
+        "text": "循环等待资源",
+        "correct": false
+      }
+    ],
+    "explanation": "死锁的四个必要条件是互斥、持有并等待、不可抢占和循环等待。资源可抢占破坏了不可抢占条件，因此不会引起死锁。其他选项均为死锁的必要条件。",
+    "id": "os-078",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "同步与互斥"
+  },
+  {
+    "type": "single",
+    "question": "关于互斥锁与自旋锁，以下说法正确的是？",
+    "options": [
+      {
+        "text": "互斥锁在获取失败时立即返回",
+        "correct": false
+      },
+      {
+        "text": "自旋锁在获取失败时忙等待",
+        "correct": true
+      },
+      {
+        "text": "自旋锁适用于长时间持有锁的场景",
+        "correct": false
+      },
+      {
+        "text": "互斥锁不会引起进程阻塞",
+        "correct": false
+      }
+    ],
+    "explanation": "自旋锁在获取失败时忙等待（自旋），适用于短临界区；互斥锁获取失败时通常阻塞。自旋锁不适合长时间持有，互斥锁会引起阻塞。",
+    "id": "os-079",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "同步与互斥"
+  },
+  {
+    "type": "single",
+    "question": "在管程中，用于实现同步的机制是？",
+    "options": [
+      {
+        "text": "信号量",
+        "correct": false
+      },
+      {
+        "text": "条件变量",
+        "correct": true
+      },
+      {
+        "text": "自旋锁",
+        "correct": false
+      },
+      {
+        "text": "原子操作",
+        "correct": false
+      }
+    ],
+    "explanation": "管程内部使用条件变量实现同步，进程在条件变量上等待和唤醒。信号量、自旋锁和原子操作不是管程的标准同步机制。",
+    "id": "os-080",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "同步与互斥"
+  },
+  {
+    "type": "single",
+    "question": "银行家算法用于什么目的？",
+    "options": [
+      {
+        "text": "死锁预防",
+        "correct": false
+      },
+      {
+        "text": "死锁避免",
+        "correct": true
+      },
+      {
+        "text": "死锁检测",
+        "correct": false
+      },
+      {
+        "text": "死锁恢复",
+        "correct": false
+      }
+    ],
+    "explanation": "银行家算法通过判断系统是否处于安全状态来避免死锁，属于死锁避免策略。它不是预防（破坏必要条件）、检测或恢复机制。",
+    "id": "os-081",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "同步与互斥"
+  },
+  {
+    "type": "single",
+    "question": "若系统中有4个并发进程，每个进程最多需要3个某类资源，则系统不会发生死锁的最小资源数是？",
+    "options": [
+      {
+        "text": "8",
+        "correct": false
+      },
+      {
+        "text": "9",
+        "correct": true
+      },
+      {
+        "text": "10",
+        "correct": false
+      },
+      {
+        "text": "12",
+        "correct": false
+      }
+    ],
+    "explanation": "最坏情况下每个进程已获得2个资源，共需8个，再增加1个资源即可使某个进程完成并释放资源，因此最小资源数为4×(3-1)+1=9。",
+    "id": "os-082",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "同步与互斥"
+  },
+  {
+    "type": "single",
+    "question": "以下哪种操作可能导致优先级反转？",
+    "options": [
+      {
+        "text": "高优先级进程等待低优先级进程持有的锁",
+        "correct": true
+      },
+      {
+        "text": "低优先级进程等待高优先级进程释放CPU",
+        "correct": false
+      },
+      {
+        "text": "高优先级进程抢占低优先级进程",
+        "correct": false
+      },
+      {
+        "text": "同优先级进程轮转",
+        "correct": false
+      }
+    ],
+    "explanation": "优先级反转发生在高优先级进程因等待低优先级进程持有的资源而阻塞，且中优先级进程抢占低优先级进程时。其他选项不会导致优先级反转。",
+    "id": "os-083",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "同步与互斥"
+  },
+  {
+    "type": "single",
+    "question": "在读者-写者问题中，若允许多个读者同时读，则读者之间需要？",
+    "options": [
+      {
+        "text": "互斥",
+        "correct": false
+      },
+      {
+        "text": "同步",
+        "correct": false
+      },
+      {
+        "text": "无需互斥",
+        "correct": true
+      },
+      {
+        "text": "顺序执行",
+        "correct": false
+      }
+    ],
+    "explanation": "多个读者同时读不会破坏数据一致性，因此读者之间无需互斥。但读者与写者之间需要互斥。同步和顺序执行不是必须的。",
+    "id": "os-084",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "同步与互斥"
+  },
+  {
+    "type": "single",
+    "question": "下列哪个不是临界区管理应遵循的原则？",
+    "options": [
+      {
+        "text": "空闲让进",
+        "correct": false
+      },
+      {
+        "text": "忙则等待",
+        "correct": false
+      },
+      {
+        "text": "有限等待",
+        "correct": false
+      },
+      {
+        "text": "无限阻塞",
+        "correct": true
+      }
+    ],
+    "explanation": "临界区管理原则包括空闲让进、忙则等待、有限等待和让权等待。无限阻塞违反有限等待原则，因此不是应遵循的原则。",
+    "id": "os-085",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "同步与互斥"
+  },
+  {
+    "type": "single",
+    "question": "使用信号量实现互斥时，信号量的初值应设为？",
+    "options": [
+      {
+        "text": "0",
+        "correct": false
+      },
+      {
+        "text": "1",
+        "correct": true
+      },
+      {
+        "text": "资源数量",
+        "correct": false
+      },
+      {
+        "text": "进程数量",
+        "correct": false
+      }
+    ],
+    "explanation": "用于互斥的信号量表示临界区的可用数量，初值应为1。初值0用于同步，资源数量和进程数量不是互斥信号量的初值。",
+    "id": "os-086",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "同步与互斥"
+  },
+  {
+    "type": "single",
+    "question": "在资源不可抢占且每类资源只有一个实例的前提下，以下哪种情况一定导致死锁？",
+    "options": [
+      {
+        "text": "两个进程互相等待对方持有的资源",
+        "correct": true
+      },
+      {
+        "text": "一个进程等待I/O完成",
+        "correct": false
+      },
+      {
+        "text": "多个进程竞争CPU",
+        "correct": false
+      },
+      {
+        "text": "进程等待用户输入",
+        "correct": false
+      }
+    ],
+    "explanation": "当两个进程各自持有对方所需的资源且资源不可被抢占时，会形成循环等待，双方都无法继续执行，因此必然进入死锁。等待I/O、竞争CPU和等待用户输入只是普通阻塞或调度状态，不会仅因这些情况必然产生死锁。",
+    "id": "os-087",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "同步与互斥"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些是死锁的必要条件？",
+    "options": [
+      {
+        "text": "互斥",
+        "correct": true
+      },
+      {
+        "text": "持有并等待",
+        "correct": true
+      },
+      {
+        "text": "可抢占",
+        "correct": false
+      },
+      {
+        "text": "循环等待",
+        "correct": true
+      }
+    ],
+    "explanation": "死锁的四个必要条件是互斥、持有并等待、不可抢占和循环等待。可抢占会破坏死锁条件，因此不是必要条件。",
+    "id": "os-088",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "同步与互斥"
+  },
+  {
+    "type": "single",
+    "question": "某系统采用信号量实现互斥，信号量 mutex 的初值为 1。当前 mutex 的值为 -2，下列推断正确的是？",
+    "options": [
+      {
+        "text": "有 2 个进程正在临界区内执行",
+        "correct": false
+      },
+      {
+        "text": "有 2 个进程在等待进入临界区",
+        "correct": true
+      },
+      {
+        "text": "有 1 个进程在临界区，1 个进程在等待",
+        "correct": false
+      },
+      {
+        "text": "信号量值不可能为负数",
+        "correct": false
+      }
+    ],
+    "explanation": "信号量值为负时，其绝对值表示在该信号量队列上等待的进程数。mutex=-2 说明有 2 个进程已执行 P 操作但未获得资源而阻塞等待。临界区内最多只有 1 个进程（初值为 1 的互斥信号量），因此选项 A、C 错误，D 违背信号量定义。",
+    "id": "os-089",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "同步与互斥"
+  },
+  {
+    "type": "multiple",
+    "question": "关于管程（monitor）机制，下列描述正确的有？",
+    "options": [
+      {
+        "text": "管程中的共享数据只能由管程内的过程访问",
+        "correct": true
+      },
+      {
+        "text": "管程通过条件变量的 wait/signal 实现进程同步",
+        "correct": true
+      },
+      {
+        "text": "管程必须由编译器保证同一时刻最多一个进程在管程内执行",
+        "correct": true
+      },
+      {
+        "text": "管程中的条件变量值表示等待进程的数量",
+        "correct": false
+      }
+    ],
+    "explanation": "管程封装共享数据与操作，外部只能通过过程访问，并由编译器或语言运行时保证互斥进入；条件变量用于同步，wait 阻塞、signal 唤醒。条件变量本身不是计数器，其值不表示等待进程数，等待队列由系统维护。因此 A、B、C 正确，D 错误。",
+    "id": "os-090",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "同步与互斥"
+  },
+  {
+    "type": "single",
+    "question": "以下哪一项是死锁发生的必要条件？",
+    "options": [
+      {
+        "text": "资源可抢占",
+        "correct": false
+      },
+      {
+        "text": "循环等待",
+        "correct": true
+      },
+      {
+        "text": "进程优先级相同",
+        "correct": false
+      },
+      {
+        "text": "系统只有一个进程",
+        "correct": false
+      }
+    ],
+    "explanation": "死锁的四个必要条件包括互斥、占有且等待、不可抢占和循环等待。循环等待是其中之一，而资源可抢占会破坏不可抢占条件，反而不利于死锁发生。",
+    "id": "os-091",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "死锁"
+  },
+  {
+    "type": "single",
+    "question": "采用资源分配图进行死锁检测时，若图中存在环，则以下说法正确的是？",
+    "options": [
+      {
+        "text": "系统一定发生了死锁",
+        "correct": false
+      },
+      {
+        "text": "系统一定没有发生死锁",
+        "correct": false
+      },
+      {
+        "text": "若每类资源只有一个实例，则一定发生死锁",
+        "correct": true
+      },
+      {
+        "text": "环的数量等于死锁进程的数量",
+        "correct": false
+      }
+    ],
+    "explanation": "资源分配图中存在环是死锁的必要条件而非充分条件。当每类资源只有一个实例时，环是死锁的充分必要条件；若有多实例，环不一定导致死锁。",
+    "id": "os-092",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "死锁"
+  },
+  {
+    "type": "single",
+    "question": "银行家算法用于死锁避免，其核心思想是？",
+    "options": [
+      {
+        "text": "在分配资源前判断系统是否处于安全状态",
+        "correct": true
+      },
+      {
+        "text": "定期检测系统中是否存在死锁",
+        "correct": false
+      },
+      {
+        "text": "强制抢占已分配的资源",
+        "correct": false
+      },
+      {
+        "text": "要求进程一次性申请所有资源",
+        "correct": false
+      }
+    ],
+    "explanation": "银行家算法在每次资源分配前模拟分配，检查系统是否仍处于安全状态，仅当安全时才实际分配，从而避免死锁。定期检测是死锁检测，强制抢占是死锁恢复。",
+    "id": "os-093",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "死锁"
+  },
+  {
+    "type": "single",
+    "question": "某系统有5个并发进程，每个进程需要3个同类资源，系统至少需要提供多少个该类资源才能保证不发生死锁？",
+    "options": [
+      {
+        "text": "10",
+        "correct": false
+      },
+      {
+        "text": "11",
+        "correct": true
+      },
+      {
+        "text": "12",
+        "correct": false
+      },
+      {
+        "text": "15",
+        "correct": false
+      }
+    ],
+    "explanation": "最坏情况下每个进程已获得2个资源，共占用10个，此时再有一个资源即可使某个进程完成并释放资源，因此至少需要11个资源才能保证不死锁。",
+    "id": "os-094",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "死锁"
+  },
+  {
+    "type": "single",
+    "question": "死锁预防中，破坏“占有且等待”条件的常用方法是？",
+    "options": [
+      {
+        "text": "资源按序分配",
+        "correct": false
+      },
+      {
+        "text": "允许进程抢占资源",
+        "correct": false
+      },
+      {
+        "text": "要求进程一次性申请所有资源",
+        "correct": true
+      },
+      {
+        "text": "设置资源使用时限",
+        "correct": false
+      }
+    ],
+    "explanation": "破坏占有且等待条件可要求进程在开始执行前一次性申请所有所需资源，或允许等待时释放已占资源。资源按序分配破坏循环等待，允许抢占破坏不可抢占。",
+    "id": "os-095",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "死锁"
+  },
+  {
+    "type": "single",
+    "question": "以下哪种死锁处理策略允许死锁发生，但通过定期检测和恢复来消除死锁？",
+    "options": [
+      {
+        "text": "死锁预防",
+        "correct": false
+      },
+      {
+        "text": "死锁避免",
+        "correct": false
+      },
+      {
+        "text": "死锁检测与恢复",
+        "correct": true
+      },
+      {
+        "text": "死锁忽略",
+        "correct": false
+      }
+    ],
+    "explanation": "死锁检测与恢复策略不限制进程行为，允许死锁发生，但通过检测算法发现死锁后采取措施恢复。预防和避免分别通过破坏必要条件和动态检查避免死锁。",
+    "id": "os-096",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "死锁"
+  },
+  {
+    "type": "single",
+    "question": "在资源分配图中，进程P1持有资源R1的一个实例，并请求资源R2；进程P2持有R2的一个实例，并请求R1。若R1和R2都只有一个实例，则当前状态？",
+    "options": [
+      {
+        "text": "不会发生死锁",
+        "correct": false
+      },
+      {
+        "text": "可能发生死锁，但不确定",
+        "correct": false
+      },
+      {
+        "text": "已经发生死锁",
+        "correct": true
+      },
+      {
+        "text": "需要更多信息判断",
+        "correct": false
+      }
+    ],
+    "explanation": "两个进程各持有一个资源并请求对方持有的资源，形成循环等待，且每类资源只有一个实例，因此已经发生死锁。",
+    "id": "os-097",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "死锁"
+  },
+  {
+    "type": "single",
+    "question": "死锁恢复中，下列哪种方法不属于资源抢占式恢复？",
+    "options": [
+      {
+        "text": "从某些进程抢占资源分配给死锁进程",
+        "correct": false
+      },
+      {
+        "text": "终止所有死锁进程",
+        "correct": true
+      },
+      {
+        "text": "回滚某些进程到检查点",
+        "correct": false
+      },
+      {
+        "text": "选择代价最小的进程抢占其资源",
+        "correct": false
+      }
+    ],
+    "explanation": "终止所有死锁进程属于进程终止式恢复，而非资源抢占。资源抢占包括从进程抢占资源、回滚等。",
+    "id": "os-098",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "死锁"
+  },
+  {
+    "type": "single",
+    "question": "关于死锁避免与死锁检测，以下说法正确的是？",
+    "options": [
+      {
+        "text": "死锁避免需要预先知道进程的最大资源需求",
+        "correct": true
+      },
+      {
+        "text": "死锁检测需要预先知道进程的最大资源需求",
+        "correct": false
+      },
+      {
+        "text": "死锁避免在运行时不产生额外开销",
+        "correct": false
+      },
+      {
+        "text": "死锁检测可以完全避免死锁发生",
+        "correct": false
+      }
+    ],
+    "explanation": "死锁避免算法（如银行家算法）需要进程声明最大资源需求；死锁检测不需要，但检测到死锁后需恢复。死锁避免有运行时开销，检测不能避免死锁。",
+    "id": "os-099",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "死锁"
+  },
+  {
+    "type": "single",
+    "question": "某系统采用按序分配资源的方法预防死锁，这破坏了死锁的哪个必要条件？",
+    "options": [
+      {
+        "text": "互斥条件",
+        "correct": false
+      },
+      {
+        "text": "占有且等待条件",
+        "correct": false
+      },
+      {
+        "text": "不可抢占条件",
+        "correct": false
+      },
+      {
+        "text": "循环等待条件",
+        "correct": true
+      }
+    ],
+    "explanation": "按序分配资源要求进程按资源编号递增顺序申请，从而防止形成循环等待，破坏了循环等待条件。",
+    "id": "os-100",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "死锁"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些属于死锁的必要条件？",
+    "options": [
+      {
+        "text": "互斥",
+        "correct": true
+      },
+      {
+        "text": "占有且等待",
+        "correct": true
+      },
+      {
+        "text": "可抢占",
+        "correct": false
+      },
+      {
+        "text": "循环等待",
+        "correct": true
+      }
+    ],
+    "explanation": "死锁的四个必要条件是互斥、占有且等待、不可抢占和循环等待。可抢占不是必要条件，相反不可抢占才是。",
+    "id": "os-101",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "死锁"
+  },
+  {
+    "type": "multiple",
+    "question": "关于银行家算法，以下描述正确的是？",
+    "options": [
+      {
+        "text": "需要进程预先声明最大资源需求",
+        "correct": true
+      },
+      {
+        "text": "在分配资源前检查安全性",
+        "correct": true
+      },
+      {
+        "text": "能检测已发生的死锁",
+        "correct": false
+      },
+      {
+        "text": "可能导致资源利用率降低",
+        "correct": true
+      }
+    ],
+    "explanation": "银行家算法要求进程声明最大需求，分配前检查安全状态，因此可能拒绝某些分配而降低资源利用率。它用于避免死锁，不能检测已发生的死锁。",
+    "id": "os-102",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "死锁"
+  },
+  {
+    "type": "multiple",
+    "question": "死锁检测与恢复中，常用的恢复方法包括？",
+    "options": [
+      {
+        "text": "终止所有死锁进程",
+        "correct": true
+      },
+      {
+        "text": "逐个终止死锁进程直到死锁解除",
+        "correct": true
+      },
+      {
+        "text": "资源抢占",
+        "correct": true
+      },
+      {
+        "text": "增加系统资源",
+        "correct": false
+      }
+    ],
+    "explanation": "死锁恢复方法包括进程终止（全部或逐个）和资源抢占。增加系统资源不是标准恢复方法，且可能无法解决循环等待。",
+    "id": "os-103",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "死锁"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些情况可能使得资源分配图中的环不导致死锁？",
+    "options": [
+      {
+        "text": "每类资源有多个实例",
+        "correct": true
+      },
+      {
+        "text": "环中的进程数大于资源数",
+        "correct": false
+      },
+      {
+        "text": "环外进程可释放环内进程所需的资源实例",
+        "correct": true
+      },
+      {
+        "text": "环中每个资源只有一个实例",
+        "correct": false
+      }
+    ],
+    "explanation": "资源分配图出现环并不必然等于死锁。相关资源类有多个实例时，环中进程可能获得其他实例而继续运行；环外进程释放环内进程所需的资源实例也可能解除等待。若每类资源只有一个实例，环是死锁的充分条件；进程数大于资源数本身不能说明环不会导致死锁。",
+    "id": "os-104",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "死锁"
+  },
+  {
+    "type": "single",
+    "question": "某系统有3个进程，每个进程最多需要2个同类资源，系统至少需要提供多少个资源才能保证不发生死锁？",
+    "options": [
+      {
+        "text": "3",
+        "correct": false
+      },
+      {
+        "text": "4",
+        "correct": true
+      },
+      {
+        "text": "5",
+        "correct": false
+      },
+      {
+        "text": "6",
+        "correct": false
+      }
+    ],
+    "explanation": "最坏情况下每个进程各持有1个资源并请求另1个，此时若资源总数为3，则每个进程都等待，形成死锁；若总数为4，则至少有一个进程能获得第2个资源并运行完毕，释放资源后其他进程也可完成，故不会死锁。",
+    "id": "os-105",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "死锁"
+  },
+  {
+    "type": "single",
+    "question": "在死锁预防中，要求进程一次性申请所有所需资源，这破坏了哪个必要条件？",
+    "options": [
+      {
+        "text": "互斥条件",
+        "correct": false
+      },
+      {
+        "text": "占有且等待条件",
+        "correct": true
+      },
+      {
+        "text": "不可剥夺条件",
+        "correct": false
+      },
+      {
+        "text": "循环等待条件",
+        "correct": false
+      }
+    ],
+    "explanation": "一次性申请所有资源意味着进程在未获得全部资源前不占有任何资源，从而破坏了“占有且等待”条件。互斥是资源固有属性，不可剥夺和循环等待需其他方法破坏。",
+    "id": "os-106",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "死锁"
+  },
+  {
+    "type": "single",
+    "question": "银行家算法中，若系统处于安全状态，则以下说法正确的是？",
+    "options": [
+      {
+        "text": "系统一定不会发生死锁",
+        "correct": true
+      },
+      {
+        "text": "系统当前一定已经发生死锁",
+        "correct": false
+      },
+      {
+        "text": "所有进程都已获得最大资源需求",
+        "correct": false
+      },
+      {
+        "text": "系统资源利用率达到最高",
+        "correct": false
+      }
+    ],
+    "explanation": "安全状态意味着存在一个安全序列，按该顺序分配资源时，每个进程都能获得尚需资源并完成，因此系统不会进入死锁。安全状态不表示当前已经死锁，也不表示所有进程已获得最大需求或资源利用率最高。",
+    "id": "os-107",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "死锁"
+  },
+  {
+    "type": "single",
+    "question": "某系统采用资源剥夺法恢复死锁，以下哪项操作属于资源剥夺？",
+    "options": [
+      {
+        "text": "终止一个进程并释放其资源",
+        "correct": false
+      },
+      {
+        "text": "回滚一个进程到检查点",
+        "correct": false
+      },
+      {
+        "text": "从较少代价的进程中强行取走资源",
+        "correct": true
+      },
+      {
+        "text": "让进程主动释放资源",
+        "correct": false
+      }
+    ],
+    "explanation": "资源剥夺是指从某些进程强行取走资源分配给其他进程以打破死锁，通常选择代价最小的进程。终止进程和回滚属于进程终止或回滚恢复，不是资源剥夺。",
+    "id": "os-108",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "死锁"
+  },
+  {
+    "type": "single",
+    "question": "在死锁检测中，若资源分配图简化后得到不可完全简化的图，则表明？",
+    "options": [
+      {
+        "text": "系统一定存在死锁",
+        "correct": true
+      },
+      {
+        "text": "系统一定不存在死锁",
+        "correct": false
+      },
+      {
+        "text": "系统可能死锁但不确定",
+        "correct": false
+      },
+      {
+        "text": "需要进一步银行家算法判断",
+        "correct": false
+      }
+    ],
+    "explanation": "资源分配图简化用于死锁检测：若能完全简化，则无死锁；若不能完全简化，则存在死锁。不可简化意味着有进程集合相互等待，形成死锁。",
+    "id": "os-109",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "死锁"
+  },
+  {
+    "type": "single",
+    "question": "以下哪种方法可以破坏“不可剥夺”条件来预防死锁？",
+    "options": [
+      {
+        "text": "进程申请新资源时释放已占资源",
+        "correct": true
+      },
+      {
+        "text": "资源按序分配",
+        "correct": false
+      },
+      {
+        "text": "一次性分配所有资源",
+        "correct": false
+      },
+      {
+        "text": "允许进程等待时释放CPU",
+        "correct": false
+      }
+    ],
+    "explanation": "破坏不可剥夺条件允许进程在请求新资源时释放已占有的资源，即资源可被剥夺。按序分配破坏循环等待，一次性分配破坏占有且等待，释放CPU与死锁条件无关。",
+    "id": "os-110",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "死锁"
+  },
+  {
+    "type": "single",
+    "question": "某系统有4个进程，每个进程最多需要3个同类资源。若系统提供8个资源，则？",
+    "options": [
+      {
+        "text": "可能发生死锁",
+        "correct": true
+      },
+      {
+        "text": "一定不会发生死锁",
+        "correct": false
+      },
+      {
+        "text": "一定发生死锁",
+        "correct": false
+      },
+      {
+        "text": "资源不足，无法运行",
+        "correct": false
+      }
+    ],
+    "explanation": "最坏情况下4个进程各持有2个资源，共8个，所有进程都在等待第3个资源而无法完成，形成死锁；但若某个进程先获得第3个资源并完成，则其他进程可继续完成，因此只是可能发生死锁。8个资源可以运行，不是资源不足。",
+    "id": "os-111",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "死锁"
+  },
+  {
+    "type": "single",
+    "question": "死锁定理指出，系统处于死锁状态的充分必要条件是？",
+    "options": [
+      {
+        "text": "资源分配图不可完全简化",
+        "correct": true
+      },
+      {
+        "text": "资源分配图中存在环",
+        "correct": false
+      },
+      {
+        "text": "系统中有进程等待资源",
+        "correct": false
+      },
+      {
+        "text": "银行家算法判定为不安全",
+        "correct": false
+      }
+    ],
+    "explanation": "死锁定理：系统死锁当且仅当资源分配图不可完全简化。存在环只是必要条件，不一定死锁；进程等待资源不一定死锁；不安全状态可能死锁但非充要条件。",
+    "id": "os-112",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "死锁"
+  },
+  {
+    "type": "single",
+    "question": "在死锁避免中，系统计算安全序列的主要目的是？",
+    "options": [
+      {
+        "text": "判断分配资源后系统是否仍安全",
+        "correct": true
+      },
+      {
+        "text": "检测当前是否已发生死锁",
+        "correct": false
+      },
+      {
+        "text": "预防循环等待",
+        "correct": false
+      },
+      {
+        "text": "提高资源利用率",
+        "correct": false
+      }
+    ],
+    "explanation": "死锁避免在每次资源分配前，通过安全性算法检查分配后系统是否仍处于安全状态，若安全则分配，否则等待。安全序列用于此判断，不是检测死锁或预防循环等待。",
+    "id": "os-113",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "死锁"
+  },
+  {
+    "type": "single",
+    "question": "以下哪种资源分配策略可能破坏循环等待条件？",
+    "options": [
+      {
+        "text": "按资源编号递增顺序申请",
+        "correct": true
+      },
+      {
+        "text": "允许进程随时申请任何资源",
+        "correct": false
+      },
+      {
+        "text": "要求进程一次性申请所有资源",
+        "correct": false
+      },
+      {
+        "text": "允许进程抢占其他进程的资源",
+        "correct": false
+      }
+    ],
+    "explanation": "按序分配资源要求进程按资源编号递增顺序申请，从而避免进程间形成循环等待。一次性申请破坏占有且等待，抢占破坏不可剥夺，随时申请可能加剧死锁。",
+    "id": "os-114",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "死锁"
+  },
+  {
+    "type": "single",
+    "question": "某系统采用死锁检测并恢复的策略，检测到死锁后终止所有死锁进程。这种方法的主要缺点是？",
+    "options": [
+      {
+        "text": "代价大，可能丢失大量工作",
+        "correct": true
+      },
+      {
+        "text": "无法打破死锁",
+        "correct": false
+      },
+      {
+        "text": "需要预先知道资源需求",
+        "correct": false
+      },
+      {
+        "text": "会破坏互斥条件",
+        "correct": false
+      }
+    ],
+    "explanation": "终止所有死锁进程虽然简单，但可能导致已计算的工作丢失，代价较高。其他选项不符合：它能打破死锁，不需要预先知道需求，也不破坏互斥。",
+    "id": "os-115",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "死锁"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些方法可用于死锁预防？",
+    "options": [
+      {
+        "text": "资源按序分配",
+        "correct": true
+      },
+      {
+        "text": "一次性申请所有资源",
+        "correct": true
+      },
+      {
+        "text": "银行家算法",
+        "correct": false
+      },
+      {
+        "text": "允许进程抢占资源",
+        "correct": true
+      }
+    ],
+    "explanation": "死锁预防通过破坏四个必要条件之一实现：按序分配破坏循环等待，一次性申请破坏占有且等待，允许抢占破坏不可剥夺。银行家算法属于死锁避免，不是预防。",
+    "id": "os-116",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "死锁"
+  },
+  {
+    "type": "multiple",
+    "question": "关于死锁避免与死锁检测，以下说法正确的有？",
+    "options": [
+      {
+        "text": "死锁避免需要预知进程的最大资源需求",
+        "correct": true
+      },
+      {
+        "text": "死锁检测允许死锁发生，通过检测算法发现",
+        "correct": true
+      },
+      {
+        "text": "银行家算法属于死锁检测",
+        "correct": false
+      },
+      {
+        "text": "死锁避免比死锁检测的资源利用率通常更高",
+        "correct": false
+      }
+    ],
+    "explanation": "死锁避免（如银行家算法）需预知最大需求，属于避免策略；死锁检测允许死锁发生，定期检测。银行家算法是避免而非检测。死锁避免保守，资源利用率通常低于检测。",
+    "id": "os-117",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "死锁"
+  },
+  {
+    "type": "multiple",
+    "question": "在资源分配图中，以下哪些情况可能使环不导致死锁？",
+    "options": [
+      {
+        "text": "环中涉及的资源有多个实例",
+        "correct": true
+      },
+      {
+        "text": "环中进程可以释放资源后重新申请",
+        "correct": false
+      },
+      {
+        "text": "环中每个资源只有一个实例",
+        "correct": false
+      },
+      {
+        "text": "环外进程可以释放资源供环内进程使用",
+        "correct": true
+      }
+    ],
+    "explanation": "当资源有多个实例时，环不一定死锁，因为其他实例可能被释放；环外进程释放资源也可能打破等待。每个资源单实例时环是死锁的充分条件；进程释放后重新申请不改变当前等待关系。",
+    "id": "os-118",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "死锁"
+  },
+  {
+    "type": "multiple",
+    "question": "死锁恢复中，常用的方法包括？",
+    "options": [
+      {
+        "text": "终止所有死锁进程",
+        "correct": true
+      },
+      {
+        "text": "逐个终止死锁进程直到死锁解除",
+        "correct": true
+      },
+      {
+        "text": "资源抢占",
+        "correct": true
+      },
+      {
+        "text": "增加资源数量",
+        "correct": false
+      }
+    ],
+    "explanation": "死锁恢复常用方法有进程终止（全部或逐个）和资源抢占。增加资源数量属于预防或避免策略，不是死锁发生后的恢复方法。",
+    "id": "os-119",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "死锁"
+  },
+  {
+    "type": "single",
+    "question": "某系统采用银行家算法进行死锁避免，当前有3类资源A、B、C，可用资源向量为(3,3,2)。进程P1的最大需求为(7,5,3)，已分配(0,1,0)；P2最大需求(3,2,2)，已分配(2,0,0)；P3最大需求(9,0,2)，已分配(3,0,2)；P4最大需求(2,2,2)，已分配(2,1,1)；P5最大需求(4,3,3)，已分配(0,0,2)。此时若P1请求资源(1,0,2)，系统应如何处理？",
+    "options": [
+      {
+        "text": "拒绝请求，因为系统当前处于不安全状态",
+        "correct": false
+      },
+      {
+        "text": "满足请求，因为存在安全序列P1→P3→P4→P2→P5",
+        "correct": false
+      },
+      {
+        "text": "满足请求，因为存在安全序列P4→P5→P2→P3→P1",
+        "correct": true
+      },
+      {
+        "text": "推迟请求，直到其他进程释放资源",
+        "correct": false
+      }
+    ],
+    "explanation": "P1请求(1,0,2)不超过其尚需资源和当前可用资源。试探分配后可用资源变为(2,3,0)，P4尚需(0,1,1)可完成并释放(2,1,1)，可用变为(4,4,1)；P5尚需(4,3,1)可完成并释放(0,0,2)，可用变为(4,4,3)；P2尚需(1,2,2)可完成并释放(2,0,0)，可用变为(6,4,3)；P3尚需(6,0,0)可完成并释放(3,0,2)，可用变为(9,4,5)；P1尚需(6,4,1)可完成。因此存在安全序列P4→P5→P2→P3→P1，请求可满足。",
+    "id": "os-120",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "死锁"
+  },
+  {
+    "type": "single",
+    "question": "在请求分页系统中，页表项中的“访问位”主要用于支持下列哪项功能？",
+    "options": [
+      {
+        "text": "页面置换时选择被换出的页面",
+        "correct": true
+      },
+      {
+        "text": "判断页面是否已被修改",
+        "correct": false
+      },
+      {
+        "text": "记录页面的物理地址",
+        "correct": false
+      },
+      {
+        "text": "控制页面读写权限",
+        "correct": false
+      }
+    ],
+    "explanation": "访问位记录页面近期是否被访问，是LRU类置换算法的重要依据。修改位才用于判断脏页，物理地址由页表项中的页框号给出，读写权限由保护位控制。",
+    "id": "os-121",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "虚拟内存"
+  },
+  {
+    "type": "single",
+    "question": "某系统页面大小为4KB，逻辑地址为32位，则页表最多包含多少个页表项？",
+    "options": [
+      {
+        "text": "2^20个",
+        "correct": true
+      },
+      {
+        "text": "2^12个",
+        "correct": false
+      },
+      {
+        "text": "2^32个",
+        "correct": false
+      },
+      {
+        "text": "2^24个",
+        "correct": false
+      }
+    ],
+    "explanation": "页内偏移占log2(4KB)=12位，剩余32-12=20位为页号，因此页表项数最多为2^20。2^12是页内偏移可表示的范围，并非页表项个数。",
+    "id": "os-122",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "虚拟内存"
+  },
+  {
+    "type": "single",
+    "question": "下列关于TLB（快表）的说法中，正确的是？",
+    "options": [
+      {
+        "text": "TLB命中时无需访问内存中的页表",
+        "correct": true
+      },
+      {
+        "text": "TLB存放的是页面的完整内容",
+        "correct": false
+      },
+      {
+        "text": "TLB未命中说明该页一定不在内存",
+        "correct": false
+      },
+      {
+        "text": "TLB位于磁盘上以扩大容量",
+        "correct": false
+      }
+    ],
+    "explanation": "TLB缓存页号到页框号的映射，命中时直接得到页框号，省去访问页表。TLB未命中只说明映射不在TLB中，页面仍可能在内存，需查页表；TLB是高速硬件缓存而非磁盘结构。",
+    "id": "os-123",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "虚拟内存"
+  },
+  {
+    "type": "single",
+    "question": "采用FIFO页面置换算法时，可能出现的异常现象是？",
+    "options": [
+      {
+        "text": "增加物理页框数后缺页次数反而增加（Belady异常）",
+        "correct": true
+      },
+      {
+        "text": "页面访问速度随页框数增加而线性下降",
+        "correct": false
+      },
+      {
+        "text": "所有进程的缺页率必然降为零",
+        "correct": false
+      },
+      {
+        "text": "页表项数量随页框数增加而减少",
+        "correct": false
+      }
+    ],
+    "explanation": "FIFO不满足栈式置换性质，可能出现Belady异常，即分配更多页框却导致更多缺页。LRU和OPT不会出现该异常；缺页率不可能因增加页框而必然为零。",
+    "id": "os-124",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "虚拟内存"
+  },
+  {
+    "type": "single",
+    "question": "在虚拟内存系统中，发生缺页中断时，操作系统首先需要做的是？",
+    "options": [
+      {
+        "text": "检查该虚拟地址是否合法，合法则从磁盘调入所需页面",
+        "correct": true
+      },
+      {
+        "text": "立即终止当前进程并释放其全部页框",
+        "correct": false
+      },
+      {
+        "text": "直接将该页写入交换区后继续执行",
+        "correct": false
+      },
+      {
+        "text": "清空TLB并重新启动整个系统",
+        "correct": false
+      }
+    ],
+    "explanation": "缺页中断处理先验证地址合法性，再在磁盘上定位页面并调入内存，必要时置换页面。非法地址才触发保护错误；合法缺页不应终止进程，也不需要清空TLB或重启系统。",
+    "id": "os-125",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "虚拟内存"
+  },
+  {
+    "type": "single",
+    "question": "某进程的工作集窗口为4次访存，访问序列为1,2,3,1,2,4,1。在时刻访问4之后，工作集内容是什么？",
+    "options": [
+      {
+        "text": "{1,2,3,4}",
+        "correct": true
+      },
+      {
+        "text": "{1,2,3}",
+        "correct": false
+      },
+      {
+        "text": "{1,2,4}",
+        "correct": false
+      },
+      {
+        "text": "{2,3,4}",
+        "correct": false
+      }
+    ],
+    "explanation": "工作集取最近窗口内的页面集合。时刻访问4之后，最近4次访存为3、1、2、4，因此工作集为{1,2,3,4}；其他集合均缺少窗口内出现过的页面。",
+    "id": "os-126",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "虚拟内存"
+  },
+  {
+    "type": "single",
+    "question": "关于按需调页（demand paging），下列说法正确的是？",
+    "options": [
+      {
+        "text": "进程启动时不必将全部页面装入内存，只在访问某页且其不在内存时才调入",
+        "correct": true
+      },
+      {
+        "text": "进程的所有页面必须在运行前一次性装入内存",
+        "correct": false
+      },
+      {
+        "text": "按需调页只适用于只读代码段",
+        "correct": false
+      },
+      {
+        "text": "按需调页禁止使用交换区",
+        "correct": false
+      }
+    ],
+    "explanation": "按需调页是惰性装入策略，页面首次被访问且不在内存时才触发缺页调入，可提高内存利用率。它适用于代码段、数据段等各类页面，也常配合交换区使用。",
+    "id": "os-127",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "虚拟内存"
+  },
+  {
+    "type": "single",
+    "question": "某系统采用二级页表，其目的是什么？",
+    "options": [
+      {
+        "text": "减少页表本身占用的连续内存空间，并允许页表离散存放",
+        "correct": true
+      },
+      {
+        "text": "把页内偏移从12位扩展到32位",
+        "correct": false
+      },
+      {
+        "text": "彻底消除缺页中断",
+        "correct": false
+      },
+      {
+        "text": "让TLB可以存储全部页表项",
+        "correct": false
+      }
+    ],
+    "explanation": "多级页表把大页表分层，使未使用的地址空间无需分配下级页表，从而节省内存并支持页表离散存放。页内偏移由页面大小决定，多级页表也不能消除缺页或扩大TLB容量。",
+    "id": "os-128",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "虚拟内存"
+  },
+  {
+    "type": "single",
+    "question": "在页面置换算法中，OPT（最佳置换）算法选择换出哪一页？",
+    "options": [
+      {
+        "text": "未来最长时间内不会被访问的页面",
+        "correct": true
+      },
+      {
+        "text": "最近最久未被访问的页面",
+        "correct": false
+      },
+      {
+        "text": "最先进入内存的页面",
+        "correct": false
+      },
+      {
+        "text": "被修改次数最少的页面",
+        "correct": false
+      }
+    ],
+    "explanation": "OPT以未来访问序列为依据，换出未来最迟才被访问的页面，缺页率最低，但需要预知未来，实际不可实现，常作为性能比较基准。最近最久未访问对应LRU，最先进入对应FIFO。",
+    "id": "os-129",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "虚拟内存"
+  },
+  {
+    "type": "single",
+    "question": "某虚拟地址经MMU转换时，TLB未命中且页表项有效位为0，此时最可能发生什么？",
+    "options": [
+      {
+        "text": "触发缺页异常，由操作系统将页面调入内存",
+        "correct": true
+      },
+      {
+        "text": "直接由MMU从磁盘读取页面并写入TLB",
+        "correct": false
+      },
+      {
+        "text": "进程立即收到段错误，因为有效位为0表示地址非法",
+        "correct": false
+      },
+      {
+        "text": "CPU自动扩大物理内存以容纳该页",
+        "correct": false
+      }
+    ],
+    "explanation": "页表项有效位为0通常表示页面不在内存，MMU产生缺页异常，由操作系统负责调入。MMU不直接访问磁盘，有效位为0不一定是非法地址，CPU也不能自动扩大物理内存。",
+    "id": "os-130",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "虚拟内存"
+  },
+  {
+    "type": "single",
+    "question": "下列关于内存映射文件（mmap）与虚拟内存关系的说法，正确的是？",
+    "options": [
+      {
+        "text": "可将文件映射到进程虚拟地址空间，访问时按页触发缺页调入文件内容",
+        "correct": true
+      },
+      {
+        "text": "mmap映射后文件内容必须在调用时全部读入物理内存",
+        "correct": false
+      },
+      {
+        "text": "mmap只能映射匿名内存，不能映射普通文件",
+        "correct": false
+      },
+      {
+        "text": "mmap映射区一旦建立就不能被换出",
+        "correct": false
+      }
+    ],
+    "explanation": "内存映射文件把文件区间映射进虚拟地址空间，借助缺页机制按页惰性读取，实现文件I/O与内存访问的统一。它既可映射普通文件也可建立匿名映射，映射页同样可被换出。",
+    "id": "os-131",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "虚拟内存"
+  },
+  {
+    "type": "multiple",
+    "question": "下列哪些措施有助于减少缺页率？",
+    "options": [
+      {
+        "text": "为进程分配更符合其工作集大小的页框数",
+        "correct": true
+      },
+      {
+        "text": "采用LRU等能反映局部性的置换算法",
+        "correct": true
+      },
+      {
+        "text": "采用预调页等利用局部性的装入策略，提前调入即将访问的页面",
+        "correct": true
+      },
+      {
+        "text": "禁止进程使用TLB",
+        "correct": false
+      }
+    ],
+    "explanation": "合理分配页框、利用局部性选择合适置换算法、预调页均可减少缺页。禁用TLB只会增加地址转换开销，不会减少缺页。",
+    "id": "os-132",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "虚拟内存"
+  },
+  {
+    "type": "multiple",
+    "question": "关于页表项中常见的位，下列说法正确的有？",
+    "options": [
+      {
+        "text": "有效位用于标识该页是否在内存中",
+        "correct": true
+      },
+      {
+        "text": "修改位（脏位）用于判断换出时是否需要写回磁盘",
+        "correct": true
+      },
+      {
+        "text": "保护位用于控制页面的读、写、执行权限",
+        "correct": true
+      },
+      {
+        "text": "页框号用于标识页面在磁盘上的位置",
+        "correct": false
+      }
+    ],
+    "explanation": "有效位指示驻留状态，脏位决定换出时是否写回，保护位控制访问权限。页框号给出页面在物理内存中的位置，磁盘位置通常由交换区索引或文件偏移记录，不由页框号表示。",
+    "id": "os-133",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "虚拟内存"
+  },
+  {
+    "type": "multiple",
+    "question": "采用分页式虚拟内存时，下列现象或性质正确的有？",
+    "options": [
+      {
+        "text": "存在内部碎片，最后一页可能未被完全使用",
+        "correct": true
+      },
+      {
+        "text": "逻辑地址空间可以大于物理内存容量",
+        "correct": true
+      },
+      {
+        "text": "进程的页面可以离散地存放在不连续的物理页框中",
+        "correct": true
+      },
+      {
+        "text": "分页必须要求整个进程在物理内存中连续存放",
+        "correct": false
+      }
+    ],
+    "explanation": "分页以固定大小页为单位，最后一页易产生内部碎片；虚拟内存使逻辑地址空间可超过物理内存；页通过页表映射到任意空闲页框，无需连续存放。要求连续存放与分页机制相悖。",
+    "id": "os-134",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "虚拟内存"
+  },
+  {
+    "type": "multiple",
+    "question": "发生缺页且内存中没有空闲页框时，操作系统可能采取哪些操作？",
+    "options": [
+      {
+        "text": "按置换算法选出一个牺牲页，若为脏页则写回磁盘",
+        "correct": true
+      },
+      {
+        "text": "将所需页面从磁盘读入被腾出的页框，并更新页表和TLB",
+        "correct": true
+      },
+      {
+        "text": "若被换出页被修改过，需要先将其内容写回交换区或文件",
+        "correct": true
+      },
+      {
+        "text": "直接丢弃牺牲页内容，无论是否被修改",
+        "correct": false
+      }
+    ],
+    "explanation": "无空闲页框时需置换，选择牺牲页，脏页必须先写回以保证一致性，再读入新页并更新页表和TLB。未修改的页可直接丢弃，但被修改的页不能无条件丢弃。",
+    "id": "os-135",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "虚拟内存"
+  },
+  {
+    "type": "single",
+    "question": "在虚拟内存系统中，页表项中的“修改位”（脏位）的主要作用是什么？",
+    "options": [
+      {
+        "text": "记录该页是否被修改过，用于决定换出时是否需要写回磁盘",
+        "correct": true
+      },
+      {
+        "text": "记录该页是否在内存中，用于判断是否发生缺页",
+        "correct": false
+      },
+      {
+        "text": "记录该页的访问权限，用于实现内存保护",
+        "correct": false
+      },
+      {
+        "text": "记录该页的物理帧号，用于地址转换",
+        "correct": false
+      }
+    ],
+    "explanation": "修改位指示页面被修改过，换出时若为脏页需写回磁盘，否则可直接丢弃。有效位判断是否在内存，权限位控制访问，帧号用于转换。",
+    "id": "os-136",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "虚拟内存"
+  },
+  {
+    "type": "single",
+    "question": "某系统页面大小为4KB，逻辑地址空间为32位，采用单级页表，每个页表项占4字节。若页表需连续存放，则页表本身占用的最大空间约为多少？",
+    "options": [
+      {
+        "text": "4MB",
+        "correct": true
+      },
+      {
+        "text": "1MB",
+        "correct": false
+      },
+      {
+        "text": "16MB",
+        "correct": false
+      },
+      {
+        "text": "4KB",
+        "correct": false
+      }
+    ],
+    "explanation": "页内偏移12位，页号20位，页表项数2^20，每项4字节，总大小4MB。常误算为1MB（忽略项大小）或16MB（误用位数）。",
+    "id": "os-137",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "虚拟内存"
+  },
+  {
+    "type": "single",
+    "question": "下列关于TLB（快表）命中时的地址转换流程，正确的是？",
+    "options": [
+      {
+        "text": "用页号查TLB，直接得到物理帧号，与页内偏移拼接成物理地址",
+        "correct": true
+      },
+      {
+        "text": "用页号查TLB，得到页表项地址，再访问页表获得帧号",
+        "correct": false
+      },
+      {
+        "text": "TLB命中后仍需访问页表验证有效位",
+        "correct": false
+      },
+      {
+        "text": "TLB命中后需先检查缺页中断再转换",
+        "correct": false
+      }
+    ],
+    "explanation": "TLB缓存页号到帧号的映射，命中时直接拼接物理地址，无需访问页表。TLB未命中才需查页表，缺页检查在页表项有效位为0时进行。",
+    "id": "os-138",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "虚拟内存"
+  },
+  {
+    "type": "single",
+    "question": "在采用LRU页面置换算法的系统中，若增加分配给进程的页框数，通常缺页次数会如何变化？",
+    "options": [
+      {
+        "text": "单调不增",
+        "correct": true
+      },
+      {
+        "text": "可能增加，出现Belady异常",
+        "correct": false
+      },
+      {
+        "text": "保持不变",
+        "correct": false
+      },
+      {
+        "text": "先增后减",
+        "correct": false
+      }
+    ],
+    "explanation": "LRU属于栈式算法，增加页框数不会增加缺页次数，具有单调不增性质。FIFO可能出现Belady异常，即页框增多缺页反增。",
+    "id": "os-139",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "虚拟内存"
+  },
+  {
+    "type": "single",
+    "question": "某进程的页面访问序列为1,2,3,4,1,2,5,1,2,3,4,5，分配3个页框，采用FIFO置换算法，缺页次数是多少？",
+    "options": [
+      {
+        "text": "9",
+        "correct": true
+      },
+      {
+        "text": "8",
+        "correct": false
+      },
+      {
+        "text": "7",
+        "correct": false
+      },
+      {
+        "text": "10",
+        "correct": false
+      }
+    ],
+    "explanation": "按FIFO模拟：缺页依次发生在访问1、2、3、4、1、2、5、3、4，共9次；访问4时换出1，访问1时换出2，访问2时换出3，访问5时换出4，访问3时换出1，访问4时换出2。序列中的1、2和末尾5命中。",
+    "id": "os-140",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "虚拟内存"
+  },
+  {
+    "type": "single",
+    "question": "在虚拟内存系统中，缺页中断处理完成后，被中断的指令通常如何继续执行？",
+    "options": [
+      {
+        "text": "重新执行引发缺页的那条指令",
+        "correct": true
+      },
+      {
+        "text": "从下一条指令开始执行",
+        "correct": false
+      },
+      {
+        "text": "从进程入口重新开始执行",
+        "correct": false
+      },
+      {
+        "text": "直接终止进程",
+        "correct": false
+      }
+    ],
+    "explanation": "缺页处理将所需页面调入内存并更新页表，然后返回并重新执行引发缺页的指令，因为该指令尚未完成。不是跳过或重启进程。",
+    "id": "os-141",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "虚拟内存"
+  },
+  {
+    "type": "single",
+    "question": "在分页式虚拟内存中，页表的作用是什么？",
+    "options": [
+      {
+        "text": "将逻辑页号映射为物理帧号",
+        "correct": true
+      },
+      {
+        "text": "将物理帧号映射为逻辑页号",
+        "correct": false
+      },
+      {
+        "text": "直接存储进程的页面内容",
+        "correct": false
+      },
+      {
+        "text": "记录进程的代码段和数据段长度",
+        "correct": false
+      }
+    ],
+    "explanation": "页表是页号到帧号的映射表，用于地址转换。方向不能反，页表不存页面内容，段表才记录段长。",
+    "id": "os-142",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "虚拟内存"
+  },
+  {
+    "type": "single",
+    "question": "某系统采用局部页面置换策略，下列哪种情况最可能导致进程抖动（thrashing）？",
+    "options": [
+      {
+        "text": "分配给进程的页框数持续小于其工作集大小",
+        "correct": true
+      },
+      {
+        "text": "TLB容量较小但页框充足",
+        "correct": false
+      },
+      {
+        "text": "页面大小设置较大",
+        "correct": false
+      },
+      {
+        "text": "磁盘I/O速度较快",
+        "correct": false
+      }
+    ],
+    "explanation": "抖动源于页框不足，进程频繁缺页换入换出，CPU利用率骤降。TLB小、页面大、I/O快不直接导致抖动，页框持续少于工作集才是根因。",
+    "id": "os-143",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "虚拟内存"
+  },
+  {
+    "type": "single",
+    "question": "在虚拟内存中，写时复制（Copy-on-Write）技术的主要优点是？",
+    "options": [
+      {
+        "text": "延迟物理页复制，直到某进程尝试写入时才复制",
+        "correct": true
+      },
+      {
+        "text": "写入时立即复制整个进程地址空间",
+        "correct": false
+      },
+      {
+        "text": "禁止进程共享任何页面",
+        "correct": false
+      },
+      {
+        "text": "将页面换出到磁盘以节省内存",
+        "correct": false
+      }
+    ],
+    "explanation": "写时复制让父子进程共享只读页，仅当写操作发生时复制该页，减少不必要的内存复制。不是立即全复制，也不是换出或禁止共享。",
+    "id": "os-144",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "虚拟内存"
+  },
+  {
+    "type": "single",
+    "question": "某虚拟地址为32位，页面大小8KB，页表项占4字节，采用二级页表，且每个二级页表恰好占一个页面。若页目录和页表均覆盖整个虚拟地址空间，则页目录至少需要多少个页目录项？",
+    "options": [
+      {
+        "text": "256",
+        "correct": true
+      },
+      {
+        "text": "512",
+        "correct": false
+      },
+      {
+        "text": "1024",
+        "correct": false
+      },
+      {
+        "text": "2048",
+        "correct": false
+      }
+    ],
+    "explanation": "页面大小8KB=2^13，页内偏移占13位，虚拟页号占32-13=19位。一个二级页表占8KB，每项4字节，可容纳2048=2^11项，因此一个二级页表覆盖11位虚拟页号。剩余19-11=8位由页目录索引，页目录至少需要2^8=256项。",
+    "id": "os-145",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "虚拟内存"
+  },
+  {
+    "type": "single",
+    "question": "在虚拟内存中，内存映射文件（mmap）方式访问文件数据时，下列描述正确的是？",
+    "options": [
+      {
+        "text": "文件区域被映射到进程虚拟地址空间，访问时按需缺页调入",
+        "correct": true
+      },
+      {
+        "text": "文件内容必须一次性全部读入物理内存",
+        "correct": false
+      },
+      {
+        "text": "mmap只能用于只读映射",
+        "correct": false
+      },
+      {
+        "text": "mmap绕过页表直接访问磁盘",
+        "correct": false
+      }
+    ],
+    "explanation": "mmap将文件映射到虚拟地址空间，访问触发缺页并按需调入页面。支持读写映射，不绕过页表，也无需一次性全部载入。",
+    "id": "os-146",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "虚拟内存"
+  },
+  {
+    "type": "multiple",
+    "question": "下列哪些措施有助于降低缺页率？",
+    "options": [
+      {
+        "text": "增加分配给进程的物理页框数",
+        "correct": true
+      },
+      {
+        "text": "提高TLB命中率",
+        "correct": false
+      },
+      {
+        "text": "采用工作集模型动态调整页框分配",
+        "correct": true
+      },
+      {
+        "text": "增大页面置换算法的换出频率",
+        "correct": false
+      }
+    ],
+    "explanation": "增加页框可减少缺页，工作集模型可防止抖动。TLB命中率影响地址转换速度，不直接减少缺页；换出频率高反而增加缺页。",
+    "id": "os-147",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "虚拟内存"
+  },
+  {
+    "type": "multiple",
+    "question": "关于页表项中常见的标志位，下列说法正确的有？",
+    "options": [
+      {
+        "text": "有效位指示该页是否在内存中",
+        "correct": true
+      },
+      {
+        "text": "访问位用于页面置换算法的参考",
+        "correct": true
+      },
+      {
+        "text": "修改位指示该页是否被写过",
+        "correct": true
+      },
+      {
+        "text": "保护位指示该页的物理帧号",
+        "correct": false
+      }
+    ],
+    "explanation": "有效位判断缺页，访问位供置换参考，修改位决定是否写回。保护位控制读写执行权限，物理帧号是页表项另一字段。",
+    "id": "os-148",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "虚拟内存"
+  },
+  {
+    "type": "single",
+    "question": "某系统采用分页虚拟内存，页表项含有效位、修改位、访问位和保护位。当进程执行写操作但对应页不在内存时，硬件产生缺页异常；若该页在内存且修改位为0，系统处理写操作时最可能需要执行的操作是？",
+    "options": [
+      {
+        "text": "直接将数据写入物理内存，并置修改位为1",
+        "correct": true
+      },
+      {
+        "text": "从磁盘读入该页并覆盖内存中的副本",
+        "correct": false
+      },
+      {
+        "text": "将该页立即换出到磁盘",
+        "correct": false
+      },
+      {
+        "text": "修改页表项的保护位以允许写",
+        "correct": false
+      }
+    ],
+    "explanation": "页已在内存且修改位为0时，写操作可直接修改内存并置脏位，以便换出时写回；缺页才需读盘，换出并非此时必要，保护位检查失败应产生保护异常而非直接修改。",
+    "id": "os-149",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "虚拟内存"
+  },
+  {
+    "type": "multiple",
+    "question": "在请求分页系统中，页表项的有效位和修改位共同参与缺页与换出处理。下列情形中，处理时可能涉及磁盘I/O的有？",
+    "options": [
+      {
+        "text": "访问的页有效位为0，缺页异常处理",
+        "correct": true
+      },
+      {
+        "text": "换出修改位为1的页",
+        "correct": true
+      },
+      {
+        "text": "换出修改位为0的页",
+        "correct": false
+      },
+      {
+        "text": "命中TLB且页有效",
+        "correct": false
+      }
+    ],
+    "explanation": "有效位为0需从磁盘调入页面；修改位为1的页换出时需写回磁盘。修改位为0的页换出无需写回，TLB命中且有效直接完成转换，不涉及磁盘I/O。",
+    "id": "os-150",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "虚拟内存"
+  },
+  {
+    "type": "single",
+    "question": "在分页系统中，页表项中的“访问位”的主要作用是什么？",
+    "options": [
+      {
+        "text": "记录该页是否被修改过",
+        "correct": false
+      },
+      {
+        "text": "记录该页是否被访问过",
+        "correct": true
+      },
+      {
+        "text": "记录该页是否在内存中",
+        "correct": false
+      },
+      {
+        "text": "记录该页的物理地址",
+        "correct": false
+      }
+    ],
+    "explanation": "访问位（Reference bit）用于记录页面是否被访问过，常用于页面置换算法如LRU的近似实现。修改位（Dirty bit）记录是否被修改；有效位记录是否在内存；页表项本身包含物理地址。",
+    "id": "os-151",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "分页与TLB"
+  },
+  {
+    "type": "single",
+    "question": "某系统采用分页存储管理，页表项大小为4字节，逻辑地址为32位，页大小为4KB。若采用一级页表，则页表最大需要占用多少内存空间？",
+    "options": [
+      {
+        "text": "4MB",
+        "correct": true
+      },
+      {
+        "text": "1MB",
+        "correct": false
+      },
+      {
+        "text": "8MB",
+        "correct": false
+      },
+      {
+        "text": "16MB",
+        "correct": false
+      }
+    ],
+    "explanation": "页大小4KB，页内偏移12位，页号20位，共2^20个页表项。每项4字节，页表总大小=2^20 * 4B = 4MB。选项1MB、8MB、16MB均计算错误。",
+    "id": "os-152",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "分页与TLB"
+  },
+  {
+    "type": "single",
+    "question": "在分页地址变换中，若页表项中“有效位”为0，则说明什么？",
+    "options": [
+      {
+        "text": "该页在内存中",
+        "correct": false
+      },
+      {
+        "text": "该页不在内存中",
+        "correct": true
+      },
+      {
+        "text": "该页被修改过",
+        "correct": false
+      },
+      {
+        "text": "该页被访问过",
+        "correct": false
+      }
+    ],
+    "explanation": "有效位（Valid bit）指示页表项是否有效，即对应页面是否在内存中。若为0，表示页面不在内存，访问将产生缺页中断。修改和访问分别由修改位和访问位表示。",
+    "id": "os-153",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "分页与TLB"
+  },
+  {
+    "type": "single",
+    "question": "TLB（快表）命中时，地址变换过程如何？",
+    "options": [
+      {
+        "text": "仍需访问页表",
+        "correct": false
+      },
+      {
+        "text": "直接由TLB得到物理页框号",
+        "correct": true
+      },
+      {
+        "text": "产生缺页中断",
+        "correct": false
+      },
+      {
+        "text": "由操作系统软件完成地址转换",
+        "correct": false
+      }
+    ],
+    "explanation": "TLB是页表的高速缓存，命中时直接获得物理页框号，无需访问内存中的页表，从而加速地址变换。缺页中断发生在页面不在内存时，与TLB命中无关。",
+    "id": "os-154",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "分页与TLB"
+  },
+  {
+    "type": "single",
+    "question": "假设TLB命中率为90%，TLB访问时间为10ns，内存访问时间为100ns。忽略缺页，采用分页式地址变换，则有效访问时间（EAT）约为多少？",
+    "options": [
+      {
+        "text": "110ns",
+        "correct": false
+      },
+      {
+        "text": "120ns",
+        "correct": true
+      },
+      {
+        "text": "130ns",
+        "correct": false
+      },
+      {
+        "text": "140ns",
+        "correct": false
+      }
+    ],
+    "explanation": "TLB命中时EAT=10+100=110ns；未命中时EAT=10+100+100=210ns。平均EAT=0.9*110+0.1*210=99+21=120ns。选项110ns仅考虑命中情况，130ns和140ns计算错误。",
+    "id": "os-155",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "分页与TLB"
+  },
+  {
+    "type": "single",
+    "question": "在分页系统中，页表基址寄存器（PTBR）的作用是什么？",
+    "options": [
+      {
+        "text": "存放当前进程页表的起始物理地址",
+        "correct": true
+      },
+      {
+        "text": "存放当前进程页表的大小",
+        "correct": false
+      },
+      {
+        "text": "存放页表项的内容",
+        "correct": false
+      },
+      {
+        "text": "存放逻辑地址的页号",
+        "correct": false
+      }
+    ],
+    "explanation": "PTBR存放当前进程页表的起始物理地址，用于快速定位页表。页表大小通常由页表长度寄存器存放；页表项内容在内存页表中；页号来自逻辑地址。",
+    "id": "os-156",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "分页与TLB"
+  },
+  {
+    "type": "single",
+    "question": "关于分页系统中的页表，以下说法正确的是：",
+    "options": [
+      {
+        "text": "每个进程有自己独立的页表",
+        "correct": true
+      },
+      {
+        "text": "所有进程共享一个页表",
+        "correct": false
+      },
+      {
+        "text": "页表必须存放在TLB中",
+        "correct": false
+      },
+      {
+        "text": "页表的大小与页大小无关",
+        "correct": false
+      }
+    ],
+    "explanation": "每个进程有独立的页表，以实现进程隔离。页表存放在内存中，TLB仅缓存部分页表项。页表大小与页大小成反比，页越大页表项越少。",
+    "id": "os-157",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "分页与TLB"
+  },
+  {
+    "type": "single",
+    "question": "某分页系统页大小为1KB，逻辑地址为16位。若逻辑地址为0x2A5F，则页号和页内偏移分别是多少？",
+    "options": [
+      {
+        "text": "页号0xA，偏移0x25F",
+        "correct": true
+      },
+      {
+        "text": "页号0x2A，偏移0x5F",
+        "correct": false
+      },
+      {
+        "text": "页号0x2A5，偏移0xF",
+        "correct": false
+      },
+      {
+        "text": "页号0x5，偏移0x25F",
+        "correct": false
+      }
+    ],
+    "explanation": "页大小1KB=2^10，低10位为页内偏移，其余高位为页号。0x2A5F的低10位为0x25F，高6位为0xA（十进制10），所以页号为0xA、偏移为0x25F。",
+    "id": "os-158",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "分页与TLB"
+  },
+  {
+    "type": "single",
+    "question": "在分页存储管理中，引入TLB（快表）的主要目的是什么？",
+    "options": [
+      {
+        "text": "减少页表占用的内存空间",
+        "correct": false
+      },
+      {
+        "text": "加快地址变换速度",
+        "correct": true
+      },
+      {
+        "text": "增加内存容量",
+        "correct": false
+      },
+      {
+        "text": "实现虚拟内存",
+        "correct": false
+      }
+    ],
+    "explanation": "TLB是页表的高速缓存，用于减少访问页表带来的内存访问开销，从而加快地址变换。它不改变页表大小，也不增加内存容量。虚拟内存由分页机制和页表支持。",
+    "id": "os-159",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "分页与TLB"
+  },
+  {
+    "type": "single",
+    "question": "在分页系统中，页表的每个页表项通常包含哪些信息？",
+    "options": [
+      {
+        "text": "页号、物理页框号、访问位、修改位",
+        "correct": false
+      },
+      {
+        "text": "物理页框号、有效位、访问位、修改位",
+        "correct": true
+      },
+      {
+        "text": "逻辑地址、物理地址、页大小",
+        "correct": false
+      },
+      {
+        "text": "进程ID、页号、偏移量",
+        "correct": false
+      }
+    ],
+    "explanation": "页表项通常包含物理页框号（或磁盘地址）、有效位、访问位、修改位等控制位，但不包含页号，因为页号由索引隐含。逻辑地址和物理地址是地址变换的输入输出，非页表项内容。",
+    "id": "os-160",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "分页与TLB"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些情况可能导致TLB未命中？",
+    "options": [
+      {
+        "text": "进程首次访问某页",
+        "correct": true
+      },
+      {
+        "text": "TLB容量小，发生替换",
+        "correct": true
+      },
+      {
+        "text": "该页的页表项不在TLB中",
+        "correct": true
+      },
+      {
+        "text": "该页不在内存中",
+        "correct": false
+      }
+    ],
+    "explanation": "TLB未命中指所需页表项不在TLB中。首次访问、TLB容量有限发生替换、页表项未缓存都会导致未命中。页不在内存是缺页，与TLB未命中不同，缺页时TLB可能也未命中，但非直接原因。",
+    "id": "os-161",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "分页与TLB"
+  },
+  {
+    "type": "multiple",
+    "question": "关于分页系统中的多级页表，以下说法正确的是？",
+    "options": [
+      {
+        "text": "可以减少页表占用的连续内存空间",
+        "correct": true
+      },
+      {
+        "text": "可以避免访问页表时的多次内存访问",
+        "correct": false
+      },
+      {
+        "text": "适用于逻辑地址空间很大的系统",
+        "correct": true
+      },
+      {
+        "text": "页表必须全部常驻内存",
+        "correct": false
+      }
+    ],
+    "explanation": "多级页表将页表分层次存放，无需连续大内存，适合大地址空间。但每级页表访问都需一次内存访问，因此增加访存次数。页表可部分换出，并非全部常驻。",
+    "id": "os-162",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "分页与TLB"
+  },
+  {
+    "type": "multiple",
+    "question": "在采用一级页表的分页地址变换过程中，通常必须执行的操作有：",
+    "options": [
+      {
+        "text": "根据页号查找页表项",
+        "correct": true
+      },
+      {
+        "text": "检查页表项有效位，若无效则产生缺页异常",
+        "correct": true
+      },
+      {
+        "text": "将页框号与页内偏移拼接成物理地址",
+        "correct": true
+      },
+      {
+        "text": "根据物理地址查找TLB",
+        "correct": false
+      }
+    ],
+    "explanation": "分页地址变换先由逻辑地址拆分出页号和页内偏移，用页号查页表；检查页表项有效位，无效时触发缺页异常；有效时取出物理页框号，与页内偏移拼接成物理地址。TLB是在地址变换开始时按页号查找的缓存，不是根据物理地址查找。",
+    "id": "os-163",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "分页与TLB"
+  },
+  {
+    "type": "multiple",
+    "question": "页表项中的修改位（脏位）的作用包括：",
+    "options": [
+      {
+        "text": "指示页面是否被修改过",
+        "correct": true
+      },
+      {
+        "text": "用于页面置换时决定是否需要写回磁盘",
+        "correct": true
+      },
+      {
+        "text": "用于地址变换时定位物理页框",
+        "correct": false
+      },
+      {
+        "text": "记录页面最近是否被访问",
+        "correct": false
+      }
+    ],
+    "explanation": "修改位指示页面是否被修改，置换时若脏则需写回磁盘。它不参与地址变换定位，定位由物理页框号完成。记录最近访问的是访问位。",
+    "id": "os-164",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "分页与TLB"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些措施可以提高TLB命中率？",
+    "options": [
+      {
+        "text": "增加TLB容量",
+        "correct": true
+      },
+      {
+        "text": "增大页大小以减少页表项数量",
+        "correct": true
+      },
+      {
+        "text": "提高程序的空间局部性",
+        "correct": true
+      },
+      {
+        "text": "减少页表项的大小",
+        "correct": false
+      }
+    ],
+    "explanation": "增大TLB容量可缓存更多页表项；增大页大小减少页表项总数，使有限TLB覆盖更大范围；提高空间局部性使访问集中。减少页表项大小不直接影响命中率。",
+    "id": "os-165",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "分页与TLB"
+  },
+  {
+    "type": "single",
+    "question": "在分页系统中，页表项的有效位（存在位）为0时，表示什么？",
+    "options": [
+      {
+        "text": "该页在内存中",
+        "correct": false
+      },
+      {
+        "text": "该页不在内存中",
+        "correct": true
+      },
+      {
+        "text": "该页已被修改",
+        "correct": false
+      },
+      {
+        "text": "该页被访问过",
+        "correct": false
+      }
+    ],
+    "explanation": "有效位（存在位）用于指示该页是否已调入内存。为0时表示不在内存，访问会引发缺页中断；为1时表示在内存。修改位和访问位是其他标志位，不表示存在性。",
+    "id": "os-166",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "分页与TLB"
+  },
+  {
+    "type": "single",
+    "question": "某分页系统页大小为4KB，逻辑地址为32位。若采用一级页表，每个页表项占4字节，则页表最大需要多少内存空间？",
+    "options": [
+      {
+        "text": "4MB",
+        "correct": true
+      },
+      {
+        "text": "1MB",
+        "correct": false
+      },
+      {
+        "text": "16MB",
+        "correct": false
+      },
+      {
+        "text": "8MB",
+        "correct": false
+      }
+    ],
+    "explanation": "页大小4KB=2^12，页内偏移12位，页号20位，页表项数2^20=1M，每项4字节，总大小4MB。注意页表项数由页号位数决定，与页大小成反比。",
+    "id": "os-167",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "分页与TLB"
+  },
+  {
+    "type": "single",
+    "question": "TLB（快表）通常采用什么硬件实现？",
+    "options": [
+      {
+        "text": "相联存储器",
+        "correct": true
+      },
+      {
+        "text": "随机存储器",
+        "correct": false
+      },
+      {
+        "text": "只读存储器",
+        "correct": false
+      },
+      {
+        "text": "磁盘缓存",
+        "correct": false
+      }
+    ],
+    "explanation": "TLB通常由相联存储器实现，支持按内容并行查找，从而快速匹配页号。随机存储器按地址访问，速度较慢；只读存储器和磁盘缓存不用于TLB。",
+    "id": "os-168",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "分页与TLB"
+  },
+  {
+    "type": "single",
+    "question": "在分页系统中，逻辑地址由什么组成？",
+    "options": [
+      {
+        "text": "段号和段内偏移",
+        "correct": false
+      },
+      {
+        "text": "页号和页内偏移",
+        "correct": true
+      },
+      {
+        "text": "页表基址和页内偏移",
+        "correct": false
+      },
+      {
+        "text": "物理页框号和页内偏移",
+        "correct": false
+      }
+    ],
+    "explanation": "分页系统的逻辑地址分为页号和页内偏移两部分。页号用于查页表，页内偏移直接对应物理页框内的偏移。段号是分段系统的概念。",
+    "id": "os-169",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "分页与TLB"
+  },
+  {
+    "type": "single",
+    "question": "TLB命中时，地址变换过程如何？",
+    "options": [
+      {
+        "text": "直接由TLB得到物理页框号，与页内偏移拼接成物理地址",
+        "correct": true
+      },
+      {
+        "text": "仍需访问内存中的页表确认",
+        "correct": false
+      },
+      {
+        "text": "由页表基址寄存器计算物理地址",
+        "correct": false
+      },
+      {
+        "text": "触发缺页中断处理",
+        "correct": false
+      }
+    ],
+    "explanation": "TLB命中时，直接获得页号对应的物理页框号，无需访问内存页表，将页框号与页内偏移拼接即得物理地址。缺页中断在有效位为0时触发。",
+    "id": "os-170",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "分页与TLB"
+  },
+  {
+    "type": "single",
+    "question": "在分页与TLB管理中，页表项或TLB项中的“全局位”通常用于什么目的？",
+    "options": [
+      {
+        "text": "标识该页在进程切换时是否可继续保留在TLB中",
+        "correct": true
+      },
+      {
+        "text": "指示该页当前是否在内存中",
+        "correct": false
+      },
+      {
+        "text": "指示该页自调入后是否被修改过",
+        "correct": false
+      },
+      {
+        "text": "指示该页最近是否被访问过",
+        "correct": false
+      }
+    ],
+    "explanation": "全局位用于TLB刷新策略，标记全局页在进程切换时不被清除，从而可继续留在TLB中服务多个进程。页是否在内存由有效位或存在位表示，页是否被修改由修改位表示，页最近是否被访问由访问位表示。",
+    "id": "os-171",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "分页与TLB"
+  },
+  {
+    "type": "single",
+    "question": "某系统采用分页管理，页大小为4KB，页表项大小为4字节，逻辑地址为32位。若采用两级页表，并规定每级页表均不超过一页，页号按等长划分，则第一级页表项数为多少？",
+    "options": [
+      {
+        "text": "1024",
+        "correct": true
+      },
+      {
+        "text": "2048",
+        "correct": false
+      },
+      {
+        "text": "512",
+        "correct": false
+      },
+      {
+        "text": "4096",
+        "correct": false
+      }
+    ],
+    "explanation": "页大小4KB，页内偏移占12位，逻辑地址32位中剩余20位为页号。每页可存放4KB除以4B等于1024个页表项，即每级页表索引占10位。两级等长划分时每级10位，因此第一级页表有2的10次方等于1024项。",
+    "id": "os-172",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "分页与TLB"
+  },
+  {
+    "type": "single",
+    "question": "在TLB中，地址转换时通常使用什么来查找对应的页表项？",
+    "options": [
+      {
+        "text": "页号",
+        "correct": true
+      },
+      {
+        "text": "页内偏移",
+        "correct": false
+      },
+      {
+        "text": "物理地址",
+        "correct": false
+      },
+      {
+        "text": "进程ID",
+        "correct": false
+      }
+    ],
+    "explanation": "TLB按页号进行查找，命中后得到页框号。页内偏移不参与TLB查找，物理地址是转换结果，进程ID可能用于区分不同进程的TLB项，但查找键是页号。",
+    "id": "os-173",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "分页与TLB"
+  },
+  {
+    "type": "single",
+    "question": "在采用一级页表的分页系统中，若TLB未命中且页表在内存中、无缺页，完成一次数据访问的地址转换和取数通常需要访问几次内存？",
+    "options": [
+      {
+        "text": "1次",
+        "correct": false
+      },
+      {
+        "text": "2次",
+        "correct": true
+      },
+      {
+        "text": "3次",
+        "correct": false
+      },
+      {
+        "text": "0次",
+        "correct": false
+      }
+    ],
+    "explanation": "TLB未命中时，需要先访问内存中的页表取得物理页框号，再按形成的物理地址访问内存取得数据，因此共有两次内存访问。TLB命中时可省去查页表的一次内存访问。",
+    "id": "os-174",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "分页与TLB"
+  },
+  {
+    "type": "single",
+    "question": "某分页系统页大小为2KB，逻辑地址为0x1A3F，则页内偏移为多少？",
+    "options": [
+      {
+        "text": "0x23F",
+        "correct": true
+      },
+      {
+        "text": "0x1A3",
+        "correct": false
+      },
+      {
+        "text": "0x3F",
+        "correct": false
+      },
+      {
+        "text": "0xA3F",
+        "correct": false
+      }
+    ],
+    "explanation": "页大小2KB=0x800，页内偏移为逻辑地址低11位。0x1A3F & 0x7FF = 0x23F。0x1A3是页号相关，0x3F和0xA3F偏移计算错误。",
+    "id": "os-175",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "分页与TLB"
+  },
+  {
+    "type": "single",
+    "question": "在分页系统中，页表项中的“保护位”通常用于什么？",
+    "options": [
+      {
+        "text": "控制对该页的读、写、执行权限",
+        "correct": true
+      },
+      {
+        "text": "指示该页是否在内存中",
+        "correct": false
+      },
+      {
+        "text": "指示该页是否被修改过",
+        "correct": false
+      },
+      {
+        "text": "指示该页是否被访问过",
+        "correct": false
+      }
+    ],
+    "explanation": "保护位定义页的访问权限（如只读、读写、可执行）。有效位指示是否在内存，修改位指示脏页，访问位指示近期访问，均非保护位作用。",
+    "id": "os-176",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "分页与TLB"
+  },
+  {
+    "type": "single",
+    "question": "在分页系统中，若页表项中的“修改位”为1，表示什么？",
+    "options": [
+      {
+        "text": "该页已被修改，换出时需要写回磁盘",
+        "correct": true
+      },
+      {
+        "text": "该页最近被访问过",
+        "correct": false
+      },
+      {
+        "text": "该页当前不在内存中",
+        "correct": false
+      },
+      {
+        "text": "该页是只读的",
+        "correct": false
+      }
+    ],
+    "explanation": "修改位（脏位）为1表示页内容被修改，换出时需写回磁盘。访问位表示近期访问，有效位表示是否在内存，保护位控制读写权限。",
+    "id": "os-177",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "分页与TLB"
+  },
+  {
+    "type": "single",
+    "question": "在分页系统中，逻辑地址转换为物理地址时，若页表项中的“有效位”为0，则可能发生什么？",
+    "options": [
+      {
+        "text": "产生缺页中断",
+        "correct": true
+      },
+      {
+        "text": "直接访问物理内存",
+        "correct": false
+      },
+      {
+        "text": "TLB命中",
+        "correct": false
+      },
+      {
+        "text": "地址越界",
+        "correct": false
+      }
+    ],
+    "explanation": "有效位为0表示该页不在内存，访问时触发缺页中断。直接访问物理内存错误，TLB命中与有效位无关，地址越界是逻辑地址超出范围。",
+    "id": "os-178",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "分页与TLB"
+  },
+  {
+    "type": "single",
+    "question": "在分页系统中，TLB通常采用什么方式实现？",
+    "options": [
+      {
+        "text": "相联存储器",
+        "correct": true
+      },
+      {
+        "text": "DRAM",
+        "correct": false
+      },
+      {
+        "text": "磁盘",
+        "correct": false
+      },
+      {
+        "text": "寄存器文件",
+        "correct": false
+      }
+    ],
+    "explanation": "TLB通常用相联存储器实现，支持快速并行查找。DRAM速度慢，磁盘更慢，寄存器文件容量太小且不用于TLB。",
+    "id": "os-179",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "分页与TLB"
+  },
+  {
+    "type": "single",
+    "question": "在分页系统中，若TLB命中率为80%，TLB访问时间为10ns，内存访问时间为100ns，则有效访问时间约为多少？",
+    "options": [
+      {
+        "text": "110ns",
+        "correct": false
+      },
+      {
+        "text": "120ns",
+        "correct": false
+      },
+      {
+        "text": "130ns",
+        "correct": true
+      },
+      {
+        "text": "140ns",
+        "correct": false
+      }
+    ],
+    "explanation": "EAT = 0.8*(10+100) + 0.2*(10+100+100) = 0.8*110 + 0.2*210 = 88+42=130ns。110ns是命中时间，120ns和140ns计算错误。",
+    "id": "os-180",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "分页与TLB"
+  },
+  {
+    "type": "single",
+    "question": "关于文件系统的inode，下列说法正确的是？",
+    "options": [
+      {
+        "text": "inode中保存文件名和文件数据块内容",
+        "correct": false
+      },
+      {
+        "text": "inode保存文件的元数据与数据块索引信息，文件名保存在目录项中",
+        "correct": true
+      },
+      {
+        "text": "每个文件至少有两个inode",
+        "correct": false
+      },
+      {
+        "text": "inode号在文件删除后仍永久保留不可复用",
+        "correct": false
+      }
+    ],
+    "explanation": "inode记录文件类型、权限、大小、时间戳及数据块指针等元数据，文件名由目录项维护，目录项将名字映射到inode号。删除后inode号可被新文件复用。A混淆了目录项与inode，C、D属常见误解。",
+    "id": "os-181",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "文件系统"
+  },
+  {
+    "type": "single",
+    "question": "某文件系统采用多级索引，若一个inode含12个直接块指针、1个一级间接块指针，块大小4KB、指针4字节，则单个文件最大可寻址数据量约为？",
+    "options": [
+      {
+        "text": "48KB",
+        "correct": false
+      },
+      {
+        "text": "4MB",
+        "correct": false
+      },
+      {
+        "text": "约4.05MB",
+        "correct": true
+      },
+      {
+        "text": "约8MB",
+        "correct": false
+      }
+    ],
+    "explanation": "每块可存4KB/4B=1024个指针。直接块12×4KB=48KB，一级间接1024×4KB=4MB，合计约4.05MB。A只算直接块，B漏算直接块，D误按二级间接估算。",
+    "id": "os-182",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "文件系统"
+  },
+  {
+    "type": "single",
+    "question": "硬链接与符号链接（软链接）的关键区别是？",
+    "options": [
+      {
+        "text": "硬链接可跨文件系统，软链接不能",
+        "correct": false
+      },
+      {
+        "text": "硬链接与源文件共享同一inode，软链接是含路径的独立文件",
+        "correct": true
+      },
+      {
+        "text": "删除源文件后硬链接立即失效",
+        "correct": false
+      },
+      {
+        "text": "软链接会增加源文件的链接计数",
+        "correct": false
+      }
+    ],
+    "explanation": "硬链接是同一inode的多个目录项，共享链接计数，不能跨文件系统也不能指向目录；软链接是独立文件，内容为目标路径。删除源文件后硬链接仍可用，软链接计数不受影响。",
+    "id": "os-183",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "文件系统"
+  },
+  {
+    "type": "single",
+    "question": "某进程打开文件后读取，read系统调用返回0，通常表示？",
+    "options": [
+      {
+        "text": "读取发生权限错误",
+        "correct": false
+      },
+      {
+        "text": "已到达文件末尾",
+        "correct": true
+      },
+      {
+        "text": "文件描述符无效",
+        "correct": false
+      },
+      {
+        "text": "磁盘空间不足",
+        "correct": false
+      }
+    ],
+    "explanation": "read返回0表示已到文件末尾（EOF）；返回-1才表示出错，并设置errno区分EBADF、EACCES等。返回值0并不表示权限错误或空间不足。",
+    "id": "os-184",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "文件系统"
+  },
+  {
+    "type": "single",
+    "question": "关于目录项与文件数据块的关系，下列描述正确的是？",
+    "options": [
+      {
+        "text": "目录本身也是文件，其数据块中存放文件名到inode号的映射",
+        "correct": true
+      },
+      {
+        "text": "目录中的数据块直接存放子文件内容",
+        "correct": false
+      },
+      {
+        "text": "目录项只保存文件名，不保存inode号",
+        "correct": false
+      },
+      {
+        "text": "目录不能有硬链接计数",
+        "correct": false
+      }
+    ],
+    "explanation": "目录是一种特殊文件，其数据块内容为目录项，每项含文件名和对应inode号。子文件内容在各自数据块中。目录的链接计数包含自身“.”及子目录“..”的引用。",
+    "id": "os-185",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "文件系统"
+  },
+  {
+    "type": "single",
+    "question": "文件系统采用位图管理空闲块。若块大小为4KB，位图共占用8KB，则可管理的磁盘块总数和容量约为？",
+    "options": [
+      {
+        "text": "8192块，32MB",
+        "correct": false
+      },
+      {
+        "text": "16384块，64MB",
+        "correct": false
+      },
+      {
+        "text": "2048块，8MB",
+        "correct": false
+      },
+      {
+        "text": "65536块，256MB",
+        "correct": true
+      }
+    ],
+    "explanation": "位图8KB等于65536位，每位对应一个磁盘块，因此可管理65536块。块大小为4KB，总容量为65536×4KB=256MB。",
+    "id": "os-186",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "文件系统"
+  },
+  {
+    "type": "single",
+    "question": "下列关于文件系统日志（journaling）机制的描述，正确的是？",
+    "options": [
+      {
+        "text": "日志机制保证文件数据绝不丢失",
+        "correct": false
+      },
+      {
+        "text": "日志先记录元数据更新，再写回实际位置，崩溃后可重放或回滚",
+        "correct": true
+      },
+      {
+        "text": "日志文件与普通文件一样不占磁盘空间",
+        "correct": false
+      },
+      {
+        "text": "日志机制只适用于内存文件系统",
+        "correct": false
+      }
+    ],
+    "explanation": "日志将即将进行的元数据事务先写入日志区，提交后再应用到最终位置，崩溃恢复时可重放保证一致性。它保证元数据一致性，不保证用户数据不丢失，也占用磁盘空间。",
+    "id": "os-187",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "文件系统"
+  },
+  {
+    "type": "single",
+    "question": "进程调用open打开文件后获得文件描述符，关于文件描述符与打开文件表，正确的是？",
+    "options": [
+      {
+        "text": "文件描述符是全局唯一的inode号",
+        "correct": false
+      },
+      {
+        "text": "不同进程打开同一文件必共享同一文件偏移量",
+        "correct": false
+      },
+      {
+        "text": "文件描述符是进程内打开文件表的索引，指向系统打开文件表项",
+        "correct": true
+      },
+      {
+        "text": "关闭一个文件描述符会立即删除磁盘上的文件",
+        "correct": false
+      }
+    ],
+    "explanation": "文件描述符是进程私有的小整数，索引本进程打开文件表，再指向系统级打开文件表项（含偏移量、状态等）。fork可共享偏移，独立open则各自偏移。close只释放引用，不删文件。",
+    "id": "os-188",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "文件系统"
+  },
+  {
+    "type": "single",
+    "question": "某磁盘采用FAT文件系统，目录项中保存文件首簇号，文件数据通过FAT表链式连接。该设计的主要缺点是？",
+    "options": [
+      {
+        "text": "不支持随机访问任何簇",
+        "correct": false
+      },
+      {
+        "text": "随机访问需沿链遍历，且FAT表可能较大并需缓存",
+        "correct": true
+      },
+      {
+        "text": "不能表示文件大小",
+        "correct": false
+      },
+      {
+        "text": "无法删除文件",
+        "correct": false
+      }
+    ],
+    "explanation": "FAT通过簇号链连接文件块，顺序访问方便，但随机访问第n块需沿链遍历；大磁盘上FAT表本身占用可观内存。目录项仍记录文件大小，删除通过清空链实现。",
+    "id": "os-189",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "文件系统"
+  },
+  {
+    "type": "single",
+    "question": "关于挂载（mount），下列说法正确的是？",
+    "options": [
+      {
+        "text": "挂载点目录中原有内容会被永久删除",
+        "correct": false
+      },
+      {
+        "text": "挂载将某文件系统接到目录树的某个目录上，使该目录成为访问入口",
+        "correct": true
+      },
+      {
+        "text": "同一文件系统不能多次挂载",
+        "correct": false
+      },
+      {
+        "text": "挂载后原文件系统立即被格式化",
+        "correct": false
+      }
+    ],
+    "explanation": "挂载把设备上的文件系统关联到目录树中的挂载点，访问该目录即进入新文件系统。挂载点原有内容被暂时遮蔽而非删除；同一文件系统可在不同挂载点多次挂载。",
+    "id": "os-190",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "文件系统"
+  },
+  {
+    "type": "single",
+    "question": "文件系统的一致性检查工具（如fsck）通常在什么情况下运行最合适？",
+    "options": [
+      {
+        "text": "文件系统正常挂载并高并发读写时",
+        "correct": false
+      },
+      {
+        "text": "文件系统卸载后或只读挂载时",
+        "correct": true
+      },
+      {
+        "text": "系统运行任意时刻均可随意运行",
+        "correct": false
+      },
+      {
+        "text": "仅在创建新文件时",
+        "correct": false
+      }
+    ],
+    "explanation": "fsck需要独占访问元数据，应在文件系统卸载后或只读挂载时运行，否则可能因并发修改造成误判甚至损坏。正常运行时不宜直接检查。",
+    "id": "os-191",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "文件系统"
+  },
+  {
+    "type": "single",
+    "question": "稀疏文件（sparse file）在支持该特性的文件系统中，其特点是？",
+    "options": [
+      {
+        "text": "未写入的“空洞”不分配实际数据块，读取时返回零",
+        "correct": true
+      },
+      {
+        "text": "空洞区域自动分配随机数据",
+        "correct": false
+      },
+      {
+        "text": "文件大小只按已分配块计算",
+        "correct": false
+      },
+      {
+        "text": "稀疏文件不能进行随机写",
+        "correct": false
+      }
+    ],
+    "explanation": "稀疏文件对未写入区域不分配磁盘块，逻辑大小仍包含空洞，读取空洞返回零。文件大小按逻辑长度计，不能按已分配块计。空洞可正常读写。",
+    "id": "os-192",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "文件系统"
+  },
+  {
+    "type": "multiple",
+    "question": "下列哪些属于文件系统需要维护的元数据？",
+    "options": [
+      {
+        "text": "文件权限与所有者",
+        "correct": true
+      },
+      {
+        "text": "文件数据块的具体内容",
+        "correct": false
+      },
+      {
+        "text": "文件大小与时间戳",
+        "correct": true
+      },
+      {
+        "text": "数据块索引或簇链",
+        "correct": true
+      }
+    ],
+    "explanation": "权限所有者、大小时间戳、块索引均属元数据，通常存于inode或目录项及FAT中。文件数据块的具体内容属于用户数据，不是元数据。故选A、C、D。",
+    "id": "os-193",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "文件系统"
+  },
+  {
+    "type": "multiple",
+    "question": "关于Linux中文件描述符的复制与继承，下列说法正确的有？",
+    "options": [
+      {
+        "text": "fork后子进程继承父进程的文件描述符，共享同一打开文件表项",
+        "correct": true
+      },
+      {
+        "text": "dup返回的新描述符与旧描述符共享文件偏移量",
+        "correct": true
+      },
+      {
+        "text": "不同进程各自open同一文件，默认共享同一偏移量",
+        "correct": false
+      },
+      {
+        "text": "exec会关闭所有未设置FD_CLOEXEC的文件描述符",
+        "correct": false
+      }
+    ],
+    "explanation": "fork继承描述符并指向同一打开文件表项，故共享偏移；dup复制描述符也共享偏移。独立open产生不同打开文件表项，偏移独立。exec默认保留描述符，除非设置了FD_CLOEXEC。",
+    "id": "os-194",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "文件系统"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些情况可能造成文件系统元数据不一致？",
+    "options": [
+      {
+        "text": "写入inode后、更新空闲位图前系统崩溃",
+        "correct": true
+      },
+      {
+        "text": "多个进程并发写同一文件但未加锁",
+        "correct": false
+      },
+      {
+        "text": "删除文件时先释放数据块后清除目录项期间断电",
+        "correct": true
+      },
+      {
+        "text": "日志事务未提交即断电",
+        "correct": false
+      }
+    ],
+    "explanation": "元数据更新若跨多个步骤，在inode与位图、目录项与数据块释放之间崩溃，可能留下互相矛盾的记录。并发写同一文件属于数据竞争，可能破坏文件内容，但不必然造成文件系统元数据不一致。日志中未提交的事务在恢复时会被回滚，通常不会造成不一致。",
+    "id": "os-195",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "文件系统"
+  },
+  {
+    "type": "single",
+    "question": "文件系统采用块大小为4KB，每个块指针占4字节。若inode中有一个二级间接块指针，则该指针能索引的数据块最大数量是多少？",
+    "options": [
+      {
+        "text": "1024",
+        "correct": false
+      },
+      {
+        "text": "1024×1024",
+        "correct": true
+      },
+      {
+        "text": "256×256",
+        "correct": false
+      },
+      {
+        "text": "4096×4096",
+        "correct": false
+      }
+    ],
+    "explanation": "每个块可存4KB/4B=1024个指针。一级间接块索引1024个数据块；二级间接块的第一层指向1024个一级间接块，每个再指向1024个数据块，共1024×1024个。",
+    "id": "os-196",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "文件系统"
+  },
+  {
+    "type": "single",
+    "question": "某文件系统目录项中存储文件名和inode号，文件数据块中不包含文件名。这种设计的直接结果是？",
+    "options": [
+      {
+        "text": "同一文件可以有多个文件名指向同一inode",
+        "correct": true
+      },
+      {
+        "text": "文件数据块必须连续分配",
+        "correct": false
+      },
+      {
+        "text": "目录不能包含子目录",
+        "correct": false
+      },
+      {
+        "text": "inode号必须与文件名相同",
+        "correct": false
+      }
+    ],
+    "explanation": "目录项只记录名字到inode号的映射，因此多个目录项可指向同一inode，形成硬链接。文件数据块分配方式与目录项内容无关；目录可包含子目录；inode号与文件名无必然相同关系。",
+    "id": "os-197",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "文件系统"
+  },
+  {
+    "type": "single",
+    "question": "对文件执行write系统调用成功后，数据通常何时被持久化到磁盘？",
+    "options": [
+      {
+        "text": "立即写入磁盘",
+        "correct": false
+      },
+      {
+        "text": "仅写入页缓存，由内核稍后回写",
+        "correct": true
+      },
+      {
+        "text": "写入磁盘前文件系统必须卸载",
+        "correct": false
+      },
+      {
+        "text": "write返回即表示磁盘介质已确认写入",
+        "correct": false
+      }
+    ],
+    "explanation": "write通常只把数据复制到内核页缓存便返回，实际磁盘写入由回写机制延迟完成。需要强制持久化时应使用fsync等接口。卸载并非写入前提，write成功也不保证介质已写入。",
+    "id": "os-198",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "文件系统"
+  },
+  {
+    "type": "single",
+    "question": "在支持硬链接的文件系统中，删除一个文件的一个硬链接后，文件数据何时被释放？",
+    "options": [
+      {
+        "text": "立即释放",
+        "correct": false
+      },
+      {
+        "text": "当inode链接计数减为0且无进程打开该文件时",
+        "correct": true
+      },
+      {
+        "text": "当目录项被缓存时",
+        "correct": false
+      },
+      {
+        "text": "必须手动执行释放命令",
+        "correct": false
+      }
+    ],
+    "explanation": "删除硬链接使inode链接计数减1。仅当链接计数为0且没有进程持有打开的文件描述符时，文件系统才回收inode和数据块。缓存状态不影响释放条件，也无需手动命令。",
+    "id": "os-199",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "文件系统"
+  },
+  {
+    "type": "single",
+    "question": "文件系统采用块位图管理空闲空间，若位图中某位为1表示对应块已分配，为0表示空闲。分配一个块时，文件系统通常执行什么操作？",
+    "options": [
+      {
+        "text": "查找第一个为1的位并改为0",
+        "correct": false
+      },
+      {
+        "text": "查找一个为0的位并改为1",
+        "correct": true
+      },
+      {
+        "text": "将所有位取反",
+        "correct": false
+      },
+      {
+        "text": "直接修改inode链接计数",
+        "correct": false
+      }
+    ],
+    "explanation": "位为0表示空闲，分配时需找到0位并置1标记已用。查找1位并改0是释放操作。取反会破坏全部状态；链接计数用于硬链接，不用于块分配。",
+    "id": "os-200",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "文件系统"
+  },
+  {
+    "type": "single",
+    "question": "在日志文件系统中，若系统在提交日志记录后、写入实际数据块前崩溃，恢复时通常如何处理？",
+    "options": [
+      {
+        "text": "重放已提交的日志事务，完成对应更新",
+        "correct": true
+      },
+      {
+        "text": "丢弃所有日志，不恢复",
+        "correct": false
+      },
+      {
+        "text": "直接格式化文件系统",
+        "correct": false
+      },
+      {
+        "text": "仅恢复超级块",
+        "correct": false
+      }
+    ],
+    "explanation": "日志已提交表示事务意图完整。崩溃恢复时重放日志可把可能未完成的数据和元数据更新补齐，保证一致性。丢弃日志会丢失已提交事务；格式化会破坏数据；仅恢复超级块不完整。",
+    "id": "os-201",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "文件系统"
+  },
+  {
+    "type": "single",
+    "question": "进程调用dup(2)复制一个文件描述符，新描述符与原描述符的关系是？",
+    "options": [
+      {
+        "text": "指向同一打开文件表项，共享文件偏移量",
+        "correct": true
+      },
+      {
+        "text": "指向不同打开文件表项，偏移量独立",
+        "correct": false
+      },
+      {
+        "text": "复制后原描述符立即关闭",
+        "correct": false
+      },
+      {
+        "text": "新描述符必须大于原描述符加100",
+        "correct": false
+      }
+    ],
+    "explanation": "dup复制文件描述符，使两个描述符指向同一打开文件表项，因此共享文件状态（包括偏移量）。独立打开同一文件才会得到不同打开文件表项。dup不关闭原描述符，描述符编号也无固定间隔要求。",
+    "id": "os-202",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "文件系统"
+  },
+  {
+    "type": "single",
+    "question": "关于文件系统的超级块，下列描述正确的是？",
+    "options": [
+      {
+        "text": "保存文件系统整体布局和关键参数",
+        "correct": true
+      },
+      {
+        "text": "保存每个文件的文件名",
+        "correct": false
+      },
+      {
+        "text": "保存进程打开文件表",
+        "correct": false
+      },
+      {
+        "text": "仅保存用户数据块内容",
+        "correct": false
+      }
+    ],
+    "explanation": "超级块记录块大小、inode总数、空闲块数、根目录位置等全局信息，是文件系统挂载和一致性检查的关键。文件名在目录项中；进程打开文件表属于内核内存结构；用户数据在数据块中。",
+    "id": "os-203",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "文件系统"
+  },
+  {
+    "type": "single",
+    "question": "某文件系统使用索引节点记录文件块位置。若文件大小从4KB增长到8KB，在仅使用直接块指针的情况下，通常需要更新什么？",
+    "options": [
+      {
+        "text": "inode中新增一个直接块指针并分配新数据块",
+        "correct": true
+      },
+      {
+        "text": "必须重建整个文件系统",
+        "correct": false
+      },
+      {
+        "text": "必须修改超级块中的块大小",
+        "correct": false
+      },
+      {
+        "text": "必须删除原inode并新建",
+        "correct": false
+      }
+    ],
+    "explanation": "文件增长需要新增数据块，并在inode中记录新块地址。直接块指针足够时无需改变块大小或超级块，也不需重建文件系统或删除inode。原inode可原地更新。",
+    "id": "os-204",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "文件系统"
+  },
+  {
+    "type": "single",
+    "question": "在Linux中，使用open以O_CREAT|O_EXCL打开一个已存在的文件，结果通常是？",
+    "options": [
+      {
+        "text": "成功打开并截断文件",
+        "correct": false
+      },
+      {
+        "text": "失败并返回EEXIST",
+        "correct": true
+      },
+      {
+        "text": "成功打开并追加数据",
+        "correct": false
+      },
+      {
+        "text": "自动删除旧文件后新建",
+        "correct": false
+      }
+    ],
+    "explanation": "O_CREAT|O_EXCL要求文件不存在时创建，若已存在则失败并返回EEXIST，常用于原子创建。截断需要O_TRUNC；追加需要O_APPEND；自动删除旧文件不是open的行为。",
+    "id": "os-205",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "文件系统"
+  },
+  {
+    "type": "single",
+    "question": "文件系统执行rename操作将文件从同一目录下的名字A改为名字B，在POSIX语义下，若名字B已存在且不是目录，rename通常？",
+    "options": [
+      {
+        "text": "失败且不改变任何名字",
+        "correct": false
+      },
+      {
+        "text": "原子地将A替换为B，旧B被移除",
+        "correct": true
+      },
+      {
+        "text": "先删除A再创建B，期间可能不可见",
+        "correct": false
+      },
+      {
+        "text": "要求B必须不存在",
+        "correct": false
+      }
+    ],
+    "explanation": "rename对已存在的非目录目标通常原子替换，旧目标被移除，A变为B。它不会先删A造成中间缺失；也不要求B不存在。失败且不改变是某些错误情形，不是目标已存在时的常规语义。",
+    "id": "os-206",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "文件系统"
+  },
+  {
+    "type": "single",
+    "question": "某进程先打开文件读取了100字节，然后调用fork创建子进程。子进程继承的文件描述符对应的文件偏移量大约是多少？",
+    "options": [
+      {
+        "text": "0",
+        "correct": false
+      },
+      {
+        "text": "100",
+        "correct": true
+      },
+      {
+        "text": "由子进程重新从0开始",
+        "correct": false
+      },
+      {
+        "text": "父进程关闭文件后才确定",
+        "correct": false
+      }
+    ],
+    "explanation": "fork后父子进程共享同一打开文件表项，文件偏移量是打开文件表项的一部分，因此子进程继承的偏移量就是父进程当前的100。不会重置为0，也与父进程是否关闭无关。",
+    "id": "os-207",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "文件系统"
+  },
+  {
+    "type": "single",
+    "question": "文件系统采用FAT表链式分配。若文件A和文件B的簇链在FAT表中意外交叉指向同一数据簇，这最直接导致什么后果？",
+    "options": [
+      {
+        "text": "两个文件内容可能互相覆盖且空间统计错误",
+        "correct": true
+      },
+      {
+        "text": "文件系统自动修复且无影响",
+        "correct": false
+      },
+      {
+        "text": "仅降低目录查找速度",
+        "correct": false
+      },
+      {
+        "text": "所有文件变为只读",
+        "correct": false
+      }
+    ],
+    "explanation": "交叉链接意味着两个文件共享簇，写一个文件可能破坏另一个，且空闲空间统计可能出错。FAT本身不会自动修复交叉链，需要一致性检查工具处理；目录查找速度与簇链交叉无直接关系。",
+    "id": "os-208",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "文件系统"
+  },
+  {
+    "type": "single",
+    "question": "关于文件系统的块缓存（buffer cache/page cache），下列描述正确的是？",
+    "options": [
+      {
+        "text": "缓存可减少磁盘I/O并提高文件访问性能",
+        "correct": true
+      },
+      {
+        "text": "缓存会永久替代磁盘存储",
+        "correct": false
+      },
+      {
+        "text": "缓存仅用于目录而不用于文件数据",
+        "correct": false
+      },
+      {
+        "text": "缓存必须由用户进程手动分配和管理",
+        "correct": false
+      }
+    ],
+    "explanation": "块缓存/页缓存把最近访问的磁盘块保留在内存，减少重复I/O，提升读写性能。它不能永久替代磁盘持久存储；既缓存元数据也可缓存文件数据；通常由内核管理，用户无需手动分配。",
+    "id": "os-209",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "文件系统"
+  },
+  {
+    "type": "single",
+    "question": "某文件系统支持延迟分配：write数据后不立即分配磁盘块，而在回写时分配。这种设计的主要好处是？",
+    "options": [
+      {
+        "text": "减少短命文件占用的磁盘块并改善连续布局",
+        "correct": true
+      },
+      {
+        "text": "保证write返回时数据已持久化",
+        "correct": false
+      },
+      {
+        "text": "消除对inode的需求",
+        "correct": false
+      },
+      {
+        "text": "使文件系统不再需要空闲空间管理",
+        "correct": false
+      }
+    ],
+    "explanation": "延迟分配让内核在回写时根据实际写入情况分配块，可避免为很快删除的临时文件分配磁盘块，并有机会分配连续块。它不保证write返回即持久化；仍需inode和空闲空间管理。",
+    "id": "os-210",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "文件系统"
+  },
+  {
+    "type": "single",
+    "question": "在操作系统中，中断向量表的主要作用是？",
+    "options": [
+      {
+        "text": "存储中断服务程序的入口地址",
+        "correct": true
+      },
+      {
+        "text": "记录中断发生的次数",
+        "correct": false
+      },
+      {
+        "text": "保存被中断进程的上下文",
+        "correct": false
+      },
+      {
+        "text": "管理I/O设备的缓冲区",
+        "correct": false
+      }
+    ],
+    "explanation": "中断向量表存放各中断类型对应的中断服务程序入口地址，CPU响应中断时据此跳转。上下文保存在内核栈或PCB中，计数器与缓冲区非其功能。",
+    "id": "os-211",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "I/O与中断"
+  },
+  {
+    "type": "single",
+    "question": "采用DMA方式进行I/O传输时，数据传送的直接控制者是谁？",
+    "options": [
+      {
+        "text": "CPU",
+        "correct": false
+      },
+      {
+        "text": "DMA控制器",
+        "correct": true
+      },
+      {
+        "text": "设备驱动程序",
+        "correct": false
+      },
+      {
+        "text": "中断控制器",
+        "correct": false
+      }
+    ],
+    "explanation": "DMA控制器接管总线，在外设与内存间直接成块传送数据，CPU仅初始化并处理结束中断。CPU不逐字搬运，驱动程序与中断控制器不直接控制数据流。",
+    "id": "os-212",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "I/O与中断"
+  },
+  {
+    "type": "single",
+    "question": "下列哪一项通常属于可屏蔽中断？",
+    "options": [
+      {
+        "text": "电源故障中断",
+        "correct": false
+      },
+      {
+        "text": "硬件时钟中断",
+        "correct": true
+      },
+      {
+        "text": "内存校验错误中断",
+        "correct": false
+      },
+      {
+        "text": "复位中断",
+        "correct": false
+      }
+    ],
+    "explanation": "时钟中断等外设请求一般可被CPU屏蔽；电源故障、内存校验错误、复位属于不可屏蔽中断，必须立即处理。",
+    "id": "os-213",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "I/O与中断"
+  },
+  {
+    "type": "single",
+    "question": "在I/O系统中使用缓冲技术的主要目的之一是？",
+    "options": [
+      {
+        "text": "提高CPU主频",
+        "correct": false
+      },
+      {
+        "text": "减少CPU与I/O设备速度不匹配的影响",
+        "correct": true
+      },
+      {
+        "text": "增加中断向量表容量",
+        "correct": false
+      },
+      {
+        "text": "降低内存容量需求",
+        "correct": false
+      }
+    ],
+    "explanation": "缓冲用于平滑CPU与慢速外设的速度差异，减少等待和中断频率。它不改变主频、向量表大小，也不以减少内存为目标。",
+    "id": "os-214",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "I/O与中断"
+  },
+  {
+    "type": "single",
+    "question": "设备驱动程序在I/O请求处理中的典型职责是？",
+    "options": [
+      {
+        "text": "将逻辑I/O请求转换为对设备寄存器的具体操作",
+        "correct": true
+      },
+      {
+        "text": "直接调度进程占用CPU",
+        "correct": false
+      },
+      {
+        "text": "维护文件系统的目录结构",
+        "correct": false
+      },
+      {
+        "text": "实现虚拟内存页面置换",
+        "correct": false
+      }
+    ],
+    "explanation": "驱动程序屏蔽设备细节，把上层逻辑请求翻译成端口读写、DMA设置等具体动作。进程调度、目录结构、页面置换分别属于内核其他子系统。",
+    "id": "os-215",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "I/O与中断"
+  },
+  {
+    "type": "single",
+    "question": "中断处理过程中，保存被中断程序现场的工作通常由谁完成？",
+    "options": [
+      {
+        "text": "用户进程主动保存所有寄存器",
+        "correct": false
+      },
+      {
+        "text": "中断隐指令或硬件与中断服务程序配合保存",
+        "correct": true
+      },
+      {
+        "text": "DMA控制器自动保存",
+        "correct": false
+      },
+      {
+        "text": "设备控制器长期保存",
+        "correct": false
+      }
+    ],
+    "explanation": "现场保存由硬件中断响应机制（如压栈PC/PSW）和中断服务程序保存通用寄存器共同完成，并非用户进程或DMA控制器负责。",
+    "id": "os-216",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "I/O与中断"
+  },
+  {
+    "type": "single",
+    "question": "关于程序查询方式（轮询）进行I/O，下列说法正确的是？",
+    "options": [
+      {
+        "text": "CPU利用率通常高于中断方式",
+        "correct": false
+      },
+      {
+        "text": "CPU需不断读取设备状态寄存器直到就绪",
+        "correct": true
+      },
+      {
+        "text": "不需要任何设备状态信息",
+        "correct": false
+      },
+      {
+        "text": "必须使用DMA控制器",
+        "correct": false
+      }
+    ],
+    "explanation": "轮询方式下CPU反复查询状态位，就绪后才传送数据，期间忙等浪费CPU。它不依赖中断或DMA，且CPU利用率通常低于中断方式。",
+    "id": "os-217",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "I/O与中断"
+  },
+  {
+    "type": "single",
+    "question": "中断屏蔽字的主要作用是？",
+    "options": [
+      {
+        "text": "改变中断优先级并控制哪些中断可被响应",
+        "correct": true
+      },
+      {
+        "text": "永久禁止所有中断",
+        "correct": false
+      },
+      {
+        "text": "加快中断向量表的访问速度",
+        "correct": false
+      },
+      {
+        "text": "保存中断发生时的程序计数器",
+        "correct": false
+      }
+    ],
+    "explanation": "屏蔽字可屏蔽某些中断源，并配合优先级决定响应顺序。它不永久禁止全部中断，也不直接加速向量表访问或保存PC。",
+    "id": "os-218",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "I/O与中断"
+  },
+  {
+    "type": "single",
+    "question": "假设某系统采用中断驱动I/O，设备每完成一个字节就产生一次中断。与DMA方式相比，这种方式的主要缺点是？",
+    "options": [
+      {
+        "text": "无法传输数据",
+        "correct": false
+      },
+      {
+        "text": "中断次数多，CPU开销大",
+        "correct": true
+      },
+      {
+        "text": "必须使用轮询",
+        "correct": false
+      },
+      {
+        "text": "设备无法通知CPU",
+        "correct": false
+      }
+    ],
+    "explanation": "每字节一次中断会频繁打断CPU，上下文切换与中断处理开销显著；DMA成块传送，仅结束时中断一次，开销更小。",
+    "id": "os-219",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "I/O与中断"
+  },
+  {
+    "type": "single",
+    "question": "在Linux中，查看/proc/interrupts文件可以获取什么信息？",
+    "options": [
+      {
+        "text": "当前系统中各中断号在各CPU上的触发次数",
+        "correct": true
+      },
+      {
+        "text": "所有进程的页表映射",
+        "correct": false
+      },
+      {
+        "text": "磁盘分区的挂载点",
+        "correct": false
+      },
+      {
+        "text": "内核模块的源代码",
+        "correct": false
+      }
+    ],
+    "explanation": "/proc/interrupts显示各中断线或MSI在每个CPU上的计数及设备名，用于观察中断分布。页表、挂载点和模块源码不在该文件。",
+    "id": "os-220",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "I/O与中断"
+  },
+  {
+    "type": "multiple",
+    "question": "下列哪些属于I/O控制方式？",
+    "options": [
+      {
+        "text": "程序查询方式",
+        "correct": true
+      },
+      {
+        "text": "中断驱动方式",
+        "correct": true
+      },
+      {
+        "text": "DMA方式",
+        "correct": true
+      },
+      {
+        "text": "页面置换方式",
+        "correct": false
+      }
+    ],
+    "explanation": "程序查询、中断驱动、DMA均是典型I/O控制方式；页面置换属于虚拟内存管理，不是I/O控制方式。",
+    "id": "os-221",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "I/O与中断"
+  },
+  {
+    "type": "multiple",
+    "question": "关于中断处理，下列说法正确的有？",
+    "options": [
+      {
+        "text": "中断处理程序通常运行在内核态",
+        "correct": true
+      },
+      {
+        "text": "中断可能发生在用户态或内核态",
+        "correct": true
+      },
+      {
+        "text": "中断处理程序可以无条件睡眠等待资源",
+        "correct": false
+      },
+      {
+        "text": "中断处理应尽量短小快速",
+        "correct": true
+      }
+    ],
+    "explanation": "中断处理程序运行于内核态，可打断用户态或内核态执行；为保证响应性应短小，不能无条件睡眠，常将耗时工作推迟到下半部。",
+    "id": "os-222",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "I/O与中断"
+  },
+  {
+    "type": "multiple",
+    "question": "DMA方式与中断驱动方式相比，具有哪些特点？",
+    "options": [
+      {
+        "text": "数据传送过程CPU参与更少",
+        "correct": true
+      },
+      {
+        "text": "通常以数据块为单位传送",
+        "correct": true
+      },
+      {
+        "text": "每传送一个字节都产生中断",
+        "correct": false
+      },
+      {
+        "text": "需要DMA控制器参与",
+        "correct": true
+      }
+    ],
+    "explanation": "DMA由控制器成块搬运数据，CPU仅在初始化和结束时介入，并非每字节中断；它需要DMA控制器硬件支持。",
+    "id": "os-223",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "I/O与中断"
+  },
+  {
+    "type": "multiple",
+    "question": "下列哪些措施有助于减少中断处理对系统性能的影响？",
+    "options": [
+      {
+        "text": "使用中断合并或NAPI减少中断次数",
+        "correct": true
+      },
+      {
+        "text": "将中断处理分为上半部和下半部",
+        "correct": true
+      },
+      {
+        "text": "在中断处理程序中执行长时间忙等",
+        "correct": false
+      },
+      {
+        "text": "合理设置中断亲和性以均衡CPU负载",
+        "correct": true
+      }
+    ],
+    "explanation": "中断合并、上下半部分离、中断亲和性都能降低开销或改善分布；在中断上下文长时间忙等会阻塞其他中断和调度，应避免。",
+    "id": "os-224",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "I/O与中断"
+  },
+  {
+    "type": "multiple",
+    "question": "操作系统中引入SPOOLing技术后，可以带来哪些效果？",
+    "options": [
+      {
+        "text": "将独占设备改造为逻辑上的共享设备",
+        "correct": true
+      },
+      {
+        "text": "提高I/O设备与CPU之间的并行性",
+        "correct": true
+      },
+      {
+        "text": "完全消除I/O操作的中断开销",
+        "correct": false
+      },
+      {
+        "text": "通过输入井和输出井缓冲作业",
+        "correct": true
+      }
+    ],
+    "explanation": "SPOOLing利用磁盘上的输入井/输出井和守护进程，使独占设备可共享并提升并行性；它不能消除底层I/O的中断开销。",
+    "id": "os-225",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "I/O与中断"
+  },
+  {
+    "type": "single",
+    "question": "某系统采用中断驱动I/O，CPU在发出读命令后进入等待状态，该等待状态最可能通过什么事件结束？",
+    "options": [
+      {
+        "text": "设备控制器发出中断请求",
+        "correct": true
+      },
+      {
+        "text": "定时器周期到时产生时钟中断",
+        "correct": false
+      },
+      {
+        "text": "CPU执行到一条访存指令时缺页",
+        "correct": false
+      },
+      {
+        "text": "用户进程主动调用sleep系统调用",
+        "correct": false
+      }
+    ],
+    "explanation": "中断驱动I/O中CPU发出命令后可转去执行其他任务或等待，设备完成数据传送后由控制器发出中断请求，CPU响应中断后继续处理。时钟中断和缺页与本设备完成无关，sleep是主动让出CPU。",
+    "id": "os-226",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "I/O与中断"
+  },
+  {
+    "type": "single",
+    "question": "在I/O端口独立编址的体系结构中，CPU访问设备寄存器通常需要借助什么？",
+    "options": [
+      {
+        "text": "专门的I/O指令",
+        "correct": true
+      },
+      {
+        "text": "普通的内存读写指令",
+        "correct": false
+      },
+      {
+        "text": "DMA控制器的描述符",
+        "correct": false
+      },
+      {
+        "text": "中断向量表项",
+        "correct": false
+      }
+    ],
+    "explanation": "独立编址时I/O端口有独立地址空间，需用IN/OUT等专门I/O指令访问；统一编址（内存映射I/O）才可用普通访存指令。DMA描述符和中断向量表都不用于端口寻址。",
+    "id": "os-227",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "I/O与中断"
+  },
+  {
+    "type": "single",
+    "question": "在支持中断嵌套的系统中，关于中断优先级，下列说法正确的是？",
+    "options": [
+      {
+        "text": "高优先级中断可以打断正在处理的低优先级中断",
+        "correct": true
+      },
+      {
+        "text": "同级中断之间一定不能嵌套",
+        "correct": false
+      },
+      {
+        "text": "中断优先级由设备传输速率唯一决定",
+        "correct": false
+      },
+      {
+        "text": "低优先级中断处理期间不会被任何中断打断",
+        "correct": false
+      }
+    ],
+    "explanation": "在支持中断嵌套的系统中，高优先级中断可打断低优先级中断服务程序。同级中断能否嵌套取决于系统是否允许同级中断，并非必然不能；中断优先级由系统综合设定，不由设备传输速率唯一决定；低优先级处理期间仍可被更高优先级中断打断。",
+    "id": "os-228",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "I/O与中断"
+  },
+  {
+    "type": "single",
+    "question": "某磁盘控制器完成一次DMA块传输后产生中断，CPU进入中断服务程序首先最应该做的是？",
+    "options": [
+      {
+        "text": "保存被中断现场的寄存器",
+        "correct": true
+      },
+      {
+        "text": "立即启动下一次磁盘读命令",
+        "correct": false
+      },
+      {
+        "text": "把数据从内核缓冲区复制到用户空间",
+        "correct": false
+      },
+      {
+        "text": "释放该中断对应的锁并唤醒进程",
+        "correct": false
+      }
+    ],
+    "explanation": "进入中断服务程序需先保存被中断程序的现场（如PC、状态寄存器），以便返回后正确恢复。启动下次传输、拷贝数据、唤醒进程都依赖后续处理，不是最先完成的动作。",
+    "id": "os-229",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "I/O与中断"
+  },
+  {
+    "type": "single",
+    "question": "关于设备控制器中的状态寄存器，下列描述最准确的是？",
+    "options": [
+      {
+        "text": "它向CPU反映设备就绪、忙、错误等状态",
+        "correct": true
+      },
+      {
+        "text": "它保存CPU当前正在执行的指令地址",
+        "correct": false
+      },
+      {
+        "text": "它存放中断向量表在内存中的基址",
+        "correct": false
+      },
+      {
+        "text": "它缓存DMA传输的全部数据内容",
+        "correct": false
+      }
+    ],
+    "explanation": "状态寄存器用于向CPU报告设备当前状态，如就绪、忙、出错等，是程序查询和中断处理的重要依据。指令地址由PC保存，向量表基址由专用寄存器保存，数据缓存由缓冲区承担。",
+    "id": "os-230",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "I/O与中断"
+  },
+  {
+    "type": "single",
+    "question": "在Linux中，进程因等待磁盘I/O完成而被挂起，最可能处于哪种状态？",
+    "options": [
+      {
+        "text": "不可中断睡眠状态",
+        "correct": true
+      },
+      {
+        "text": "运行状态",
+        "correct": false
+      },
+      {
+        "text": "僵尸状态",
+        "correct": false
+      },
+      {
+        "text": "停止状态",
+        "correct": false
+      }
+    ],
+    "explanation": "等待I/O完成的进程通常进入睡眠状态，其中磁盘I/O等场景常为不可中断睡眠（D状态），避免被信号提前唤醒破坏一致性。运行态表示正在或可运行，僵尸态是已退出未回收，停止态多由信号暂停。",
+    "id": "os-231",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "I/O与中断"
+  },
+  {
+    "type": "single",
+    "question": "与中断驱动I/O相比，采用DMA方式传送大块数据的主要优势是什么？",
+    "options": [
+      {
+        "text": "减少CPU参与字节级搬运的次数",
+        "correct": true
+      },
+      {
+        "text": "完全不需要设备控制器参与传输",
+        "correct": false
+      },
+      {
+        "text": "彻底消除每次数据传输后的中断",
+        "correct": false
+      },
+      {
+        "text": "使CPU不再需要访问内存",
+        "correct": false
+      }
+    ],
+    "explanation": "DMA由控制器直接在内存与设备间搬运数据，CPU只在块传输开始和结束时介入，减少字节级中断和搬运开销。传输仍需控制器参与；块完成通常仍产生中断；CPU也要访存执行程序。",
+    "id": "os-232",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "I/O与中断"
+  },
+  {
+    "type": "single",
+    "question": "中断向量表中每个表项通常存放什么？",
+    "options": [
+      {
+        "text": "对应中断服务程序的入口地址",
+        "correct": true
+      },
+      {
+        "text": "被中断程序的一条指令内容",
+        "correct": false
+      },
+      {
+        "text": "设备DMA缓冲区的首地址",
+        "correct": false
+      },
+      {
+        "text": "当前进程页表的物理地址",
+        "correct": false
+      }
+    ],
+    "explanation": "中断向量表按中断号索引，表项保存中断服务程序的入口地址（或入口地址的跳转信息），CPU据此转入处理程序。它不保存被中断指令、DMA缓冲区或页表地址。",
+    "id": "os-233",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "I/O与中断"
+  },
+  {
+    "type": "single",
+    "question": "采用内存映射I/O（统一编址）时，设备控制寄存器如何被CPU访问？",
+    "options": [
+      {
+        "text": "使用与内存相同的访存指令访问对应地址",
+        "correct": true
+      },
+      {
+        "text": "必须使用专门的OUT指令访问",
+        "correct": false
+      },
+      {
+        "text": "只能由DMA控制器代为读写",
+        "correct": false
+      },
+      {
+        "text": "只能通过中断向量表间接访问",
+        "correct": false
+      }
+    ],
+    "explanation": "统一编址把设备寄存器映射到内存地址空间，CPU用普通load/store指令即可访问，便于使用高级语言和通用访存机制。专门OUT指令用于独立编址；DMA和中断向量表不负责寄存器寻址。",
+    "id": "os-234",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "I/O与中断"
+  },
+  {
+    "type": "single",
+    "question": "某系统同时采用DMA和中断，磁盘块传输完成后DMA控制器发出中断。该中断的主要作用是？",
+    "options": [
+      {
+        "text": "通知CPU本次块传输已完成并可进行后续处理",
+        "correct": true
+      },
+      {
+        "text": "请求CPU逐字节搬运本次块的数据",
+        "correct": false
+      },
+      {
+        "text": "让CPU重新配置磁盘的物理扇区号",
+        "correct": false
+      },
+      {
+        "text": "在中断向量表中写入新的页表地址",
+        "correct": false
+      }
+    ],
+    "explanation": "DMA完成整块搬运后以中断告知CPU，CPU再处理校验、唤醒等待进程等。逐字节搬运正是DMA所取代的；扇区配置在传输前完成；向量表与页表地址不由此中断写入。",
+    "id": "os-235",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "I/O与中断"
+  },
+  {
+    "type": "single",
+    "question": "在采用DMA方式传输数据时，若CPU同时需要访问内存，通常由谁协调总线使用权以避免冲突？",
+    "options": [
+      {
+        "text": "DMA控制器通过总线请求与CPU进行总线仲裁",
+        "correct": true
+      },
+      {
+        "text": "设备控制器直接暂停CPU的时钟",
+        "correct": false
+      },
+      {
+        "text": "操作系统通过软件轮询强行让CPU让出总线",
+        "correct": false
+      },
+      {
+        "text": "内存控制器自动忽略CPU的访问请求",
+        "correct": false
+      }
+    ],
+    "explanation": "DMA控制器需通过总线请求信号向CPU申请总线使用权，经仲裁获得授权后才能占用总线传输数据。CPU时钟暂停、软件轮询强行让出总线、忽略CPU请求均非标准机制。",
+    "id": "os-236",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "I/O与中断"
+  },
+  {
+    "type": "single",
+    "question": "某设备采用中断驱动I/O，CPU发出启动命令后继续执行其他进程。当设备完成一个字节传输时，系统最可能发生什么？",
+    "options": [
+      {
+        "text": "设备向CPU发送中断请求，CPU暂停当前进程转去执行中断服务程序",
+        "correct": true
+      },
+      {
+        "text": "CPU必须立即停止当前指令并直接读取设备数据到用户缓冲区",
+        "correct": false
+      },
+      {
+        "text": "DMA控制器接管总线将数据直接写入内存",
+        "correct": false
+      },
+      {
+        "text": "操作系统调度器立即切换到等待该I/O的进程",
+        "correct": false
+      }
+    ],
+    "explanation": "中断驱动I/O下，设备完成一个字节后发中断请求，CPU响应后暂停当前进程，执行中断服务程序读走数据。数据直接写用户缓冲区、DMA接管总线、立即切换等待进程均不符合中断驱动方式。",
+    "id": "os-237",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "I/O与中断"
+  },
+  {
+    "type": "single",
+    "question": "关于可编程I/O端口与内存统一编址（内存映射I/O），下列说法正确的是？",
+    "options": [
+      {
+        "text": "设备控制寄存器被映射到内存地址空间，CPU可用普通访存指令访问",
+        "correct": true
+      },
+      {
+        "text": "CPU必须使用专门的I/O指令如IN/OUT才能访问设备寄存器",
+        "correct": false
+      },
+      {
+        "text": "设备寄存器与内存物理上使用完全相同的存储单元",
+        "correct": false
+      },
+      {
+        "text": "统一编址后设备寄存器不再需要地址译码",
+        "correct": false
+      }
+    ],
+    "explanation": "内存映射I/O将设备寄存器映射到内存地址空间，CPU用普通访存指令访问。专门IN/OUT指令对应独立编址；寄存器与内存单元物理上不同；统一编址仍需地址译码。",
+    "id": "os-238",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "I/O与中断"
+  },
+  {
+    "type": "multiple",
+    "question": "下列关于中断处理流程的描述，正确的有？",
+    "options": [
+      {
+        "text": "CPU响应中断后通常先保存当前程序的断点与现场信息",
+        "correct": true
+      },
+      {
+        "text": "中断服务程序执行完毕后一般通过中断返回指令恢复现场并继续原程序",
+        "correct": true
+      },
+      {
+        "text": "中断处理过程中必须关闭所有中断直到服务程序结束",
+        "correct": false
+      },
+      {
+        "text": "中断向量表用于存放中断服务程序的入口地址",
+        "correct": true
+      }
+    ],
+    "explanation": "中断响应后保存断点和现场，服务程序结束用中断返回恢复现场；向量表存放服务程序入口地址。通常只屏蔽同级或低优先级中断，并非关闭所有中断，故第三项错误。",
+    "id": "os-239",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "I/O与中断"
+  },
+  {
+    "type": "multiple",
+    "question": "某系统采用SPOOLing技术管理打印机，下列哪些效果是该技术通常能带来的？",
+    "options": [
+      {
+        "text": "将独占设备改造为可共享的逻辑设备",
+        "correct": true
+      },
+      {
+        "text": "提高设备利用率并减少进程等待设备的时间",
+        "correct": true
+      },
+      {
+        "text": "使多个进程的打印输出按队列顺序实际打印",
+        "correct": true
+      },
+      {
+        "text": "完全消除打印任务对磁盘存储空间的需求",
+        "correct": false
+      }
+    ],
+    "explanation": "SPOOLing通过输入井/输出井将独占设备虚拟为共享设备，进程输出先入队列，按序实际打印，提高利用率。它需要磁盘缓冲区，不能消除存储需求，故第四项错误。",
+    "id": "os-240",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "I/O与中断"
+  },
+  {
+    "type": "single",
+    "question": "在Linux中，系统调用与库函数的区别，以下描述正确的是？",
+    "options": [
+      {
+        "text": "系统调用是内核提供的服务接口，库函数是用户空间的代码封装",
+        "correct": true
+      },
+      {
+        "text": "系统调用和库函数都在用户态执行",
+        "correct": false
+      },
+      {
+        "text": "库函数必须通过系统调用实现所有功能",
+        "correct": false
+      },
+      {
+        "text": "系统调用只能由C标准库调用",
+        "correct": false
+      }
+    ],
+    "explanation": "系统调用是内核暴露的接口，执行时切换至内核态；库函数是用户态代码，可能封装系统调用，但并非必须。误区是混淆执行态及调用关系。",
+    "id": "os-241",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "系统调用"
+  },
+  {
+    "type": "single",
+    "question": "关于系统调用的开销，以下说法正确的是？",
+    "options": [
+      {
+        "text": "系统调用需要用户态与内核态切换，开销比普通函数调用大",
+        "correct": true
+      },
+      {
+        "text": "系统调用与普通函数调用开销相同",
+        "correct": false
+      },
+      {
+        "text": "系统调用不需要切换CPU特权级",
+        "correct": false
+      },
+      {
+        "text": "系统调用在用户态完成所有操作",
+        "correct": false
+      }
+    ],
+    "explanation": "系统调用涉及特权级切换、上下文保存与恢复，开销显著大于用户态函数调用。误区是忽视态切换成本。",
+    "id": "os-242",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "系统调用"
+  },
+  {
+    "type": "single",
+    "question": "在x86-64 Linux系统中，系统调用通常通过哪个指令触发？",
+    "options": [
+      {
+        "text": "syscall",
+        "correct": true
+      },
+      {
+        "text": "int 0x80",
+        "correct": false
+      },
+      {
+        "text": "sysenter",
+        "correct": false
+      },
+      {
+        "text": "call gate",
+        "correct": false
+      }
+    ],
+    "explanation": "x86-64 Linux使用syscall指令快速进入内核；int 0x80是32位传统方式，sysenter用于32位快速调用。误区是混淆不同架构和模式。",
+    "id": "os-243",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "系统调用"
+  },
+  {
+    "type": "single",
+    "question": "在Linux中，open系统调用的第二个参数flags用于指定打开方式，以下哪个标志表示以读写方式打开？",
+    "options": [
+      {
+        "text": "O_RDWR",
+        "correct": true
+      },
+      {
+        "text": "O_RDONLY",
+        "correct": false
+      },
+      {
+        "text": "O_WRONLY",
+        "correct": false
+      },
+      {
+        "text": "O_CREAT",
+        "correct": false
+      }
+    ],
+    "explanation": "O_RDWR表示读写打开；O_RDONLY只读，O_WRONLY只写，O_CREAT在文件不存在时创建。误区是混淆访问模式与创建标志。",
+    "id": "os-244",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "系统调用"
+  },
+  {
+    "type": "single",
+    "question": "关于fork系统调用的返回值，以下说法正确的是？",
+    "options": [
+      {
+        "text": "父进程中返回子进程PID，子进程中返回0",
+        "correct": true
+      },
+      {
+        "text": "父进程和子进程都返回0",
+        "correct": false
+      },
+      {
+        "text": "父进程中返回0，子进程中返回父进程PID",
+        "correct": false
+      },
+      {
+        "text": "fork失败时父进程返回0",
+        "correct": false
+      }
+    ],
+    "explanation": "fork成功时父进程返回子进程PID，子进程返回0；失败时返回-1。误区是颠倒父子进程返回值。",
+    "id": "os-245",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "系统调用"
+  },
+  {
+    "type": "single",
+    "question": "以下哪个系统调用用于将程序映像加载到内存并执行？",
+    "options": [
+      {
+        "text": "execve",
+        "correct": true
+      },
+      {
+        "text": "fork",
+        "correct": false
+      },
+      {
+        "text": "waitpid",
+        "correct": false
+      },
+      {
+        "text": "exit",
+        "correct": false
+      }
+    ],
+    "explanation": "execve用新程序替换当前进程映像；fork创建新进程，waitpid等待子进程，exit终止进程。误区是混淆进程创建与程序加载。",
+    "id": "os-246",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "系统调用"
+  },
+  {
+    "type": "single",
+    "question": "在Linux中，系统调用号通常通过哪个寄存器传递给内核（x86-64架构）？",
+    "options": [
+      {
+        "text": "rax",
+        "correct": true
+      },
+      {
+        "text": "rdi",
+        "correct": false
+      },
+      {
+        "text": "rsi",
+        "correct": false
+      },
+      {
+        "text": "rdx",
+        "correct": false
+      }
+    ],
+    "explanation": "x86-64 Linux用rax传递系统调用号，rdi、rsi、rdx等传递参数。误区是误将参数寄存器当作调用号寄存器。",
+    "id": "os-247",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "系统调用"
+  },
+  {
+    "type": "single",
+    "question": "关于阻塞式系统调用，以下描述正确的是？",
+    "options": [
+      {
+        "text": "调用进程可能被挂起直到操作完成",
+        "correct": true
+      },
+      {
+        "text": "调用立即返回，无论操作是否完成",
+        "correct": false
+      },
+      {
+        "text": "不会引起进程状态变化",
+        "correct": false
+      },
+      {
+        "text": "只能在实时操作系统中出现",
+        "correct": false
+      }
+    ],
+    "explanation": "阻塞调用如read在数据未就绪时可能使进程进入睡眠状态，直到条件满足。误区是混淆阻塞与非阻塞语义。",
+    "id": "os-248",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "系统调用"
+  },
+  {
+    "type": "single",
+    "question": "以下哪个系统调用用于创建管道？",
+    "options": [
+      {
+        "text": "pipe",
+        "correct": true
+      },
+      {
+        "text": "socket",
+        "correct": false
+      },
+      {
+        "text": "open",
+        "correct": false
+      },
+      {
+        "text": "dup",
+        "correct": false
+      }
+    ],
+    "explanation": "pipe创建匿名管道，返回两个文件描述符；socket创建套接字，open打开文件，dup复制描述符。误区是混淆IPC机制。",
+    "id": "os-249",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "系统调用"
+  },
+  {
+    "type": "single",
+    "question": "在Linux中，系统调用失败时通常返回什么值？",
+    "options": [
+      {
+        "text": "-1，并设置errno",
+        "correct": true
+      },
+      {
+        "text": "0，并设置errno",
+        "correct": false
+      },
+      {
+        "text": "总是返回NULL",
+        "correct": false
+      },
+      {
+        "text": "返回错误码，不设置errno",
+        "correct": false
+      }
+    ],
+    "explanation": "大多数系统调用失败返回-1，并在全局变量errno中记录错误码；成功返回值依调用而定。误区是误以为返回错误码。",
+    "id": "os-250",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "系统调用"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些是常见的系统调用？（多选）",
+    "options": [
+      {
+        "text": "read",
+        "correct": true
+      },
+      {
+        "text": "write",
+        "correct": true
+      },
+      {
+        "text": "printf",
+        "correct": false
+      },
+      {
+        "text": "malloc",
+        "correct": false
+      }
+    ],
+    "explanation": "read和write是系统调用；printf和malloc是C库函数，它们内部可能使用系统调用，但本身不是系统调用。误区是将库函数当作系统调用。",
+    "id": "os-251",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "系统调用"
+  },
+  {
+    "type": "multiple",
+    "question": "关于系统调用与上下文切换，以下说法正确的有？（多选）",
+    "options": [
+      {
+        "text": "系统调用可能引起进程上下文切换",
+        "correct": true
+      },
+      {
+        "text": "系统调用必然导致进程切换",
+        "correct": false
+      },
+      {
+        "text": "系统调用需要保存和恢复CPU寄存器",
+        "correct": true
+      },
+      {
+        "text": "系统调用在用户态完成核心功能",
+        "correct": false
+      }
+    ],
+    "explanation": "系统调用进入内核时保存上下文，若阻塞可能触发调度切换，但并非必然切换。误区是认为系统调用一定导致进程切换。",
+    "id": "os-252",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "系统调用"
+  },
+  {
+    "type": "multiple",
+    "question": "在Linux中，用于进程创建和管理的系统调用包括哪些？（多选）",
+    "options": [
+      {
+        "text": "fork",
+        "correct": true
+      },
+      {
+        "text": "execve",
+        "correct": true
+      },
+      {
+        "text": "waitpid",
+        "correct": true
+      },
+      {
+        "text": "pthread_create",
+        "correct": false
+      }
+    ],
+    "explanation": "fork、execve、waitpid都是系统调用；pthread_create是线程库函数，并非系统调用。误区是将线程库函数当作系统调用。",
+    "id": "os-253",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "系统调用"
+  },
+  {
+    "type": "multiple",
+    "question": "关于Linux系统调用接口，以下说法正确的有？（多选）",
+    "options": [
+      {
+        "text": "系统调用接口由操作系统内核提供，用户程序通过陷入内核请求服务",
+        "correct": true
+      },
+      {
+        "text": "应用程序可以直接使用内联汇编触发系统调用，而不经过针对具体调用的C库封装",
+        "correct": true
+      },
+      {
+        "text": "系统调用号在所有操作系统和体系结构间保持一致",
+        "correct": false
+      },
+      {
+        "text": "库函数如printf、malloc本身都是系统调用",
+        "correct": false
+      }
+    ],
+    "explanation": "系统调用是内核提供的受控服务入口，用户程序通过陷入内核请求服务；也可以使用内联汇编按ABI直接触发系统调用，而不经过针对具体调用的C库封装。系统调用号由操作系统和体系结构约定，并不跨系统一致；printf、malloc是库函数，内部可能使用系统调用，但本身不是系统调用。",
+    "id": "os-254",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "系统调用"
+  },
+  {
+    "type": "multiple",
+    "question": "关于系统调用的参数传递，以下说法正确的有？（多选）",
+    "options": [
+      {
+        "text": "参数可以通过寄存器传递",
+        "correct": true
+      },
+      {
+        "text": "参数可以通过栈传递",
+        "correct": true
+      },
+      {
+        "text": "参数必须通过全局变量传递",
+        "correct": false
+      },
+      {
+        "text": "参数传递方式由编程语言决定",
+        "correct": false
+      }
+    ],
+    "explanation": "系统调用参数传递方式由ABI规定，常见寄存器或栈；与语言无关。误区是认为参数传递由语言决定或必须用全局变量。",
+    "id": "os-255",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "系统调用"
+  },
+  {
+    "type": "single",
+    "question": "在Linux中，用户程序执行read系统调用读取文件时发生错误，系统调用返回-1后，用户程序通常通过什么方式确定具体的错误原因？",
+    "options": [
+      {
+        "text": "检查全局变量errno的值",
+        "correct": true
+      },
+      {
+        "text": "读取进程状态寄存器中的错误码",
+        "correct": false
+      },
+      {
+        "text": "再次调用read获取错误信息",
+        "correct": false
+      },
+      {
+        "text": "查看标准错误流stderr的内容",
+        "correct": false
+      }
+    ],
+    "explanation": "系统调用失败返回-1时，内核会把错误码写入用户态可见的errno，库函数随后按需翻译。寄存器返回的是调用返回值本身，stderr是错误输出流而非错误码来源，再次调用read也不会得到具体原因。",
+    "id": "os-256",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "系统调用"
+  },
+  {
+    "type": "single",
+    "question": "某程序需要直接向内核请求服务，且不经过针对具体系统调用的C库封装函数，在x86-64 Linux用户态中最合理的是？",
+    "options": [
+      {
+        "text": "按x86-64系统调用约定设置rax、rdi等寄存器，并执行syscall指令",
+        "correct": true
+      },
+      {
+        "text": "直接调用内核源码中的do_syscall函数",
+        "correct": false
+      },
+      {
+        "text": "修改中断描述符表后触发软件中断",
+        "correct": false
+      },
+      {
+        "text": "链接内核模块中的静态函数并调用",
+        "correct": false
+      }
+    ],
+    "explanation": "用户态直接发起系统调用时应遵循x86-64 Linux的ABI：在rax中放系统调用号，在rdi、rsi、rdx、r10、r8、r9等寄存器中放参数，执行syscall指令陷入内核。内核内部函数不能被普通用户进程直接调用，修改中断描述符表属于特权操作，内核模块中的静态函数也不能被普通进程直接链接调用。",
+    "id": "os-257",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "系统调用"
+  },
+  {
+    "type": "single",
+    "question": "在x86-64 Linux上，用户程序调用syscall指令进入内核后，系统调用号存放于哪个寄存器？",
+    "options": [
+      {
+        "text": "rax",
+        "correct": true
+      },
+      {
+        "text": "rdi",
+        "correct": false
+      },
+      {
+        "text": "rdx",
+        "correct": false
+      },
+      {
+        "text": "rcx",
+        "correct": false
+      }
+    ],
+    "explanation": "x86-64 Linux约定系统调用号放在rax中，参数依次使用rdi、rsi、rdx等寄存器。rcx和r11在syscall进入内核时被用来保存返回地址和标志，不能作为系统调用号。",
+    "id": "os-258",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "系统调用"
+  },
+  {
+    "type": "single",
+    "question": "关于Linux中进程调用execve成功后原进程映像的变化，下列说法正确的是？",
+    "options": [
+      {
+        "text": "原进程的代码和数据被新程序替换，但进程号保持不变",
+        "correct": true
+      },
+      {
+        "text": "原进程终止并由父进程创建全新进程执行新程序",
+        "correct": false
+      },
+      {
+        "text": "原进程的进程号被重新分配为新进程号",
+        "correct": false
+      },
+      {
+        "text": "原进程的打开文件描述符全部被强制关闭",
+        "correct": false
+      }
+    ],
+    "explanation": "execve成功时用新程序替换当前进程的地址空间和映像，进程本身不新建，PID不变。默认情况下除设置了FD_CLOEXEC的文件描述符外，打开文件描述符会保留，而不是全部关闭。",
+    "id": "os-259",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "系统调用"
+  },
+  {
+    "type": "single",
+    "question": "在Linux中，系统调用从用户态切换到内核态所使用的主要机制，以下描述最准确的是？",
+    "options": [
+      {
+        "text": "执行专用陷入指令（如x86-64的syscall；传统x86也使用int 0x80软中断）",
+        "correct": true
+      },
+      {
+        "text": "由外部设备产生硬件中断后进入内核",
+        "correct": false
+      },
+      {
+        "text": "执行普通函数调用指令call",
+        "correct": false
+      },
+      {
+        "text": "执行无条件跳转指令jmp",
+        "correct": false
+      }
+    ],
+    "explanation": "系统调用由用户态主动触发陷入异常或陷阱进入内核，现代x86-64通常使用syscall指令，传统x86可使用int 0x80软中断。硬件中断由外部设备触发，普通call和jmp不会改变CPU特权级，不能用于进入内核执行系统调用。",
+    "id": "os-260",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "系统调用"
+  },
+  {
+    "type": "single",
+    "question": "关于系统调用与普通函数调用的区别，以下描述正确的是？",
+    "options": [
+      {
+        "text": "系统调用需要切换到内核态执行，普通函数调用在用户态执行",
+        "correct": true
+      },
+      {
+        "text": "系统调用和普通函数调用都在内核态执行",
+        "correct": false
+      },
+      {
+        "text": "系统调用和普通函数调用都在用户态执行",
+        "correct": false
+      },
+      {
+        "text": "系统调用不需要保存上下文，普通函数调用需要",
+        "correct": false
+      }
+    ],
+    "explanation": "系统调用涉及特权级切换，在内核态执行；普通函数调用在用户态完成，不切换特权级。两者都需要保存上下文，但系统调用开销更大。正确选项强调内核态与用户态的区别。",
+    "id": "os-261",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "系统调用"
+  },
+  {
+    "type": "single",
+    "question": "在Linux中，系统调用号用于标识哪个系统调用，它通常由谁传递给内核？",
+    "options": [
+      {
+        "text": "用户程序通过特定寄存器传递",
+        "correct": true
+      },
+      {
+        "text": "内核通过返回值传递",
+        "correct": false
+      },
+      {
+        "text": "C库通过全局变量传递",
+        "correct": false
+      },
+      {
+        "text": "硬件通过中断向量传递",
+        "correct": false
+      }
+    ],
+    "explanation": "系统调用号由用户程序在触发系统调用前放入约定寄存器（如x86-64的rax），内核据此分派。C库封装函数会帮助设置寄存器，但传递主体是用户程序。硬件中断向量与系统调用号不同。",
+    "id": "os-262",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "系统调用"
+  },
+  {
+    "type": "single",
+    "question": "在Linux中，通过C库（如glibc）封装的系统调用失败时，用户程序通常如何获知错误？",
+    "options": [
+      {
+        "text": "C库封装返回-1，并设置errno以指示错误码",
+        "correct": true
+      },
+      {
+        "text": "内核直接返回0并设置errno",
+        "correct": false
+      },
+      {
+        "text": "抛出异常",
+        "correct": false
+      },
+      {
+        "text": "直接终止进程",
+        "correct": false
+      }
+    ],
+    "explanation": "内核在系统调用失败时返回负错误码；C库封装通常把它转换为-1，并把错误码放入errno。用户程序随后检查返回值和errno。返回0通常表示成功，异常和终止进程不是标准通知方式。",
+    "id": "os-263",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "系统调用"
+  },
+  {
+    "type": "single",
+    "question": "在Linux中，用于复制文件描述符的系统调用是？",
+    "options": [
+      {
+        "text": "dup",
+        "correct": true
+      },
+      {
+        "text": "open",
+        "correct": false
+      },
+      {
+        "text": "close",
+        "correct": false
+      },
+      {
+        "text": "read",
+        "correct": false
+      }
+    ],
+    "explanation": "dup系统调用用于复制一个已有的文件描述符，返回新的描述符。open用于打开文件，close关闭描述符，read读取数据。正确选项为dup。",
+    "id": "os-264",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "系统调用"
+  },
+  {
+    "type": "single",
+    "question": "关于系统调用中的参数传递，以下说法正确的是？",
+    "options": [
+      {
+        "text": "参数通常通过寄存器或栈传递给内核",
+        "correct": true
+      },
+      {
+        "text": "参数只能通过全局变量传递",
+        "correct": false
+      },
+      {
+        "text": "参数必须通过文件传递",
+        "correct": false
+      },
+      {
+        "text": "参数由硬件自动传递",
+        "correct": false
+      }
+    ],
+    "explanation": "系统调用参数通常按ABI约定通过寄存器传递，参数较多时使用栈。全局变量、文件和硬件自动传递均不符合常规机制。正确选项为寄存器或栈传递。",
+    "id": "os-265",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "系统调用"
+  },
+  {
+    "type": "single",
+    "question": "在Linux中，用户程序调用write系统调用向文件描述符写入数据时，以下描述正确的是？",
+    "options": [
+      {
+        "text": "write可能只写入部分数据，需要循环检查返回值",
+        "correct": true
+      },
+      {
+        "text": "write保证一次性写入全部数据",
+        "correct": false
+      },
+      {
+        "text": "write只能写入文本数据",
+        "correct": false
+      },
+      {
+        "text": "write不需要文件描述符参数",
+        "correct": false
+      }
+    ],
+    "explanation": "write系统调用可能因缓冲区满等原因返回实际写入的字节数，可能小于请求值，因此用户程序应检查返回值并循环写入剩余数据。write可写二进制数据，且必须提供文件描述符。",
+    "id": "os-266",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "系统调用"
+  },
+  {
+    "type": "single",
+    "question": "在Linux中，execve系统调用成功执行后，原进程的代码段和数据段会发生什么变化？",
+    "options": [
+      {
+        "text": "被新程序完全替换，但进程ID保持不变",
+        "correct": true
+      },
+      {
+        "text": "保持不变，仅加载新程序到新进程",
+        "correct": false
+      },
+      {
+        "text": "被清空但进程终止",
+        "correct": false
+      },
+      {
+        "text": "与原程序合并",
+        "correct": false
+      }
+    ],
+    "explanation": "execve成功后会替换当前进程的代码段、数据段和堆栈等，但进程ID不变。它不创建新进程，也不会清空后终止，更不会合并原程序。正确选项强调替换且PID保留。",
+    "id": "os-267",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "系统调用"
+  },
+  {
+    "type": "single",
+    "question": "在Linux中，系统调用与库函数的关系，以下描述正确的是？",
+    "options": [
+      {
+        "text": "库函数可能封装系统调用，也可能完全不涉及系统调用",
+        "correct": true
+      },
+      {
+        "text": "所有库函数都是系统调用的直接封装",
+        "correct": false
+      },
+      {
+        "text": "系统调用必须通过库函数才能使用",
+        "correct": false
+      },
+      {
+        "text": "库函数和系统调用是同一概念",
+        "correct": false
+      }
+    ],
+    "explanation": "库函数是用户态函数，有些封装系统调用（如printf最终调用write），有些纯用户态计算（如strlen）。系统调用可直接通过汇编指令发起，不必须经过库函数。两者不是同一概念。",
+    "id": "os-268",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "系统调用"
+  },
+  {
+    "type": "single",
+    "question": "在Linux中，通过C库封装的系统调用失败后，通常通过哪个错误码标识获取具体错误原因？",
+    "options": [
+      {
+        "text": "errno",
+        "correct": true
+      },
+      {
+        "text": "syscall",
+        "correct": false
+      },
+      {
+        "text": "perror",
+        "correct": false
+      },
+      {
+        "text": "strerror",
+        "correct": false
+      }
+    ],
+    "explanation": "errno是用于保存最近一次错误码的标识，通常实现为线程局部存储；perror和strerror根据错误码生成描述，syscall是发起系统调用的函数名。",
+    "id": "os-269",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "系统调用"
+  },
+  {
+    "type": "single",
+    "question": "在x86-64 Linux系统中，用户程序通过syscall指令触发系统调用时，系统调用号应放在哪个寄存器？",
+    "options": [
+      {
+        "text": "rax",
+        "correct": true
+      },
+      {
+        "text": "rdi",
+        "correct": false
+      },
+      {
+        "text": "rsi",
+        "correct": false
+      },
+      {
+        "text": "rdx",
+        "correct": false
+      }
+    ],
+    "explanation": "x86-64 Linux约定系统调用号放入rax，参数依次放入rdi、rsi、rdx等寄存器；rdi等用于传递参数而非调用号。",
+    "id": "os-270",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "系统调用"
+  },
+  {
+    "type": "single",
+    "question": "在Linux系统中，要查看当前目录下所有文件（包括隐藏文件）的详细信息，应使用哪个命令？",
+    "options": [
+      {
+        "text": "ls -l",
+        "correct": false
+      },
+      {
+        "text": "ls -a",
+        "correct": false
+      },
+      {
+        "text": "ls -la",
+        "correct": true
+      },
+      {
+        "text": "ls -lh",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项是ls -la。其中-a显示隐藏文件，-l以长格式显示详细信息。ls -l不显示隐藏文件，ls -a只列出文件名，ls -lh虽以易读格式显示大小但仍不包含隐藏文件。",
+    "id": "os-271",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "Linux实践"
+  },
+  {
+    "type": "single",
+    "question": "使用chmod命令将文件file.txt的权限设置为：所有者可读写执行，所属组可读执行，其他用户无权限，正确的命令是？",
+    "options": [
+      {
+        "text": "chmod 750 file.txt",
+        "correct": true
+      },
+      {
+        "text": "chmod 760 file.txt",
+        "correct": false
+      },
+      {
+        "text": "chmod 740 file.txt",
+        "correct": false
+      },
+      {
+        "text": "chmod 755 file.txt",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项是chmod 750。数字表示中7=4+2+1（rwx），5=4+1（r-x），0表示无权限。760中组有写权限，740中组无执行权限，755中其他用户有读执行权限，均不符合要求。",
+    "id": "os-272",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "Linux实践"
+  },
+  {
+    "type": "single",
+    "question": "在Linux中，要查找/etc目录下所有名称以.conf结尾的条目（包括目录），正确的命令是？",
+    "options": [
+      {
+        "text": "find /etc -name \"*.conf\"",
+        "correct": true
+      },
+      {
+        "text": "find /etc -type f -name \"*.conf\"",
+        "correct": false
+      },
+      {
+        "text": "locate /etc/*.conf",
+        "correct": false
+      },
+      {
+        "text": "grep \"*.conf\" /etc",
+        "correct": false
+      }
+    ],
+    "explanation": "find /etc -name \"*.conf\" 会从/etc递归匹配名称；加上 -type f 只匹配普通文件，会漏掉名称匹配的目录；locate依赖数据库且给出的模式不是递归名称匹配；grep用于搜索文件内容。",
+    "id": "os-273",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "Linux实践"
+  },
+  {
+    "type": "single",
+    "question": "在Linux中，要查看当前终端（由tty命令给出的终端名）上运行的进程，应使用哪个命令？",
+    "options": [
+      {
+        "text": "ps -t \"$(tty)\"",
+        "correct": true
+      },
+      {
+        "text": "ps -ef",
+        "correct": false
+      },
+      {
+        "text": "ps aux",
+        "correct": false
+      },
+      {
+        "text": "ps -T",
+        "correct": false
+      }
+    ],
+    "explanation": "ps 的 -t 选项按终端选择进程，$(tty) 取得当前终端名；-ef 和 aux 列出全系统进程；在Linux procps 中 -T 用于显示线程，不是按终端筛选进程。",
+    "id": "os-274",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "Linux实践"
+  },
+  {
+    "type": "single",
+    "question": "关于Linux中的硬链接和软链接，以下说法正确的是？",
+    "options": [
+      {
+        "text": "删除源文件后，硬链接仍然可以访问文件内容",
+        "correct": true
+      },
+      {
+        "text": "硬链接可以跨文件系统创建",
+        "correct": false
+      },
+      {
+        "text": "软链接文件的大小等于源文件大小",
+        "correct": false
+      },
+      {
+        "text": "软链接与目标文件共享同一个inode号",
+        "correct": false
+      }
+    ],
+    "explanation": "硬链接与目标文件共享inode，删除其中一个目录项只是减少链接计数，其他硬链接仍可访问内容。硬链接不能跨文件系统；软链接自身大小通常是目标路径字符串长度，并且有独立inode，不共享目标inode。",
+    "id": "os-275",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "Linux实践"
+  },
+  {
+    "type": "single",
+    "question": "在Linux中，要实时查看文件/var/log/syslog的新增内容，应使用哪个命令？",
+    "options": [
+      {
+        "text": "cat /var/log/syslog",
+        "correct": false
+      },
+      {
+        "text": "tail -f /var/log/syslog",
+        "correct": true
+      },
+      {
+        "text": "head /var/log/syslog",
+        "correct": false
+      },
+      {
+        "text": "less /var/log/syslog",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项是tail -f，它持续输出文件末尾的新增内容。cat显示全部内容后退出；head显示开头部分；less需要手动翻页且不自动刷新。",
+    "id": "os-276",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "Linux实践"
+  },
+  {
+    "type": "single",
+    "question": "在Linux中，要只显示当前时间、系统已运行时长、登录用户数和平均负载的一行摘要，不列出各登录用户的活动，应使用哪个命令？",
+    "options": [
+      {
+        "text": "uptime",
+        "correct": true
+      },
+      {
+        "text": "w",
+        "correct": false
+      },
+      {
+        "text": "who",
+        "correct": false
+      },
+      {
+        "text": "last",
+        "correct": false
+      }
+    ],
+    "explanation": "uptime 输出一行摘要，包含当前时间、运行时长、登录用户数和平均负载；w 虽然首行摘要相近，但还会列出各登录用户及其活动；who 列出登录用户；last 显示登录历史。",
+    "id": "os-277",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "Linux实践"
+  },
+  {
+    "type": "single",
+    "question": "在Linux中，使用grep命令在文件file中搜索字符串\"error\"（忽略大小写），正确的命令是？",
+    "options": [
+      {
+        "text": "grep -i \"error\" file",
+        "correct": true
+      },
+      {
+        "text": "grep -v \"error\" file",
+        "correct": false
+      },
+      {
+        "text": "grep -c \"error\" file",
+        "correct": false
+      },
+      {
+        "text": "grep -n \"error\" file",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项是grep -i，它忽略大小写匹配。grep -v反向选择（不匹配的行）；-c统计匹配行数；-n显示行号，但均不忽略大小写。",
+    "id": "os-278",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "Linux实践"
+  },
+  {
+    "type": "single",
+    "question": "在Linux中，要解压文件archive.tar.gz，正确的命令是？",
+    "options": [
+      {
+        "text": "tar -czvf archive.tar.gz",
+        "correct": false
+      },
+      {
+        "text": "tar -xzvf archive.tar.gz",
+        "correct": true
+      },
+      {
+        "text": "tar -tzvf archive.tar.gz",
+        "correct": false
+      },
+      {
+        "text": "tar -cjvf archive.tar.gz",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项是tar -xzvf，-x表示解压，-z处理gzip，-v显示过程，-f指定文件。-c创建归档，-t列出内容，-j处理bzip2。",
+    "id": "os-279",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "Linux实践"
+  },
+  {
+    "type": "single",
+    "question": "在Linux中，要查看当前shell进程可打开的文件描述符软限制，应使用哪个命令？",
+    "options": [
+      {
+        "text": "ulimit -n",
+        "correct": true
+      },
+      {
+        "text": "ulimit -u",
+        "correct": false
+      },
+      {
+        "text": "cat /proc/sys/fs/file-max",
+        "correct": false
+      },
+      {
+        "text": "sysctl fs.file-nr",
+        "correct": false
+      }
+    ],
+    "explanation": "ulimit -n 显示当前shell的打开文件描述符软限制；ulimit -u 显示用户进程数限制；/proc/sys/fs/file-max 是系统级最大文件句柄数；fs.file-nr 显示已分配和未使用的文件句柄统计。",
+    "id": "os-280",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "Linux实践"
+  },
+  {
+    "type": "multiple",
+    "question": "在Linux中，以下哪些命令可以用于查看进程的实时资源使用情况（如CPU、内存）？",
+    "options": [
+      {
+        "text": "top",
+        "correct": true
+      },
+      {
+        "text": "ps aux",
+        "correct": false
+      },
+      {
+        "text": "htop",
+        "correct": true
+      },
+      {
+        "text": "vmstat",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项是top和htop，它们提供动态更新的进程资源使用视图。ps aux是静态快照；vmstat显示系统整体统计，不针对单个进程实时监控。",
+    "id": "os-281",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "Linux实践"
+  },
+  {
+    "type": "multiple",
+    "question": "关于Linux中的环境变量，以下说法正确的有？",
+    "options": [
+      {
+        "text": "使用export命令可以将变量导出为环境变量",
+        "correct": true
+      },
+      {
+        "text": "环境变量只对当前shell有效，子进程无法继承",
+        "correct": false
+      },
+      {
+        "text": "使用env命令可以显示当前环境变量",
+        "correct": true
+      },
+      {
+        "text": "修改/etc/profile后，新登录的Bourne兼容shell会话通常会加载该配置，可对相应用户生效",
+        "correct": true
+      }
+    ],
+    "explanation": "export 将 shell 变量标记为环境变量，使其进入后续子进程的环境；已经导出的环境变量可被子进程继承，未导出的普通 shell 变量不会。env 不带参数时列出当前进程的环境变量。/etc/profile 由 Bourne 兼容登录 shell 在登录时读取，修改后通常影响之后新登录的相应 shell 会话，不保证立即影响已登录会话或所有 shell 类型。",
+    "id": "os-282",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "Linux实践"
+  },
+  {
+    "type": "multiple",
+    "question": "在Linux中，以下哪些方式可以查看文件/etc/passwd的内容？",
+    "options": [
+      {
+        "text": "cat /etc/passwd",
+        "correct": true
+      },
+      {
+        "text": "more /etc/passwd",
+        "correct": true
+      },
+      {
+        "text": "less /etc/passwd",
+        "correct": true
+      },
+      {
+        "text": "grep /etc/passwd",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项是cat、more、less，它们都能显示文件内容。grep用于在文件中搜索模式，需要提供模式和文件，单独grep /etc/passwd会等待标准输入，不能直接查看文件。",
+    "id": "os-283",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "Linux实践"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些命令主要用于主动测试到目标主机的网络连通性或路由路径？",
+    "options": [
+      {
+        "text": "ping",
+        "correct": true
+      },
+      {
+        "text": "traceroute",
+        "correct": true
+      },
+      {
+        "text": "netstat",
+        "correct": false
+      },
+      {
+        "text": "nslookup",
+        "correct": false
+      }
+    ],
+    "explanation": "ping 通过 ICMP Echo 请求测试目标可达性和往返时间；traceroute 通过逐步增加 TTL 探测到目标的路径。netstat 查看本机连接、路由和接口统计，nslookup 查询 DNS 记录，二者可辅助网络诊断，但不主动测试到目标主机的连通性或路径。",
+    "id": "os-284",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "Linux实践"
+  },
+  {
+    "type": "multiple",
+    "question": "在Linux中，以下哪些操作可以释放磁盘空间？",
+    "options": [
+      {
+        "text": "删除不再需要的文件",
+        "correct": true
+      },
+      {
+        "text": "清空日志文件（如使用> /var/log/syslog）",
+        "correct": true
+      },
+      {
+        "text": "使用df -h查看磁盘使用情况",
+        "correct": false
+      },
+      {
+        "text": "卸载不再使用的文件系统",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项是删除文件和清空日志文件，它们直接减少磁盘占用。df -h只查看使用情况，不释放空间；卸载文件系统不删除数据，不会释放空间。",
+    "id": "os-285",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "Linux实践"
+  },
+  {
+    "type": "single",
+    "question": "Linux 中执行 `ls -l` 后某行显示 `-rw-r----x 1 alice dev 1024 May 1 10:00 report`，则其他用户对该文件的权限是？",
+    "options": [
+      {
+        "text": "可读、可写、可执行",
+        "correct": false
+      },
+      {
+        "text": "仅可执行",
+        "correct": true
+      },
+      {
+        "text": "仅可读",
+        "correct": false
+      },
+      {
+        "text": "无任何权限",
+        "correct": false
+      }
+    ],
+    "explanation": "权限串九位从左到右分为所有者、所属组、其他用户三组；这里分别是 rw-、r--、--x。因此其他用户只有执行权限，没有读和写权限。",
+    "id": "os-286",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "Linux实践"
+  },
+  {
+    "type": "single",
+    "question": "要在不改变文件所属组的前提下，把文件 data 的所属用户改为 bob，应使用哪条命令？",
+    "options": [
+      {
+        "text": "chgrp bob data",
+        "correct": false
+      },
+      {
+        "text": "chown bob data",
+        "correct": true
+      },
+      {
+        "text": "chmod bob data",
+        "correct": false
+      },
+      {
+        "text": "usermod bob data",
+        "correct": false
+      }
+    ],
+    "explanation": "chown 改所有者，只给用户参数时组保持不变；chgrp 改组；chmod 改权限；usermod 改账户属性而非文件。误区是混淆 chown 与 chgrp 的作用对象。正确为 chown bob data。",
+    "id": "os-287",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "Linux实践"
+  },
+  {
+    "type": "single",
+    "question": "在 Bash 中执行 `command > out.txt 2>&1`，其含义是？",
+    "options": [
+      {
+        "text": "标准输出和标准错误都写入 out.txt",
+        "correct": true
+      },
+      {
+        "text": "仅标准输出写入 out.txt，错误仍在终端",
+        "correct": false
+      },
+      {
+        "text": "仅标准错误写入 out.txt，标准输出在终端",
+        "correct": false
+      },
+      {
+        "text": "把 out.txt 内容同时送到两个描述符",
+        "correct": false
+      }
+    ],
+    "explanation": "先 `> out.txt` 把 stdout 指向文件，再 `2>&1` 让 stderr 复制 stdout 当前指向，于是两者都进文件。误区是认为 `2>&1` 顺序无关，若写成 `2>&1 > out.txt` 则错误仍留在终端。正确为两者都写入文件。",
+    "id": "os-288",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "Linux实践"
+  },
+  {
+    "type": "single",
+    "question": "使用 `tar -czf backup.tar.gz /home/user/docs` 打包时，恢复后文件路径通常呈现为？",
+    "options": [
+      {
+        "text": "docs/ 相对路径",
+        "correct": false
+      },
+      {
+        "text": "home/user/docs 的嵌套路径",
+        "correct": true
+      },
+      {
+        "text": "仅文件名不含目录",
+        "correct": false
+      },
+      {
+        "text": "自动去掉所有目录层级，只保留文件名 docs",
+        "correct": false
+      }
+    ],
+    "explanation": "tar 遇到绝对路径会去掉开头的斜杠，但归档中仍保留 home/user/docs 的目录层级；解包时默认在当前目录下重建该层级，所以通常得到 home/user/docs 嵌套路径，而不是只保留 docs 或文件名。",
+    "id": "os-289",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "Linux实践"
+  },
+  {
+    "type": "single",
+    "question": "用 `find /data -type f -size +100M` 查找文件，下面描述正确的是？",
+    "options": [
+      {
+        "text": "查找大于 100MB 的普通文件",
+        "correct": true
+      },
+      {
+        "text": "查找小于 100MB 的普通文件",
+        "correct": false
+      },
+      {
+        "text": "查找大小恰为 100MB 的目录",
+        "correct": false
+      },
+      {
+        "text": "查找最近 100 分钟修改的文件",
+        "correct": false
+      }
+    ],
+    "explanation": "`-type f` 限定普通文件，`-size +100M` 表示大于 100 个 1MB 单位，即大于 100MB。误区是把 `+` 理解为等于或把 `-size` 当成时间条件；时间用 `-mmin`。正确为大于 100MB 的普通文件。",
+    "id": "os-290",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "Linux实践"
+  },
+  {
+    "type": "single",
+    "question": "对于 `ps aux` 输出中的 STAT 列值 `Ss`，较合理的解释是？",
+    "options": [
+      {
+        "text": "进程已停止且为会话首进程",
+        "correct": false
+      },
+      {
+        "text": "可中断睡眠状态且为会话首进程",
+        "correct": true
+      },
+      {
+        "text": "正在运行且占用高 CPU",
+        "correct": false
+      },
+      {
+        "text": "僵尸进程且被跟踪",
+        "correct": false
+      }
+    ],
+    "explanation": "STAT 第一位表示状态，S 为可中断睡眠；后续小写 s 表示会话首进程。误区是把 S 当作 stopped，停止是 T；Z 才是僵尸。正确为可中断睡眠且为会话首进程。",
+    "id": "os-291",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "Linux实践"
+  },
+  {
+    "type": "single",
+    "question": "systemd 系统中，想让修改后的 unit 配置在不重启整机的情况下生效，较合适的做法是？",
+    "options": [
+      {
+        "text": "执行 systemctl daemon-reload 后按需重启对应服务",
+        "correct": true
+      },
+      {
+        "text": "直接 kill 掉 systemd 进程",
+        "correct": false
+      },
+      {
+        "text": "执行 reboot 才能生效",
+        "correct": false
+      },
+      {
+        "text": "删除 /etc/systemd/system 下所有文件",
+        "correct": false
+      }
+    ],
+    "explanation": "修改 unit 文件后需 daemon-reload 让 systemd 重新读取配置，再 restart 相关服务使运行实例采用新配置。误区是认为必须重启整机或杀掉 systemd。正确为 daemon-reload 加按需重启服务。",
+    "id": "os-292",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "Linux实践"
+  },
+  {
+    "type": "single",
+    "question": "关于 shell 中的管道 `cmd1 | cmd2`，下列说法正确的是？",
+    "options": [
+      {
+        "text": "cmd1 的标准输出作为 cmd2 的标准输入",
+        "correct": true
+      },
+      {
+        "text": "cmd1 与 cmd2 共享同一个标准输入",
+        "correct": false
+      },
+      {
+        "text": "cmd2 的标准错误自动进入 cmd1",
+        "correct": false
+      },
+      {
+        "text": "管道只传递退出状态不传递数据",
+        "correct": false
+      }
+    ],
+    "explanation": "管道把左侧进程 stdout 接到右侧进程 stdin，二者并发运行。stderr 默认不进入管道；退出状态需用 PIPESTATUS 查看。误区是认为管道传递错误输出或退出码。正确为 stdout 到 stdin。",
+    "id": "os-293",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "Linux实践"
+  },
+  {
+    "type": "single",
+    "question": "使用 `crontab -e` 添加 `30 2 * * 1 /opt/job.sh`，该任务执行规律是？",
+    "options": [
+      {
+        "text": "每天 2:30 执行",
+        "correct": false
+      },
+      {
+        "text": "每周一 2:30 执行",
+        "correct": true
+      },
+      {
+        "text": "每月 1 日 2:30 执行",
+        "correct": false
+      },
+      {
+        "text": "每周二 3:00 执行",
+        "correct": false
+      }
+    ],
+    "explanation": "cron 五个时间字段依次为分、时、日、月、周，周字段 1 表示周一（0 或 7 为周日）。因此是每周一 2:30。误区是把周字段 1 当作每月 1 日。正确为每周一 2:30。",
+    "id": "os-294",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "Linux实践"
+  },
+  {
+    "type": "single",
+    "question": "在 Bash 中运行脚本 `./run.sh` 提示权限不够，但 `bash run.sh` 可以执行，最可能的原因是？",
+    "options": [
+      {
+        "text": "脚本缺少执行权限",
+        "correct": true
+      },
+      {
+        "text": "脚本所在文件系统只读",
+        "correct": false
+      },
+      {
+        "text": "当前用户没有读权限",
+        "correct": false
+      },
+      {
+        "text": "脚本首行没有 shebang 就完全不能运行",
+        "correct": false
+      }
+    ],
+    "explanation": "直接执行要求文件具有执行权限；用 bash 显式解释只需读权限。误区是把无 shebang 当作绝对无法运行，其实 bash 显式调用仍可执行。最可能原因是缺少执行权限，可用 chmod +x 修复。",
+    "id": "os-295",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "Linux实践"
+  },
+  {
+    "type": "multiple",
+    "question": "下列哪些做法能查看某个进程打开的文件和网络套接字？",
+    "options": [
+      {
+        "text": "lsof -p 进程号",
+        "correct": true
+      },
+      {
+        "text": "在 /proc/进程号/fd 下查看描述符链接",
+        "correct": true
+      },
+      {
+        "text": "用 free -m 查看该进程内存",
+        "correct": false
+      },
+      {
+        "text": "用 df -h 查看该进程磁盘占用",
+        "correct": false
+      }
+    ],
+    "explanation": "lsof -p 列出指定进程打开的文件描述符，包括套接字；/proc/PID/fd 中符号链接也对应打开的文件。free 看整体内存，df 看文件系统空间，均不针对单个进程的打开文件。正确为前两项。",
+    "id": "os-296",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "Linux实践"
+  },
+  {
+    "type": "multiple",
+    "question": "关于 Linux 软链接，下列说法正确的有？",
+    "options": [
+      {
+        "text": "删除源文件后软链接通常变为悬空链接",
+        "correct": true
+      },
+      {
+        "text": "软链接可以跨文件系统创建",
+        "correct": true
+      },
+      {
+        "text": "软链接与源文件共享同一个 inode 号",
+        "correct": false
+      },
+      {
+        "text": "对软链接执行 chmod（未使用 -h）通常会修改目标文件权限",
+        "correct": true
+      }
+    ],
+    "explanation": "软链接是独立文件，有自己的 inode，内容是指向目标的路径，因此可跨文件系统；目标删除后链接通常悬空。硬链接才与源文件共享 inode。chmod 默认跟随符号链接修改目标文件权限，只有使用 -h 等选项才作用于链接自身。",
+    "id": "os-297",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "Linux实践"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些方式可以临时把某目录加入当前 shell 的可执行文件搜索路径？",
+    "options": [
+      {
+        "text": "export PATH=/opt/bin:$PATH",
+        "correct": true
+      },
+      {
+        "text": "PATH=/opt/bin:$PATH 后 export PATH",
+        "correct": true
+      },
+      {
+        "text": "alias PATH=/opt/bin",
+        "correct": false
+      },
+      {
+        "text": "chmod +x /opt/bin 后无需其他操作",
+        "correct": false
+      }
+    ],
+    "explanation": "PATH 是环境变量，export 后当前 shell 及子进程按新顺序搜索命令；先赋值再 export 等效。alias 不能改 PATH；给目录加执行权限只影响访问，不会使其进入搜索路径。正确为前两项。",
+    "id": "os-298",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "Linux实践"
+  },
+  {
+    "type": "multiple",
+    "question": "排查“磁盘显示已满但找不到大文件”时，合理的检查方向有？",
+    "options": [
+      {
+        "text": "用 lsof +L1 查看被删除但仍被进程占用的文件",
+        "correct": true
+      },
+      {
+        "text": "检查是否有进程向已删除文件持续写入导致空间未释放",
+        "correct": true
+      },
+      {
+        "text": "直接执行 mkfs 重新格式化分区",
+        "correct": false
+      },
+      {
+        "text": "只查看目录大小就能确定 inode 是否耗尽",
+        "correct": false
+      }
+    ],
+    "explanation": "文件被删除但仍有进程打开时，数据块不会释放，du 看不到而 df 仍满；lsof +L1 可定位。inode 耗尽需用 df -i 检查，与目录大小无关；mkfs 会破坏数据。正确为前两项。",
+    "id": "os-299",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "Linux实践"
+  },
+  {
+    "type": "multiple",
+    "question": "关于 Linux 中 `kill` 命令发送信号，下列说法正确的有？",
+    "options": [
+      {
+        "text": "kill -TERM PID 请求进程正常终止",
+        "correct": true
+      },
+      {
+        "text": "kill -9 PID 发送 SIGKILL，进程无法捕获处理",
+        "correct": true
+      },
+      {
+        "text": "kill 只能终止进程，不能发送其他信号",
+        "correct": false
+      },
+      {
+        "text": "kill -STOP PID 会直接杀死进程",
+        "correct": false
+      }
+    ],
+    "explanation": "SIGTERM 可被捕获以清理后退出；SIGKILL 不可捕获、不可忽略，强制终止。kill 可发送多种信号；SIGSTOP 只是暂停进程，恢复用 SIGCONT。正确为前两项。",
+    "id": "os-300",
+    "tags": [
+      "操作系统"
+    ],
+    "section": "Linux实践"
+  }
+]

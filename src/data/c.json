@@ -1,0 +1,8402 @@
+[
+  {
+    "type": "single",
+    "question": "在 char 为8位有符号、采用补码且将超范围整数转换截断为低8位的 C 实现中，表达式 `(char)300` 的值是？",
+    "options": [
+      {
+        "text": "44",
+        "correct": true
+      },
+      {
+        "text": "300",
+        "correct": false
+      },
+      {
+        "text": "-300",
+        "correct": false
+      },
+      {
+        "text": "未定义行为",
+        "correct": false
+      }
+    ],
+    "explanation": "标准规定，整数转换为不能表示该值的有符号整数类型时结果由实现定义。在题设的实现中，取300的低8位得到00101100，即十进制44；这不是未定义行为。",
+    "id": "c-001",
+    "tags": [
+      "C"
+    ],
+    "section": "类型与转换"
+  },
+  {
+    "type": "single",
+    "question": "若 `int a = 10; double b = 3.14;`，则表达式 `a + b` 的结果类型是？",
+    "options": [
+      {
+        "text": "int",
+        "correct": false
+      },
+      {
+        "text": "double",
+        "correct": true
+      },
+      {
+        "text": "float",
+        "correct": false
+      },
+      {
+        "text": "long",
+        "correct": false
+      }
+    ],
+    "explanation": "根据寻常算术转换，int会提升为double，因此结果类型为double。float和long不符合转换规则。",
+    "id": "c-002",
+    "tags": [
+      "C"
+    ],
+    "section": "类型与转换"
+  },
+  {
+    "type": "single",
+    "question": "下列哪个初始化语句会发生隐式类型转换？",
+    "options": [
+      {
+        "text": "int x = 3.14;",
+        "correct": true
+      },
+      {
+        "text": "double y = 3.14;",
+        "correct": false
+      },
+      {
+        "text": "float z = 3.14f;",
+        "correct": false
+      },
+      {
+        "text": "int w = (int)3.14;",
+        "correct": false
+      }
+    ],
+    "explanation": "把 double 常量赋给 int 变量会发生隐式转换并丢弃小数部分；double 常量初始化 double、float 常量初始化 float 类型匹配；显式强制转换不属于隐式转换。",
+    "id": "c-003",
+    "tags": [
+      "C"
+    ],
+    "section": "类型与转换"
+  },
+  {
+    "type": "single",
+    "question": "表达式 `(int)3.99` 的值是？",
+    "options": [
+      {
+        "text": "3",
+        "correct": true
+      },
+      {
+        "text": "4",
+        "correct": false
+      },
+      {
+        "text": "3.99",
+        "correct": false
+      },
+      {
+        "text": "0",
+        "correct": false
+      }
+    ],
+    "explanation": "强制类型转换将浮点数截断为整数，丢弃小数部分，因此结果为3。不是四舍五入。",
+    "id": "c-004",
+    "tags": [
+      "C"
+    ],
+    "section": "类型与转换"
+  },
+  {
+    "type": "single",
+    "question": "在C语言中，`sizeof(char)` 的值是？",
+    "options": [
+      {
+        "text": "1",
+        "correct": true
+      },
+      {
+        "text": "2",
+        "correct": false
+      },
+      {
+        "text": "4",
+        "correct": false
+      },
+      {
+        "text": "取决于编译器",
+        "correct": false
+      }
+    ],
+    "explanation": "C标准规定sizeof(char)恒为1，因为char是一个字节。其他选项错误。",
+    "id": "c-005",
+    "tags": [
+      "C"
+    ],
+    "section": "类型与转换"
+  },
+  {
+    "type": "single",
+    "question": "若有 `unsigned int a = 1; int b = -2;`，则表达式 `a + b` 的结果类型是？",
+    "options": [
+      {
+        "text": "int",
+        "correct": false
+      },
+      {
+        "text": "unsigned int",
+        "correct": true
+      },
+      {
+        "text": "long",
+        "correct": false
+      },
+      {
+        "text": "unsigned long",
+        "correct": false
+      }
+    ],
+    "explanation": "根据寻常算术转换，int与unsigned int运算时，int被转换为unsigned int，因此结果类型为unsigned int。",
+    "id": "c-006",
+    "tags": [
+      "C"
+    ],
+    "section": "类型与转换"
+  },
+  {
+    "type": "single",
+    "question": "下列哪个标准库函数直接将字符串转换为 int 并返回该整数值？",
+    "options": [
+      {
+        "text": "atoi",
+        "correct": true
+      },
+      {
+        "text": "itoa",
+        "correct": false
+      },
+      {
+        "text": "sscanf",
+        "correct": false
+      },
+      {
+        "text": "sprintf",
+        "correct": false
+      }
+    ],
+    "explanation": "atoi 解析字符串并返回对应的 int 值；itoa 不是 C 标准库函数；sscanf 需要输出参数并返回成功赋值的项数，不直接返回转换后的整数值；sprintf 用于格式化输出到字符串。",
+    "id": "c-007",
+    "tags": [
+      "C"
+    ],
+    "section": "类型与转换"
+  },
+  {
+    "type": "single",
+    "question": "表达式 `(float)1/3` 的结果是？",
+    "options": [
+      {
+        "text": "0.333333",
+        "correct": true
+      },
+      {
+        "text": "0",
+        "correct": false
+      },
+      {
+        "text": "1",
+        "correct": false
+      },
+      {
+        "text": "0.3",
+        "correct": false
+      }
+    ],
+    "explanation": "由于(float)1将1转换为float，然后除以3，进行浮点除法，结果为0.333333（近似）。若为1/3则整数除法得0。",
+    "id": "c-008",
+    "tags": [
+      "C"
+    ],
+    "section": "类型与转换"
+  },
+  {
+    "type": "single",
+    "question": "在C语言中，将double转换为int时，若值超出int范围，行为是？",
+    "options": [
+      {
+        "text": "未定义行为",
+        "correct": true
+      },
+      {
+        "text": "截断为INT_MAX",
+        "correct": false
+      },
+      {
+        "text": "截断为INT_MIN",
+        "correct": false
+      },
+      {
+        "text": "四舍五入",
+        "correct": false
+      }
+    ],
+    "explanation": "C标准规定，如果浮点值转换为整数类型时无法表示，行为未定义。其他选项不符合标准。",
+    "id": "c-009",
+    "tags": [
+      "C"
+    ],
+    "section": "类型与转换"
+  },
+  {
+    "type": "single",
+    "question": "下列哪个表达式将字符'5'转换为其对应的整数值5？",
+    "options": [
+      {
+        "text": "'5' - '0'",
+        "correct": true
+      },
+      {
+        "text": "(int)'5'",
+        "correct": false
+      },
+      {
+        "text": "'5' + 0",
+        "correct": false
+      },
+      {
+        "text": "atoi('5')",
+        "correct": false
+      }
+    ],
+    "explanation": "'5' - '0'利用字符编码的连续性得到整数值5。(int)'5'得到ASCII码53，atoi参数需为字符串。",
+    "id": "c-010",
+    "tags": [
+      "C"
+    ],
+    "section": "类型与转换"
+  },
+  {
+    "type": "single",
+    "question": "表达式 `1 ? 2 : 3.0` 的结果类型是？",
+    "options": [
+      {
+        "text": "int",
+        "correct": false
+      },
+      {
+        "text": "double",
+        "correct": true
+      },
+      {
+        "text": "float",
+        "correct": false
+      },
+      {
+        "text": "取决于条件",
+        "correct": false
+      }
+    ],
+    "explanation": "条件运算符的第二和第三操作数会进行类型平衡，int和double共同类型为double，因此整个表达式类型为double，结果为2.0。",
+    "id": "c-011",
+    "tags": [
+      "C"
+    ],
+    "section": "类型与转换"
+  },
+  {
+    "type": "single",
+    "question": "在 `NULL` 被定义为整数常量 `0` 的 C 实现中，表达式 `(int)NULL` 的值是？",
+    "options": [
+      {
+        "text": "0",
+        "correct": true
+      },
+      {
+        "text": "1",
+        "correct": false
+      },
+      {
+        "text": "未定义行为",
+        "correct": false
+      },
+      {
+        "text": "编译错误",
+        "correct": false
+      }
+    ],
+    "explanation": "当 NULL 被定义为整数常量 0 时，转换为 int 得到 0。若 NULL 被定义为空指针常量如 `((void*)0)`，则指针到整数的转换由实现定义，题目已限定为整数常量 0 的情形。",
+    "id": "c-012",
+    "tags": [
+      "C"
+    ],
+    "section": "类型与转换"
+  },
+  {
+    "type": "single",
+    "question": "在 ASCII 字符集下，表达式 `(char)('A' + 2)` 对应的字符是？",
+    "options": [
+      {
+        "text": "'C'",
+        "correct": true
+      },
+      {
+        "text": "'B'",
+        "correct": false
+      },
+      {
+        "text": "'D'",
+        "correct": false
+      },
+      {
+        "text": "'E'",
+        "correct": false
+      }
+    ],
+    "explanation": "ASCII 中字符 'A' 的编码为 65，加 2 得 67，转换为 char 后对应字符 'C'。",
+    "id": "c-013",
+    "tags": [
+      "C"
+    ],
+    "section": "类型与转换"
+  },
+  {
+    "type": "single",
+    "question": "下列哪个转换是安全的（不会丢失信息）？",
+    "options": [
+      {
+        "text": "int到long",
+        "correct": true
+      },
+      {
+        "text": "long到int",
+        "correct": false
+      },
+      {
+        "text": "double到float",
+        "correct": false
+      },
+      {
+        "text": "int到char",
+        "correct": false
+      }
+    ],
+    "explanation": "int到long通常是安全的，因为long至少与int一样宽。其他转换可能丢失信息，如long到int可能溢出，double到float可能损失精度，int到char可能截断。",
+    "id": "c-014",
+    "tags": [
+      "C"
+    ],
+    "section": "类型与转换"
+  },
+  {
+    "type": "single",
+    "question": "表达式 `(double)(1/3)` 的值是？",
+    "options": [
+      {
+        "text": "0.0",
+        "correct": true
+      },
+      {
+        "text": "0.333333",
+        "correct": false
+      },
+      {
+        "text": "1.0",
+        "correct": false
+      },
+      {
+        "text": "3.0",
+        "correct": false
+      }
+    ],
+    "explanation": "1/3进行整数除法，结果为0，然后转换为double得0.0。若要浮点除法应写为1.0/3或(double)1/3。",
+    "id": "c-015",
+    "tags": [
+      "C"
+    ],
+    "section": "类型与转换"
+  },
+  {
+    "type": "single",
+    "question": "在C语言中，表达式 `(unsigned char)256` 的结果（假设unsigned char为8位）是？",
+    "options": [
+      {
+        "text": "0",
+        "correct": true
+      },
+      {
+        "text": "256",
+        "correct": false
+      },
+      {
+        "text": "1",
+        "correct": false
+      },
+      {
+        "text": "255",
+        "correct": false
+      }
+    ],
+    "explanation": "unsigned char为8位，取值范围0~255，256超出范围，转换时对256取模得0。正确选项为0。误区是认为转换会饱和到255或保留原值。",
+    "id": "c-016",
+    "tags": [
+      "C"
+    ],
+    "section": "类型与转换"
+  },
+  {
+    "type": "single",
+    "question": "若有 `short s = -1; unsigned int u = 1;`，则表达式 `s < u` 的结果是？",
+    "options": [
+      {
+        "text": "1",
+        "correct": false
+      },
+      {
+        "text": "0",
+        "correct": true
+      },
+      {
+        "text": "不确定",
+        "correct": false
+      },
+      {
+        "text": "编译错误",
+        "correct": false
+      }
+    ],
+    "explanation": "s为short，u为unsigned int，比较时s被转换为unsigned int，-1转换为一个很大的无符号数，因此s < u为假，结果为0。误区是认为按数学值比较。",
+    "id": "c-017",
+    "tags": [
+      "C"
+    ],
+    "section": "类型与转换"
+  },
+  {
+    "type": "single",
+    "question": "表达式 `(int)3.99 + (int)-3.99` 的值是？",
+    "options": [
+      {
+        "text": "0",
+        "correct": true
+      },
+      {
+        "text": "1",
+        "correct": false
+      },
+      {
+        "text": "-1",
+        "correct": false
+      },
+      {
+        "text": "7",
+        "correct": false
+      }
+    ],
+    "explanation": "浮点数转整数时向零截断：(int)3.99为3，(int)-3.99为-3，相加得0。误区是认为会四舍五入或向负无穷取整。",
+    "id": "c-018",
+    "tags": [
+      "C"
+    ],
+    "section": "类型与转换"
+  },
+  {
+    "type": "single",
+    "question": "若有 `char c = 'A';`，则表达式 `c + 1` 的类型是？",
+    "options": [
+      {
+        "text": "char",
+        "correct": false
+      },
+      {
+        "text": "int",
+        "correct": true
+      },
+      {
+        "text": "unsigned char",
+        "correct": false
+      },
+      {
+        "text": "short",
+        "correct": false
+      }
+    ],
+    "explanation": "char在算术运算中会进行整数提升，通常提升为int，因此c+1的类型是int。误区是认为结果类型仍为char。",
+    "id": "c-019",
+    "tags": [
+      "C"
+    ],
+    "section": "类型与转换"
+  },
+  {
+    "type": "single",
+    "question": "下列哪个选项中的转换可能丢失数据？",
+    "options": [
+      {
+        "text": "int 到 long",
+        "correct": false
+      },
+      {
+        "text": "float 到 double",
+        "correct": false
+      },
+      {
+        "text": "double 到 float",
+        "correct": true
+      },
+      {
+        "text": "char 到 int",
+        "correct": false
+      }
+    ],
+    "explanation": "double的精度和范围通常大于float，转换为float可能丢失精度或溢出。其他选项均为拓宽转换，通常安全。误区是认为所有浮点转换都安全。",
+    "id": "c-020",
+    "tags": [
+      "C"
+    ],
+    "section": "类型与转换"
+  },
+  {
+    "type": "single",
+    "question": "若有 `int i = 42; void *p = &i;`，则表达式 `*(int *)p` 的值是？",
+    "options": [
+      {
+        "text": "42",
+        "correct": true
+      },
+      {
+        "text": "地址值",
+        "correct": false
+      },
+      {
+        "text": "未定义",
+        "correct": false
+      },
+      {
+        "text": "编译错误",
+        "correct": false
+      }
+    ],
+    "explanation": "void*可转换为任意对象指针，转换回int*后解引用得到i的值42。误区是认为void*不能转换或解引用。",
+    "id": "c-021",
+    "tags": [
+      "C"
+    ],
+    "section": "类型与转换"
+  },
+  {
+    "type": "single",
+    "question": "在采用二进制补码、将超出有符号 char 范围的值按模 256 回绕的实现上，表达式 `(int)(char)200` 的值是？",
+    "options": [
+      {
+        "text": "200",
+        "correct": false
+      },
+      {
+        "text": "-56",
+        "correct": true
+      },
+      {
+        "text": "56",
+        "correct": false
+      },
+      {
+        "text": "0",
+        "correct": false
+      }
+    ],
+    "explanation": "200 超出 8 位有符号 char 的表示范围，转换为 char 由实现定义；在题目指定的补码回绕实现中，200 按 8 位解释为 -56，再转换为 int 仍为 -56。",
+    "id": "c-022",
+    "tags": [
+      "C"
+    ],
+    "section": "类型与转换"
+  },
+  {
+    "type": "single",
+    "question": "假设 unsigned short 为 16 位且 int 为 32 位，若有 `unsigned short us = 65535; int i = us;`，则 i 的值是？",
+    "options": [
+      {
+        "text": "65535",
+        "correct": true
+      },
+      {
+        "text": "-1",
+        "correct": false
+      },
+      {
+        "text": "0",
+        "correct": false
+      },
+      {
+        "text": "实现定义",
+        "correct": false
+      }
+    ],
+    "explanation": "unsigned short 在算术和赋值语境中先做整数提升；因为 32 位 int 能表示 16 位 unsigned short 的全部值，提升为 int 且值不变，所以赋给 int 后仍为 65535。",
+    "id": "c-023",
+    "tags": [
+      "C"
+    ],
+    "section": "类型与转换"
+  },
+  {
+    "type": "single",
+    "question": "在 IEEE 754 常见实现下（float 为 32 位、double 为 64 位），表达式 `(double)(float)0.1` 的值与 double 常量 0.1 比较，结果是？",
+    "options": [
+      {
+        "text": "相等",
+        "correct": false
+      },
+      {
+        "text": "不相等",
+        "correct": true
+      },
+      {
+        "text": "无法确定",
+        "correct": false
+      },
+      {
+        "text": "编译错误",
+        "correct": false
+      }
+    ],
+    "explanation": "0.1 先转换为 float 会发生舍入，再转换为 double 时保留的是 float 舍入后的值；该值通常大于 double 常量 0.1 的表示值，因此二者不相等。",
+    "id": "c-024",
+    "tags": [
+      "C"
+    ],
+    "section": "类型与转换"
+  },
+  {
+    "type": "single",
+    "question": "若有 `int a = 1; double b = 2.5;`，则表达式 `a / b` 的结果是？",
+    "options": [
+      {
+        "text": "0.4",
+        "correct": true
+      },
+      {
+        "text": "0",
+        "correct": false
+      },
+      {
+        "text": "0.5",
+        "correct": false
+      },
+      {
+        "text": "编译错误",
+        "correct": false
+      }
+    ],
+    "explanation": "a被转换为double，执行浮点除法，1/2.5得0.4。误区是认为先整数除法得0再转换。",
+    "id": "c-025",
+    "tags": [
+      "C"
+    ],
+    "section": "类型与转换"
+  },
+  {
+    "type": "multiple",
+    "question": "下列哪些表达式存在隐式类型转换？",
+    "options": [
+      {
+        "text": "int i = 3.14;",
+        "correct": true
+      },
+      {
+        "text": "double d = 5;",
+        "correct": true
+      },
+      {
+        "text": "char c = 'A' + 1;",
+        "correct": true
+      },
+      {
+        "text": "int x = (int)3.14;",
+        "correct": false
+      }
+    ],
+    "explanation": "A中double转int，B中int转double，C中char提升为int再转回char，均为隐式转换。D为显式强制转换。误区是忽略赋值和算术中的隐式转换。",
+    "id": "c-026",
+    "tags": [
+      "C"
+    ],
+    "section": "类型与转换"
+  },
+  {
+    "type": "multiple",
+    "question": "下列关于整数提升的说法，正确的有？",
+    "options": [
+      {
+        "text": "char和short在算术运算中通常提升为int",
+        "correct": true
+      },
+      {
+        "text": "提升后的类型至少为int",
+        "correct": true
+      },
+      {
+        "text": "unsigned char提升后一定为unsigned int",
+        "correct": false
+      },
+      {
+        "text": "提升可能导致值改变",
+        "correct": false
+      }
+    ],
+    "explanation": "整数提升将等级低于int的类型提升为int或unsigned int，提升后的类型至少为int，且值保持不变。unsigned char通常提升为int。误区是认为提升会改变值或一定为unsigned int。",
+    "id": "c-027",
+    "tags": [
+      "C"
+    ],
+    "section": "类型与转换"
+  },
+  {
+    "type": "multiple",
+    "question": "下列哪些转换可能丢失信息？",
+    "options": [
+      {
+        "text": "long 到 int",
+        "correct": true
+      },
+      {
+        "text": "double 到 int",
+        "correct": true
+      },
+      {
+        "text": "int 到 unsigned int",
+        "correct": true
+      },
+      {
+        "text": "short 到 int",
+        "correct": false
+      }
+    ],
+    "explanation": "long转int可能溢出，double转int丢失小数且可能溢出，int转unsigned int对负数会改变值。short转int为拓宽转换，通常安全。误区是认为同宽度转换不丢失信息。",
+    "id": "c-028",
+    "tags": [
+      "C"
+    ],
+    "section": "类型与转换"
+  },
+  {
+    "type": "multiple",
+    "question": "若有 `int i = -1; unsigned int u = 1;`，则下列表达式结果正确的有？",
+    "options": [
+      {
+        "text": "i < u 为假",
+        "correct": true
+      },
+      {
+        "text": "i + u 的结果类型为 unsigned int",
+        "correct": true
+      },
+      {
+        "text": "i > u 为假",
+        "correct": false
+      },
+      {
+        "text": "i 被转换为 unsigned int 后值为 UINT_MAX",
+        "correct": true
+      }
+    ],
+    "explanation": "int 与 unsigned int 进行运算时，int 会转换为 unsigned int；-1 转换为该无符号类型的最大值 UINT_MAX。因此比较按无符号进行，UINT_MAX 不小于 1，所以 i < u 为假；同时 UINT_MAX 大于 1，所以 i > u 为真。加法结果的类型为 unsigned int。",
+    "id": "c-029",
+    "tags": [
+      "C"
+    ],
+    "section": "类型与转换"
+  },
+  {
+    "type": "single",
+    "question": "表达式 `(unsigned)-1` 的值是？",
+    "options": [
+      {
+        "text": "1",
+        "correct": false
+      },
+      {
+        "text": "UINT_MAX",
+        "correct": true
+      },
+      {
+        "text": "-1",
+        "correct": false
+      },
+      {
+        "text": "0",
+        "correct": false
+      }
+    ],
+    "explanation": "将-1转换为unsigned时，按模2^N计算，结果为该无符号类型的最大值UINT_MAX。误区是认为结果为1或保留负号。",
+    "id": "c-030",
+    "tags": [
+      "C"
+    ],
+    "section": "类型与转换"
+  },
+  {
+    "type": "single",
+    "question": "设有定义 int a[5] = {1,2,3,4,5}; int *p = a; 则表达式 *(p+3) 的值是？",
+    "options": [
+      {
+        "text": "3",
+        "correct": false
+      },
+      {
+        "text": "4",
+        "correct": true
+      },
+      {
+        "text": "5",
+        "correct": false
+      },
+      {
+        "text": "地址值",
+        "correct": false
+      }
+    ],
+    "explanation": "p 指向 a[0]，p+3 指向 a[3]，解引用得到 4。误选3是把下标与元素值混淆；误选地址值说明把 *(p+3) 与 p+3 混为一谈。",
+    "id": "c-031",
+    "tags": [
+      "C"
+    ],
+    "section": "指针与数组"
+  },
+  {
+    "type": "single",
+    "question": "对数组名 a 使用 sizeof(a) 与对指向其首元素的指针 p 使用 sizeof(p)，在同一平台下通常表现为？",
+    "options": [
+      {
+        "text": "两者相等",
+        "correct": false
+      },
+      {
+        "text": "sizeof(a) 是整个数组字节数，sizeof(p) 是指针字节数",
+        "correct": true
+      },
+      {
+        "text": "sizeof(a) 是指针字节数，sizeof(p) 是数组字节数",
+        "correct": false
+      },
+      {
+        "text": "二者都无法编译",
+        "correct": false
+      }
+    ],
+    "explanation": "数组名在 sizeof 中不退化，得到整个数组大小；指针变量大小由平台决定。常见误区是认为数组名总等同指针，从而错误认为二者 sizeof 结果相同。",
+    "id": "c-032",
+    "tags": [
+      "C"
+    ],
+    "section": "指针与数组"
+  },
+  {
+    "type": "single",
+    "question": "char s[] = \"hello\"; 则 sizeof(s) 的值是？",
+    "options": [
+      {
+        "text": "5",
+        "correct": false
+      },
+      {
+        "text": "6",
+        "correct": true
+      },
+      {
+        "text": "7",
+        "correct": false
+      },
+      {
+        "text": "由编译器决定，不可知",
+        "correct": false
+      }
+    ],
+    "explanation": "字符串字面量初始化数组时包含结尾的空字符 '\\0'，故 h e l l o \\0 共 6 字节。误选5是忽略结束符；误选7是误以为还要额外填充对齐字节。",
+    "id": "c-033",
+    "tags": [
+      "C"
+    ],
+    "section": "指针与数组"
+  },
+  {
+    "type": "single",
+    "question": "若有 `int a[3][4];`，在表达式 `int *q = a[1];` 中，初始化右侧 `a[1]` 退化后的指针类型是？",
+    "options": [
+      {
+        "text": "int",
+        "correct": false
+      },
+      {
+        "text": "int *",
+        "correct": true
+      },
+      {
+        "text": "int (*)[4]",
+        "correct": false
+      },
+      {
+        "text": "int **",
+        "correct": false
+      }
+    ],
+    "explanation": "a[1] 本身是含 4 个 int 的一维数组左值，在赋给 int * 指针的上下文中退化为指向其首元素的指针，类型为 int *。int (*)[4] 是二维数组名退化后的类型，int ** 与二维数组的行数组不兼容。",
+    "id": "c-034",
+    "tags": [
+      "C"
+    ],
+    "section": "指针与数组"
+  },
+  {
+    "type": "single",
+    "question": "若有 int a[10]; int *p = &a[0]; 则表达式 p[3] 与下列哪项等价？",
+    "options": [
+      {
+        "text": "*(p+3)",
+        "correct": true
+      },
+      {
+        "text": "*p+3",
+        "correct": false
+      },
+      {
+        "text": "&a[3]",
+        "correct": false
+      },
+      {
+        "text": "a[3]+p",
+        "correct": false
+      }
+    ],
+    "explanation": "下标运算 p[i] 按定义等价于 *(p+i)，故 p[3] 即 *(p+3)，取 a[3] 的值。*p+3 是先取首元素再加3；&a[3] 是地址；最后一项类型不合法。",
+    "id": "c-035",
+    "tags": [
+      "C"
+    ],
+    "section": "指针与数组"
+  },
+  {
+    "type": "single",
+    "question": "以下代码段的输出是？\nint a[4]={10,20,30,40};\nint *p=a;\nprintf(\"%d\", *p++);",
+    "options": [
+      {
+        "text": "10",
+        "correct": true
+      },
+      {
+        "text": "20",
+        "correct": false
+      },
+      {
+        "text": "11",
+        "correct": false
+      },
+      {
+        "text": "未定义",
+        "correct": false
+      }
+    ],
+    "explanation": "后置 ++ 先取 *p 的值 10 输出，然后 p 自增指向 a[1]。误选20是把先自增后取值混淆；*p++ 不是 (*p)++，不会把值加1。",
+    "id": "c-036",
+    "tags": [
+      "C"
+    ],
+    "section": "指针与数组"
+  },
+  {
+    "type": "single",
+    "question": "函数参数写成 void f(int a[10]) 时，在函数内部 sizeof(a) 通常得到？",
+    "options": [
+      {
+        "text": "40（假设 int 为4字节）",
+        "correct": false
+      },
+      {
+        "text": "指针的大小",
+        "correct": true
+      },
+      {
+        "text": "10",
+        "correct": false
+      },
+      {
+        "text": "编译错误",
+        "correct": false
+      }
+    ],
+    "explanation": "数组形参等价于指针形参 int *a，数组长度信息丢失，sizeof(a) 得到指针大小。误区是以为形参中的 [10] 保留了数组大小信息。",
+    "id": "c-037",
+    "tags": [
+      "C"
+    ],
+    "section": "指针与数组"
+  },
+  {
+    "type": "single",
+    "question": "若 p 是 int * 类型且指向数组元素，下列哪个表达式不能用于访问 p 所指向元素的后一个元素？",
+    "options": [
+      {
+        "text": "p+1",
+        "correct": false
+      },
+      {
+        "text": "&p[1]",
+        "correct": false
+      },
+      {
+        "text": "p[1] 的地址即 &(*(p+1))",
+        "correct": false
+      },
+      {
+        "text": "*p+1",
+        "correct": true
+      }
+    ],
+    "explanation": "*p+1 是取出当前元素的值再加1，结果是数值而非地址，不能访问后一个元素。p+1 与 &p[1] 都是后一元素地址；&(*(p+1)) 也等价于 p+1。",
+    "id": "c-038",
+    "tags": [
+      "C"
+    ],
+    "section": "指针与数组"
+  },
+  {
+    "type": "single",
+    "question": "以下哪种写法能正确声明一个指向含5个int元素的数组的指针？",
+    "options": [
+      {
+        "text": "int *p[5];",
+        "correct": false
+      },
+      {
+        "text": "int (*p)[5];",
+        "correct": true
+      },
+      {
+        "text": "int *p = int[5];",
+        "correct": false
+      },
+      {
+        "text": "int p[5]*;",
+        "correct": false
+      }
+    ],
+    "explanation": "int (*p)[5] 中括号使 p 先与 * 结合成为指针，再指向 int[5] 数组。int *p[5] 是指针数组（5个int*），两者含义不同，这是常见易错点。",
+    "id": "c-039",
+    "tags": [
+      "C"
+    ],
+    "section": "指针与数组"
+  },
+  {
+    "type": "single",
+    "question": "int a[3][4]; 若要声明指针 q 使其能接收 a（即 q=a），q 应声明为？",
+    "options": [
+      {
+        "text": "int *q;",
+        "correct": false
+      },
+      {
+        "text": "int **q;",
+        "correct": false
+      },
+      {
+        "text": "int (*q)[4];",
+        "correct": true
+      },
+      {
+        "text": "int q[4];",
+        "correct": false
+      }
+    ],
+    "explanation": "a 退化为指向首行（int[4]）的指针，类型为 int (*)[4]，故用 int (*q)[4] 接收。int *q 类型不匹配；int ** 与二维数组布局不同，不能隐式转换。",
+    "id": "c-040",
+    "tags": [
+      "C"
+    ],
+    "section": "指针与数组"
+  },
+  {
+    "type": "single",
+    "question": "关于 char *s = \"abc\"; 的说法，正确的是？",
+    "options": [
+      {
+        "text": "s 指向的字符串可安全修改",
+        "correct": false
+      },
+      {
+        "text": "s 是数组，sizeof(s) 为4",
+        "correct": false
+      },
+      {
+        "text": "s 指向字符串字面量，修改其内容属未定义行为",
+        "correct": true
+      },
+      {
+        "text": "s 与 char s[]=\"abc\" 完全等价",
+        "correct": false
+      }
+    ],
+    "explanation": "字符串字面量通常存放在只读区域，通过指针修改属未定义行为。s 是指针，sizeof(s) 为指针大小；而 char s[] 会复制到可修改的数组，两者不等价。",
+    "id": "c-041",
+    "tags": [
+      "C"
+    ],
+    "section": "指针与数组"
+  },
+  {
+    "type": "multiple",
+    "question": "以下关于数组与指针关系的说法，正确的有？",
+    "options": [
+      {
+        "text": "在多数表达式中数组名会退化为指向首元素的指针",
+        "correct": true
+      },
+      {
+        "text": "a[i] 与 *(a+i) 等价",
+        "correct": true
+      },
+      {
+        "text": "数组名可以作为赋值语句的左值被重新赋值",
+        "correct": false
+      },
+      {
+        "text": "指针可以用下标运算符访问",
+        "correct": true
+      }
+    ],
+    "explanation": "数组名在表达式中退化首元素指针，故 a[i] 等价 *(a+i)；指针也支持下标运算 p[i] 即 *(p+i)。数组名不是可修改左值，不能被赋值指向别处，这是常见误区。",
+    "id": "c-042",
+    "tags": [
+      "C"
+    ],
+    "section": "指针与数组"
+  },
+  {
+    "type": "multiple",
+    "question": "对 int a[5]; int *p = a; 下列表达式类型为 int * 的有？",
+    "options": [
+      {
+        "text": "a+1",
+        "correct": true
+      },
+      {
+        "text": "&a[2]",
+        "correct": true
+      },
+      {
+        "text": "p+5",
+        "correct": true
+      },
+      {
+        "text": "*(p+1)",
+        "correct": false
+      }
+    ],
+    "explanation": "a+1、&a[2]、p+5 都是地址，类型为 int *；*(p+1) 解引用后是 int 值。注意 p+5 虽已越界，但表达式本身的类型仍是 int *，问题只问类型。",
+    "id": "c-043",
+    "tags": [
+      "C"
+    ],
+    "section": "指针与数组"
+  },
+  {
+    "type": "multiple",
+    "question": "关于二维数组 int a[2][3]; 下列说法正确的有？",
+    "options": [
+      {
+        "text": "a[0] 的类型在表达式中为 int *",
+        "correct": true
+      },
+      {
+        "text": "&a[0][0] 与 a[0] 的数值通常相同，但类型均可作为 int * 使用",
+        "correct": true
+      },
+      {
+        "text": "a 可以直接赋值给 int ** 指针",
+        "correct": false
+      },
+      {
+        "text": "a+1 的类型为 int (*)[3]",
+        "correct": true
+      }
+    ],
+    "explanation": "a[0] 是首行数组，退化为 int *；&a[0][0] 也是 int *，二者数值相同。a 的类型是 int (*)[3]，a+1 仍是该类型；二维数组不能直接赋给 int **，因布局与语义不同。",
+    "id": "c-044",
+    "tags": [
+      "C"
+    ],
+    "section": "指针与数组"
+  },
+  {
+    "type": "single",
+    "question": "若有 int a[5] = {0}; int *p = &a[4]; 在同一数组内，表达式 p - a 的值和类型分别是？",
+    "options": [
+      {
+        "text": "4，类型为 ptrdiff_t",
+        "correct": true
+      },
+      {
+        "text": "-4，类型为 ptrdiff_t",
+        "correct": false
+      },
+      {
+        "text": "4，类型为 int",
+        "correct": false
+      },
+      {
+        "text": "16，类型为 int *",
+        "correct": false
+      }
+    ],
+    "explanation": "同一数组内两个指针相减得到相隔元素个数，p 指向 a[4]，a 退化为指向 a[0]，相隔 4 个元素；结果类型为 ptrdiff_t，不是字节数或指针。",
+    "id": "c-045",
+    "tags": [
+      "C"
+    ],
+    "section": "指针与数组"
+  },
+  {
+    "type": "single",
+    "question": "设有定义 int a[5] = {1,2,3,4,5}; int *p = a; 则表达式 *(p+2) 的值是？",
+    "options": [
+      {
+        "text": "1",
+        "correct": false
+      },
+      {
+        "text": "2",
+        "correct": false
+      },
+      {
+        "text": "3",
+        "correct": true
+      },
+      {
+        "text": "4",
+        "correct": false
+      }
+    ],
+    "explanation": "p指向a[0]，p+2指向a[2]，解引用得a[2]的值3。注意数组下标从0开始，*(p+2)等价于a[2]。其他选项对应错误偏移。",
+    "id": "c-046",
+    "tags": [
+      "C"
+    ],
+    "section": "指针与数组"
+  },
+  {
+    "type": "single",
+    "question": "以下代码段的输出是？\nint a[3] = {10,20,30};\nint *p = a;\nprintf(\"%d\", *++p);",
+    "options": [
+      {
+        "text": "10",
+        "correct": false
+      },
+      {
+        "text": "20",
+        "correct": true
+      },
+      {
+        "text": "30",
+        "correct": false
+      },
+      {
+        "text": "不确定",
+        "correct": false
+      }
+    ],
+    "explanation": "++p先使p指向a[1]，再解引用得到20。与*p++不同，后者先取*p再移动指针。注意前置自增与解引用的优先级和结合性。",
+    "id": "c-047",
+    "tags": [
+      "C"
+    ],
+    "section": "指针与数组"
+  },
+  {
+    "type": "single",
+    "question": "设有 int a[4][5]; 在表达式 sizeof(a[2]) 中，a[2] 的类型是？",
+    "options": [
+      {
+        "text": "int [5]",
+        "correct": true
+      },
+      {
+        "text": "int *",
+        "correct": false
+      },
+      {
+        "text": "int (*)[5]",
+        "correct": false
+      },
+      {
+        "text": "int **",
+        "correct": false
+      }
+    ],
+    "explanation": "a[2] 是二维数组的第三行，本身是具有 5 个 int 的数组；在 sizeof 中不发生数组到指针转换，因此类型为 int [5]。在普通值表达式中它会退化为 int *。",
+    "id": "c-048",
+    "tags": [
+      "C"
+    ],
+    "section": "指针与数组"
+  },
+  {
+    "type": "single",
+    "question": "设 a 是已定义的 int 数组，i 为合法下标。以下表达式与 a[i] 等价的是？",
+    "options": [
+      {
+        "text": "*(a+i)",
+        "correct": true
+      },
+      {
+        "text": "a+i",
+        "correct": false
+      },
+      {
+        "text": "&a[i]",
+        "correct": false
+      },
+      {
+        "text": "*a+i",
+        "correct": false
+      }
+    ],
+    "explanation": "a+i 和 &a[i] 表示地址；*a+i 表示 a[0] 加 i；*(a+i) 解引用指向第 i 个元素的指针，等价于 a[i]。",
+    "id": "c-049",
+    "tags": [
+      "C"
+    ],
+    "section": "指针与数组"
+  },
+  {
+    "type": "single",
+    "question": "若有 int a[10]; int *p = &a[3]; 则表达式 p[-1] 等价于？",
+    "options": [
+      {
+        "text": "a[2]",
+        "correct": true
+      },
+      {
+        "text": "a[3]",
+        "correct": false
+      },
+      {
+        "text": "a[4]",
+        "correct": false
+      },
+      {
+        "text": "未定义行为",
+        "correct": false
+      }
+    ],
+    "explanation": "p[-1]等价于*(p-1)，p指向a[3]，减1后指向a[2]，故值为a[2]。指针下标可为负，只要结果在数组范围内即合法。",
+    "id": "c-050",
+    "tags": [
+      "C"
+    ],
+    "section": "指针与数组"
+  },
+  {
+    "type": "single",
+    "question": "以下代码中，sizeof(a) 的值是？\nchar a[] = \"abc\";",
+    "options": [
+      {
+        "text": "3",
+        "correct": false
+      },
+      {
+        "text": "4",
+        "correct": true
+      },
+      {
+        "text": "5",
+        "correct": false
+      },
+      {
+        "text": "取决于编译器",
+        "correct": false
+      }
+    ],
+    "explanation": "字符串字面量\"abc\"包含字符'a','b','c'和结尾的'\\0'，共4字节。数组a由字符串初始化，大小包括结尾空字符。",
+    "id": "c-051",
+    "tags": [
+      "C"
+    ],
+    "section": "指针与数组"
+  },
+  {
+    "type": "single",
+    "question": "以下哪种声明能正确表示一个指向含有5个int元素的数组的指针？",
+    "options": [
+      {
+        "text": "int *p[5];",
+        "correct": false
+      },
+      {
+        "text": "int (*p)[5];",
+        "correct": true
+      },
+      {
+        "text": "int *p = int[5];",
+        "correct": false
+      },
+      {
+        "text": "int p[5];",
+        "correct": false
+      }
+    ],
+    "explanation": "int (*p)[5]表示p是指针，指向int[5]数组。int *p[5]是指针数组，含5个int*元素。注意括号改变结合性。",
+    "id": "c-052",
+    "tags": [
+      "C"
+    ],
+    "section": "指针与数组"
+  },
+  {
+    "type": "single",
+    "question": "以下代码段的输出是？\nint a[5] = {1,2,3,4,5};\nint *p = a + 1;\nprintf(\"%d\", *(p + 2));",
+    "options": [
+      {
+        "text": "3",
+        "correct": false
+      },
+      {
+        "text": "4",
+        "correct": true
+      },
+      {
+        "text": "5",
+        "correct": false
+      },
+      {
+        "text": "2",
+        "correct": false
+      }
+    ],
+    "explanation": "p指向a[1]，p+2指向a[3]，解引用得a[3]的值4。注意指针加法以元素为单位，不是字节。",
+    "id": "c-053",
+    "tags": [
+      "C"
+    ],
+    "section": "指针与数组"
+  },
+  {
+    "type": "single",
+    "question": "若有 int a[5] = {0}; int *p = &a[4]; 则表达式 p - a 的值是？",
+    "options": [
+      {
+        "text": "4",
+        "correct": true
+      },
+      {
+        "text": "5",
+        "correct": false
+      },
+      {
+        "text": "16",
+        "correct": false
+      },
+      {
+        "text": "20",
+        "correct": false
+      }
+    ],
+    "explanation": "指针相减得到元素个数，p指向a[4]，a指向a[0]，相差4个元素。注意不是字节数。",
+    "id": "c-054",
+    "tags": [
+      "C"
+    ],
+    "section": "指针与数组"
+  },
+  {
+    "type": "single",
+    "question": "设 int a[3] = {10,20,30}; 以下哪个表达式不是访问 a[1] 的等价写法？",
+    "options": [
+      {
+        "text": "*(a+1)",
+        "correct": false
+      },
+      {
+        "text": "1[a]",
+        "correct": false
+      },
+      {
+        "text": "*(1+a)",
+        "correct": false
+      },
+      {
+        "text": "*a + 1",
+        "correct": true
+      }
+    ],
+    "explanation": "*(a+1)、1[a]、*(1+a) 都形成对 a[1] 的访问；*a+1 先取 a[0] 的值再加 1，并没有访问 a[1]。",
+    "id": "c-055",
+    "tags": [
+      "C"
+    ],
+    "section": "指针与数组"
+  },
+  {
+    "type": "single",
+    "question": "设有 int a[4] = {5, 10, 15, 20}; int *p = a + 1; 则表达式 *p++ 的值是？",
+    "options": [
+      {
+        "text": "5",
+        "correct": false
+      },
+      {
+        "text": "10",
+        "correct": true
+      },
+      {
+        "text": "15",
+        "correct": false
+      },
+      {
+        "text": "20",
+        "correct": false
+      }
+    ],
+    "explanation": "p 初始指向 a[1]，*p++ 先取 p 当前指向的值 10，然后 p 自增指向 a[2]。正确选项为 10。误区是误认为先自增再取值，从而错选 15。",
+    "id": "c-056",
+    "tags": [
+      "C"
+    ],
+    "section": "指针与数组"
+  },
+  {
+    "type": "single",
+    "question": "在 64 位 Linux 环境下，已知 sizeof(int)=4，sizeof(int*)=8，设有 int a[10]; 则 sizeof(a) 与 sizeof(&a[0]) 的值分别是？",
+    "options": [
+      {
+        "text": "40 和 8",
+        "correct": true
+      },
+      {
+        "text": "40 和 40",
+        "correct": false
+      },
+      {
+        "text": "8 和 8",
+        "correct": false
+      },
+      {
+        "text": "8 和 40",
+        "correct": false
+      }
+    ],
+    "explanation": "数组名 a 在 sizeof 中代表整个数组，大小为 10*4=40；&a[0] 是指针，64 位环境下大小为 8。误区是认为数组名总等价于指针，从而错选 8 和 8。",
+    "id": "c-057",
+    "tags": [
+      "C"
+    ],
+    "section": "指针与数组"
+  },
+  {
+    "type": "single",
+    "question": "设有 int a[3][4]; 表达式 a + 1 的类型是？",
+    "options": [
+      {
+        "text": "int (*)[4]",
+        "correct": true
+      },
+      {
+        "text": "int *",
+        "correct": false
+      },
+      {
+        "text": "int [4]",
+        "correct": false
+      },
+      {
+        "text": "int **",
+        "correct": false
+      }
+    ],
+    "explanation": "a 的类型是指向含 4 个 int 的数组的指针，即 int (*)[4]；对 a 加 1 仍得到同样类型的指针，指向下一行。",
+    "id": "c-058",
+    "tags": [
+      "C"
+    ],
+    "section": "指针与数组"
+  },
+  {
+    "type": "multiple",
+    "question": "关于 C 语言中指针与数组的关系，下列说法正确的有？",
+    "options": [
+      {
+        "text": "数组名在大多数表达式中会转换为指向首元素的指针",
+        "correct": true
+      },
+      {
+        "text": "对数组名使用 sizeof 得到的是整个数组的字节数",
+        "correct": true
+      },
+      {
+        "text": "指针变量可以完全替代数组名进行数组定义",
+        "correct": false
+      },
+      {
+        "text": "数组名可以赋值给同类型指针变量",
+        "correct": true
+      }
+    ],
+    "explanation": "数组名在表达式中通常退化为首元素指针，sizeof 和 & 是例外；数组名是常量不可赋值，但可赋给指针变量。指针不能替代数组定义。正确项为 A、B、D。",
+    "id": "c-059",
+    "tags": [
+      "C"
+    ],
+    "section": "指针与数组"
+  },
+  {
+    "type": "multiple",
+    "question": "设有 int a[5] = {1,2,3,4,5}; int *p = a; 下列表达式中结果等于 3 的有？",
+    "options": [
+      {
+        "text": "*(p+2)",
+        "correct": true
+      },
+      {
+        "text": "p[2]",
+        "correct": true
+      },
+      {
+        "text": "*(a+2)",
+        "correct": true
+      },
+      {
+        "text": "*p + 5",
+        "correct": false
+      }
+    ],
+    "explanation": "*(p+2)、p[2] 和 *(a+2) 都访问下标为 2 的元素，得到 3；*p + 5 先取首元素 1 再加 5，得到 6。",
+    "id": "c-060",
+    "tags": [
+      "C"
+    ],
+    "section": "指针与数组"
+  },
+  {
+    "type": "single",
+    "question": "在C语言中，使用 malloc 分配内存后，最佳实践是立即进行什么操作？",
+    "options": [
+      {
+        "text": "将内存内容全部置零",
+        "correct": false
+      },
+      {
+        "text": "检查返回指针是否为 NULL",
+        "correct": true
+      },
+      {
+        "text": "调用 free 释放内存",
+        "correct": false
+      },
+      {
+        "text": "将指针转换为 void* 类型",
+        "correct": false
+      }
+    ],
+    "explanation": "malloc 可能分配失败并返回 NULL，直接使用会导致未定义行为。置零可用 calloc，free 是释放不是立即操作，void* 转换不必要。",
+    "id": "c-061",
+    "tags": [
+      "C"
+    ],
+    "section": "内存管理"
+  },
+  {
+    "type": "single",
+    "question": "以下关于 free 函数的描述，哪一项是正确的？",
+    "options": [
+      {
+        "text": "free 的参数可以是由动态分配函数返回的指针，也可以是空指针",
+        "correct": true
+      },
+      {
+        "text": "free 释放内存后会把传入的指针变量自动置为空指针",
+        "correct": false
+      },
+      {
+        "text": "对同一个非空指针连续调用两次 free 是安全的",
+        "correct": false
+      },
+      {
+        "text": "free 可以释放局部数组所在的内存",
+        "correct": false
+      }
+    ],
+    "explanation": "free 只接受动态分配函数返回的指针或空指针；对空指针调用 free 不做任何操作。释放后不会修改指针变量本身，重复释放同一非空指针或释放非动态分配的内存均为未定义行为。",
+    "id": "c-062",
+    "tags": [
+      "C"
+    ],
+    "section": "内存管理"
+  },
+  {
+    "type": "single",
+    "question": "关于栈内存和堆内存，以下说法正确的是？",
+    "options": [
+      {
+        "text": "栈内存由程序员手动分配和释放",
+        "correct": false
+      },
+      {
+        "text": "堆内存的分配和释放通常由程序员控制",
+        "correct": true
+      },
+      {
+        "text": "栈内存的容量通常比堆内存大",
+        "correct": false
+      },
+      {
+        "text": "堆内存的访问速度总是比栈内存快",
+        "correct": false
+      }
+    ],
+    "explanation": "栈内存由编译器自动管理，堆内存需程序员手动分配释放。栈通常容量较小但访问快，堆容量大但管理开销大。",
+    "id": "c-063",
+    "tags": [
+      "C"
+    ],
+    "section": "内存管理"
+  },
+  {
+    "type": "single",
+    "question": "以下代码片段可能造成什么问题？\nint *p = (int*)malloc(10 * sizeof(int));\nfree(p);\nfree(p);",
+    "options": [
+      {
+        "text": "内存泄漏",
+        "correct": false
+      },
+      {
+        "text": "重复释放（double free）",
+        "correct": true
+      },
+      {
+        "text": "悬空指针",
+        "correct": false
+      },
+      {
+        "text": "缓冲区溢出",
+        "correct": false
+      }
+    ],
+    "explanation": "对同一指针 p 连续调用 free 两次会导致重复释放，属于未定义行为。释放后 p 成为悬空指针，但第二次 free 是重复释放问题。",
+    "id": "c-064",
+    "tags": [
+      "C"
+    ],
+    "section": "内存管理"
+  },
+  {
+    "type": "single",
+    "question": "使用 calloc 分配内存时，以下哪项是正确的？",
+    "options": [
+      {
+        "text": "calloc 分配的内存未初始化",
+        "correct": false
+      },
+      {
+        "text": "calloc 的两个参数分别指定元素个数和每个元素的大小",
+        "correct": true
+      },
+      {
+        "text": "calloc 只能分配一个连续字节块",
+        "correct": false
+      },
+      {
+        "text": "calloc 分配失败时返回空指针并设置 errno",
+        "correct": false
+      }
+    ],
+    "explanation": "calloc(n, size) 分配 n 个元素，每个 size 字节，并将内存初始化为 0。分配失败返回 NULL，不保证设置 errno。",
+    "id": "c-065",
+    "tags": [
+      "C"
+    ],
+    "section": "内存管理"
+  },
+  {
+    "type": "single",
+    "question": "以下哪个函数用于调整已分配内存块的大小？",
+    "options": [
+      {
+        "text": "malloc",
+        "correct": false
+      },
+      {
+        "text": "calloc",
+        "correct": false
+      },
+      {
+        "text": "realloc",
+        "correct": true
+      },
+      {
+        "text": "free",
+        "correct": false
+      }
+    ],
+    "explanation": "realloc 用于改变已分配内存块的大小，可能返回新指针。malloc 和 calloc 用于新分配，free 用于释放。",
+    "id": "c-066",
+    "tags": [
+      "C"
+    ],
+    "section": "内存管理"
+  },
+  {
+    "type": "single",
+    "question": "关于内存泄漏，以下描述正确的是？",
+    "options": [
+      {
+        "text": "内存泄漏是指程序访问已释放的内存",
+        "correct": false
+      },
+      {
+        "text": "内存泄漏是指程序未能释放不再使用的动态内存",
+        "correct": true
+      },
+      {
+        "text": "内存泄漏会导致程序立即崩溃",
+        "correct": false
+      },
+      {
+        "text": "内存泄漏只能通过 free 函数解决",
+        "correct": false
+      }
+    ],
+    "explanation": "内存泄漏是动态分配的内存在不再需要时未被释放，导致可用内存减少。它通常不会立即崩溃，但长期运行可能耗尽内存。",
+    "id": "c-067",
+    "tags": [
+      "C"
+    ],
+    "section": "内存管理"
+  },
+  {
+    "type": "single",
+    "question": "以下代码中，哪个选项正确描述了 p 和 q 的关系？\nint *p = (int*)malloc(sizeof(int));\nint *q = p;\nfree(p);\n*q = 10;",
+    "options": [
+      {
+        "text": "q 是悬空指针，解引用导致未定义行为",
+        "correct": true
+      },
+      {
+        "text": "q 仍然有效，可以安全使用",
+        "correct": false
+      },
+      {
+        "text": "free 会自动将 q 置为 NULL",
+        "correct": false
+      },
+      {
+        "text": "q 指向的内存被自动清零",
+        "correct": false
+      }
+    ],
+    "explanation": "free(p) 释放内存后，p 和 q 都成为悬空指针。通过 q 访问已释放内存是未定义行为，free 不会修改 q 的值。",
+    "id": "c-068",
+    "tags": [
+      "C"
+    ],
+    "section": "内存管理"
+  },
+  {
+    "type": "single",
+    "question": "在C语言中，动态分配的内存位于哪个区域？",
+    "options": [
+      {
+        "text": "栈",
+        "correct": false
+      },
+      {
+        "text": "堆",
+        "correct": true
+      },
+      {
+        "text": "全局/静态存储区",
+        "correct": false
+      },
+      {
+        "text": "代码区",
+        "correct": false
+      }
+    ],
+    "explanation": "动态分配的内存（如 malloc）位于堆区。栈用于局部变量，全局/静态存储区用于全局和静态变量，代码区存放程序代码。",
+    "id": "c-069",
+    "tags": [
+      "C"
+    ],
+    "section": "内存管理"
+  },
+  {
+    "type": "single",
+    "question": "以下关于 realloc 的描述，哪一项是正确的？",
+    "options": [
+      {
+        "text": "realloc 返回的新指针可能与传入的指针值相同",
+        "correct": true
+      },
+      {
+        "text": "realloc 调整大小失败时，原内存块会立即被释放",
+        "correct": false
+      },
+      {
+        "text": "realloc 成功后，程序员仍必须对传入的原指针调用 free",
+        "correct": false
+      },
+      {
+        "text": "realloc 只能扩大内存块，不能缩小内存块",
+        "correct": false
+      }
+    ],
+    "explanation": "realloc 可扩大或缩小内存块；成功时可能在原地址调整，也可能移动到新地址并复制内容，返回的指针可能与原指针值相同。失败时返回空指针，原内存块保持有效，不能先覆盖原指针。成功后不应再对传入的原指针调用 free。",
+    "id": "c-070",
+    "tags": [
+      "C"
+    ],
+    "section": "内存管理"
+  },
+  {
+    "type": "single",
+    "question": "以下代码可能导致什么后果？\nchar *p = (char*)malloc(10);\np = (char*)malloc(20);\nfree(p);",
+    "options": [
+      {
+        "text": "内存泄漏",
+        "correct": true
+      },
+      {
+        "text": "重复释放",
+        "correct": false
+      },
+      {
+        "text": "悬空指针解引用",
+        "correct": false
+      },
+      {
+        "text": "缓冲区溢出",
+        "correct": false
+      }
+    ],
+    "explanation": "第一次 malloc 分配的内存未释放，p 被重新赋值后丢失了原地址，导致内存泄漏。最后释放的是第二次分配的内存。",
+    "id": "c-071",
+    "tags": [
+      "C"
+    ],
+    "section": "内存管理"
+  },
+  {
+    "type": "single",
+    "question": "以下哪个是避免悬空指针的有效方法？",
+    "options": [
+      {
+        "text": "释放内存后立即将指针置为 NULL",
+        "correct": true
+      },
+      {
+        "text": "释放内存后继续使用指针",
+        "correct": false
+      },
+      {
+        "text": "多次释放同一指针",
+        "correct": false
+      },
+      {
+        "text": "始终使用栈内存代替堆内存",
+        "correct": false
+      }
+    ],
+    "explanation": "释放内存后将指针置 NULL 可防止意外解引用。继续使用或多次释放是错误的。栈内存不能完全代替堆内存。",
+    "id": "c-072",
+    "tags": [
+      "C"
+    ],
+    "section": "内存管理"
+  },
+  {
+    "type": "single",
+    "question": "以下代码中，哪个函数调用可能导致内存分配失败？\nint *p = (int*)malloc(SIZE_MAX);",
+    "options": [
+      {
+        "text": "malloc 一定失败并返回 NULL",
+        "correct": false
+      },
+      {
+        "text": "malloc 可能成功，取决于系统",
+        "correct": true
+      },
+      {
+        "text": "malloc 会触发未定义行为",
+        "correct": false
+      },
+      {
+        "text": "malloc 会自动调整大小",
+        "correct": false
+      }
+    ],
+    "explanation": "malloc(SIZE_MAX) 请求极大内存，通常失败返回 NULL，但标准未保证一定失败。检查返回值是必要的。",
+    "id": "c-073",
+    "tags": [
+      "C"
+    ],
+    "section": "内存管理"
+  },
+  {
+    "type": "single",
+    "question": "关于内存管理函数，以下哪项说法正确？",
+    "options": [
+      {
+        "text": "free 可以释放栈内存",
+        "correct": false
+      },
+      {
+        "text": "malloc 分配的内存需要手动初始化",
+        "correct": true
+      },
+      {
+        "text": "calloc 分配的内存需要手动清零",
+        "correct": false
+      },
+      {
+        "text": "realloc 只能扩大内存块",
+        "correct": false
+      }
+    ],
+    "explanation": "malloc 分配的内存未初始化，需手动初始化。calloc 自动清零。free 只能释放堆内存。realloc 可扩大或缩小内存块。",
+    "id": "c-074",
+    "tags": [
+      "C"
+    ],
+    "section": "内存管理"
+  },
+  {
+    "type": "single",
+    "question": "以下关于野指针（未初始化或未指向确定有效对象的指针）的描述，哪一项是正确的？",
+    "options": [
+      {
+        "text": "野指针的值不确定，直接解引用可能造成未定义行为",
+        "correct": true
+      },
+      {
+        "text": "野指针总是指向已释放的堆内存",
+        "correct": false
+      },
+      {
+        "text": "野指针会在使用前自动变为空指针",
+        "correct": false
+      },
+      {
+        "text": "对野指针调用 free 是消除野指针的安全方法",
+        "correct": false
+      }
+    ],
+    "explanation": "野指针通常指未初始化或未指向确定有效对象的指针，其值不确定；直接解引用可能造成未定义行为。指向已释放内存的指针通常称悬空指针，且 free 不能修复未初始化指针。",
+    "id": "c-075",
+    "tags": [
+      "C"
+    ],
+    "section": "内存管理"
+  },
+  {
+    "type": "single",
+    "question": "在C语言中，当 malloc 分配内存失败时，它返回什么？",
+    "options": [
+      {
+        "text": "空指针",
+        "correct": true
+      },
+      {
+        "text": "指向一段可写内存的指针",
+        "correct": false
+      },
+      {
+        "text": "整数 0 的 int 类型值",
+        "correct": false
+      },
+      {
+        "text": "一个未定义的值",
+        "correct": false
+      }
+    ],
+    "explanation": "malloc 分配失败时返回空指针，调用方应先检查返回值再使用。返回类型是 void*，不是 int；空指针的实际二进制表示也不一定是全零。",
+    "id": "c-076",
+    "tags": [
+      "C"
+    ],
+    "section": "内存管理"
+  },
+  {
+    "type": "single",
+    "question": "以下哪个函数分配的内存会被自动初始化为零？",
+    "options": [
+      {
+        "text": "malloc",
+        "correct": false
+      },
+      {
+        "text": "calloc",
+        "correct": true
+      },
+      {
+        "text": "realloc",
+        "correct": false
+      },
+      {
+        "text": "alloca",
+        "correct": false
+      }
+    ],
+    "explanation": "calloc 分配内存并将所有字节初始化为零；malloc 和 realloc 不保证初始化；alloca 在栈上分配且不初始化。因此只有 calloc 满足自动清零的要求。",
+    "id": "c-077",
+    "tags": [
+      "C"
+    ],
+    "section": "内存管理"
+  },
+  {
+    "type": "single",
+    "question": "以下代码片段存在什么问题？\nint *p = (int*)malloc(sizeof(int));\nif (p = NULL) {\n    return -1;\n}",
+    "options": [
+      {
+        "text": "条件中使用了赋值而非比较，导致逻辑错误",
+        "correct": true
+      },
+      {
+        "text": "malloc 参数错误",
+        "correct": false
+      },
+      {
+        "text": "缺少对 p 的初始化",
+        "correct": false
+      },
+      {
+        "text": "返回类型不匹配",
+        "correct": false
+      }
+    ],
+    "explanation": "if (p = NULL) 将 NULL 赋值给 p，表达式值为 NULL（假），导致条件永远不成立，且丢失了原指针。应使用 p == NULL 进行比较。其他选项与代码错误无关。",
+    "id": "c-078",
+    "tags": [
+      "C"
+    ],
+    "section": "内存管理"
+  },
+  {
+    "type": "single",
+    "question": "关于 free 函数的参数，以下说法正确的是？",
+    "options": [
+      {
+        "text": "参数必须是由 malloc、calloc、realloc 或 aligned_alloc 等动态分配函数返回的指针，或者是空指针",
+        "correct": true
+      },
+      {
+        "text": "参数可以是任意指针",
+        "correct": false
+      },
+      {
+        "text": "参数为空指针时会导致程序崩溃",
+        "correct": false
+      },
+      {
+        "text": "参数必须是数组名",
+        "correct": false
+      }
+    ],
+    "explanation": "free 的参数必须来自动态分配函数并指向分配块起始位置，或者为空指针；对空指针调用 free 是安全的。传递其他指针或重复释放非空指针会导致未定义行为。",
+    "id": "c-079",
+    "tags": [
+      "C"
+    ],
+    "section": "内存管理"
+  },
+  {
+    "type": "single",
+    "question": "以下代码执行后，p 和 q 指向什么？\nint *p = (int*)malloc(sizeof(int));\nint *q = p;\nfree(p);\np = NULL;",
+    "options": [
+      {
+        "text": "p 为 NULL，q 为悬空指针",
+        "correct": true
+      },
+      {
+        "text": "p 和 q 均为 NULL",
+        "correct": false
+      },
+      {
+        "text": "p 和 q 均指向有效内存",
+        "correct": false
+      },
+      {
+        "text": "p 为悬空指针，q 为 NULL",
+        "correct": false
+      }
+    ],
+    "explanation": "free(p) 释放内存后，q 仍保存原地址成为悬空指针；随后 p = NULL 使 p 为空指针。因此 p 为 NULL，q 为悬空指针。其他选项错误描述了指针状态。",
+    "id": "c-080",
+    "tags": [
+      "C"
+    ],
+    "section": "内存管理"
+  },
+  {
+    "type": "single",
+    "question": "当 realloc 调整一个已分配内存块的大小，且请求的大小不为 0、分配失败并返回 NULL 时，原内存块会怎样？",
+    "options": [
+      {
+        "text": "原内存块被自动释放",
+        "correct": false
+      },
+      {
+        "text": "原内存块保持不变，仍可访问",
+        "correct": true
+      },
+      {
+        "text": "原内存块内容被清零",
+        "correct": false
+      },
+      {
+        "text": "原内存块被移动到新地址",
+        "correct": false
+      }
+    ],
+    "explanation": "realloc 失败并返回空指针时，原内存块未被释放，内容和地址保持不变；但若请求大小为 0，realloc 的行为由实现定义，可能释放原块并返回空指针，因此题目限定请求大小不为 0。应使用临时指针接收返回值，避免直接覆盖原指针造成泄漏。",
+    "id": "c-081",
+    "tags": [
+      "C"
+    ],
+    "section": "内存管理"
+  },
+  {
+    "type": "single",
+    "question": "以下哪种情况会导致内存泄漏？",
+    "options": [
+      {
+        "text": "释放内存后未将指针置空",
+        "correct": false
+      },
+      {
+        "text": "丢失指向动态分配内存的指针且未释放",
+        "correct": true
+      },
+      {
+        "text": "使用 free 释放 NULL 指针",
+        "correct": false
+      },
+      {
+        "text": "对同一指针多次 free",
+        "correct": false
+      }
+    ],
+    "explanation": "内存泄漏指动态分配的内存未被释放且无法再访问，通常因丢失指针导致。释放后未置空可能造成悬空指针；free(NULL) 安全；多次 free 导致未定义行为而非泄漏。",
+    "id": "c-082",
+    "tags": [
+      "C"
+    ],
+    "section": "内存管理"
+  },
+  {
+    "type": "single",
+    "question": "在C语言中，以下哪个内存区域通常由程序员手动分配和释放？",
+    "options": [
+      {
+        "text": "栈",
+        "correct": false
+      },
+      {
+        "text": "堆",
+        "correct": true
+      },
+      {
+        "text": "全局区",
+        "correct": false
+      },
+      {
+        "text": "代码区",
+        "correct": false
+      }
+    ],
+    "explanation": "堆内存由 malloc、calloc、realloc 等函数动态分配，并由 free 手动释放；栈由编译器自动管理；全局区和代码区在程序生命周期内固定。因此堆是手动管理的区域。",
+    "id": "c-083",
+    "tags": [
+      "C"
+    ],
+    "section": "内存管理"
+  },
+  {
+    "type": "single",
+    "question": "以下代码片段可能导致什么问题？\nchar *p = (char*)malloc(10);\nstrcpy(p, \"hello world\");",
+    "options": [
+      {
+        "text": "缓冲区溢出",
+        "correct": true
+      },
+      {
+        "text": "内存泄漏",
+        "correct": false
+      },
+      {
+        "text": "重复释放",
+        "correct": false
+      },
+      {
+        "text": "悬空指针",
+        "correct": false
+      }
+    ],
+    "explanation": "malloc(10) 只分配 10 字节，而字符串 \"hello world\" 含结束符共 12 字节，strcpy 会写入超出分配范围，造成缓冲区溢出。其他选项与代码行为不符。",
+    "id": "c-084",
+    "tags": [
+      "C"
+    ],
+    "section": "内存管理"
+  },
+  {
+    "type": "single",
+    "question": "以下代码中，哪个操作会导致内存泄漏？\nint *p = (int*)malloc(sizeof(int));\nint *q = (int*)malloc(sizeof(int));\np = q;\nfree(p);",
+    "options": [
+      {
+        "text": "p 原指向的内存未释放",
+        "correct": true
+      },
+      {
+        "text": "q 指向的内存被释放",
+        "correct": false
+      },
+      {
+        "text": "p 和 q 均被释放",
+        "correct": false
+      },
+      {
+        "text": "没有内存泄漏",
+        "correct": false
+      }
+    ],
+    "explanation": "p 原本指向一块动态内存，执行 p = q 后丢失了原指针，无法再释放该内存，造成泄漏；随后 free(p) 释放的是 q 指向的内存。因此泄漏的是 p 原指向的内存。",
+    "id": "c-085",
+    "tags": [
+      "C"
+    ],
+    "section": "内存管理"
+  },
+  {
+    "type": "single",
+    "question": "关于 alloca 函数，以下描述正确的是？",
+    "options": [
+      {
+        "text": "它在栈上分配内存，函数返回时自动释放",
+        "correct": true
+      },
+      {
+        "text": "它在堆上分配内存，需要手动 free",
+        "correct": false
+      },
+      {
+        "text": "它分配的内存初始化为零",
+        "correct": false
+      },
+      {
+        "text": "它是C标准库函数，可移植性好",
+        "correct": false
+      }
+    ],
+    "explanation": "alloca 在栈上分配内存，随函数返回自动释放，无需 free；不保证清零；它不是C标准库函数，可移植性差。因此只有 A 正确。",
+    "id": "c-086",
+    "tags": [
+      "C"
+    ],
+    "section": "内存管理"
+  },
+  {
+    "type": "single",
+    "question": "以下代码执行后，哪一项描述正确？\nint *p = (int*)malloc(2 * sizeof(int));\np[0] = 10; p[1] = 20;\nint *q = realloc(p, 4 * sizeof(int));\nq[2] = 30; q[3] = 40;",
+    "options": [
+      {
+        "text": "realloc 可能移动内存块，因此若 q 非空，原 p 已失效，后续应使用 q",
+        "correct": true
+      },
+      {
+        "text": "realloc 一定在原位置扩展内存，因此 p 和 q 指向同一地址",
+        "correct": false
+      },
+      {
+        "text": "若 realloc 返回新地址，原 p 指向的内存仍可安全访问和修改",
+        "correct": false
+      },
+      {
+        "text": "realloc 只调整内存大小，不会复制原有数据，因此 p[0] 丢失",
+        "correct": false
+      }
+    ],
+    "explanation": "realloc 可能返回新地址并复制原数据，调用成功后原指针失效，应使用返回值 q 访问新内存。误认为一定原地扩展、原 p 仍有效或数据不复制都是常见错误。",
+    "id": "c-087",
+    "tags": [
+      "C"
+    ],
+    "section": "内存管理"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些做法有助于避免动态内存管理中的悬空指针？",
+    "options": [
+      {
+        "text": "释放指针指向的内存后立即将指针置为 NULL",
+        "correct": true
+      },
+      {
+        "text": "释放内存前确保没有其他指针仍指向该内存，或明确这些指针不再使用",
+        "correct": true
+      },
+      {
+        "text": "对同一块内存多次调用 free 以彻底释放",
+        "correct": false
+      },
+      {
+        "text": "在函数返回前释放局部指针指向的堆内存，并让调用者继续使用该局部指针",
+        "correct": false
+      }
+    ],
+    "explanation": "释放后置空可避免误用，明确所有别名指针的生命周期也关键。重复 free 是未定义行为，返回后继续使用已释放内存同样会产生悬空指针。",
+    "id": "c-088",
+    "tags": [
+      "C"
+    ],
+    "section": "内存管理"
+  },
+  {
+    "type": "single",
+    "question": "关于 malloc 分配的内存初始内容，以下说法最准确的是？",
+    "options": [
+      {
+        "text": "malloc 不保证清零，未写入内容的值不确定，不能假定其为零或可直接作为有意义的值使用",
+        "correct": true
+      },
+      {
+        "text": "malloc 分配的内存总是被清零",
+        "correct": false
+      },
+      {
+        "text": "malloc 分配的内存总是被填充为 0xFF",
+        "correct": false
+      },
+      {
+        "text": "malloc 分配的内存内容由编译器版本号决定",
+        "correct": false
+      }
+    ],
+    "explanation": "malloc 只分配存储空间，不初始化内容；未写入区域的值不确定，不能假定为零。若需要清零应使用 calloc 或显式初始化。固定填充或由编译器版本决定等说法都不符合标准。",
+    "id": "c-089",
+    "tags": [
+      "C"
+    ],
+    "section": "内存管理"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些情况属于内存泄漏或可能导致内存泄漏？",
+    "options": [
+      {
+        "text": "分配内存后将唯一指向它的指针重新赋值，且未释放原内存",
+        "correct": true
+      },
+      {
+        "text": "函数中分配内存后，在未释放的情况下直接 return",
+        "correct": true
+      },
+      {
+        "text": "调用 free 释放内存后，将指针置为 NULL",
+        "correct": false
+      },
+      {
+        "text": "使用 calloc 分配内存后，在程序结束前仍保留指向它的指针",
+        "correct": false
+      }
+    ],
+    "explanation": "丢失唯一指针或提前返回未释放都会造成泄漏。释放后置空是良好习惯，程序结束前仍保留有效指针可正常使用或释放，不构成泄漏。",
+    "id": "c-090",
+    "tags": [
+      "C"
+    ],
+    "section": "内存管理"
+  },
+  {
+    "type": "single",
+    "question": "以下关于C语言字符串常量及其存储的叙述，正确的是？",
+    "options": [
+      {
+        "text": "字符串常量中的字符可以通过指向它的指针任意修改",
+        "correct": false
+      },
+      {
+        "text": "字符串常量在内存中以空字符'\\0'作为结束标志",
+        "correct": true
+      },
+      {
+        "text": "字符串常量必须用单引号括起来",
+        "correct": false
+      },
+      {
+        "text": "字符串常量所占的字节数不包含末尾的'\\0'",
+        "correct": false
+      }
+    ],
+    "explanation": "C语言字符串常量用双引号括起，编译器在末尾添加空字符'\\0'作为结束标志，所占存储空间包含该空字符。字符串常量通常位于只读区域，通过指针修改其中字符是未定义行为；字符常量才使用单引号。",
+    "id": "c-091",
+    "tags": [
+      "C"
+    ],
+    "section": "字符串"
+  },
+  {
+    "type": "single",
+    "question": "若有定义：char str[] = \"hello\"; 则数组str所占的字节数是？",
+    "options": [
+      {
+        "text": "5",
+        "correct": false
+      },
+      {
+        "text": "6",
+        "correct": true
+      },
+      {
+        "text": "7",
+        "correct": false
+      },
+      {
+        "text": "取决于编译器",
+        "correct": false
+      }
+    ],
+    "explanation": "用字符串字面量初始化字符数组时，数组大小包括末尾的'\\0'。\"hello\"有5个字符，加上'\\0'共6个字节。因此str占6字节。",
+    "id": "c-092",
+    "tags": [
+      "C"
+    ],
+    "section": "字符串"
+  },
+  {
+    "type": "single",
+    "question": "以下哪个标准库函数把字符串转换为 int 类型，且只接收一个字符串参数？",
+    "options": [
+      {
+        "text": "atoi",
+        "correct": true
+      },
+      {
+        "text": "itoa",
+        "correct": false
+      },
+      {
+        "text": "sprintf",
+        "correct": false
+      },
+      {
+        "text": "strtol",
+        "correct": false
+      }
+    ],
+    "explanation": "atoi 接收一个字符串并返回 int，不提供错误检测；strtol 也能解析整数，但返回 long，并需要结束指针和进制等参数；itoa 不是标准C函数；sprintf 用于格式化输出到字符数组。",
+    "id": "c-093",
+    "tags": [
+      "C"
+    ],
+    "section": "字符串"
+  },
+  {
+    "type": "single",
+    "question": "以下关于strcpy函数的叙述，正确的是？",
+    "options": [
+      {
+        "text": "strcpy会检查目标缓冲区的大小",
+        "correct": false
+      },
+      {
+        "text": "strcpy会复制源字符串包括'\\0'",
+        "correct": true
+      },
+      {
+        "text": "strcpy可以用于重叠的内存区域",
+        "correct": false
+      },
+      {
+        "text": "strcpy返回目标字符串的长度",
+        "correct": false
+      }
+    ],
+    "explanation": "strcpy函数将源字符串（包括'\\0'）复制到目标缓冲区，不检查目标缓冲区大小，可能导致溢出。它不适用于重叠内存区域（应使用memmove）。返回值为目标字符串的指针，不是长度。",
+    "id": "c-094",
+    "tags": [
+      "C"
+    ],
+    "section": "字符串"
+  },
+  {
+    "type": "single",
+    "question": "若有char *p = \"abc\"; 则以下操作合法的是？",
+    "options": [
+      {
+        "text": "p[0] = 'A';",
+        "correct": false
+      },
+      {
+        "text": "p = \"def\";",
+        "correct": true
+      },
+      {
+        "text": "p[1] = 'B';",
+        "correct": false
+      },
+      {
+        "text": "free(p);",
+        "correct": false
+      }
+    ],
+    "explanation": "p指向字符串常量，不能修改其内容（p[0]='A'和p[1]='B'非法）。p本身是指针变量，可以重新赋值指向另一个字符串常量。free只能释放动态分配的内存。",
+    "id": "c-095",
+    "tags": [
+      "C"
+    ],
+    "section": "字符串"
+  },
+  {
+    "type": "single",
+    "question": "以下哪个声明得到的字符数组包含完整的字符串 \"hello\"（包括末尾的空字符'\\0'）？",
+    "options": [
+      {
+        "text": "char str[5] = \"hello\";",
+        "correct": false
+      },
+      {
+        "text": "char str[] = \"hello\";",
+        "correct": true
+      },
+      {
+        "text": "char str[5] = {'h','e','l','l','o'};",
+        "correct": false
+      },
+      {
+        "text": "char str[6] = 'hello';",
+        "correct": false
+      }
+    ],
+    "explanation": "用字符串字面量初始化字符数组时，若数组大小未显式给出，会自动包含末尾空字符，因此 char str[] = \"hello\"; 得到 6 字节并构成完整字符串。char str[5] = \"hello\"; 在 C 中可合法初始化但会忽略末尾空字符，因此数组不包含终止符；字符列表初始化没有自动添加空字符；单引号形式不是字符串字面量。",
+    "id": "c-096",
+    "tags": [
+      "C"
+    ],
+    "section": "字符串"
+  },
+  {
+    "type": "single",
+    "question": "以下哪个标准库函数按完整字符串（直到遇到的第一个空字符）比较两个字符串？",
+    "options": [
+      {
+        "text": "strcmp",
+        "correct": true
+      },
+      {
+        "text": "strncmp",
+        "correct": false
+      },
+      {
+        "text": "strcpy",
+        "correct": false
+      },
+      {
+        "text": "strcat",
+        "correct": false
+      }
+    ],
+    "explanation": "strcmp 按完整字符串内容逐字符比较，直到遇到空字符并返回比较结果；strncmp 只比较至多指定数量的字符；strcpy 复制字符串；strcat 连接字符串。",
+    "id": "c-097",
+    "tags": [
+      "C"
+    ],
+    "section": "字符串"
+  },
+  {
+    "type": "single",
+    "question": "以下关于字符串输入函数scanf和gets的叙述，正确的是？",
+    "options": [
+      {
+        "text": "scanf的%s格式可以读取包含空格的字符串",
+        "correct": false
+      },
+      {
+        "text": "gets函数是安全的，推荐使用",
+        "correct": false
+      },
+      {
+        "text": "scanf的%s格式会在空白字符处停止读取",
+        "correct": true
+      },
+      {
+        "text": "gets函数会检查缓冲区大小",
+        "correct": false
+      }
+    ],
+    "explanation": "scanf的%s格式在读取时遇到空白字符（空格、制表符、换行）就停止，因此不能读取包含空格的字符串。gets函数不检查缓冲区大小，容易导致溢出，已被废弃。推荐使用fgets。",
+    "id": "c-098",
+    "tags": [
+      "C"
+    ],
+    "section": "字符串"
+  },
+  {
+    "type": "single",
+    "question": "若有定义：char s[] = \"abc\\0def\"; 则strlen(s)的返回值是？",
+    "options": [
+      {
+        "text": "3",
+        "correct": true
+      },
+      {
+        "text": "7",
+        "correct": false
+      },
+      {
+        "text": "8",
+        "correct": false
+      },
+      {
+        "text": "取决于编译器",
+        "correct": false
+      }
+    ],
+    "explanation": "strlen计算字符串长度，遇到第一个'\\0'停止。s中第一个'\\0'在'c'之后，因此长度为3。数组总大小为8，但strlen只计算到'\\0'。",
+    "id": "c-099",
+    "tags": [
+      "C"
+    ],
+    "section": "字符串"
+  },
+  {
+    "type": "single",
+    "question": "以下哪个函数用于在字符串中查找子串？",
+    "options": [
+      {
+        "text": "strchr",
+        "correct": false
+      },
+      {
+        "text": "strstr",
+        "correct": true
+      },
+      {
+        "text": "strrchr",
+        "correct": false
+      },
+      {
+        "text": "strpbrk",
+        "correct": false
+      }
+    ],
+    "explanation": "strstr用于查找子串，返回指向第一次出现子串的指针。strchr查找字符，strrchr查找字符最后一次出现，strpbrk查找任何一组字符第一次出现的位置。",
+    "id": "c-100",
+    "tags": [
+      "C"
+    ],
+    "section": "字符串"
+  },
+  {
+    "type": "single",
+    "question": "若有char s[10] = \"abc\"; 则执行strcat(s, \"def\"); 后s的内容是？",
+    "options": [
+      {
+        "text": "\"abcdef\"",
+        "correct": true
+      },
+      {
+        "text": "\"abc\"",
+        "correct": false
+      },
+      {
+        "text": "\"def\"",
+        "correct": false
+      },
+      {
+        "text": "\"abcdef\\0\"",
+        "correct": false
+      }
+    ],
+    "explanation": "strcat将\"def\"追加到s的末尾，原s为\"abc\"，追加后变为\"abcdef\"，末尾自动添加'\\0'。字符串内容表示为\"abcdef\"，'\\0'不计入显示。",
+    "id": "c-101",
+    "tags": [
+      "C"
+    ],
+    "section": "字符串"
+  },
+  {
+    "type": "single",
+    "question": "以下关于字符串常量存储的叙述，正确的是？",
+    "options": [
+      {
+        "text": "字符串常量存储在栈区",
+        "correct": false
+      },
+      {
+        "text": "字符串常量存储在堆区",
+        "correct": false
+      },
+      {
+        "text": "字符串常量通常存储在只读数据段",
+        "correct": true
+      },
+      {
+        "text": "字符串常量存储在代码区",
+        "correct": false
+      }
+    ],
+    "explanation": "字符串常量通常存储在只读数据段（如.rodata），试图修改会导致未定义行为。栈区存放局部变量，堆区动态分配，代码区存放可执行指令。",
+    "id": "c-102",
+    "tags": [
+      "C"
+    ],
+    "section": "字符串"
+  },
+  {
+    "type": "single",
+    "question": "在C语言中，使用strlen函数计算字符串长度时，其返回值类型是？",
+    "options": [
+      {
+        "text": "int",
+        "correct": false
+      },
+      {
+        "text": "size_t",
+        "correct": true
+      },
+      {
+        "text": "unsigned int",
+        "correct": false
+      },
+      {
+        "text": "long",
+        "correct": false
+      }
+    ],
+    "explanation": "strlen返回size_t（无符号整数类型）。常见误区是认为返回int。标准规定size_t定义于stddef.h，用于表示对象大小。",
+    "id": "c-103",
+    "tags": [
+      "C"
+    ],
+    "section": "字符串"
+  },
+  {
+    "type": "single",
+    "question": "若有char str[20] = \"hello\"; 执行strcpy(str, \"world\"); 后，str中存储的字符串是？",
+    "options": [
+      {
+        "text": "\"world\"",
+        "correct": true
+      },
+      {
+        "text": "\"helloworld\"",
+        "correct": false
+      },
+      {
+        "text": "\"worldhello\"",
+        "correct": false
+      },
+      {
+        "text": "\"hello\"",
+        "correct": false
+      }
+    ],
+    "explanation": "strcpy会覆盖目标字符串，从起始位置复制，包括结尾的'\\0'。因此str内容变为\"world\"。误区是认为会拼接，拼接应使用strcat。",
+    "id": "c-104",
+    "tags": [
+      "C"
+    ],
+    "section": "字符串"
+  },
+  {
+    "type": "single",
+    "question": "以下关于字符数组与字符串字面量的叙述，正确的是？",
+    "options": [
+      {
+        "text": "字符数组名可以直接赋值给另一个字符数组名",
+        "correct": false
+      },
+      {
+        "text": "字符串字面量可以修改其中的字符",
+        "correct": false
+      },
+      {
+        "text": "字符数组可以在初始化时用字符串字面量赋值",
+        "correct": true
+      },
+      {
+        "text": "字符指针不能指向字符串字面量",
+        "correct": false
+      }
+    ],
+    "explanation": "字符数组初始化时可用字符串字面量，如char s[]=\"abc\"；但之后不能整体赋值。字符串字面量通常只读，修改行为未定义。指针可以指向字面量。",
+    "id": "c-105",
+    "tags": [
+      "C"
+    ],
+    "section": "字符串"
+  },
+  {
+    "type": "single",
+    "question": "若有char s[] = \"a\\0b\"; 则sizeof(s)的值是？",
+    "options": [
+      {
+        "text": "2",
+        "correct": false
+      },
+      {
+        "text": "3",
+        "correct": false
+      },
+      {
+        "text": "4",
+        "correct": true
+      },
+      {
+        "text": "5",
+        "correct": false
+      }
+    ],
+    "explanation": "字符串字面量\"a\\0b\"包含字符'a'、'\\0'、'b'和结尾的'\\0'，共4个字节，数组大小与字面量长度相同。误区是只计算可见字符。",
+    "id": "c-106",
+    "tags": [
+      "C"
+    ],
+    "section": "字符串"
+  },
+  {
+    "type": "single",
+    "question": "以下哪个函数用于在字符串中查找指定字符第一次出现的位置？",
+    "options": [
+      {
+        "text": "strchr",
+        "correct": true
+      },
+      {
+        "text": "strstr",
+        "correct": false
+      },
+      {
+        "text": "strrchr",
+        "correct": false
+      },
+      {
+        "text": "strpbrk",
+        "correct": false
+      }
+    ],
+    "explanation": "strchr查找字符首次出现，返回指向该字符的指针。strstr查找子串，strrchr查找字符最后一次出现，strpbrk查找任一字符首次出现。",
+    "id": "c-107",
+    "tags": [
+      "C"
+    ],
+    "section": "字符串"
+  },
+  {
+    "type": "single",
+    "question": "若有char *p = \"hello\"; 则表达式p[0] = 'H'; 的行为是？",
+    "options": [
+      {
+        "text": "编译错误",
+        "correct": false
+      },
+      {
+        "text": "运行时错误",
+        "correct": false
+      },
+      {
+        "text": "未定义行为",
+        "correct": true
+      },
+      {
+        "text": "正常修改字符串",
+        "correct": false
+      }
+    ],
+    "explanation": "p指向字符串字面量，字面量通常存储在只读区域，修改它会导致未定义行为。常见误区是认为可以像数组一样修改。",
+    "id": "c-108",
+    "tags": [
+      "C"
+    ],
+    "section": "字符串"
+  },
+  {
+    "type": "single",
+    "question": "以下关于strncpy函数的叙述，正确的是？",
+    "options": [
+      {
+        "text": "strncpy总会在目标字符串末尾添加'\\0'",
+        "correct": false
+      },
+      {
+        "text": "若源字符串长度小于n，strncpy会用'\\0'填充目标数组，直到写入n个字符",
+        "correct": true
+      },
+      {
+        "text": "当源字符串长度不小于n时，strncpy会自动在目标末尾添加'\\0'",
+        "correct": false
+      },
+      {
+        "text": "strncpy与strcpy功能完全相同，只是多一个长度参数",
+        "correct": false
+      }
+    ],
+    "explanation": "strncpy最多复制n个字符；当源字符串长度小于n时，剩余位置用'\\0'填充到n个字符；当源字符串长度不小于n时，不会自动追加'\\0'，目标字符串可能需要手动终止。",
+    "id": "c-109",
+    "tags": [
+      "C"
+    ],
+    "section": "字符串"
+  },
+  {
+    "type": "single",
+    "question": "若有char s[10]; 从标准输入读取一行包含空格的字符串，以下哪个函数最合适？",
+    "options": [
+      {
+        "text": "scanf(\"%s\", s)",
+        "correct": false
+      },
+      {
+        "text": "gets(s)",
+        "correct": false
+      },
+      {
+        "text": "fgets(s, sizeof(s), stdin)",
+        "correct": true
+      },
+      {
+        "text": "getchar()",
+        "correct": false
+      }
+    ],
+    "explanation": "fgets可限制读取长度，避免缓冲区溢出，且能读取空格。scanf(\"%s\")遇到空格停止；gets不安全；getchar只能读单个字符。",
+    "id": "c-110",
+    "tags": [
+      "C"
+    ],
+    "section": "字符串"
+  },
+  {
+    "type": "single",
+    "question": "若有char s1[] = \"abc\"; char s2[] = \"abd\"; 则strcmp(s1, s2)的返回值是？",
+    "options": [
+      {
+        "text": "0",
+        "correct": false
+      },
+      {
+        "text": "正数",
+        "correct": false
+      },
+      {
+        "text": "负数",
+        "correct": true
+      },
+      {
+        "text": "1",
+        "correct": false
+      }
+    ],
+    "explanation": "strcmp按字符编码比较，'c'的ASCII码小于'd'，因此s1小于s2，返回负值。具体数值取决于实现，但符号是确定的。",
+    "id": "c-111",
+    "tags": [
+      "C"
+    ],
+    "section": "字符串"
+  },
+  {
+    "type": "single",
+    "question": "以下哪个标准库函数将字符串转换为long，且不提供进制参数和错误检测？",
+    "options": [
+      {
+        "text": "atoi",
+        "correct": false
+      },
+      {
+        "text": "atol",
+        "correct": true
+      },
+      {
+        "text": "strtod",
+        "correct": false
+      },
+      {
+        "text": "strtol",
+        "correct": false
+      }
+    ],
+    "explanation": "atol把字符串转换为long且不提供进制参数和错误检测；atoi转换为int；strtod转换为double；strtol转换为long并支持指定进制和错误检测。",
+    "id": "c-112",
+    "tags": [
+      "C"
+    ],
+    "section": "字符串"
+  },
+  {
+    "type": "single",
+    "question": "以下关于字符串字面量与字符数组的叙述，正确的是？",
+    "options": [
+      {
+        "text": "字符串字面量通常存放在只读存储区，修改其内容属于未定义行为",
+        "correct": true
+      },
+      {
+        "text": "字符数组名是一个常量指针，不能改变指向",
+        "correct": false
+      },
+      {
+        "text": "字符串字面量可以整体赋值给字符数组名",
+        "correct": false
+      },
+      {
+        "text": "字符数组在初始化时不能使用字符串字面量",
+        "correct": false
+      }
+    ],
+    "explanation": "字符串字面量有静态存储期，具体存储区域由实现决定，尝试修改是未定义行为；数组名不是可赋值指针，数组不能整体赋值；字符数组初始化时可以使用字符串字面量。",
+    "id": "c-113",
+    "tags": [
+      "C"
+    ],
+    "section": "字符串"
+  },
+  {
+    "type": "single",
+    "question": "以下关于将字符串中的小写字母转换为大写字母的叙述，正确的是？",
+    "options": [
+      {
+        "text": "toupper是标准库函数，可用于单个字符的大小写转换，处理整个字符串需要遍历每个字符",
+        "correct": true
+      },
+      {
+        "text": "strupr是标准C库函数，可直接将整个字符串转换为大写",
+        "correct": false
+      },
+      {
+        "text": "strlwr是标准C库函数，可将整个字符串转换为小写",
+        "correct": false
+      },
+      {
+        "text": "标准C库提供了直接转换整个字符串大小写的函数",
+        "correct": false
+      }
+    ],
+    "explanation": "toupper处理单个字符，转换整个字符串需要循环；strupr和strlwr不是标准C函数；标准C没有直接转换整个字符串大小写的函数。",
+    "id": "c-114",
+    "tags": [
+      "C"
+    ],
+    "section": "字符串"
+  },
+  {
+    "type": "single",
+    "question": "以下代码的输出结果是？\nchar s[] = \"ab\\0cd\";\nprintf(\"%zu %zu\", strlen(s), sizeof(s));",
+    "options": [
+      {
+        "text": "2 5",
+        "correct": false
+      },
+      {
+        "text": "2 6",
+        "correct": true
+      },
+      {
+        "text": "5 6",
+        "correct": false
+      },
+      {
+        "text": "5 5",
+        "correct": false
+      }
+    ],
+    "explanation": "strlen遇到第一个'\\0'停止，故为2；sizeof统计数组总字节数，包含隐式结尾'\\0'，共6字节。",
+    "id": "c-115",
+    "tags": [
+      "C"
+    ],
+    "section": "字符串"
+  },
+  {
+    "type": "single",
+    "question": "以下关于strncpy函数的说法，正确的是？",
+    "options": [
+      {
+        "text": "strncpy总是会在目标字符串末尾添加'\\0'",
+        "correct": false
+      },
+      {
+        "text": "如果源字符串长度小于n，strncpy会用'\\0'填充目标数组剩余部分",
+        "correct": true
+      },
+      {
+        "text": "strncpy会复制源字符串直到遇到'\\0'，最多复制n个字符，并自动添加'\\0'",
+        "correct": false
+      },
+      {
+        "text": "strncpy的目标数组必须比源字符串大至少1字节",
+        "correct": false
+      }
+    ],
+    "explanation": "strncpy最多复制n个字符；若源长度小于n，剩余用'\\0'填充；若源长度不小于n，则不会自动添加'\\0'。",
+    "id": "c-116",
+    "tags": [
+      "C"
+    ],
+    "section": "字符串"
+  },
+  {
+    "type": "single",
+    "question": "若有char s[10] = \"abc\"; 执行strncat(s, \"defgh\", 2); 后，s中的字符串是？",
+    "options": [
+      {
+        "text": "\"abcdef\"",
+        "correct": false
+      },
+      {
+        "text": "\"abcde\"",
+        "correct": true
+      },
+      {
+        "text": "\"abcdefgh\"",
+        "correct": false
+      },
+      {
+        "text": "\"abc\"",
+        "correct": false
+      }
+    ],
+    "explanation": "strncat最多追加n个字符，并自动添加'\\0'。这里追加\"de\"，结果为\"abcde\"。",
+    "id": "c-117",
+    "tags": [
+      "C"
+    ],
+    "section": "字符串"
+  },
+  {
+    "type": "multiple",
+    "question": "以下关于字符数组和字符串字面量的叙述，正确的有？",
+    "options": [
+      {
+        "text": "char a[] = \"abc\"; 与 char b[] = {'a','b','c','\\0'}; 等价",
+        "correct": true
+      },
+      {
+        "text": "char *p = \"abc\"; 可以通过p修改字符串内容",
+        "correct": false
+      },
+      {
+        "text": "字符串字面量的内容不可修改，尝试修改属于未定义行为",
+        "correct": true
+      },
+      {
+        "text": "char s[3] = \"abc\"; 是合法的初始化",
+        "correct": false
+      }
+    ],
+    "explanation": "字符数组用字符串字面量初始化会包含结尾空字符，与逐字符再加'\\0'等价；字符串字面量不应修改，尝试修改是未定义行为；三个字节空间放不下三个字符加终止符。",
+    "id": "c-118",
+    "tags": [
+      "C"
+    ],
+    "section": "字符串"
+  },
+  {
+    "type": "multiple",
+    "question": "以下关于字符串比较函数的叙述，正确的有？",
+    "options": [
+      {
+        "text": "strcmp按字典序比较字符串，返回值可能为正、负或0",
+        "correct": true
+      },
+      {
+        "text": "strncmp可以限制比较的字符数，避免读取越界",
+        "correct": true
+      },
+      {
+        "text": "strcmp比较时遇到'\\0'即停止",
+        "correct": true
+      },
+      {
+        "text": "strcmp返回值一定为-1、0或1",
+        "correct": false
+      }
+    ],
+    "explanation": "strcmp按字典序比较，遇'\\0'停止，返回值符号有意义但不限于-1/0/1；strncmp可限制比较长度。",
+    "id": "c-119",
+    "tags": [
+      "C"
+    ],
+    "section": "字符串"
+  },
+  {
+    "type": "single",
+    "question": "执行以下代码后，buf中确定的内容是什么？\nchar buf[10];\nstrncpy(buf, \"abc\", 5);",
+    "options": [
+      {
+        "text": "前5个字节依次为'a','b','c','\\0','\\0'，第6个字节起未初始化",
+        "correct": true
+      },
+      {
+        "text": "前3个字节为'a','b','c'，第4个字节为'\\0'，第5个字节未初始化",
+        "correct": false
+      },
+      {
+        "text": "buf中仅包含字符串\"abc\"，其余字节内容确定",
+        "correct": false
+      },
+      {
+        "text": "strncpy不会写入'\\0'，因此buf中没有终止符",
+        "correct": false
+      }
+    ],
+    "explanation": "strncpy在源字符串长度小于n时用'\\0'填充到n个字符；这里n为5，所以前5个字节确定，后续字节未初始化。",
+    "id": "c-120",
+    "tags": [
+      "C"
+    ],
+    "section": "字符串"
+  },
+  {
+    "type": "single",
+    "question": "在C语言中，以下关于结构体成员对齐的描述正确的是？",
+    "options": [
+      {
+        "text": "结构体成员在内存中按声明顺序连续存放，无填充",
+        "correct": false
+      },
+      {
+        "text": "编译器可能在各成员之间插入填充字节，以满足对齐要求",
+        "correct": true
+      },
+      {
+        "text": "结构体总大小恒等于各成员大小之和",
+        "correct": false
+      },
+      {
+        "text": "只有指针成员需要对齐，基本类型成员不需要",
+        "correct": false
+      }
+    ],
+    "explanation": "编译器为满足各成员类型的对齐要求，可能在成员间插入填充字节，因此结构体大小常大于成员大小之和。A忽略填充，C忽略填充与尾部填充，D错误地认为基本类型无需对齐。",
+    "id": "c-121",
+    "tags": [
+      "C"
+    ],
+    "section": "结构体与对齐"
+  },
+  {
+    "type": "single",
+    "question": "在常见ABI且未使用pack或显式对齐属性时，关于结构体总大小的对齐规则，下列描述正确的是？",
+    "options": [
+      {
+        "text": "结构体总大小通常是各成员对齐值最大值（即结构体对齐值）的整数倍",
+        "correct": true
+      },
+      {
+        "text": "结构体总大小总是4的倍数",
+        "correct": false
+      },
+      {
+        "text": "结构体总大小等于最后一个成员的偏移加其大小",
+        "correct": false
+      },
+      {
+        "text": "结构体总大小由第一个成员的类型决定",
+        "correct": false
+      }
+    ],
+    "explanation": "在常见ABI中，结构体对齐值通常取各成员对齐值的最大值，总大小需为该对齐值的整数倍，必要时在末尾填充。并非总是4的倍数；最后一个成员偏移加大小未计入尾部填充；首个成员不决定整体对齐。",
+    "id": "c-122",
+    "tags": [
+      "C"
+    ],
+    "section": "结构体与对齐"
+  },
+  {
+    "type": "single",
+    "question": "已知 struct { char a; int b; } s; 在常见32位/64位平台上（int对齐4），sizeof(s)通常是多少？",
+    "options": [
+      {
+        "text": "5",
+        "correct": false
+      },
+      {
+        "text": "8",
+        "correct": true
+      },
+      {
+        "text": "4",
+        "correct": false
+      },
+      {
+        "text": "12",
+        "correct": false
+      }
+    ],
+    "explanation": "char a占1字节，为让int b按4字节对齐，需在a后填充3字节，b占4字节，总大小8字节，且8是最大对齐4的倍数。选5忽略填充；4不足；12无依据。",
+    "id": "c-123",
+    "tags": [
+      "C"
+    ],
+    "section": "结构体与对齐"
+  },
+  {
+    "type": "single",
+    "question": "已知 struct { char a; char b; int c; } s; 在int对齐4的平台上，sizeof(s)通常是多少？",
+    "options": [
+      {
+        "text": "6",
+        "correct": false
+      },
+      {
+        "text": "8",
+        "correct": true
+      },
+      {
+        "text": "12",
+        "correct": false
+      },
+      {
+        "text": "4",
+        "correct": false
+      }
+    ],
+    "explanation": "a、b各占1字节，共2字节，为让c按4对齐需填充2字节，c占4字节，总8字节，正好是最大对齐4的倍数。6忽略填充；12过度填充；4放不下。",
+    "id": "c-124",
+    "tags": [
+      "C"
+    ],
+    "section": "结构体与对齐"
+  },
+  {
+    "type": "single",
+    "question": "已知 struct { int a; char b; } s; 在int对齐4的平台上，sizeof(s)通常是多少？",
+    "options": [
+      {
+        "text": "5",
+        "correct": false
+      },
+      {
+        "text": "8",
+        "correct": true
+      },
+      {
+        "text": "6",
+        "correct": false
+      },
+      {
+        "text": "12",
+        "correct": false
+      }
+    ],
+    "explanation": "int a占4字节，char b占1字节，为使整体大小为最大对齐4的倍数，末尾需填充3字节，总8字节。选5忽略尾部填充；6非4的倍数；12无依据。",
+    "id": "c-125",
+    "tags": [
+      "C"
+    ],
+    "section": "结构体与对齐"
+  },
+  {
+    "type": "single",
+    "question": "已知 struct { double d; char c; } s; 在double对齐8的平台上，sizeof(s)通常是多少？",
+    "options": [
+      {
+        "text": "9",
+        "correct": false
+      },
+      {
+        "text": "16",
+        "correct": true
+      },
+      {
+        "text": "12",
+        "correct": false
+      },
+      {
+        "text": "8",
+        "correct": false
+      }
+    ],
+    "explanation": "double d占8字节，char c占1字节，末尾需填充7字节使总大小为8的倍数，故为16。9忽略尾部填充；12非8倍数；8放不下c。",
+    "id": "c-126",
+    "tags": [
+      "C"
+    ],
+    "section": "结构体与对齐"
+  },
+  {
+    "type": "single",
+    "question": "在C语言中，#pragma pack(1) 作用于结构体时通常产生什么效果？",
+    "options": [
+      {
+        "text": "按1字节对齐，取消成员间填充，结构体可能变小",
+        "correct": true
+      },
+      {
+        "text": "使所有成员变为1字节类型",
+        "correct": false
+      },
+      {
+        "text": "强制结构体总大小为1的倍数但保留填充",
+        "correct": false
+      },
+      {
+        "text": "仅对第一个成员生效",
+        "correct": false
+      }
+    ],
+    "explanation": "#pragma pack(1)将最大对齐设为1，编译器不在成员间插入填充，结构体大小通常等于成员大小之和。它不改变成员类型，不保留常规填充，也不只作用于首成员。",
+    "id": "c-127",
+    "tags": [
+      "C"
+    ],
+    "section": "结构体与对齐"
+  },
+  {
+    "type": "single",
+    "question": "以下哪个操作在C语言中是非法的？",
+    "options": [
+      {
+        "text": "定义指向结构体类型的指针",
+        "correct": false
+      },
+      {
+        "text": "用另一个同类型结构体变量给结构体变量赋值",
+        "correct": false
+      },
+      {
+        "text": "对两个同类型结构体变量使用==比较是否相等",
+        "correct": true
+      },
+      {
+        "text": "将结构体变量作为函数参数按值传递",
+        "correct": false
+      }
+    ],
+    "explanation": "C语言允许结构体指针、同类型结构体赋值和按值传参，但不支持用==直接比较两个结构体，需逐成员比较。因此C非法，其余合法。",
+    "id": "c-128",
+    "tags": [
+      "C"
+    ],
+    "section": "结构体与对齐"
+  },
+  {
+    "type": "single",
+    "question": "关于结构体指针访问成员，下列写法正确的是（p为指向结构体的指针）？",
+    "options": [
+      {
+        "text": "p.x",
+        "correct": false
+      },
+      {
+        "text": "(*p).x 或 p->x",
+        "correct": true
+      },
+      {
+        "text": "*p.x",
+        "correct": false
+      },
+      {
+        "text": "p->x 与 p.x 等价",
+        "correct": false
+      }
+    ],
+    "explanation": "指针访问成员可用(*p).x或p->x，二者等价。p.x用于结构体变量而非指针；*p.x因.优先级高于*会先取成员，语义错误；D混淆了两种运算符。",
+    "id": "c-129",
+    "tags": [
+      "C"
+    ],
+    "section": "结构体与对齐"
+  },
+  {
+    "type": "single",
+    "question": "已知 struct S { int a; char b; }; 下列初始化写法正确的是？",
+    "options": [
+      {
+        "text": "struct S s = {1, 'x'};",
+        "correct": true
+      },
+      {
+        "text": "struct S s = (1, 'x');",
+        "correct": false
+      },
+      {
+        "text": "struct S s = {1; 'x'};",
+        "correct": false
+      },
+      {
+        "text": "struct S s = [1, 'x'];",
+        "correct": false
+      }
+    ],
+    "explanation": "结构体初始化使用花括号并按成员顺序赋值，A正确。B是逗号表达式；C用分号分隔非法；D用方括号非法。",
+    "id": "c-130",
+    "tags": [
+      "C"
+    ],
+    "section": "结构体与对齐"
+  },
+  {
+    "type": "single",
+    "question": "已知 struct A { char c; double d; }; 在double对齐8的平台上，成员d的偏移量通常是多少？",
+    "options": [
+      {
+        "text": "1",
+        "correct": false
+      },
+      {
+        "text": "8",
+        "correct": true
+      },
+      {
+        "text": "4",
+        "correct": false
+      },
+      {
+        "text": "0",
+        "correct": false
+      }
+    ],
+    "explanation": "char c占偏移0，double d需按8对齐，故c后填充7字节，d偏移为8。选1忽略对齐；4不是8的倍数；0已被c占用。",
+    "id": "c-131",
+    "tags": [
+      "C"
+    ],
+    "section": "结构体与对齐"
+  },
+  {
+    "type": "single",
+    "question": "情境：某程序将结构体通过二进制方式写入文件再读回，换了编译选项后读到错误数据。最可能的原因是什么？",
+    "options": [
+      {
+        "text": "结构体内存布局（填充和对齐）因编译选项改变而不一致",
+        "correct": true
+      },
+      {
+        "text": "C语言不允许结构体写入文件",
+        "correct": false
+      },
+      {
+        "text": "文件读写函数只能处理字符",
+        "correct": false
+      },
+      {
+        "text": "结构体成员必须全部为int",
+        "correct": false
+      }
+    ],
+    "explanation": "结构体二进制布局受对齐和pack选项影响，编译选项不同可能导致填充与总大小不同，读写端布局不一致即读错。C允许写结构体；文件函数可写任意字节；D无此要求。",
+    "id": "c-132",
+    "tags": [
+      "C"
+    ],
+    "section": "结构体与对齐"
+  },
+  {
+    "type": "single",
+    "question": "在C语言中，结构体成员之间插入填充字节的主要目的是什么？",
+    "options": [
+      {
+        "text": "使结构体总大小是最大成员大小的整数倍",
+        "correct": false
+      },
+      {
+        "text": "满足成员的对齐要求，提高访问效率",
+        "correct": true
+      },
+      {
+        "text": "减少结构体占用的内存空间",
+        "correct": false
+      },
+      {
+        "text": "保证结构体可以按位访问",
+        "correct": false
+      }
+    ],
+    "explanation": "填充字节是为了满足成员的对齐要求，确保成员地址是其对齐值的整数倍，从而避免性能损失或硬件异常。总大小为最大对齐整数倍是结果而非目的；填充通常增加大小；按位访问与填充无关。",
+    "id": "c-133",
+    "tags": [
+      "C"
+    ],
+    "section": "结构体与对齐"
+  },
+  {
+    "type": "single",
+    "question": "假设 int 对齐为4，struct { char a; int b; char c; } 的 sizeof 通常是多少？",
+    "options": [
+      {
+        "text": "6",
+        "correct": false
+      },
+      {
+        "text": "9",
+        "correct": false
+      },
+      {
+        "text": "12",
+        "correct": true
+      },
+      {
+        "text": "16",
+        "correct": false
+      }
+    ],
+    "explanation": "成员 a 占1字节，之后填充3字节使 b 对齐到4，b 占4字节，c 占1字节，之后填充3字节使总大小为4的倍数，故为12。6未考虑填充；9未尾部填充；16过度填充。",
+    "id": "c-134",
+    "tags": [
+      "C"
+    ],
+    "section": "结构体与对齐"
+  },
+  {
+    "type": "single",
+    "question": "已知 double 对齐为8，struct { char c; double d; } 的 sizeof 通常是多少？",
+    "options": [
+      {
+        "text": "9",
+        "correct": false
+      },
+      {
+        "text": "12",
+        "correct": false
+      },
+      {
+        "text": "16",
+        "correct": true
+      },
+      {
+        "text": "8",
+        "correct": false
+      }
+    ],
+    "explanation": "c 占1字节，填充7字节使 d 对齐到8，d 占8字节，总大小16是8的倍数。9未填充；12不满足8对齐；8无法容纳d。",
+    "id": "c-135",
+    "tags": [
+      "C"
+    ],
+    "section": "结构体与对齐"
+  },
+  {
+    "type": "single",
+    "question": "在常见C编译器实现中，要改变结构体成员的对齐方式，可以使用哪个预处理指令？",
+    "options": [
+      {
+        "text": "#pragma pack",
+        "correct": true
+      },
+      {
+        "text": "#pragma align",
+        "correct": false
+      },
+      {
+        "text": "#pragma struct",
+        "correct": false
+      },
+      {
+        "text": "#pragma padding",
+        "correct": false
+      }
+    ],
+    "explanation": "常见编译器提供 #pragma pack 预处理扩展来设置结构体成员的最大对齐值；标准C还提供 _Alignas 等对齐说明符，但它不是预处理指令。其他写法不是通用预处理指令。",
+    "id": "c-136",
+    "tags": [
+      "C"
+    ],
+    "section": "结构体与对齐"
+  },
+  {
+    "type": "single",
+    "question": "在不使用标准宏 offsetof 的情况下，下列哪种表达式常用于计算结构体成员 b 的偏移量？",
+    "options": [
+      {
+        "text": "sizeof(struct S) - sizeof(((struct S*)0)->b)",
+        "correct": false
+      },
+      {
+        "text": "(size_t)&((struct S*)0)->b",
+        "correct": true
+      },
+      {
+        "text": "offsetof(struct S, b)",
+        "correct": false
+      },
+      {
+        "text": "sizeof(struct S) - offsetof(struct S, b)",
+        "correct": false
+      }
+    ],
+    "explanation": "将空指针转换为结构体指针并取成员地址，再转换为 size_t，是 offsetof 的经典实现思路，得到成员相对起始地址的偏移。直接调用 offsetof 是标准宏，而非题目所问的不使用宏的表达式；其余减法公式不能正确得到偏移。",
+    "id": "c-137",
+    "tags": [
+      "C"
+    ],
+    "section": "结构体与对齐"
+  },
+  {
+    "type": "single",
+    "question": "已知 struct { short s; char c; } 在 short 对齐为2的平台上，sizeof 通常是多少？",
+    "options": [
+      {
+        "text": "3",
+        "correct": false
+      },
+      {
+        "text": "4",
+        "correct": true
+      },
+      {
+        "text": "2",
+        "correct": false
+      },
+      {
+        "text": "6",
+        "correct": false
+      }
+    ],
+    "explanation": "s 占2字节，c 占1字节，总大小需为2的倍数，故填充1字节，sizeof为4。3未尾部填充；2无法容纳c；6过大。",
+    "id": "c-138",
+    "tags": [
+      "C"
+    ],
+    "section": "结构体与对齐"
+  },
+  {
+    "type": "single",
+    "question": "关于结构体赋值，以下说法正确的是？",
+    "options": [
+      {
+        "text": "两个类型相同的结构体变量可以直接用 = 赋值",
+        "correct": true
+      },
+      {
+        "text": "结构体赋值会复制填充字节的具体值",
+        "correct": false
+      },
+      {
+        "text": "结构体赋值只能通过 memcpy 进行",
+        "correct": false
+      },
+      {
+        "text": "结构体赋值时必须显式转换类型",
+        "correct": false
+      }
+    ],
+    "explanation": "C语言允许同类型结构体直接赋值，赋值会复制所有成员，但填充字节的值是未指定的。memcpy 不是唯一方式；同类型赋值无需转换。",
+    "id": "c-139",
+    "tags": [
+      "C"
+    ],
+    "section": "结构体与对齐"
+  },
+  {
+    "type": "single",
+    "question": "已知 struct { char a; long b; } 在 long 对齐为8的平台上，成员 b 的偏移量通常是多少？",
+    "options": [
+      {
+        "text": "1",
+        "correct": false
+      },
+      {
+        "text": "4",
+        "correct": false
+      },
+      {
+        "text": "8",
+        "correct": true
+      },
+      {
+        "text": "16",
+        "correct": false
+      }
+    ],
+    "explanation": "a 占1字节，b 需要8字节对齐，因此填充7字节，b 的偏移量为8。1和4不满足8对齐；16过度填充。",
+    "id": "c-140",
+    "tags": [
+      "C"
+    ],
+    "section": "结构体与对齐"
+  },
+  {
+    "type": "single",
+    "question": "情境：两个平台字节序相同、基本整数类型大小相同，但编译器对结构体的默认对齐和填充规则不同。程序将同一结构体对象直接写入文件，在另一平台按相同结构体类型读取时出现部分成员值错乱。最可能的原因是什么？",
+    "options": [
+      {
+        "text": "文件读写函数使用错误",
+        "correct": false
+      },
+      {
+        "text": "结构体对齐和填充在不同平台可能不同",
+        "correct": true
+      },
+      {
+        "text": "编译器会重排结构体成员声明顺序",
+        "correct": false
+      },
+      {
+        "text": "文件系统不支持二进制写入",
+        "correct": false
+      }
+    ],
+    "explanation": "结构体的成员偏移和总大小受实现定义的对齐与填充规则影响；跨平台直接读写内存映像会使字段落点不一致。C 标准不重排成员声明顺序，普通文件系统支持二进制读写，函数使用错误不是这里最有针对性的解释。",
+    "id": "c-141",
+    "tags": [
+      "C"
+    ],
+    "section": "结构体与对齐"
+  },
+  {
+    "type": "single",
+    "question": "若 arr 是当前作用域内定义的结构体数组（尚未转换为指针），以下哪个表达式可以计算该数组的元素个数？",
+    "options": [
+      {
+        "text": "sizeof(arr) / sizeof(arr[0])",
+        "correct": true
+      },
+      {
+        "text": "sizeof(arr) / sizeof(arr)",
+        "correct": false
+      },
+      {
+        "text": "sizeof(arr[0]) / sizeof(arr)",
+        "correct": false
+      },
+      {
+        "text": "sizeof(arr) * sizeof(arr[0])",
+        "correct": false
+      }
+    ],
+    "explanation": "对真正的数组对象，sizeof arr 得到整个数组的字节数，sizeof arr[0] 得到单个元素的字节数，相除得到元素个数。若数组名已作为函数参数退化为指针，则不能这样计算。",
+    "id": "c-142",
+    "tags": [
+      "C"
+    ],
+    "section": "结构体与对齐"
+  },
+  {
+    "type": "multiple",
+    "question": "关于C语言结构体在默认对齐规则下（未使用 #pragma pack 或类似扩展）的对齐，以下说法正确的有哪些？",
+    "options": [
+      {
+        "text": "成员偏移量必须是该成员对齐要求的整数倍",
+        "correct": true
+      },
+      {
+        "text": "结构体总大小必须满足结构体对齐要求，通常为最大成员对齐要求的整数倍",
+        "correct": true
+      },
+      {
+        "text": "填充字节的值是未指定的",
+        "correct": true
+      },
+      {
+        "text": "结构体对齐要求一定等于其最大成员的大小",
+        "correct": false
+      }
+    ],
+    "explanation": "成员按自身对齐要求放置，成员之间可能需要填充；结构体大小需满足结构体对齐要求，在默认规则下通常也满足最大成员对齐要求。填充字节内容不由语言规定。结构体对齐要求与最大成员大小不是同一概念，数组成员的对齐要求常小于整个数组大小。",
+    "id": "c-143",
+    "tags": [
+      "C"
+    ],
+    "section": "结构体与对齐"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些方法可能改变结构体的内存布局？",
+    "options": [
+      {
+        "text": "使用 #pragma pack 指定对齐字节数",
+        "correct": true
+      },
+      {
+        "text": "调整成员声明顺序",
+        "correct": true
+      },
+      {
+        "text": "使用编译器扩展属性指定对齐",
+        "correct": true
+      },
+      {
+        "text": "改变结构体变量的名称",
+        "correct": false
+      }
+    ],
+    "explanation": "pack 指令、成员顺序、对齐属性都会影响填充与偏移；变量名不影响布局。",
+    "id": "c-144",
+    "tags": [
+      "C"
+    ],
+    "section": "结构体与对齐"
+  },
+  {
+    "type": "multiple",
+    "question": "关于结构体与内存，以下说法正确的有哪些？",
+    "options": [
+      {
+        "text": "结构体变量可以整体赋值",
+        "correct": true
+      },
+      {
+        "text": "结构体可以作为函数参数和返回值",
+        "correct": true
+      },
+      {
+        "text": "结构体成员在内存中一定连续存放",
+        "correct": false
+      },
+      {
+        "text": "结构体可以包含位段",
+        "correct": true
+      }
+    ],
+    "explanation": "结构体支持整体赋值、传参、返回和位段；成员间可能有填充，不一定连续。",
+    "id": "c-145",
+    "tags": [
+      "C"
+    ],
+    "section": "结构体与对齐"
+  },
+  {
+    "type": "multiple",
+    "question": "情境：需要设计一个跨平台传输的结构体，以下哪些做法有助于避免对齐问题？",
+    "options": [
+      {
+        "text": "使用固定大小的整数类型",
+        "correct": true
+      },
+      {
+        "text": "使用 #pragma pack(1) 消除填充",
+        "correct": true
+      },
+      {
+        "text": "直接传输结构体内存映像",
+        "correct": false
+      },
+      {
+        "text": "手动序列化每个成员",
+        "correct": true
+      }
+    ],
+    "explanation": "固定类型、紧凑对齐和手动序列化可减少平台差异；直接传输内存映像会受填充和字节序影响，不可靠。",
+    "id": "c-146",
+    "tags": [
+      "C"
+    ],
+    "section": "结构体与对齐"
+  },
+  {
+    "type": "single",
+    "question": "在标准C中，若要将结构体成员按小于其自然对齐要求的边界放置，应如何实现？",
+    "options": [
+      {
+        "text": "使用 alignas 关键字修饰该成员",
+        "correct": false
+      },
+      {
+        "text": "使用 packed 关键字修饰该成员",
+        "correct": false
+      },
+      {
+        "text": "使用 _Alignas 关键字修饰该成员",
+        "correct": false
+      },
+      {
+        "text": "没有标准关键字；通常需使用编译器的 packed 扩展或 #pragma pack 等实现相关手段",
+        "correct": true
+      }
+    ],
+    "explanation": "标准C的对齐说明符用于提高或满足对齐要求，不能用来把成员对齐要求降低到自然对齐以下。减小成员对齐并消除填充通常依赖实现扩展，因此可移植性需自行评估。packed 不是标准关键字。",
+    "id": "c-147",
+    "tags": [
+      "C"
+    ],
+    "section": "结构体与对齐"
+  },
+  {
+    "type": "single",
+    "question": "已知 struct { char a; short b; int c; } s; 在short对齐2、int对齐4的平台上，成员b和c的偏移量通常分别是多少？",
+    "options": [
+      {
+        "text": "1和3",
+        "correct": false
+      },
+      {
+        "text": "2和4",
+        "correct": true
+      },
+      {
+        "text": "1和4",
+        "correct": false
+      },
+      {
+        "text": "2和6",
+        "correct": false
+      }
+    ],
+    "explanation": "成员a偏移0占1字节，b需2对齐，偏移2；c需4对齐，b占2字节后下一可用偏移4，恰好4对齐，故偏移4。总大小12。",
+    "id": "c-148",
+    "tags": [
+      "C"
+    ],
+    "section": "结构体与对齐"
+  },
+  {
+    "type": "single",
+    "question": "情境：某结构体包含 char、double 以及其他成员，在 double 对齐为 8 的平台上，调整 char 与 double 的声明顺序可能改变结构体总大小。以下解释正确的是？",
+    "options": [
+      {
+        "text": "char 放在 double 之后会导致 double 的自然对齐失效",
+        "correct": false
+      },
+      {
+        "text": "结构体总大小需满足结构体对齐要求，成员之间和尾部可能有填充",
+        "correct": true
+      },
+      {
+        "text": "char 放在 double 之后会使编译器插入更少填充",
+        "correct": false
+      },
+      {
+        "text": "double 放在 char 之后总是减少总大小",
+        "correct": false
+      }
+    ],
+    "explanation": "成员按声明顺序放置，并在需要时插入填充以满足各成员对齐；结构体尾部也可能填充以满足数组元素对齐。改变顺序会改变填充位置和数量，从而可能改变总大小，但具体结果取决于全部成员，不能断言某种顺序总是更大或更小。",
+    "id": "c-149",
+    "tags": [
+      "C"
+    ],
+    "section": "结构体与对齐"
+  },
+  {
+    "type": "multiple",
+    "question": "在默认对齐规则下（不使用 #pragma pack 或 packed 等扩展），关于C语言结构体对齐，以下说法正确的有哪些？",
+    "options": [
+      {
+        "text": "结构体成员的偏移量必须满足该成员的对齐要求",
+        "correct": true
+      },
+      {
+        "text": "结构体总大小需满足结构体对齐要求，通常为最大成员对齐要求的整数倍",
+        "correct": true
+      },
+      {
+        "text": "调整成员声明顺序可能改变结构体总大小",
+        "correct": true
+      },
+      {
+        "text": "结构体对齐只影响性能，不影响内存布局",
+        "correct": false
+      }
+    ],
+    "explanation": "默认放置规则要求成员偏移满足对齐要求，并可能在成员之间及尾部插入填充；结构体大小需满足数组元素对齐，因此通常满足最大成员对齐要求。调整顺序可减少或增加填充，直接改变内存布局和大小。",
+    "id": "c-150",
+    "tags": [
+      "C"
+    ],
+    "section": "结构体与对齐"
+  },
+  {
+    "type": "single",
+    "question": "在C语言中，关于#include指令的说法正确的是？",
+    "options": [
+      {
+        "text": "#include <stdio.h> 会在编译阶段直接插入 stdio.h 文件的内容",
+        "correct": false
+      },
+      {
+        "text": "#include \"file.h\" 通常先搜索包含该指令的源文件所在目录（或实现定义的引用搜索路径），再搜索系统头文件目录",
+        "correct": true
+      },
+      {
+        "text": "#include 指令只能包含 .h 文件，不能包含 .c 文件",
+        "correct": false
+      },
+      {
+        "text": "#include 指令在链接阶段处理",
+        "correct": false
+      }
+    ],
+    "explanation": "文件包含在预处理阶段完成；双引号形式搜索路径由实现定义，通常先搜索源文件所在目录或引用路径，再搜索系统路径；尖括号形式通常直接搜索系统路径。包含指令可包含任意文本文件，不限于 .h 扩展名。",
+    "id": "c-151",
+    "tags": [
+      "C"
+    ],
+    "section": "预处理与编译链接"
+  },
+  {
+    "type": "single",
+    "question": "以下关于宏定义#define SQUARE(x) x*x的描述，哪个调用会导致意外结果？",
+    "options": [
+      {
+        "text": "SQUARE(2)",
+        "correct": false
+      },
+      {
+        "text": "SQUARE(2+3)",
+        "correct": true
+      },
+      {
+        "text": "SQUARE(4)",
+        "correct": false
+      },
+      {
+        "text": "SQUARE(5)",
+        "correct": false
+      }
+    ],
+    "explanation": "SQUARE(2+3)展开为2+3*2+3，因缺少括号，结果为11而非25。宏参数应加括号：((x)*(x))。其他选项为简单数字，结果正确。",
+    "id": "c-152",
+    "tags": [
+      "C"
+    ],
+    "section": "预处理与编译链接"
+  },
+  {
+    "type": "single",
+    "question": "在C语言中，条件编译指令#ifdef和#if defined的区别是？",
+    "options": [
+      {
+        "text": "#ifdef只能判断宏是否定义，#if defined可以组合更复杂的条件表达式",
+        "correct": true
+      },
+      {
+        "text": "#ifdef在编译时判断，#if defined在运行时判断",
+        "correct": false
+      },
+      {
+        "text": "#ifdef用于检查宏的值，#if defined用于检查宏是否存在",
+        "correct": false
+      },
+      {
+        "text": "两者完全等价，可以互换使用",
+        "correct": false
+      }
+    ],
+    "explanation": "A正确：#ifdef仅检查宏是否定义；#if defined是#if的特例，可与其他条件组合（如&&、||）。B错，都在预处理时；C错，#ifdef不检查值；D错，不等价。",
+    "id": "c-153",
+    "tags": [
+      "C"
+    ],
+    "section": "预处理与编译链接"
+  },
+  {
+    "type": "single",
+    "question": "关于C语言中的#pragma once，下列说法正确的是？",
+    "options": [
+      {
+        "text": "它是C标准规定的指令，所有编译器都支持",
+        "correct": false
+      },
+      {
+        "text": "它用于防止头文件被多次包含，但非标准，可移植性不如头文件守卫",
+        "correct": true
+      },
+      {
+        "text": "它会导致头文件只被编译一次，但可能引发链接错误",
+        "correct": false
+      },
+      {
+        "text": "它必须与#ifndef一起使用",
+        "correct": false
+      }
+    ],
+    "explanation": "B正确：#pragma once是编译器扩展，非C标准，但广泛支持；头文件守卫（#ifndef）是标准做法，可移植性更好。A错，非标准；C错，不会引发链接错误；D错，可单独使用。",
+    "id": "c-154",
+    "tags": [
+      "C"
+    ],
+    "section": "预处理与编译链接"
+  },
+  {
+    "type": "single",
+    "question": "在C语言中，预处理阶段不会进行以下哪项操作？",
+    "options": [
+      {
+        "text": "宏替换",
+        "correct": false
+      },
+      {
+        "text": "删除注释",
+        "correct": false
+      },
+      {
+        "text": "处理条件编译",
+        "correct": false
+      },
+      {
+        "text": "分配内存",
+        "correct": true
+      }
+    ],
+    "explanation": "D正确：分配内存发生在运行阶段，预处理阶段仅进行文本替换、文件包含、条件编译和删除注释等。A、B、C均为预处理任务。",
+    "id": "c-155",
+    "tags": [
+      "C"
+    ],
+    "section": "预处理与编译链接"
+  },
+  {
+    "type": "single",
+    "question": "假设有头文件guard.h使用以下守卫方式，哪个能正确防止多次包含？",
+    "options": [
+      {
+        "text": "#ifndef GUARD_H\\n#define GUARD_H\\n...\\n#endif",
+        "correct": true
+      },
+      {
+        "text": "#ifdef GUARD_H\\n#define GUARD_H\\n...\\n#endif",
+        "correct": false
+      },
+      {
+        "text": "#ifndef GUARD_H\\n...\\n#endif",
+        "correct": false
+      },
+      {
+        "text": "#define GUARD_H\\n#ifndef GUARD_H\\n...\\n#endif",
+        "correct": false
+      }
+    ],
+    "explanation": "A正确：标准头文件守卫先检查未定义再定义，确保内容只包含一次。B逻辑反了；C缺少#define；D先定义导致#ifndef永远为假。",
+    "id": "c-156",
+    "tags": [
+      "C"
+    ],
+    "section": "预处理与编译链接"
+  },
+  {
+    "type": "single",
+    "question": "在C语言中，关于宏定义中的 # 和 ## 运算符，说法正确的是？",
+    "options": [
+      {
+        "text": "# 用于字符串化，## 用于连接两个记号",
+        "correct": true
+      },
+      {
+        "text": "# 用于连接两个记号，## 用于字符串化",
+        "correct": false
+      },
+      {
+        "text": "# 和 ## 都用于字符串化",
+        "correct": false
+      },
+      {
+        "text": "# 和 ## 都只能在函数式宏中使用",
+        "correct": false
+      }
+    ],
+    "explanation": "宏预处理中，# 运算符把函数式宏的参数转换为字符串字面量；## 运算符把相邻的两个记号连接成一个记号。由于 # 必须作用于宏参数，它只能出现在函数式宏中；## 可用于对象式宏和函数式宏中。",
+    "id": "c-157",
+    "tags": [
+      "C"
+    ],
+    "section": "预处理与编译链接"
+  },
+  {
+    "type": "single",
+    "question": "以下哪个选项正确描述了C程序从源代码到可执行文件的步骤？",
+    "options": [
+      {
+        "text": "预处理 → 编译 → 汇编 → 链接",
+        "correct": true
+      },
+      {
+        "text": "编译 → 预处理 → 链接 → 汇编",
+        "correct": false
+      },
+      {
+        "text": "预处理 → 链接 → 编译 → 汇编",
+        "correct": false
+      },
+      {
+        "text": "汇编 → 编译 → 预处理 → 链接",
+        "correct": false
+      }
+    ],
+    "explanation": "A正确：标准流程为预处理（展开宏和头文件）、编译（生成汇编代码）、汇编（生成目标文件）、链接（合并目标文件生成可执行文件）。",
+    "id": "c-158",
+    "tags": [
+      "C"
+    ],
+    "section": "预处理与编译链接"
+  },
+  {
+    "type": "single",
+    "question": "在C语言中，多个源文件共同使用一个全局变量时，正确的做法是？",
+    "options": [
+      {
+        "text": "在一个源文件中定义，在其他源文件中用extern声明",
+        "correct": true
+      },
+      {
+        "text": "在每个源文件中都定义一次",
+        "correct": false
+      },
+      {
+        "text": "在头文件中定义，并在每个源文件中包含该头文件",
+        "correct": false
+      },
+      {
+        "text": "直接在其他源文件中声明为static",
+        "correct": false
+      }
+    ],
+    "explanation": "A正确：全局变量应在一个.c中定义，其他文件用extern声明引用。B导致多重定义链接错误；C头文件中定义也会多重定义（除非C++17 inline变量）；D会改变链接属性。",
+    "id": "c-159",
+    "tags": [
+      "C"
+    ],
+    "section": "预处理与编译链接"
+  },
+  {
+    "type": "single",
+    "question": "对于非 static 的外部函数 func，链接时出现错误“undefined reference to 'func'”，最可能的原因是？",
+    "options": [
+      {
+        "text": "func 在调用它的源文件中只声明未定义，或定义所在的目标文件没有参与链接",
+        "correct": true
+      },
+      {
+        "text": "func 在调用它的同一源文件中被定义为 static",
+        "correct": false
+      },
+      {
+        "text": "func 定义时缺少分号",
+        "correct": false
+      },
+      {
+        "text": "func 被多次定义",
+        "correct": false
+      }
+    ],
+    "explanation": "该链接错误表示链接器找不到可见的 func 定义。常见情形是只有声明没有定义，或者包含定义的目标文件/库没有被加入链接。缺少分号属于编译阶段语法错误；重复定义通常报告 multiple definition；static 定义会改变链接属性，但题干已限定为非 static 外部函数。",
+    "id": "c-160",
+    "tags": [
+      "C"
+    ],
+    "section": "预处理与编译链接"
+  },
+  {
+    "type": "single",
+    "question": "在C语言中，用static修饰文件作用域的全局变量时，其主要作用是什么？",
+    "options": [
+      {
+        "text": "将变量的链接属性改为内部链接，使其只能在本翻译单元内被引用",
+        "correct": true
+      },
+      {
+        "text": "将变量的存储位置改到堆区",
+        "correct": false
+      },
+      {
+        "text": "使变量在函数调用之间保持值",
+        "correct": false
+      },
+      {
+        "text": "使变量成为不可修改的常量",
+        "correct": false
+      }
+    ],
+    "explanation": "文件作用域变量本身已具有文件作用域；static 改变的是链接属性，使其成为内部链接，其他翻译单元不能通过外部链接引用。变量仍在静态存储区；使局部变量在函数调用间保持值是 static 局部变量的效果；不可修改由 const 表示。",
+    "id": "c-161",
+    "tags": [
+      "C"
+    ],
+    "section": "预处理与编译链接"
+  },
+  {
+    "type": "single",
+    "question": "以下关于编译错误和链接错误的描述，正确的是？",
+    "options": [
+      {
+        "text": "语法错误通常在编译阶段发现，未定义符号通常在链接阶段发现",
+        "correct": true
+      },
+      {
+        "text": "语法错误通常在链接阶段发现，未定义符号通常在编译阶段发现",
+        "correct": false
+      },
+      {
+        "text": "两者都在预处理阶段发现",
+        "correct": false
+      },
+      {
+        "text": "两者都在运行阶段发现",
+        "correct": false
+      }
+    ],
+    "explanation": "A正确：编译阶段检查语法和语义，链接阶段解析符号引用。B反了；C错，预处理不检查语法；D错，错误在构建时已报告。",
+    "id": "c-162",
+    "tags": [
+      "C"
+    ],
+    "section": "预处理与编译链接"
+  },
+  {
+    "type": "single",
+    "question": "在C语言中，#error指令的作用是？",
+    "options": [
+      {
+        "text": "在预处理阶段产生编译错误并输出指定消息",
+        "correct": true
+      },
+      {
+        "text": "在运行时产生错误消息",
+        "correct": false
+      },
+      {
+        "text": "在链接阶段产生错误",
+        "correct": false
+      },
+      {
+        "text": "警告并继续编译",
+        "correct": false
+      }
+    ],
+    "explanation": "A正确：#error使预处理器立即发出错误诊断并停止编译（通常），常用于条件编译中检查环境。B、C阶段不对；D错，#error是错误而非警告。",
+    "id": "c-163",
+    "tags": [
+      "C"
+    ],
+    "section": "预处理与编译链接"
+  },
+  {
+    "type": "single",
+    "question": "以下关于C语言中宏定义与const变量的比较，正确的是？",
+    "options": [
+      {
+        "text": "宏定义在预处理阶段展开，没有类型检查；const变量在编译阶段处理，有类型检查",
+        "correct": true
+      },
+      {
+        "text": "宏定义在编译阶段处理，const变量在运行时处理",
+        "correct": false
+      },
+      {
+        "text": "宏定义有类型检查，const变量没有",
+        "correct": false
+      },
+      {
+        "text": "两者完全等价，可以互换",
+        "correct": false
+      }
+    ],
+    "explanation": "A正确：宏是文本替换，无类型；const是变量，有类型和作用域。B错，宏在预处理；C反了；D错，不等价。",
+    "id": "c-164",
+    "tags": [
+      "C"
+    ],
+    "section": "预处理与编译链接"
+  },
+  {
+    "type": "single",
+    "question": "在C语言中，`#include <stdio.h>` 与 `#include \"stdio.h\"` 的主要区别是什么？",
+    "options": [
+      {
+        "text": "尖括号形式按实现定义的搜索路径查找；双引号形式通常先搜索当前文件所在目录，若未找到再按尖括号形式查找",
+        "correct": true
+      },
+      {
+        "text": "尖括号形式在编译阶段包含文件，双引号形式在链接阶段包含文件",
+        "correct": false
+      },
+      {
+        "text": "两种形式完全等价，没有区别",
+        "correct": false
+      },
+      {
+        "text": "双引号形式只能包含 .h 文件，尖括号形式可包含任意文件",
+        "correct": false
+      }
+    ],
+    "explanation": "两种形式都在预处理阶段把被包含文件的内容引入当前翻译单元。标准只规定搜索策略的大致规则，具体搜索目录由实现定义；双引号形式通常优先搜索本地路径。",
+    "id": "c-165",
+    "tags": [
+      "C"
+    ],
+    "section": "预处理与编译链接"
+  },
+  {
+    "type": "single",
+    "question": "在C语言中，预处理指令 `#define MAX 100` 的作用是什么？",
+    "options": [
+      {
+        "text": "定义一个名为MAX的整型变量，初值为100",
+        "correct": false
+      },
+      {
+        "text": "在预处理阶段将源代码中所有标识符MAX替换为100",
+        "correct": true
+      },
+      {
+        "text": "定义一个常量，编译器会进行类型检查",
+        "correct": false
+      },
+      {
+        "text": "在运行时将MAX的值设置为100",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项B：#define是预处理指令，进行简单的文本替换，不涉及类型检查或内存分配。A错在变量定义；C错在宏无类型；D错在运行时。",
+    "id": "c-166",
+    "tags": [
+      "C"
+    ],
+    "section": "预处理与编译链接"
+  },
+  {
+    "type": "single",
+    "question": "以下哪个预处理指令用于取消一个已定义的宏？",
+    "options": [
+      {
+        "text": "#undef",
+        "correct": true
+      },
+      {
+        "text": "#remove",
+        "correct": false
+      },
+      {
+        "text": "#delete",
+        "correct": false
+      },
+      {
+        "text": "#cancel",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项A：#undef用于取消宏定义。其他选项不是标准C预处理指令，属于虚构。",
+    "id": "c-167",
+    "tags": [
+      "C"
+    ],
+    "section": "预处理与编译链接"
+  },
+  {
+    "type": "single",
+    "question": "关于头文件中的包含守卫（include guard），以下说法正确的是？",
+    "options": [
+      {
+        "text": "包含守卫可以防止同一个头文件被多次包含，避免重复定义",
+        "correct": true
+      },
+      {
+        "text": "包含守卫只能用于防止源文件被多次包含",
+        "correct": false
+      },
+      {
+        "text": "包含守卫在链接阶段起作用",
+        "correct": false
+      },
+      {
+        "text": "包含守卫通过#pragma once实现，是标准C的一部分",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项A：包含守卫利用#ifndef/#define/#endif防止头文件重复包含。B错在用于头文件；C错在预处理阶段；D错在#pragma once非标准。",
+    "id": "c-168",
+    "tags": [
+      "C"
+    ],
+    "section": "预处理与编译链接"
+  },
+  {
+    "type": "single",
+    "question": "在C语言中，宏定义 `#define FOO(x) (x+1)`，则表达式 `FOO(2)*3` 展开后的求值结果是什么？",
+    "options": [
+      {
+        "text": "9",
+        "correct": true
+      },
+      {
+        "text": "7",
+        "correct": false
+      },
+      {
+        "text": "6",
+        "correct": false
+      },
+      {
+        "text": "3",
+        "correct": false
+      }
+    ],
+    "explanation": "宏调用先展开为 (2+1)，再与 *3 组合，得到 (2+1)*3；按整数运算结果为 9。宏替换是预处理阶段的记号替换，不在替换时求值。",
+    "id": "c-169",
+    "tags": [
+      "C"
+    ],
+    "section": "预处理与编译链接"
+  },
+  {
+    "type": "single",
+    "question": "以下关于C语言中 `#include <filename>` 和 `#include \"filename\"` 的说法，哪项最准确？",
+    "options": [
+      {
+        "text": "尖括号形式按实现定义的搜索路径查找；双引号形式通常先搜索当前源文件所在目录，若未找到再按尖括号形式查找",
+        "correct": true
+      },
+      {
+        "text": "两者完全等价，没有区别",
+        "correct": false
+      },
+      {
+        "text": "双引号形式只搜索当前目录，尖括号形式搜索所有目录",
+        "correct": false
+      },
+      {
+        "text": "尖括号形式只用于C标准库，双引号形式只用于用户头文件，且两者搜索路径相同",
+        "correct": false
+      }
+    ],
+    "explanation": "#include 指令在预处理阶段引入文件内容；标准没有固定具体目录，搜索路径由实现定义。双引号形式通常优先本地路径，失败后再按尖括号形式处理。",
+    "id": "c-170",
+    "tags": [
+      "C"
+    ],
+    "section": "预处理与编译链接"
+  },
+  {
+    "type": "single",
+    "question": "在C语言中，预处理阶段会处理以下哪个指令？",
+    "options": [
+      {
+        "text": "#define",
+        "correct": true
+      },
+      {
+        "text": "printf",
+        "correct": false
+      },
+      {
+        "text": "return",
+        "correct": false
+      },
+      {
+        "text": "if",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项A：#define是预处理指令，在预处理阶段展开。printf是库函数，return和if是C语句，在编译阶段处理。",
+    "id": "c-171",
+    "tags": [
+      "C"
+    ],
+    "section": "预处理与编译链接"
+  },
+  {
+    "type": "single",
+    "question": "关于C程序编译链接过程中的符号解析，以下说法正确的是？",
+    "options": [
+      {
+        "text": "编译器负责解析所有外部符号引用",
+        "correct": false
+      },
+      {
+        "text": "链接器负责将多个目标文件合并，并解析外部符号引用",
+        "correct": true
+      },
+      {
+        "text": "预处理器负责解析函数调用",
+        "correct": false
+      },
+      {
+        "text": "符号解析发生在运行时",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项B：链接器将目标文件和库合并，解析未定义符号。编译器只编译单个翻译单元；预处理器处理宏和包含；运行时动态链接可能发生，但静态符号解析在链接时。",
+    "id": "c-172",
+    "tags": [
+      "C"
+    ],
+    "section": "预处理与编译链接"
+  },
+  {
+    "type": "single",
+    "question": "在C语言中，用 static 修饰一个函数时，其主要作用是什么？",
+    "options": [
+      {
+        "text": "使该函数具有内部链接，其他翻译单元不能通过函数名引用它",
+        "correct": true
+      },
+      {
+        "text": "使该函数在程序运行期间一直占用堆空间",
+        "correct": false
+      },
+      {
+        "text": "使该函数可以被其他源文件通过函数名调用",
+        "correct": false
+      },
+      {
+        "text": "使该函数在每次调用结束后自动销毁",
+        "correct": false
+      }
+    ],
+    "explanation": "static 修饰函数改变链接属性为内部链接；函数代码不以堆或栈对象方式分配，调用结束也不会销毁。其他翻译单元不能通过该函数名直接引用；若在本翻译单元内取得函数地址并传递出去，仍可通过函数指针调用。",
+    "id": "c-173",
+    "tags": [
+      "C"
+    ],
+    "section": "预处理与编译链接"
+  },
+  {
+    "type": "single",
+    "question": "以下哪个选项是C语言中有效的预处理指令？",
+    "options": [
+      {
+        "text": "#ifdef",
+        "correct": true
+      },
+      {
+        "text": "#ifndefine",
+        "correct": false
+      },
+      {
+        "text": "#elseif",
+        "correct": false
+      },
+      {
+        "text": "#end",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项A：#ifdef是标准预处理指令。其他选项不是标准指令：#ifndefine不是；#elseif不是（应为#elif）；#end不是（应为#endif）。",
+    "id": "c-174",
+    "tags": [
+      "C"
+    ],
+    "section": "预处理与编译链接"
+  },
+  {
+    "type": "single",
+    "question": "在C语言中，宏定义 `#define STR(x) #x`，则 `STR(hello)` 展开后是什么？",
+    "options": [
+      {
+        "text": "hello",
+        "correct": false
+      },
+      {
+        "text": "\"hello\"",
+        "correct": true
+      },
+      {
+        "text": "'hello'",
+        "correct": false
+      },
+      {
+        "text": "编译错误",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项B：#运算符将宏参数转换为字符串字面量，所以STR(hello)展开为\"hello\"。A是标识符；C是字符常量；D错误。",
+    "id": "c-175",
+    "tags": [
+      "C"
+    ],
+    "section": "预处理与编译链接"
+  },
+  {
+    "type": "single",
+    "question": "以下关于C语言中条件编译指令 `#if` 和 `#ifdef` 的说法正确的是？",
+    "options": [
+      {
+        "text": "#if 后面跟常量表达式，#ifdef 后面跟宏名",
+        "correct": true
+      },
+      {
+        "text": "#if 后面跟宏名，#ifdef 后面跟常量表达式",
+        "correct": false
+      },
+      {
+        "text": "两者完全等价",
+        "correct": false
+      },
+      {
+        "text": "#if 只能用于数值比较，#ifdef 只能用于字符串比较",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项A：#if后跟常量表达式（可包含宏），#ifdef后跟宏名，检查是否定义。B反了；C错；D错，两者都不用于字符串比较。",
+    "id": "c-176",
+    "tags": [
+      "C"
+    ],
+    "section": "预处理与编译链接"
+  },
+  {
+    "type": "single",
+    "question": "在C语言中，预处理指令 `#pragma` 的主要用途是什么？",
+    "options": [
+      {
+        "text": "向编译器提供实现特定的信息或指令",
+        "correct": true
+      },
+      {
+        "text": "定义宏",
+        "correct": false
+      },
+      {
+        "text": "包含头文件",
+        "correct": false
+      },
+      {
+        "text": "进行条件编译",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项A：#pragma用于向编译器传递实现特定的指令，如控制警告、优化等。B是#define；C是#include；D是#if等。",
+    "id": "c-177",
+    "tags": [
+      "C"
+    ],
+    "section": "预处理与编译链接"
+  },
+  {
+    "type": "single",
+    "question": "在C语言中，以下哪个操作发生在预处理阶段？",
+    "options": [
+      {
+        "text": "删除注释",
+        "correct": true
+      },
+      {
+        "text": "语法分析",
+        "correct": false
+      },
+      {
+        "text": "生成目标代码",
+        "correct": false
+      },
+      {
+        "text": "符号解析",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项A：预处理阶段会删除注释、展开宏、处理包含和条件编译。语法分析在编译阶段；生成目标代码在编译后期；符号解析在链接阶段。",
+    "id": "c-178",
+    "tags": [
+      "C"
+    ],
+    "section": "预处理与编译链接"
+  },
+  {
+    "type": "single",
+    "question": "关于C语言中宏定义和函数的区别，以下说法正确的是？",
+    "options": [
+      {
+        "text": "宏定义在预处理阶段展开，不进行类型检查；函数在编译阶段处理，进行类型检查",
+        "correct": true
+      },
+      {
+        "text": "宏定义和函数都在编译阶段处理",
+        "correct": false
+      },
+      {
+        "text": "宏定义在运行时展开，函数在编译时展开",
+        "correct": false
+      },
+      {
+        "text": "宏定义有类型，函数没有类型",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项A：宏是文本替换，无类型检查；函数有类型检查。B错在宏在预处理；C错在宏不在运行时；D错在宏无类型。",
+    "id": "c-179",
+    "tags": [
+      "C"
+    ],
+    "section": "预处理与编译链接"
+  },
+  {
+    "type": "single",
+    "question": "在C语言中，使用 `#include` 指令包含一个头文件时，预处理器会做什么？",
+    "options": [
+      {
+        "text": "将头文件的内容插入到#include指令所在的位置",
+        "correct": true
+      },
+      {
+        "text": "在运行时动态加载头文件",
+        "correct": false
+      },
+      {
+        "text": "将头文件编译成目标文件",
+        "correct": false
+      },
+      {
+        "text": "在链接阶段合并头文件",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项A：#include指令导致预处理器将指定文件的内容复制到该指令处。B错在运行时；C错在编译成目标文件；D错在链接阶段。",
+    "id": "c-180",
+    "tags": [
+      "C"
+    ],
+    "section": "预处理与编译链接"
+  },
+  {
+    "type": "single",
+    "question": "在C语言中，函数定义头部的形参变量具有什么作用域？",
+    "options": [
+      {
+        "text": "整个程序文件",
+        "correct": false
+      },
+      {
+        "text": "从定义处到函数结束",
+        "correct": false
+      },
+      {
+        "text": "仅函数体内",
+        "correct": true
+      },
+      {
+        "text": "整个源文件及其包含的头文件",
+        "correct": false
+      }
+    ],
+    "explanation": "形参是函数局部变量，作用域限于函数体，随函数调用创建、返回销毁。文件作用域属于外部或静态全局变量，与形参无关。",
+    "id": "c-181",
+    "tags": [
+      "C"
+    ],
+    "section": "函数与作用域"
+  },
+  {
+    "type": "single",
+    "question": "关于C语言中函数返回值的说法，正确的是？",
+    "options": [
+      {
+        "text": "函数必须返回值",
+        "correct": false
+      },
+      {
+        "text": "return后的表达式类型会自动转换为函数声明返回类型",
+        "correct": true
+      },
+      {
+        "text": "return只能返回基本类型",
+        "correct": false
+      },
+      {
+        "text": "返回局部数组名是安全的",
+        "correct": false
+      }
+    ],
+    "explanation": "return表达式会按函数声明返回类型转换。void函数可不返回值；可返回结构体、指针等；返回局部数组名会因数组生命周期结束而悬空。",
+    "id": "c-182",
+    "tags": [
+      "C"
+    ],
+    "section": "函数与作用域"
+  },
+  {
+    "type": "single",
+    "question": "以下代码中，变量x的作用域是什么？\nvoid f(void){ { int x = 1; } x = 2; }",
+    "options": [
+      {
+        "text": "内层花括号内",
+        "correct": true
+      },
+      {
+        "text": "整个函数f",
+        "correct": false
+      },
+      {
+        "text": "整个文件",
+        "correct": false
+      },
+      {
+        "text": "从定义到文件结束",
+        "correct": false
+      }
+    ],
+    "explanation": "x定义在内层复合语句中，作用域限于该复合语句。离开花括号后x不可见，所以后面的x=2编译报错，说明块作用域。",
+    "id": "c-183",
+    "tags": [
+      "C"
+    ],
+    "section": "函数与作用域"
+  },
+  {
+    "type": "single",
+    "question": "在C语言中，若函数未声明就调用，C99标准下的处理是？",
+    "options": [
+      {
+        "text": "自动隐式声明为返回int的函数",
+        "correct": false
+      },
+      {
+        "text": "编译器必须给出诊断，C99不再允许隐式函数声明",
+        "correct": true
+      },
+      {
+        "text": "链接时自动匹配定义",
+        "correct": false
+      },
+      {
+        "text": "视为返回void",
+        "correct": false
+      }
+    ],
+    "explanation": "C99删除了隐式函数声明，调用前未声明属于约束违反，编译器必须给出诊断信息；这不是链接期自动匹配，也不是视为返回void。",
+    "id": "c-184",
+    "tags": [
+      "C"
+    ],
+    "section": "函数与作用域"
+  },
+  {
+    "type": "single",
+    "question": "一个文件中static int g; 与 int g; 在链接属性上的区别是？",
+    "options": [
+      {
+        "text": "static使g为内部链接，普通全局g为外部链接",
+        "correct": true
+      },
+      {
+        "text": "两者都是外部链接",
+        "correct": false
+      },
+      {
+        "text": "static使g无链接属性",
+        "correct": false
+      },
+      {
+        "text": "普通全局g是内部链接",
+        "correct": false
+      }
+    ],
+    "explanation": "文件作用域的static变量具有内部链接，仅在当前翻译单元可见；未加static的全局变量具有外部链接，可被其他文件引用（但需声明）。",
+    "id": "c-185",
+    "tags": [
+      "C"
+    ],
+    "section": "函数与作用域"
+  },
+  {
+    "type": "single",
+    "question": "以下关于递归函数每次调用的局部变量，正确的是？",
+    "options": [
+      {
+        "text": "所有调用共享同一份局部变量",
+        "correct": false
+      },
+      {
+        "text": "每次调用都有独立的局部变量副本",
+        "correct": true
+      },
+      {
+        "text": "局部变量存放在全局区",
+        "correct": false
+      },
+      {
+        "text": "递归调用时局部变量被清零",
+        "correct": false
+      }
+    ],
+    "explanation": "每次函数调用都会创建独立的栈帧，局部变量（非static）各调用独立。递归时不同层次调用互不干扰，这正是递归正确工作的基础。",
+    "id": "c-186",
+    "tags": [
+      "C"
+    ],
+    "section": "函数与作用域"
+  },
+  {
+    "type": "single",
+    "question": "在同一翻译单元内，函数原型为 int f(int); 而定义却是 int f(char c){return c;}，会发生什么？",
+    "options": [
+      {
+        "text": "合法，形参类型以定义为准",
+        "correct": false
+      },
+      {
+        "text": "编译报错，原型与定义冲突",
+        "correct": true
+      },
+      {
+        "text": "链接错误",
+        "correct": false
+      },
+      {
+        "text": "运行时崩溃",
+        "correct": false
+      }
+    ],
+    "explanation": "同一作用域中，函数原型与定义的参数类型必须兼容一致。int(int)与int(char)是不同的函数类型，编译器会报冲突错误，不是链接或运行时问题。",
+    "id": "c-187",
+    "tags": [
+      "C"
+    ],
+    "section": "函数与作用域"
+  },
+  {
+    "type": "single",
+    "question": "考虑函数 void f(int a){ a = 10; } 与调用 int x=5; f(x);，调用后x的值是？",
+    "options": [
+      {
+        "text": "10",
+        "correct": false
+      },
+      {
+        "text": "5",
+        "correct": true
+      },
+      {
+        "text": "未定义",
+        "correct": false
+      },
+      {
+        "text": "0",
+        "correct": false
+      }
+    ],
+    "explanation": "C语言按值传递，形参a是实参x的副本。函数内修改a不影响x，所以x仍为5。这是值传递与指针传递区别的基础考点。",
+    "id": "c-188",
+    "tags": [
+      "C"
+    ],
+    "section": "函数与作用域"
+  },
+  {
+    "type": "single",
+    "question": "以下哪个声明使数组arr在函数内修改能影响调用者？",
+    "options": [
+      {
+        "text": "void f(int arr[10])",
+        "correct": true
+      },
+      {
+        "text": "void f(int arr)",
+        "correct": false
+      },
+      {
+        "text": "void f(const int arr[10])",
+        "correct": false
+      },
+      {
+        "text": "void f(const int * const arr)",
+        "correct": false
+      }
+    ],
+    "explanation": "数组形参在参数列表中会退化为指向元素类型的指针，传入数组后可通过该指针修改调用者元素。形参声明为普通int数组时可修改；按值传int不能；元素类型为const时只读；指向const对象的const指针既不能改元素也不能改指向。",
+    "id": "c-189",
+    "tags": [
+      "C"
+    ],
+    "section": "函数与作用域"
+  },
+  {
+    "type": "single",
+    "question": "函数中声明的static局部变量，其生命周期是？",
+    "options": [
+      {
+        "text": "函数每次调用期间",
+        "correct": false
+      },
+      {
+        "text": "整个程序运行期间",
+        "correct": true
+      },
+      {
+        "text": "从第一次调用到函数返回",
+        "correct": false
+      },
+      {
+        "text": "随所在块进入离开",
+        "correct": false
+      }
+    ],
+    "explanation": "static局部变量具有静态存储期，程序运行期间一直存在，只在程序启动前或首次进入前初始化一次；其名字作用域仍是块作用域，生命周期与作用域不同。",
+    "id": "c-190",
+    "tags": [
+      "C"
+    ],
+    "section": "函数与作用域"
+  },
+  {
+    "type": "single",
+    "question": "若全局变量在多个源文件中定义且需共享，推荐做法是？",
+    "options": [
+      {
+        "text": "在每个文件都写int g;",
+        "correct": false
+      },
+      {
+        "text": "一个文件定义int g;，其他文件用extern声明",
+        "correct": true
+      },
+      {
+        "text": "在每个文件写static int g;",
+        "correct": false
+      },
+      {
+        "text": "在头文件中定义int g;并被多文件包含",
+        "correct": false
+      }
+    ],
+    "explanation": "外部变量应一个翻译单元定义，其他文件用extern声明，避免重复定义。头文件定义全局变量在多个文件包含时会导致多重定义链接错误。",
+    "id": "c-191",
+    "tags": [
+      "C"
+    ],
+    "section": "函数与作用域"
+  },
+  {
+    "type": "multiple",
+    "question": "关于C语言作用域，下列说法正确的有？",
+    "options": [
+      {
+        "text": "标签名具有函数作用域",
+        "correct": true
+      },
+      {
+        "text": "宏名不受普通作用域规则约束，展开后按替换文本参与编译",
+        "correct": true
+      },
+      {
+        "text": "for循环初始化中声明的变量作用域限于该for语句范围",
+        "correct": true
+      },
+      {
+        "text": "所有变量都具有块作用域",
+        "correct": false
+      }
+    ],
+    "explanation": "标签在所在函数内可见；宏由预处理替换，不遵循C的块作用域或文件作用域；C99中for初始化变量从声明处到for语句结束，包括条件、迭代表达式和循环体均可见。文件作用域变量并非块作用域，所以并非所有变量都是块作用域。",
+    "id": "c-192",
+    "tags": [
+      "C"
+    ],
+    "section": "函数与作用域"
+  },
+  {
+    "type": "multiple",
+    "question": "下列哪些情况会导致函数调用时实参与形参不匹配的问题？",
+    "options": [
+      {
+        "text": "调用有原型的函数时实参个数少于形参",
+        "correct": true
+      },
+      {
+        "text": "调用无原型的老式函数时传入类型不兼容的实参",
+        "correct": true
+      },
+      {
+        "text": "把数组传给期望指针的形参",
+        "correct": false
+      },
+      {
+        "text": "用函数名作为参数传给函数指针形参",
+        "correct": false
+      }
+    ],
+    "explanation": "原型可见时个数或类型不符编译器会诊断；无原型时默认实参提升后可能类型不匹配产生未定义行为。数组退化为指针、函数名退化为函数指针都是合法匹配。",
+    "id": "c-193",
+    "tags": [
+      "C"
+    ],
+    "section": "函数与作用域"
+  },
+  {
+    "type": "multiple",
+    "question": "关于函数返回值与存储期，下列说法正确的有？",
+    "options": [
+      {
+        "text": "返回指向静态局部变量的指针是安全的",
+        "correct": true
+      },
+      {
+        "text": "返回指向局部自动变量的指针会导致悬空指针",
+        "correct": true
+      },
+      {
+        "text": "返回结构体值会复制整个结构体内容",
+        "correct": true
+      },
+      {
+        "text": "返回局部数组名会得到数组副本",
+        "correct": false
+      }
+    ],
+    "explanation": "static局部变量生命周期到程序结束，返回其地址安全；自动变量随函数返回销毁，其地址悬空；返回结构体会按值复制；数组名返回时退化为指针而非数组副本。",
+    "id": "c-194",
+    "tags": [
+      "C"
+    ],
+    "section": "函数与作用域"
+  },
+  {
+    "type": "multiple",
+    "question": "以下关于函数声明与定义的描述，正确的有？",
+    "options": [
+      {
+        "text": "函数声明可以省略形参名，只保留类型",
+        "correct": true
+      },
+      {
+        "text": "同一函数可以有多处声明但只能有一处外部定义",
+        "correct": true
+      },
+      {
+        "text": "函数定义同时也起到声明作用",
+        "correct": true
+      },
+      {
+        "text": "函数声明必须写在所有函数定义之前",
+        "correct": false
+      }
+    ],
+    "explanation": "声明只需类型可省名；可多次声明但外部定义只能一处；定义本身是声明。声明只需在调用之前出现，并不要求位于所有定义之前。",
+    "id": "c-195",
+    "tags": [
+      "C"
+    ],
+    "section": "函数与作用域"
+  },
+  {
+    "type": "single",
+    "question": "C语言中，函数内定义的自动变量在函数返回后其存储空间会怎样？",
+    "options": [
+      {
+        "text": "被静态保留，下次调用仍可用",
+        "correct": false
+      },
+      {
+        "text": "生命周期结束，内容不再保证有效",
+        "correct": true
+      },
+      {
+        "text": "被编译器移到全局区",
+        "correct": false
+      },
+      {
+        "text": "由调用者负责释放",
+        "correct": false
+      }
+    ],
+    "explanation": "自动变量具有自动存储期，函数返回时生命周期结束，其空间可被复用。访问返回后的局部变量地址是未定义行为。误区是误以为局部变量会保留或自动转全局。",
+    "id": "c-196",
+    "tags": [
+      "C"
+    ],
+    "section": "函数与作用域"
+  },
+  {
+    "type": "single",
+    "question": "在C语言中，形参和实参的传递方式默认是什么？",
+    "options": [
+      {
+        "text": "按值传递，形参是实参的副本",
+        "correct": true
+      },
+      {
+        "text": "按引用传递，形参是实参的别名",
+        "correct": false
+      },
+      {
+        "text": "按地址传递，形参总是指针",
+        "correct": false
+      },
+      {
+        "text": "按名字传递，形参绑定实参表达式",
+        "correct": false
+      }
+    ],
+    "explanation": "C语言函数调用默认按值传递，形参获得实参值的副本，函数内修改形参不影响实参。若需修改调用者对象，应显式传递指针并在函数内解引用。C没有引用参数。",
+    "id": "c-197",
+    "tags": [
+      "C"
+    ],
+    "section": "函数与作用域"
+  },
+  {
+    "type": "single",
+    "question": "下列声明中，哪个表示函数f接受两个int并返回指向int的指针？",
+    "options": [
+      {
+        "text": "int *f(int, int);",
+        "correct": true
+      },
+      {
+        "text": "int (*f)(int, int);",
+        "correct": false
+      },
+      {
+        "text": "int f(int *, int);",
+        "correct": false
+      },
+      {
+        "text": "int *f(int *, int *);",
+        "correct": false
+      }
+    ],
+    "explanation": "int *f(int,int)中，f是函数，返回int*。选项B是函数指针变量，C的形参为int*，D的形参为两个int*。关键在理解*与函数声明符的结合优先级。",
+    "id": "c-198",
+    "tags": [
+      "C"
+    ],
+    "section": "函数与作用域"
+  },
+  {
+    "type": "single",
+    "question": "函数内定义static int count = 0; 每次调用该函数时count的初始值如何？",
+    "options": [
+      {
+        "text": "每次调用都重新初始化为0",
+        "correct": false
+      },
+      {
+        "text": "仅在程序启动时初始化一次，之后保留上次值",
+        "correct": true
+      },
+      {
+        "text": "初始值不确定",
+        "correct": false
+      },
+      {
+        "text": "每次调用根据栈内容随机初始化",
+        "correct": false
+      }
+    ],
+    "explanation": "静态局部变量具有静态存储期，只在程序开始前初始化一次，函数多次调用间保留其值。误区是把它当成自动变量每次调用重新初始化。",
+    "id": "c-199",
+    "tags": [
+      "C"
+    ],
+    "section": "函数与作用域"
+  },
+  {
+    "type": "single",
+    "question": "若函数原型为void g(int a[10]);，在函数定义中形参a的实际类型是什么？",
+    "options": [
+      {
+        "text": "int[10]",
+        "correct": false
+      },
+      {
+        "text": "int *",
+        "correct": true
+      },
+      {
+        "text": "int **",
+        "correct": false
+      },
+      {
+        "text": "const int *",
+        "correct": false
+      }
+    ],
+    "explanation": "数组形参在函数参数列表中会调整为指向元素类型的指针，因此int a[10]实际为int *a。函数无法通过sizeof(a)获得数组长度，需另传长度。",
+    "id": "c-200",
+    "tags": [
+      "C"
+    ],
+    "section": "函数与作用域"
+  },
+  {
+    "type": "single",
+    "question": "文件a.c中定义static int s;，文件b.c中能否用extern int s;访问它？",
+    "options": [
+      {
+        "text": "能，extern会找到a.c中的s",
+        "correct": false
+      },
+      {
+        "text": "不能，s具有内部链接，仅限a.c",
+        "correct": true
+      },
+      {
+        "text": "能，但必须加register",
+        "correct": false
+      },
+      {
+        "text": "不能，因为s未初始化",
+        "correct": false
+      }
+    ],
+    "explanation": "static修饰文件作用域变量使其具有内部链接，仅在本翻译单元可见。其他文件即使写extern也无法链接到它。误区是认为extern总能跨文件访问任意全局名。",
+    "id": "c-201",
+    "tags": [
+      "C"
+    ],
+    "section": "函数与作用域"
+  },
+  {
+    "type": "single",
+    "question": "关于函数声明与定义，下列哪项是允许的？",
+    "options": [
+      {
+        "text": "同一函数在同一翻译单元中有两个不同定义",
+        "correct": false
+      },
+      {
+        "text": "函数声明可多次出现，定义在同一翻译单元中至多一次",
+        "correct": true
+      },
+      {
+        "text": "函数声明必须写出形参名",
+        "correct": false
+      },
+      {
+        "text": "函数定义不能同时作为声明",
+        "correct": false
+      }
+    ],
+    "explanation": "函数声明可以重复出现，用于告知编译器签名；同一翻译单元中函数定义至多一次。声明中的形参名可以省略。函数定义本身也起声明作用。",
+    "id": "c-202",
+    "tags": [
+      "C"
+    ],
+    "section": "函数与作用域"
+  },
+  {
+    "type": "single",
+    "question": "调用函数时，实参为short型而形参为int型，会发生什么？",
+    "options": [
+      {
+        "text": "编译错误，类型必须完全一致",
+        "correct": false
+      },
+      {
+        "text": "short被隐式转换为int后传递",
+        "correct": true
+      },
+      {
+        "text": "运行时崩溃",
+        "correct": false
+      },
+      {
+        "text": "实参地址被直接传入",
+        "correct": false
+      }
+    ],
+    "explanation": "C允许实参向形参类型进行隐式转换，short会提升/转换为int。若形参类型不能表示实参值或涉及指针，可能产生截断或诊断。关键是与原型匹配后的转换规则。",
+    "id": "c-203",
+    "tags": [
+      "C"
+    ],
+    "section": "函数与作用域"
+  },
+  {
+    "type": "single",
+    "question": "若在函数内声明 extern int x; 并读取 x，而整个程序没有 x 的定义，链接阶段通常怎样？",
+    "options": [
+      {
+        "text": "自动生成 x 的定义",
+        "correct": false
+      },
+      {
+        "text": "链接器通常报未定义引用错误",
+        "correct": true
+      },
+      {
+        "text": "x 被当作局部变量",
+        "correct": false
+      },
+      {
+        "text": "编译时一定报语法错误",
+        "correct": false
+      }
+    ],
+    "explanation": "extern 声明只是引用外部名字，不分配存储。若代码实际引用该名字且整个程序没有定义，链接器通常报未定义引用；若声明后未引用，可能不产生外部引用。",
+    "id": "c-204",
+    "tags": [
+      "C"
+    ],
+    "section": "函数与作用域"
+  },
+  {
+    "type": "single",
+    "question": "关于函数指针调用，下列写法正确的是？",
+    "options": [
+      {
+        "text": "int (*p)(int) = f; int r = p(3);",
+        "correct": true
+      },
+      {
+        "text": "int *p(int) = f; int r = p(3);",
+        "correct": false
+      },
+      {
+        "text": "int (*p)(int) = &f(); int r = p(3);",
+        "correct": false
+      },
+      {
+        "text": "int p(int) = f; int r = p(3);",
+        "correct": false
+      }
+    ],
+    "explanation": "函数名在赋值时转换为指向函数的指针，函数指针可像函数一样调用。另一种写法声明的是返回指针的函数；对函数调用结果再取地址也不是把函数赋给函数指针；把函数名当作变量定义也不正确。注意声明符结合规则。",
+    "id": "c-205",
+    "tags": [
+      "C"
+    ],
+    "section": "函数与作用域"
+  },
+  {
+    "type": "multiple",
+    "question": "下列哪些名字具有文件作用域？",
+    "options": [
+      {
+        "text": "在所有函数外定义的全局变量",
+        "correct": true
+      },
+      {
+        "text": "函数内定义的 static 局部变量",
+        "correct": false
+      },
+      {
+        "text": "文件内 static 函数的函数名",
+        "correct": true
+      },
+      {
+        "text": "函数形参",
+        "correct": false
+      }
+    ],
+    "explanation": "文件作用域的名字在所有函数外声明，包括全局变量名和文件内 static 函数名。static 局部变量虽具有静态存储期，但作用域仍在块内；形参作用域在函数定义中。存储期与作用域需区分，函数名不是对象但可作为具有作用域的名字。",
+    "id": "c-206",
+    "tags": [
+      "C"
+    ],
+    "section": "函数与作用域"
+  },
+  {
+    "type": "multiple",
+    "question": "关于函数返回指针，下列哪些做法是安全的？",
+    "options": [
+      {
+        "text": "返回指向静态局部变量的指针",
+        "correct": true
+      },
+      {
+        "text": "返回指向调用者提供的缓冲区的指针",
+        "correct": true
+      },
+      {
+        "text": "返回指向函数内自动数组的指针",
+        "correct": false
+      },
+      {
+        "text": "返回指向字符串字面量的指针且不修改",
+        "correct": true
+      }
+    ],
+    "explanation": "静态变量、调用者缓冲区、字符串字面量在返回后仍有效。自动数组随函数返回销毁，返回其地址会导致悬空指针。关键判断所指对象生命周期是否覆盖使用期。",
+    "id": "c-207",
+    "tags": [
+      "C"
+    ],
+    "section": "函数与作用域"
+  },
+  {
+    "type": "multiple",
+    "question": "下列哪些情况下函数原型与定义在参数类型上不兼容？",
+    "options": [
+      {
+        "text": "原型 int f(int); 定义 int f(double x){return 0;}",
+        "correct": true
+      },
+      {
+        "text": "原型 void f(void); 定义 void f(int x){}",
+        "correct": true
+      },
+      {
+        "text": "原型 int f(int); 定义 int f(int x){return x;}",
+        "correct": false
+      },
+      {
+        "text": "原型 void f(int); 定义 static void f(int x){}",
+        "correct": false
+      }
+    ],
+    "explanation": "参数类型不同，或原型写 void 而定义接收 int 等，会在类型上冲突。返回类型和形参类型一致则兼容；static 只影响链接属性，本身不改变类型兼容，但若同一翻译单元中前后链接属性冲突则另有约束。",
+    "id": "c-208",
+    "tags": [
+      "C"
+    ],
+    "section": "函数与作用域"
+  },
+  {
+    "type": "multiple",
+    "question": "关于C语言中名字的作用域与链接，下列说法正确的有？",
+    "options": [
+      {
+        "text": "块作用域名字可屏蔽外层同名名字",
+        "correct": true
+      },
+      {
+        "text": "同一翻译单元中static全局名具有内部链接",
+        "correct": true
+      },
+      {
+        "text": "所有extern声明都创建新对象",
+        "correct": false
+      },
+      {
+        "text": "函数形参的作用域从声明处开始到函数体结束",
+        "correct": true
+      }
+    ],
+    "explanation": "内层块可隐藏外层同名；static文件作用域名内部链接；extern声明仅引用不创建对象；形参作用域覆盖函数体。误区是把声明与定义、链接属性混为一谈。",
+    "id": "c-209",
+    "tags": [
+      "C"
+    ],
+    "section": "函数与作用域"
+  },
+  {
+    "type": "single",
+    "question": "在一个C源文件中，函数f内部定义了局部变量a，同时该文件在文件作用域定义了同名变量a。在函数f内部未加声明直接使用a时，实际访问的是哪个？",
+    "options": [
+      {
+        "text": "函数f的局部变量a",
+        "correct": true
+      },
+      {
+        "text": "文件作用域的变量a",
+        "correct": false
+      },
+      {
+        "text": "编译错误，因为名称冲突",
+        "correct": false
+      },
+      {
+        "text": "链接错误，因为名称重复",
+        "correct": false
+      }
+    ],
+    "explanation": "C语言中，块作用域的局部变量会隐藏外层同名的文件作用域变量。因此在函数f内部直接使用a时，访问的是局部变量a。编译器和链接器不会因不同作用域的同名变量报错。",
+    "id": "c-210",
+    "tags": [
+      "C"
+    ],
+    "section": "函数与作用域"
+  },
+  {
+    "type": "single",
+    "question": "以下关于C语言未定义行为的描述，哪一项是正确的？",
+    "options": [
+      {
+        "text": "未定义行为在编译时一定会报错",
+        "correct": false
+      },
+      {
+        "text": "未定义行为在运行时一定会导致程序崩溃",
+        "correct": false
+      },
+      {
+        "text": "未定义行为意味着程序的行为没有标准约束，任何结果都可能发生",
+        "correct": true
+      },
+      {
+        "text": "未定义行为只会在优化编译时出现",
+        "correct": false
+      }
+    ],
+    "explanation": "未定义行为指标准未规定程序行为，编译器无需诊断，运行时可能产生任意结果，包括崩溃或看似正常。未定义行为不保证编译错误或崩溃，也不只与优化有关。",
+    "id": "c-211",
+    "tags": [
+      "C"
+    ],
+    "section": "未定义行为"
+  },
+  {
+    "type": "single",
+    "question": "以下哪个表达式可能引发未定义行为？",
+    "options": [
+      {
+        "text": "int a = 10; int b = a / 2;",
+        "correct": false
+      },
+      {
+        "text": "int a = 0; int b = 10 / a;",
+        "correct": true
+      },
+      {
+        "text": "int a = 10; int b = a % 3;",
+        "correct": false
+      },
+      {
+        "text": "double a = 10.0; double b = a / 2.0;",
+        "correct": false
+      }
+    ],
+    "explanation": "整数除以零是未定义行为；其余列出的除数非零，结果有定义。",
+    "id": "c-212",
+    "tags": [
+      "C"
+    ],
+    "section": "未定义行为"
+  },
+  {
+    "type": "single",
+    "question": "对于有符号整数溢出，C标准的规定是？",
+    "options": [
+      {
+        "text": "行为未定义",
+        "correct": true
+      },
+      {
+        "text": "行为未指定",
+        "correct": false
+      },
+      {
+        "text": "行为由实现定义",
+        "correct": false
+      },
+      {
+        "text": "行为与无符号整数溢出相同",
+        "correct": false
+      }
+    ],
+    "explanation": "C标准规定有符号整数溢出是未定义行为；无符号整数溢出按模回绕。编译器可利用有符号溢出不会发生进行优化。",
+    "id": "c-213",
+    "tags": [
+      "C"
+    ],
+    "section": "未定义行为"
+  },
+  {
+    "type": "single",
+    "question": "以下关于序列点的说法，哪一项是正确的？",
+    "options": [
+      {
+        "text": "在表达式a[i] = i++中，i的副作用在赋值后发生，因此行为定义良好",
+        "correct": false
+      },
+      {
+        "text": "序列点只出现在分号处",
+        "correct": false
+      },
+      {
+        "text": "在表达式i = i++ + 1中，i被修改两次且无序列点分隔，行为未定义",
+        "correct": true
+      },
+      {
+        "text": "C11标准用序列点替代了顺序关系",
+        "correct": false
+      }
+    ],
+    "explanation": "在 i = i++ + 1 中，i 的递增和赋值之间没有序列点，且同一对象被修改两次，行为未定义。a[i] = i++ 中对 i 的读取与修改无顺序，也属于未定义；序列点还出现在 &&、||、?: 等位置。C11 引入顺序关系并保留序列点，而不是用序列点替代顺序关系。",
+    "id": "c-214",
+    "tags": [
+      "C"
+    ],
+    "section": "未定义行为"
+  },
+  {
+    "type": "single",
+    "question": "关于未定义行为与未指定行为的区别，以下哪项正确？",
+    "options": [
+      {
+        "text": "未指定行为也可能导致程序崩溃",
+        "correct": false
+      },
+      {
+        "text": "未定义行为是未指定行为的子集",
+        "correct": false
+      },
+      {
+        "text": "未指定行为允许编译器在每次执行时选择不同的合法行为",
+        "correct": true
+      },
+      {
+        "text": "未定义行为必须被编译器诊断",
+        "correct": false
+      }
+    ],
+    "explanation": "未指定行为是标准提供多种可能合法行为，实现不必每次选择相同，且不得导致未定义行为。未定义行为没有任何约束，可能崩溃；未定义行为不是未指定行为的子集，编译器也不要求诊断未定义行为。",
+    "id": "c-215",
+    "tags": [
+      "C"
+    ],
+    "section": "未定义行为"
+  },
+  {
+    "type": "single",
+    "question": "以下哪种情况属于未定义行为？",
+    "options": [
+      {
+        "text": "使用malloc分配内存后未检查返回值",
+        "correct": false
+      },
+      {
+        "text": "对空指针进行解引用",
+        "correct": true
+      },
+      {
+        "text": "在函数中返回局部变量的值",
+        "correct": false
+      },
+      {
+        "text": "读取已初始化的局部变量参与运算",
+        "correct": false
+      }
+    ],
+    "explanation": "解引用空指针是未定义行为。malloc 后未检查返回值本身不是未定义行为；返回局部变量的值（非地址）合法；读取已初始化的局部变量参与运算合法。",
+    "id": "c-216",
+    "tags": [
+      "C"
+    ],
+    "section": "未定义行为"
+  },
+  {
+    "type": "single",
+    "question": "以下代码片段中，哪一行可能导致未定义行为？\nint main(void) {\n  int a[3] = {1, 2, 3};\n  int *p = a + 3;  // 行A\n  int x = *(a + 5); // 行B\n  int y = a[2];    // 行C\n  return 0;\n}",
+    "options": [
+      {
+        "text": "行A",
+        "correct": false
+      },
+      {
+        "text": "行B",
+        "correct": true
+      },
+      {
+        "text": "行C",
+        "correct": false
+      },
+      {
+        "text": "行A和行C",
+        "correct": false
+      }
+    ],
+    "explanation": "数组 a 有 3 个元素，形成指向末尾后一个元素的指针 a+3 是允许的，但不能解引用；访问 a+5 已越界，是未定义行为；访问 a[2] 是最后一个合法元素。",
+    "id": "c-217",
+    "tags": [
+      "C"
+    ],
+    "section": "未定义行为"
+  },
+  {
+    "type": "single",
+    "question": "关于未定义行为，以下说法错误的是？",
+    "options": [
+      {
+        "text": "编译器可以假设未定义行为不会发生，并据此进行优化",
+        "correct": false
+      },
+      {
+        "text": "程序中出现未定义行为，则整个程序的行为都是未定义的",
+        "correct": false
+      },
+      {
+        "text": "未定义行为一定导致程序运行时立即崩溃",
+        "correct": true
+      },
+      {
+        "text": "某些未定义行为可能在某些平台上看似正常工作",
+        "correct": false
+      }
+    ],
+    "explanation": "未定义行为不保证运行时立即崩溃，也可能看似正常。编译器可以假定未定义行为不会发生并据此优化；一旦执行到未定义行为，整个执行的行为不再受标准约束。",
+    "id": "c-218",
+    "tags": [
+      "C"
+    ],
+    "section": "未定义行为"
+  },
+  {
+    "type": "single",
+    "question": "在C语言中，以下哪个操作可能引发未定义行为？",
+    "options": [
+      {
+        "text": "将浮点数转换为整数，且值超出整数范围",
+        "correct": true
+      },
+      {
+        "text": "将整数转换为浮点数",
+        "correct": false
+      },
+      {
+        "text": "使用位运算符操作无符号整数",
+        "correct": false
+      },
+      {
+        "text": "对无符号整数进行移位操作，移位量小于位宽",
+        "correct": false
+      }
+    ],
+    "explanation": "浮点数转换为整数时，若值超出目标整数类型可表示范围，行为未定义。整数转浮点可能丢精度但有定义；无符号位运算合法；无符号移位量小于位宽且结果可表示时合法。",
+    "id": "c-219",
+    "tags": [
+      "C"
+    ],
+    "section": "未定义行为"
+  },
+  {
+    "type": "single",
+    "question": "以下关于未定义行为与编译器优化的关系，哪项正确？",
+    "options": [
+      {
+        "text": "编译器必须检测并报告所有未定义行为",
+        "correct": false
+      },
+      {
+        "text": "编译器可以假定程序中不存在未定义行为，并据此进行优化",
+        "correct": true
+      },
+      {
+        "text": "未定义行为只会影响包含它的函数，不会影响其他函数",
+        "correct": false
+      },
+      {
+        "text": "开启优化会消除所有未定义行为",
+        "correct": false
+      }
+    ],
+    "explanation": "编译器通常假定程序不包含未定义行为，并据此优化。编译器不要求检测并报告所有未定义行为；未定义行为可能影响整个程序；优化不会消除未定义行为。",
+    "id": "c-220",
+    "tags": [
+      "C"
+    ],
+    "section": "未定义行为"
+  },
+  {
+    "type": "single",
+    "question": "以下哪个表达式没有未定义行为？",
+    "options": [
+      {
+        "text": "int i = 0; i = i++ + 1;",
+        "correct": false
+      },
+      {
+        "text": "int a = 5; a = a++ + ++a;",
+        "correct": false
+      },
+      {
+        "text": "int i = 0; int j = (i++, i);",
+        "correct": true
+      },
+      {
+        "text": "int *p = 0; *p = 10;",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项C。逗号运算符有序列点，i++后i为1，j为1，行为良好。A和B中i被多次修改且无序列点分隔，未定义。D解引用空指针未定义。",
+    "id": "c-221",
+    "tags": [
+      "C"
+    ],
+    "section": "未定义行为"
+  },
+  {
+    "type": "single",
+    "question": "以下关于严格别名规则的说法，哪项正确？",
+    "options": [
+      {
+        "text": "通过不兼容类型的指针访问对象可能引发未定义行为",
+        "correct": true
+      },
+      {
+        "text": "严格别名规则只适用于结构体",
+        "correct": false
+      },
+      {
+        "text": "使用char指针访问任何对象总是未定义行为",
+        "correct": false
+      },
+      {
+        "text": "严格别名规则是编译器扩展，不是标准要求",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项A。严格别名规则要求通过兼容类型的指针访问对象，否则可能未定义。B错，适用于所有类型。C错，char指针可访问任何对象。D错，它是C标准的一部分（有效类型规则）。",
+    "id": "c-222",
+    "tags": [
+      "C"
+    ],
+    "section": "未定义行为"
+  },
+  {
+    "type": "single",
+    "question": "以下代码中哪一行触发未定义行为？\nint a[1] = {10};\nint *p = a;\nint *q = p + 1; // 行1\nint y = *q; // 行2",
+    "options": [
+      {
+        "text": "行1",
+        "correct": false
+      },
+      {
+        "text": "行2",
+        "correct": true
+      },
+      {
+        "text": "行1和行2都触发",
+        "correct": false
+      },
+      {
+        "text": "没有未定义行为",
+        "correct": false
+      }
+    ],
+    "explanation": "p + 1 指向数组末尾后一个位置，形成该指针是允许的；解引用 q 会访问数组之外的对象，因此构成未定义行为。",
+    "id": "c-223",
+    "tags": [
+      "C"
+    ],
+    "section": "未定义行为"
+  },
+  {
+    "type": "single",
+    "question": "在C语言中，以下哪种情况属于未定义行为？",
+    "options": [
+      {
+        "text": "对数组进行越界访问",
+        "correct": true
+      },
+      {
+        "text": "声明未初始化的指针变量但不读取其值",
+        "correct": false
+      },
+      {
+        "text": "在函数中返回局部变量的值",
+        "correct": false
+      },
+      {
+        "text": "使用NULL指针进行比较",
+        "correct": false
+      }
+    ],
+    "explanation": "数组越界访问会访问数组对象之外的存储，属于未定义行为；仅声明未初始化指针而不读取其值、返回局部变量的值、比较空指针均有定义。",
+    "id": "c-224",
+    "tags": [
+      "C"
+    ],
+    "section": "未定义行为"
+  },
+  {
+    "type": "single",
+    "question": "以下关于未定义行为的说法，哪项正确？",
+    "options": [
+      {
+        "text": "未定义行为在C标准中有明确的行为描述",
+        "correct": false
+      },
+      {
+        "text": "未定义行为可能被编译器优化掉，导致程序行为与预期不符",
+        "correct": true
+      },
+      {
+        "text": "未定义行为只会发生在运行时，不会影响编译",
+        "correct": false
+      },
+      {
+        "text": "所有未定义行为都会导致段错误",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项B。编译器可以基于未定义行为不会发生来优化，从而可能删除代码或改变行为。A错，未定义行为无明确描述。C错，编译时即可利用。D错，不保证段错误。",
+    "id": "c-225",
+    "tags": [
+      "C"
+    ],
+    "section": "未定义行为"
+  },
+  {
+    "type": "single",
+    "question": "若函数内声明了 `int x;` 但未初始化，随后直接执行 `printf(\"%d\", x);`，以下哪项最准确？",
+    "options": [
+      {
+        "text": "读取自动 int 的不确定值；若其对象表示是陷阱表示则行为未定义，否则输出未指定值",
+        "correct": true
+      },
+      {
+        "text": "总是未定义行为，因为自动变量未初始化",
+        "correct": false
+      },
+      {
+        "text": "总是输出0，因为自动变量默认零初始化",
+        "correct": false
+      },
+      {
+        "text": "编译错误，因为使用了未初始化变量",
+        "correct": false
+      }
+    ],
+    "explanation": "自动存储期的 int 未初始化时具有不确定值；读取该值时，若对象表示是陷阱表示则行为未定义，否则得到未指定值。标准不要求编译报错，也不保证零初始化。",
+    "id": "c-226",
+    "tags": [
+      "C"
+    ],
+    "section": "未定义行为"
+  },
+  {
+    "type": "single",
+    "question": "表达式 `int i = 1; i = i++ + 1;` 在C11标准下的性质是？",
+    "options": [
+      {
+        "text": "有定义，结果为3",
+        "correct": false
+      },
+      {
+        "text": "有定义，结果由编译器决定",
+        "correct": false
+      },
+      {
+        "text": "未定义行为，因为对i的修改与读取之间没有序列点",
+        "correct": true
+      },
+      {
+        "text": "未指定行为，但结果只能是2或3",
+        "correct": false
+      }
+    ],
+    "explanation": "i++ 对 i 的修改与赋值左侧对 i 的修改之间缺乏序列点，且 i 被多次修改并读取，违反序列点规则，属于未定义行为。",
+    "id": "c-227",
+    "tags": [
+      "C"
+    ],
+    "section": "未定义行为"
+  },
+  {
+    "type": "single",
+    "question": "以下代码中，哪一行最可能因违反严格别名规则而引发未定义行为（假设 int 与 float 的对齐兼容）？\nint i = 0;\nfloat f = 1.0f;\nint *p = (int *)&f;\nint x = *p;",
+    "options": [
+      {
+        "text": "int i = 0;",
+        "correct": false
+      },
+      {
+        "text": "float f = 1.0f;",
+        "correct": false
+      },
+      {
+        "text": "int *p = (int *)&f; 的强制转换本身",
+        "correct": false
+      },
+      {
+        "text": "int x = *p;",
+        "correct": true
+      }
+    ],
+    "explanation": "通过 int 左值访问 float 对象违反严格别名规则；强制转换本身不犯错，但解引用并读取时构成未定义行为。",
+    "id": "c-228",
+    "tags": [
+      "C"
+    ],
+    "section": "未定义行为"
+  },
+  {
+    "type": "single",
+    "question": "若 `int a[10];`，执行 `int *p = a + 11;` 后，该指针的创建行为在C标准中属于？",
+    "options": [
+      {
+        "text": "合法，只要不解引用",
+        "correct": false
+      },
+      {
+        "text": "未定义行为，因为指针算术超出数组末尾一个元素的范围",
+        "correct": true
+      },
+      {
+        "text": "合法，因为指针可以指向任意地址",
+        "correct": false
+      },
+      {
+        "text": "未指定行为，由实现决定",
+        "correct": false
+      }
+    ],
+    "explanation": "指针算术只允许在数组对象及其末尾后一个位置之间进行；a+11 超出该范围，即使不解引用，指针算术本身也已构成未定义行为。",
+    "id": "c-229",
+    "tags": [
+      "C"
+    ],
+    "section": "未定义行为"
+  },
+  {
+    "type": "single",
+    "question": "表达式 `int x = 0; int y = 1 / x;` 在C标准中的性质是？",
+    "options": [
+      {
+        "text": "有定义，结果为0",
+        "correct": false
+      },
+      {
+        "text": "未指定行为，可能抛出异常",
+        "correct": false
+      },
+      {
+        "text": "未定义行为，因为整数除以零",
+        "correct": true
+      },
+      {
+        "text": "实现定义行为，由编译器决定",
+        "correct": false
+      }
+    ],
+    "explanation": "整数除法的除数为零时，C标准明确规定为未定义行为；编译器不一定报错，运行时可能崩溃或产生任意结果。",
+    "id": "c-230",
+    "tags": [
+      "C"
+    ],
+    "section": "未定义行为"
+  },
+  {
+    "type": "single",
+    "question": "对于 `int arr[5]; int *p = arr; p += 5; int x = *p;`，以下描述正确的是？",
+    "options": [
+      {
+        "text": "p 指向末尾后一个位置，解引用合法",
+        "correct": false
+      },
+      {
+        "text": "p 的算术合法，但解引用构成未定义行为",
+        "correct": true
+      },
+      {
+        "text": "p += 5 本身已构成未定义行为",
+        "correct": false
+      },
+      {
+        "text": "整个代码完全有定义",
+        "correct": false
+      }
+    ],
+    "explanation": "p += 5 使 p 指向数组末尾后一个位置，该指针值合法；但解引用该指针（*p）访问了数组之外的对象，构成未定义行为。",
+    "id": "c-231",
+    "tags": [
+      "C"
+    ],
+    "section": "未定义行为"
+  },
+  {
+    "type": "single",
+    "question": "以下关于 `volatile` 与未定义行为的说法，哪项正确？",
+    "options": [
+      {
+        "text": "volatile 能防止所有未定义行为",
+        "correct": false
+      },
+      {
+        "text": "volatile 只保证访问不被优化掉，不改变对象越界访问等未定义行为的性质",
+        "correct": true
+      },
+      {
+        "text": "对 volatile 对象的越界访问是合法的",
+        "correct": false
+      },
+      {
+        "text": "volatile 对象的未初始化读取有定义",
+        "correct": false
+      }
+    ],
+    "explanation": "volatile 限定符只影响访问的可观察性，使编译器不优化掉访问；它不扩大对象边界，也不赋予未初始化读取或越界访问以定义。",
+    "id": "c-232",
+    "tags": [
+      "C"
+    ],
+    "section": "未定义行为"
+  },
+  {
+    "type": "single",
+    "question": "若 `int a = 1; int b = 2; int *p = &a; int *q = p; *q = 3;`，该程序的行为是？",
+    "options": [
+      {
+        "text": "未定义行为，因为通过两个指针修改同一对象",
+        "correct": false
+      },
+      {
+        "text": "有定义，最终 a 的值为3",
+        "correct": true
+      },
+      {
+        "text": "未指定行为，a 可能为1或3",
+        "correct": false
+      },
+      {
+        "text": "有定义，但 a 的值不确定",
+        "correct": false
+      }
+    ],
+    "explanation": "p 和 q 指向同一对象 a，通过 q 修改 a 是合法的；不存在序列点冲突，程序行为有定义，a 最终为3。",
+    "id": "c-233",
+    "tags": [
+      "C"
+    ],
+    "section": "未定义行为"
+  },
+  {
+    "type": "single",
+    "question": "表达式 `int i = 0; int j = (i++, i++, i++);` 在C标准中的性质是？",
+    "options": [
+      {
+        "text": "未定义行为，因为 i 被多次修改",
+        "correct": false
+      },
+      {
+        "text": "有定义，逗号运算符引入序列点，j 的值为2",
+        "correct": true
+      },
+      {
+        "text": "未指定行为，j 可能为0、1或2",
+        "correct": false
+      },
+      {
+        "text": "编译错误，因为逗号表达式不能用于初始化",
+        "correct": false
+      }
+    ],
+    "explanation": "逗号运算符在每个左操作数求值后有序列点；三次 i++ 依次返回0、1、2并丢弃前两个，第三个结果作为整个逗号表达式的值赋给 j，所以 j 为2且 i 为3，没有未定义行为。",
+    "id": "c-234",
+    "tags": [
+      "C"
+    ],
+    "section": "未定义行为"
+  },
+  {
+    "type": "single",
+    "question": "以下哪种情况属于C标准明确规定的未定义行为？",
+    "options": [
+      {
+        "text": "对空指针进行解引用",
+        "correct": true
+      },
+      {
+        "text": "将整数0转换为空指针常量",
+        "correct": false
+      },
+      {
+        "text": "使用 `sizeof` 获取数组大小",
+        "correct": false
+      },
+      {
+        "text": "对结构体进行值赋值",
+        "correct": false
+      }
+    ],
+    "explanation": "解引用空指针是C标准明确规定的未定义行为；整数0转换为空指针、sizeof 数组和结构体赋值均为有定义操作。",
+    "id": "c-235",
+    "tags": [
+      "C"
+    ],
+    "section": "未定义行为"
+  },
+  {
+    "type": "single",
+    "question": "若 `char *p = \"hello\"; p[0] = 'H';`，该代码的行为是？",
+    "options": [
+      {
+        "text": "有定义，字符串被修改为\"Hello\"",
+        "correct": false
+      },
+      {
+        "text": "未定义行为，因为试图修改字符串字面量",
+        "correct": true
+      },
+      {
+        "text": "未指定行为，可能修改成功",
+        "correct": false
+      },
+      {
+        "text": "编译错误，因为 p 是 const 指针",
+        "correct": false
+      }
+    ],
+    "explanation": "字符串字面量具有静态存储期，修改其内容属于未定义行为；p 本身不是 const 指针，编译器不一定报错，但行为不受标准保证。",
+    "id": "c-236",
+    "tags": [
+      "C"
+    ],
+    "section": "未定义行为"
+  },
+  {
+    "type": "single",
+    "question": "执行 `int a[3]; int *p = &a[0]; p = p + 3; int x = *p;` 后，未定义行为发生在哪一步？",
+    "options": [
+      {
+        "text": "p = p + 3; 本身",
+        "correct": false
+      },
+      {
+        "text": "int x = *p; 解引用时",
+        "correct": true
+      },
+      {
+        "text": "int *p = &a[0];",
+        "correct": false
+      },
+      {
+        "text": "整个代码没有未定义行为",
+        "correct": false
+      }
+    ],
+    "explanation": "p + 3 使 p 指向数组末尾后一个位置，该指针值合法；随后解引用 *p 访问了数组之外，构成未定义行为。",
+    "id": "c-237",
+    "tags": [
+      "C"
+    ],
+    "section": "未定义行为"
+  },
+  {
+    "type": "single",
+    "question": "以下关于 `memcpy` 与重叠内存区域的说法，哪项正确？",
+    "options": [
+      {
+        "text": "memcpy 允许源和目标重叠，行为有定义",
+        "correct": false
+      },
+      {
+        "text": "memcpy 要求源和目标不重叠，重叠时行为未定义，应使用 memmove",
+        "correct": true
+      },
+      {
+        "text": "memcpy 在重叠时行为未指定，但不会崩溃",
+        "correct": false
+      },
+      {
+        "text": "memmove 要求源和目标不重叠",
+        "correct": false
+      }
+    ],
+    "explanation": "C标准规定 memcpy 的源和目标区域不能重叠，重叠时行为未定义；memmove 则允许重叠并保证正确复制。",
+    "id": "c-238",
+    "tags": [
+      "C"
+    ],
+    "section": "未定义行为"
+  },
+  {
+    "type": "single",
+    "question": "表达式 `int x = 1; int y = (x = 2) + x;` 在C11标准下的性质是？",
+    "options": [
+      {
+        "text": "未定义行为，因为对 x 的修改与读取之间没有序列点",
+        "correct": true
+      },
+      {
+        "text": "有定义，y 的值为4",
+        "correct": false
+      },
+      {
+        "text": "有定义，y 的值为3",
+        "correct": false
+      },
+      {
+        "text": "未指定行为，y 可能为3或4",
+        "correct": false
+      }
+    ],
+    "explanation": "赋值表达式 (x=2) 对 x 的修改与右侧读取 x 之间没有序列点，且 x 被修改并读取，违反序列点规则，属于未定义行为。",
+    "id": "c-239",
+    "tags": [
+      "C"
+    ],
+    "section": "未定义行为"
+  },
+  {
+    "type": "single",
+    "question": "在C语言中，释放动态分配的内存后继续使用该指针（如 `free(p); *p = 1;`）属于？",
+    "options": [
+      {
+        "text": "有定义行为，只是值不再有效",
+        "correct": false
+      },
+      {
+        "text": "未定义行为，因为访问了已释放对象的存储",
+        "correct": true
+      },
+      {
+        "text": "未指定行为，由实现决定",
+        "correct": false
+      },
+      {
+        "text": "编译错误，编译器会检测到",
+        "correct": false
+      }
+    ],
+    "explanation": "free 后指针值变为不确定，继续解引用该指针访问已释放对象的存储，属于未定义行为；编译器通常不会报错。",
+    "id": "c-240",
+    "tags": [
+      "C"
+    ],
+    "section": "未定义行为"
+  },
+  {
+    "type": "single",
+    "question": "关于C标准库中fgetc函数的返回值，下列描述正确的是？",
+    "options": [
+      {
+        "text": "成功时返回读取的字符，以unsigned char转为int；失败或EOF时返回EOF",
+        "correct": true
+      },
+      {
+        "text": "成功时返回读取的字符，失败时返回NULL",
+        "correct": false
+      },
+      {
+        "text": "总是返回0到255之间的值，不会返回负数",
+        "correct": false
+      },
+      {
+        "text": "读取失败时返回-2以区别于文件结束",
+        "correct": false
+      }
+    ],
+    "explanation": "fgetc成功返回字符值（作为unsigned char转换的int），遇到文件结束或错误返回EOF（通常-1）。NULL用于指针，不会区分结束与错误，也不存在-2约定。",
+    "id": "c-241",
+    "tags": [
+      "C"
+    ],
+    "section": "文件I/O"
+  },
+  {
+    "type": "single",
+    "question": "调用fwrite(buf, size, count, fp)时，其返回值表示什么？",
+    "options": [
+      {
+        "text": "实际成功写入的完整数据项个数，可能小于请求的count",
+        "correct": true
+      },
+      {
+        "text": "实际写入的字节数",
+        "correct": false
+      },
+      {
+        "text": "成功返回0，失败返回EOF",
+        "correct": false
+      },
+      {
+        "text": "成功返回总字节数，失败返回NULL",
+        "correct": false
+      }
+    ],
+    "explanation": "fwrite返回成功写入的完整元素个数，而不是字节数。返回值小于count通常表示写入出错，应结合ferror判断。成功返回0或EOF、失败返回NULL都不是fwrite的返回约定。",
+    "id": "c-242",
+    "tags": [
+      "C"
+    ],
+    "section": "文件I/O"
+  },
+  {
+    "type": "single",
+    "question": "以下哪一项最能说明C语言中文本流与二进制流在读写换行符时的区别？",
+    "options": [
+      {
+        "text": "文本流在读写时可能进行换行符转换，二进制流不做这种转换",
+        "correct": true
+      },
+      {
+        "text": "文本流无法读写换行符，二进制流可以",
+        "correct": false
+      },
+      {
+        "text": "二进制流会把换行符转换为两个字符存储",
+        "correct": false
+      },
+      {
+        "text": "两者完全一致，换行符都按一个字节原样处理",
+        "correct": false
+      }
+    ],
+    "explanation": "文本流可能将本地换行表示转换为'\\n'或反向转换，二进制流按字节原样传输。文本流并非不能读写换行，二进制流也不会额外转换。正确为文本流可能转换。",
+    "id": "c-243",
+    "tags": [
+      "C"
+    ],
+    "section": "文件I/O"
+  },
+  {
+    "type": "single",
+    "question": "以下代码段的主要错误是：FILE *fp=fopen(\"a.txt\",\"r\"); if(fp) { fclose(fp); } else { perror(\"open\"); }",
+    "options": [
+      {
+        "text": "代码没有明显错误，能正确处理打开失败",
+        "correct": true
+      },
+      {
+        "text": "fclose不能放在if内",
+        "correct": false
+      },
+      {
+        "text": "perror必须在fopen之前调用",
+        "correct": false
+      },
+      {
+        "text": "fopen返回EOF表示失败，应判断EOF",
+        "correct": false
+      }
+    ],
+    "explanation": "fopen失败返回NULL，if(fp)成功才关闭，否则perror输出错误，逻辑正确。fclose可放在分支内，perror不需要提前调用，fopen失败并不返回EOF。",
+    "id": "c-244",
+    "tags": [
+      "C"
+    ],
+    "section": "文件I/O"
+  },
+  {
+    "type": "single",
+    "question": "在C标准库中，以\"a\"模式打开一个已存在的文本文件时，文件位置指示器的初始位置如何确定？",
+    "options": [
+      {
+        "text": "一定在文件开头",
+        "correct": false
+      },
+      {
+        "text": "一定在文件末尾",
+        "correct": false
+      },
+      {
+        "text": "在文件开头之后第一个字符",
+        "correct": false
+      },
+      {
+        "text": "由实现定义，可能在文件开头或末尾",
+        "correct": true
+      }
+    ],
+    "explanation": "以\"a\"模式打开时，标准要求后续写入总是被强制到当前文件末尾，但初始文件位置指示器位于文件开头还是末尾由实现定义。不能仅根据追加写入语义断定初始位置一定在末尾。",
+    "id": "c-245",
+    "tags": [
+      "C"
+    ],
+    "section": "文件I/O"
+  },
+  {
+    "type": "single",
+    "question": "关于C语言中fclose函数的返回值，下列说法正确的是？",
+    "options": [
+      {
+        "text": "成功时返回0，失败时返回EOF",
+        "correct": true
+      },
+      {
+        "text": "成功时返回非零值，失败时返回0",
+        "correct": false
+      },
+      {
+        "text": "总是返回0",
+        "correct": false
+      },
+      {
+        "text": "成功时返回文件描述符，失败时返回-1",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项为A。fclose成功关闭流返回0，失败返回EOF。B颠倒返回值；C忽略可能失败；D混淆了文件描述符，fclose返回的是状态码。",
+    "id": "c-246",
+    "tags": [
+      "C"
+    ],
+    "section": "文件I/O"
+  },
+  {
+    "type": "single",
+    "question": "使用fseek函数定位到文件末尾之后的位置（超过文件实际大小）再写入数据，在标准C中可能产生什么结果？",
+    "options": [
+      {
+        "text": "写入必定失败并返回错误",
+        "correct": false
+      },
+      {
+        "text": "文件被扩展，原文件末尾与写入位置之间的空洞内容未指定",
+        "correct": true
+      },
+      {
+        "text": "文件大小不变，写入数据被忽略",
+        "correct": false
+      },
+      {
+        "text": "标准C保证空洞自动填零且该行为可移植",
+        "correct": false
+      }
+    ],
+    "explanation": "fseek可以把位置指示器设置到文件末尾之后，后续写入会扩展文件。标准C不规定中间空洞的具体内容，因此是未指定的；自动填零通常是POSIX等环境的行为，不是标准C的可移植保证。",
+    "id": "c-247",
+    "tags": [
+      "C"
+    ],
+    "section": "文件I/O"
+  },
+  {
+    "type": "single",
+    "question": "以下代码段试图读取一行文本，其中存在错误。正确的修改方式是？\nchar buf[100];\nFILE *fp = fopen(\"data.txt\", \"r\");\nfgets(buf, 100, fp);\nfclose(fp);",
+    "options": [
+      {
+        "text": "将fgets的第三个参数改为stdin",
+        "correct": false
+      },
+      {
+        "text": "检查fopen返回值是否为NULL，再使用fp",
+        "correct": true
+      },
+      {
+        "text": "将fgets改为gets",
+        "correct": false
+      },
+      {
+        "text": "将fclose(fp)移到fgets之前",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项为B。fopen可能失败返回NULL，直接传给fgets会导致未定义行为。A改变输入源；C使用不安全的gets；D顺序错误，先关闭无法读取。",
+    "id": "c-248",
+    "tags": [
+      "C"
+    ],
+    "section": "文件I/O"
+  },
+  {
+    "type": "single",
+    "question": "关于C标准库中文本流与二进制流的区别，下列描述正确的是？",
+    "options": [
+      {
+        "text": "文本流读写时可能进行换行符转换，二进制流不转换",
+        "correct": true
+      },
+      {
+        "text": "二进制流只能读写整数，文本流只能读写字符",
+        "correct": false
+      },
+      {
+        "text": "文本流必须用fread/fwrite，二进制流用fprintf/fscanf",
+        "correct": false
+      },
+      {
+        "text": "两者完全一样，没有区别",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项为A。文本流可能将换行符映射为系统特定表示，二进制流直接读写字节。B、C错误描述功能；D忽略标准区别。",
+    "id": "c-249",
+    "tags": [
+      "C"
+    ],
+    "section": "文件I/O"
+  },
+  {
+    "type": "single",
+    "question": "调用fread(buf, size, count, fp)时，若实际读取的元素个数少于count，则返回值表示什么？",
+    "options": [
+      {
+        "text": "实际读取的字节数",
+        "correct": false
+      },
+      {
+        "text": "实际读取的完整元素个数",
+        "correct": true
+      },
+      {
+        "text": "总是等于count",
+        "correct": false
+      },
+      {
+        "text": "失败时返回-1",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项为B。fread返回成功读取的完整元素个数，可能小于count。A混淆元素与字节；C错误；D fread失败返回0，不返回-1。",
+    "id": "c-250",
+    "tags": [
+      "C"
+    ],
+    "section": "文件I/O"
+  },
+  {
+    "type": "single",
+    "question": "使用fprintf向文件写入数据后，若希望在继续使用该流的情况下确保流缓冲区中的未写数据被写出，应调用哪个函数？",
+    "options": [
+      {
+        "text": "fflush",
+        "correct": true
+      },
+      {
+        "text": "fclose",
+        "correct": false
+      },
+      {
+        "text": "rewind",
+        "correct": false
+      },
+      {
+        "text": "setbuf",
+        "correct": false
+      }
+    ],
+    "explanation": "fflush用于把输出流缓冲区中的未写数据交付宿主环境写出。fclose也会刷新并关闭流，因此会结束该流的使用；rewind改变文件位置；setbuf用于设置缓冲区，不负责刷新。",
+    "id": "c-251",
+    "tags": [
+      "C"
+    ],
+    "section": "文件I/O"
+  },
+  {
+    "type": "single",
+    "question": "以下代码段试图以二进制方式写入一个结构体数组，存在错误。正确的修改方式是？\nstruct Rec { int id; char name[20]; } recs[10];\nFILE *fp = fopen(\"data.bin\", \"w\");\nfwrite(recs, sizeof(recs), 1, fp);\nfclose(fp);",
+    "options": [
+      {
+        "text": "将\"w\"改为\"wb\"",
+        "correct": true
+      },
+      {
+        "text": "将fwrite的参数改为fwrite(recs, 1, sizeof(recs), fp)",
+        "correct": false
+      },
+      {
+        "text": "将sizeof(recs)改为sizeof(struct Rec)",
+        "correct": false
+      },
+      {
+        "text": "将fclose(fp)改为fflush(fp)",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项为A。二进制写入应以\"wb\"模式打开，避免文本转换。B参数等价；C只写一个元素；D不关闭流可能丢失数据。",
+    "id": "c-252",
+    "tags": [
+      "C"
+    ],
+    "section": "文件I/O"
+  },
+  {
+    "type": "single",
+    "question": "关于C语言中feof函数的行为，下列说法正确的是？",
+    "options": [
+      {
+        "text": "在到达文件末尾时立即返回真",
+        "correct": false
+      },
+      {
+        "text": "在尝试读取越过文件末尾后返回真",
+        "correct": true
+      },
+      {
+        "text": "总是返回0",
+        "correct": false
+      },
+      {
+        "text": "只能用于二进制流",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项为B。feof在读取操作尝试越过文件末尾后才设置EOF指示器并返回真。A常见误解；C错误；D文本流也可用。",
+    "id": "c-253",
+    "tags": [
+      "C"
+    ],
+    "section": "文件I/O"
+  },
+  {
+    "type": "single",
+    "question": "以下代码段试图从文件中读取整数直到文件结束，存在逻辑错误。正确的循环条件是？\nint x;\nFILE *fp = fopen(\"num.txt\", \"r\");\nwhile (!feof(fp)) {\n    fscanf(fp, \"%d\", &x);\n    printf(\"%d \", x);\n}",
+    "options": [
+      {
+        "text": "while (fscanf(fp, \"%d\", &x) == 1)",
+        "correct": true
+      },
+      {
+        "text": "while (feof(fp))",
+        "correct": false
+      },
+      {
+        "text": "while (fscanf(fp, \"%d\", &x) != 0)",
+        "correct": false
+      },
+      {
+        "text": "while (fgetc(fp) != EOF)",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项为A。应直接用fscanf返回值判断是否成功读取，避免feof滞后导致重复输出。B条件相反；C可能死循环；D破坏流位置。",
+    "id": "c-254",
+    "tags": [
+      "C"
+    ],
+    "section": "文件I/O"
+  },
+  {
+    "type": "single",
+    "question": "在C标准库中，函数tmpfile()的作用是什么？",
+    "options": [
+      {
+        "text": "创建一个临时文件，关闭时自动删除",
+        "correct": true
+      },
+      {
+        "text": "创建一个命名临时文件，需手动删除",
+        "correct": false
+      },
+      {
+        "text": "返回临时文件的路径字符串",
+        "correct": false
+      },
+      {
+        "text": "打开一个已存在的临时文件",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项为A。tmpfile创建临时二进制文件（通常以\"wb+\"模式），程序正常终止或关闭时自动删除。B、C、D均不符合标准行为。",
+    "id": "c-255",
+    "tags": [
+      "C"
+    ],
+    "section": "文件I/O"
+  },
+  {
+    "type": "multiple",
+    "question": "关于C语言中fopen函数的模式字符串，下列说法正确的有哪些？",
+    "options": [
+      {
+        "text": "\"r+\"模式要求文件必须存在，可读可写",
+        "correct": true
+      },
+      {
+        "text": "\"w+\"模式会截断文件（若存在），可读可写",
+        "correct": true
+      },
+      {
+        "text": "\"a+\"模式允许读取，但写入总是追加到末尾",
+        "correct": true
+      },
+      {
+        "text": "\"rb+\"模式在文本流中无效",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项为A、B、C。\"r+\"要求文件存在；\"w+\"截断；\"a+\"写入追加。D错误，\"rb+\"是有效的二进制读写模式。",
+    "id": "c-256",
+    "tags": [
+      "C"
+    ],
+    "section": "文件I/O"
+  },
+  {
+    "type": "multiple",
+    "question": "以下关于C标准库文件I/O函数的描述，正确的有哪些？",
+    "options": [
+      {
+        "text": "fgetc成功时返回读取的字符（作为unsigned char转换为int），失败或EOF时返回EOF",
+        "correct": true
+      },
+      {
+        "text": "fputc成功时返回写入的字符，失败时返回EOF",
+        "correct": true
+      },
+      {
+        "text": "fgets读取失败时返回NULL，成功时返回str",
+        "correct": true
+      },
+      {
+        "text": "fputs成功时返回写入的字符数，失败时返回EOF",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项为A、B、C。D错误，fputs成功返回非负值，失败返回EOF，不返回字符数。",
+    "id": "c-257",
+    "tags": [
+      "C"
+    ],
+    "section": "文件I/O"
+  },
+  {
+    "type": "multiple",
+    "question": "在C程序中，关于文件流的缓冲，下列说法正确的有哪些？",
+    "options": [
+      {
+        "text": "标准输出连接到终端时通常是行缓冲的",
+        "correct": true
+      },
+      {
+        "text": "标准错误流stderr通常是无缓冲的",
+        "correct": true
+      },
+      {
+        "text": "调用setvbuf可以改变流的缓冲模式",
+        "correct": true
+      },
+      {
+        "text": "fflush(stdin)是标准C中清除输入缓冲区的可移植方法",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项为A、B、C。D错误，fflush仅用于输出流或更新流，对输入流使用是未定义行为。",
+    "id": "c-258",
+    "tags": [
+      "C"
+    ],
+    "section": "文件I/O"
+  },
+  {
+    "type": "multiple",
+    "question": "关于C语言中fseek和ftell函数的使用，下列说法正确的有哪些？",
+    "options": [
+      {
+        "text": "fseek成功时返回0，失败时返回非零值",
+        "correct": true
+      },
+      {
+        "text": "ftell返回当前文件位置指示器的值，失败时返回-1L",
+        "correct": true
+      },
+      {
+        "text": "在文本流中，fseek的偏移量只能使用0或ftell返回的值",
+        "correct": true
+      },
+      {
+        "text": "fseek可以用于任何流，包括已关闭的流",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项为A、B、C。D错误，已关闭的流不能再操作。文本流中fseek偏移量有限制，C正确。",
+    "id": "c-259",
+    "tags": [
+      "C"
+    ],
+    "section": "文件I/O"
+  },
+  {
+    "type": "single",
+    "question": "在C语言中，使用fopen以\"r+\"模式打开一个已存在的文本文件时，文件位置指示器的初始位置在哪里？",
+    "options": [
+      {
+        "text": "文件开头",
+        "correct": true
+      },
+      {
+        "text": "文件末尾",
+        "correct": false
+      },
+      {
+        "text": "文件中间",
+        "correct": false
+      },
+      {
+        "text": "由实现定义",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项是A。\"r+\"模式打开文件用于读写，文件必须存在，位置指示器初始位于文件开头。误区是误以为读写模式会定位到末尾，或与\"a+\"混淆。",
+    "id": "c-260",
+    "tags": [
+      "C"
+    ],
+    "section": "文件I/O"
+  },
+  {
+    "type": "single",
+    "question": "在C语言中，使用fopen以\"a\"模式打开一个已存在的文本文件时，文件位置指示器的初始位置在哪里？",
+    "options": [
+      {
+        "text": "文件开头",
+        "correct": false
+      },
+      {
+        "text": "文件末尾",
+        "correct": true
+      },
+      {
+        "text": "文件中间",
+        "correct": false
+      },
+      {
+        "text": "由实现定义",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项是B。\"a\"模式用于追加，文件位置指示器初始位于文件末尾，写入总是追加到末尾。误区是误以为与\"r\"模式一样定位到开头。",
+    "id": "c-261",
+    "tags": [
+      "C"
+    ],
+    "section": "文件I/O"
+  },
+  {
+    "type": "single",
+    "question": "在C标准库中，调用fopen函数打开文件时，若以\"w\"模式打开一个已存在的文本文件，则文件内容会怎样？",
+    "options": [
+      {
+        "text": "文件内容被清空",
+        "correct": true
+      },
+      {
+        "text": "文件内容保留，读写位置在开头",
+        "correct": false
+      },
+      {
+        "text": "文件内容保留，读写位置在末尾",
+        "correct": false
+      },
+      {
+        "text": "打开失败",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项是A。\"w\"模式用于写，若文件存在则长度截断为0，内容清空。误区是误以为会保留内容或定位到末尾。",
+    "id": "c-262",
+    "tags": [
+      "C"
+    ],
+    "section": "文件I/O"
+  },
+  {
+    "type": "single",
+    "question": "在一个需要频繁随机读取固定大小记录的C程序中，下列哪种文件打开模式最合适？",
+    "options": [
+      {
+        "text": "\"rb\"",
+        "correct": true
+      },
+      {
+        "text": "\"r\"",
+        "correct": false
+      },
+      {
+        "text": "\"rt\"",
+        "correct": false
+      },
+      {
+        "text": "\"r+\"",
+        "correct": false
+      }
+    ],
+    "explanation": "二进制模式\"rb\"避免文本模式可能发生的换行符转换，保证记录字节与文件内容一致，适合随机读写固定大小记录。\"r\"是文本只读，可能转换换行；\"rt\"非标准；\"r+\"可读写但仍是文本模式。",
+    "id": "c-263",
+    "tags": [
+      "C"
+    ],
+    "section": "文件I/O"
+  },
+  {
+    "type": "single",
+    "question": "调用fgets(buf, n, fp)读取一行时，若该行长度（含换行符）小于n-1，则buf中最终包含的内容是什么？",
+    "options": [
+      {
+        "text": "该行字符及换行符，并以空字符结尾",
+        "correct": true
+      },
+      {
+        "text": "仅该行字符，不含换行符，并以空字符结尾",
+        "correct": false
+      },
+      {
+        "text": "恰好n-1个字符，不含换行符",
+        "correct": false
+      },
+      {
+        "text": "该行字符、换行符和空字符，共n个字符",
+        "correct": false
+      }
+    ],
+    "explanation": "fgets在未读满n-1个字符且遇到换行符时，会把换行符也存入缓冲区，然后追加空字符结尾。它不会自动删除换行符。选项混淆了fgets与gets或scanf的差异。",
+    "id": "c-264",
+    "tags": [
+      "C"
+    ],
+    "section": "文件I/O"
+  },
+  {
+    "type": "single",
+    "question": "以下代码打开文件后立即读取，最可能的问题是什么？\nFILE *fp = fopen(\"data.txt\", \"w\");\nchar c = fgetc(fp);",
+    "options": [
+      {
+        "text": "以\"w\"模式打开会截断文件，且流为只写，读取行为未定义",
+        "correct": true
+      },
+      {
+        "text": "fgetc只能用于二进制流，文本流应使用fread",
+        "correct": false
+      },
+      {
+        "text": "fopen返回NULL，因此fgetc必然崩溃",
+        "correct": false
+      },
+      {
+        "text": "读取位置未用fseek重置，因此读到文件开头",
+        "correct": false
+      }
+    ],
+    "explanation": "\"w\"模式只写且截断文件，对只写流调用fgetc属于未定义行为。fgetc可用于文本流；fopen不一定返回NULL；只写流没有有效的读取位置，先fseek也不行。",
+    "id": "c-265",
+    "tags": [
+      "C"
+    ],
+    "section": "文件I/O"
+  },
+  {
+    "type": "single",
+    "question": "使用fread读取二进制文件时，如何正确判断是否读到了文件末尾？",
+    "options": [
+      {
+        "text": "在fread返回小于请求元素个数后，检查feof(fp)是否为真",
+        "correct": true
+      },
+      {
+        "text": "只要fread返回0就一定是文件结束",
+        "correct": false
+      },
+      {
+        "text": "在每次fread前调用feof(fp)判断",
+        "correct": false
+      },
+      {
+        "text": "fread返回EOF表示文件结束",
+        "correct": false
+      }
+    ],
+    "explanation": "fread返回小于请求个数可能因文件结束或错误，应随后用feof/ferror区分。返回0不一定是结束，也可能是错误；feof只在读操作失败后才置位；fread不返回EOF。",
+    "id": "c-266",
+    "tags": [
+      "C"
+    ],
+    "section": "文件I/O"
+  },
+  {
+    "type": "multiple",
+    "question": "关于C标准库中fopen的\"a\"和\"a+\"模式，下列说法正确的有哪些？",
+    "options": [
+      {
+        "text": "\"a\"模式打开已存在文件时，写入总是追加到文件末尾",
+        "correct": true
+      },
+      {
+        "text": "\"a+\"模式打开已存在文件时，初始文件位置指示器位于文件末尾",
+        "correct": true
+      },
+      {
+        "text": "\"a\"模式打开不存在的文件时，创建新文件",
+        "correct": true
+      },
+      {
+        "text": "\"a+\"模式允许通过fseek改变后续写入位置到文件中间",
+        "correct": false
+      }
+    ],
+    "explanation": "追加模式下，打开后文件位置指示器初始位于文件末尾；\"a\"和\"a+\"的写入都总是追加到当时的文件末尾，fseek不能改变后续追加写入的位置。文件不存在时追加模式会创建新文件。",
+    "id": "c-267",
+    "tags": [
+      "C"
+    ],
+    "section": "文件I/O"
+  },
+  {
+    "type": "multiple",
+    "question": "在C标准库中，下列哪些情况属于已定义的I/O失败，并可能设置流的错误指示器？",
+    "options": [
+      {
+        "text": "向已满的磁盘写入数据",
+        "correct": true
+      },
+      {
+        "text": "从文件读取时底层设备报告读取错误",
+        "correct": true
+      },
+      {
+        "text": "对以\"r\"模式打开的流调用fputc",
+        "correct": false
+      },
+      {
+        "text": "对以\"w\"模式打开的流调用fgetc",
+        "correct": false
+      }
+    ],
+    "explanation": "磁盘满和底层读写错误会使I/O函数失败，并可通过ferror检查错误指示器。以只读流写入或以只写流读取违反流模式约束，属于未定义行为，不是标准定义的失败路径。",
+    "id": "c-268",
+    "tags": [
+      "C"
+    ],
+    "section": "文件I/O"
+  },
+  {
+    "type": "multiple",
+    "question": "关于C标准库中文件流的缓冲，下列说法正确的有哪些？",
+    "options": [
+      {
+        "text": "标准输出连接到终端时通常为行缓冲",
+        "correct": true
+      },
+      {
+        "text": "调用fflush(fp)可将该输出流的缓冲数据写入文件",
+        "correct": true
+      },
+      {
+        "text": "程序正常终止时，所有已打开的输出流会被刷新并关闭",
+        "correct": true
+      },
+      {
+        "text": "对输入流调用fflush总能丢弃未读取的输入数据",
+        "correct": false
+      }
+    ],
+    "explanation": "终端输出常为行缓冲；fflush用于输出流刷新缓冲；正常终止会刷新关闭流。对输入流调用fflush的行为在标准中未定义，不能依赖它丢弃输入。",
+    "id": "c-269",
+    "tags": [
+      "C"
+    ],
+    "section": "文件I/O"
+  },
+  {
+    "type": "single",
+    "question": "在一个日志程序中，希望每次写入一条记录后立即持久化到文件，应优先采用哪种做法？",
+    "options": [
+      {
+        "text": "写入后调用fflush(fp)，必要时再调用fsync(fileno(fp))",
+        "correct": true
+      },
+      {
+        "text": "写入后调用fclose(fp)，然后重新fopen追加",
+        "correct": false
+      },
+      {
+        "text": "写入后调用rewind(fp)",
+        "correct": false
+      },
+      {
+        "text": "写入后调用feof(fp)检查是否持久化",
+        "correct": false
+      }
+    ],
+    "explanation": "fflush把用户空间缓冲交给系统，fsync（POSIX）再要求系统写入存储，适合日志持久化。fclose虽会刷新但关闭后需重开；rewind不刷新；feof只检查读结束标志。",
+    "id": "c-270",
+    "tags": [
+      "C"
+    ],
+    "section": "文件I/O"
+  },
+  {
+    "type": "single",
+    "question": "在C11标准中，下列哪个头文件用于定义原子类型和原子操作？",
+    "options": [
+      {
+        "text": "<stdatomic.h>",
+        "correct": true
+      },
+      {
+        "text": "<threads.h>",
+        "correct": false
+      },
+      {
+        "text": "<atomic.h>",
+        "correct": false
+      },
+      {
+        "text": "<stdthread.h>",
+        "correct": false
+      }
+    ],
+    "explanation": "C11标准引入了<stdatomic.h>来提供原子类型和操作。<threads.h>用于线程管理，<atomic.h>和<stdthread.h>不是标准头文件。",
+    "id": "c-271",
+    "tags": [
+      "C"
+    ],
+    "section": "并发与原子操作"
+  },
+  {
+    "type": "single",
+    "question": "下列关于原子类型atomic_int的描述中，正确的是？",
+    "options": [
+      {
+        "text": "atomic_int保证对该对象的读写操作是原子的",
+        "correct": true
+      },
+      {
+        "text": "atomic_int只能用于单线程程序",
+        "correct": false
+      },
+      {
+        "text": "atomic_int是C++特有的类型",
+        "correct": false
+      },
+      {
+        "text": "atomic_int的原子性依赖于编译器的优化选项",
+        "correct": false
+      }
+    ],
+    "explanation": "atomic_int是C11中定义的原子整型，对其操作保证原子性，与编译器优化无关，可用于多线程。",
+    "id": "c-272",
+    "tags": [
+      "C"
+    ],
+    "section": "并发与原子操作"
+  },
+  {
+    "type": "single",
+    "question": "在C11中，函数atomic_load用于原子地读取一个原子对象的值。其参数类型是？",
+    "options": [
+      {
+        "text": "指向原子类型的指针",
+        "correct": true
+      },
+      {
+        "text": "原子类型的值",
+        "correct": false
+      },
+      {
+        "text": "指向普通类型的指针",
+        "correct": false
+      },
+      {
+        "text": "原子类型的大小",
+        "correct": false
+      }
+    ],
+    "explanation": "atomic_load接受一个指向原子类型的指针，例如atomic_load(&a)，返回其当前值，保证读取的原子性。",
+    "id": "c-273",
+    "tags": [
+      "C"
+    ],
+    "section": "并发与原子操作"
+  },
+  {
+    "type": "single",
+    "question": "使用atomic_fetch_add(&a, b)时，该操作返回的值是？",
+    "options": [
+      {
+        "text": "a的旧值（操作前的值）",
+        "correct": true
+      },
+      {
+        "text": "a的新值（操作后的值）",
+        "correct": false
+      },
+      {
+        "text": "b的值",
+        "correct": false
+      },
+      {
+        "text": "操作是否成功的布尔值",
+        "correct": false
+      }
+    ],
+    "explanation": "atomic_fetch_add执行原子加法并返回操作前a的值。例如a=5，调用后a=5+b，返回5。",
+    "id": "c-274",
+    "tags": [
+      "C"
+    ],
+    "section": "并发与原子操作"
+  },
+  {
+    "type": "single",
+    "question": "内存序memory_order_relaxed的作用是？",
+    "options": [
+      {
+        "text": "只保证原子性，不提供任何同步或顺序约束",
+        "correct": true
+      },
+      {
+        "text": "保证该操作之前的所有读写不会重排到该操作之后",
+        "correct": false
+      },
+      {
+        "text": "保证该操作之后的所有读写不会重排到该操作之前",
+        "correct": false
+      },
+      {
+        "text": "提供全序关系，所有线程看到的操作顺序一致",
+        "correct": false
+      }
+    ],
+    "explanation": "memory_order_relaxed仅保证操作的原子性，不建立线程间的同步，编译器或CPU可以自由重排其他内存操作。",
+    "id": "c-275",
+    "tags": [
+      "C"
+    ],
+    "section": "并发与原子操作"
+  },
+  {
+    "type": "single",
+    "question": "在C11中，若已有一个原子整型对象obj，在并发访问开始前，下列哪个是专门用于初始化该原子对象的操作（该初始化本身不要求原子性）？",
+    "options": [
+      {
+        "text": "atomic_init(&obj, value)",
+        "correct": true
+      },
+      {
+        "text": "atomic_store(&obj, value)",
+        "correct": false
+      },
+      {
+        "text": "atomic_exchange(&obj, value)",
+        "correct": false
+      },
+      {
+        "text": "atomic_compare_exchange_strong(&obj, &expected, value)",
+        "correct": false
+      }
+    ],
+    "explanation": "atomic_init用于在并发访问前初始化原子对象，它不保证初始化本身是原子操作。atomic_store、atomic_exchange和atomic_compare_exchange_strong都是用于已初始化原子对象的原子操作，不是专用初始化接口。",
+    "id": "c-276",
+    "tags": [
+      "C"
+    ],
+    "section": "并发与原子操作"
+  },
+  {
+    "type": "single",
+    "question": "关于原子类型的比较交换操作atomic_compare_exchange_strong，下列说法正确的是？",
+    "options": [
+      {
+        "text": "如果原子对象的值等于expected所指的值，则将其设置为desired并返回true",
+        "correct": true
+      },
+      {
+        "text": "如果原子对象的值不等于expected所指的值，则将其设置为desired并返回false",
+        "correct": false
+      },
+      {
+        "text": "该操作总是返回原子对象的旧值",
+        "correct": false
+      },
+      {
+        "text": "该操作只能用于整型原子类型",
+        "correct": false
+      }
+    ],
+    "explanation": "atomic_compare_exchange_strong比较原子对象与expected指向的值，相等则写入desired并返回true，否则将原子对象当前值写入*expected并返回false。",
+    "id": "c-277",
+    "tags": [
+      "C"
+    ],
+    "section": "并发与原子操作"
+  },
+  {
+    "type": "single",
+    "question": "在C11中，memory_order_seq_cst内存序的含义是？",
+    "options": [
+      {
+        "text": "顺序一致性，所有线程看到的操作顺序一致，且每个操作都是原子的",
+        "correct": true
+      },
+      {
+        "text": "只保证操作的原子性，不保证顺序",
+        "correct": false
+      },
+      {
+        "text": "保证释放语义，防止前面的读写重排到后面",
+        "correct": false
+      },
+      {
+        "text": "保证获取语义，防止后面的读写重排到前面",
+        "correct": false
+      }
+    ],
+    "explanation": "memory_order_seq_cst提供顺序一致性，是所有内存序中最严格的，它保证原子操作按程序顺序执行，且所有线程观察到相同的顺序。",
+    "id": "c-278",
+    "tags": [
+      "C"
+    ],
+    "section": "并发与原子操作"
+  },
+  {
+    "type": "single",
+    "question": "使用原子操作实现自旋锁时，通常使用哪个原子操作来尝试获取锁？",
+    "options": [
+      {
+        "text": "atomic_exchange",
+        "correct": true
+      },
+      {
+        "text": "atomic_load",
+        "correct": false
+      },
+      {
+        "text": "atomic_fetch_add",
+        "correct": false
+      },
+      {
+        "text": "atomic_store",
+        "correct": false
+      }
+    ],
+    "explanation": "自旋锁常用atomic_exchange尝试将锁标志从0交换为1，若返回0表示获取成功。其他操作不能原子地测试并设置。",
+    "id": "c-279",
+    "tags": [
+      "C"
+    ],
+    "section": "并发与原子操作"
+  },
+  {
+    "type": "single",
+    "question": "以下关于原子类型和volatile关键字的说法，正确的是？",
+    "options": [
+      {
+        "text": "volatile不保证原子性，原子类型保证原子性",
+        "correct": true
+      },
+      {
+        "text": "volatile保证原子性，原子类型不保证原子性",
+        "correct": false
+      },
+      {
+        "text": "两者都保证原子性和内存顺序",
+        "correct": false
+      },
+      {
+        "text": "两者都不保证原子性",
+        "correct": false
+      }
+    ],
+    "explanation": "volatile仅防止编译器优化，不保证原子性和内存顺序；原子类型提供原子操作和内存序控制。",
+    "id": "c-280",
+    "tags": [
+      "C"
+    ],
+    "section": "并发与原子操作"
+  },
+  {
+    "type": "multiple",
+    "question": "下列哪些属于C11标准定义的内存序（memory order）？",
+    "options": [
+      {
+        "text": "memory_order_relaxed",
+        "correct": true
+      },
+      {
+        "text": "memory_order_acquire",
+        "correct": true
+      },
+      {
+        "text": "memory_order_release",
+        "correct": true
+      },
+      {
+        "text": "memory_order_volatile",
+        "correct": false
+      }
+    ],
+    "explanation": "C11定义了memory_order_relaxed、acquire、release、acq_rel、seq_cst等，没有memory_order_volatile。",
+    "id": "c-281",
+    "tags": [
+      "C"
+    ],
+    "section": "并发与原子操作"
+  },
+  {
+    "type": "multiple",
+    "question": "关于原子类型atomic_flag，下列说法正确的是？",
+    "options": [
+      {
+        "text": "atomic_flag必须用ATOMIC_FLAG_INIT初始化",
+        "correct": true
+      },
+      {
+        "text": "atomic_flag支持test_and_set操作",
+        "correct": true
+      },
+      {
+        "text": "atomic_flag支持clear操作",
+        "correct": true
+      },
+      {
+        "text": "atomic_flag可以像普通整型一样进行加减运算",
+        "correct": false
+      }
+    ],
+    "explanation": "atomic_flag是一种简单的原子布尔类型，必须用ATOMIC_FLAG_INIT初始化，提供test_and_set和clear操作，不支持算术运算。",
+    "id": "c-282",
+    "tags": [
+      "C"
+    ],
+    "section": "并发与原子操作"
+  },
+  {
+    "type": "multiple",
+    "question": "在C11中，使用原子操作可以避免哪些问题？",
+    "options": [
+      {
+        "text": "数据竞争",
+        "correct": true
+      },
+      {
+        "text": "编译器重排导致的可见性问题",
+        "correct": true
+      },
+      {
+        "text": "死锁",
+        "correct": false
+      },
+      {
+        "text": "所有并发错误",
+        "correct": false
+      }
+    ],
+    "explanation": "原子操作可以防止数据竞争和由重排引起的可见性问题，但不能避免死锁，也不能解决所有并发错误（如逻辑错误）。",
+    "id": "c-283",
+    "tags": [
+      "C"
+    ],
+    "section": "并发与原子操作"
+  },
+  {
+    "type": "single",
+    "question": "考虑以下代码：atomic_int x = 0; 线程1执行atomic_store(&x, 1); 线程2执行int y = atomic_load(&x); 若没有其他同步，y的值可能是？",
+    "options": [
+      {
+        "text": "0或1",
+        "correct": true
+      },
+      {
+        "text": "只能是0",
+        "correct": false
+      },
+      {
+        "text": "只能是1",
+        "correct": false
+      },
+      {
+        "text": "未定义",
+        "correct": false
+      }
+    ],
+    "explanation": "atomic_load和atomic_store是原子操作，但若使用默认内存序（seq_cst），线程2可能读到0或1，取决于执行顺序，但不会读到其他值。",
+    "id": "c-284",
+    "tags": [
+      "C"
+    ],
+    "section": "并发与原子操作"
+  },
+  {
+    "type": "multiple",
+    "question": "下列哪些函数是C11标准中提供的原子操作函数？",
+    "options": [
+      {
+        "text": "atomic_fetch_add",
+        "correct": true
+      },
+      {
+        "text": "atomic_exchange",
+        "correct": true
+      },
+      {
+        "text": "atomic_compare_exchange_weak",
+        "correct": true
+      },
+      {
+        "text": "atomic_increment",
+        "correct": false
+      }
+    ],
+    "explanation": "C11提供atomic_fetch_add、atomic_exchange、atomic_compare_exchange_weak等，没有atomic_increment函数。",
+    "id": "c-285",
+    "tags": [
+      "C"
+    ],
+    "section": "并发与原子操作"
+  },
+  {
+    "type": "single",
+    "question": "在C11标准中，原子类型对象必须满足的对齐要求是什么？",
+    "options": [
+      {
+        "text": "与对应非原子类型相同",
+        "correct": false
+      },
+      {
+        "text": "至少为2字节",
+        "correct": false
+      },
+      {
+        "text": "由实现定义但需保证原子访问不发生撕裂",
+        "correct": true
+      },
+      {
+        "text": "必须为8字节",
+        "correct": false
+      }
+    ],
+    "explanation": "C11要求原子类型对齐足以保证原子操作不产生撕裂，具体值由实现定义。选项A错误，原子类型对齐可能更严格；B、D无标准依据。",
+    "id": "c-286",
+    "tags": [
+      "C"
+    ],
+    "section": "并发与原子操作"
+  },
+  {
+    "type": "single",
+    "question": "关于atomic_is_lock_free函数，下列说法正确的是？",
+    "options": [
+      {
+        "text": "它返回一个布尔值，指示指定原子类型是否无锁",
+        "correct": true
+      },
+      {
+        "text": "它只能用于atomic_flag类型",
+        "correct": false
+      },
+      {
+        "text": "它返回原子对象当前的值",
+        "correct": false
+      },
+      {
+        "text": "它总是返回true",
+        "correct": false
+      }
+    ],
+    "explanation": "atomic_is_lock_free用于查询原子类型是否无锁实现。B错误，可用于任意原子类型；C混淆了load；D错误，可能返回false。",
+    "id": "c-287",
+    "tags": [
+      "C"
+    ],
+    "section": "并发与原子操作"
+  },
+  {
+    "type": "single",
+    "question": "考虑代码：atomic_int a = ATOMIC_VAR_INIT(0); 若线程1执行atomic_fetch_add(&a, 5)，线程2同时执行atomic_fetch_sub(&a, 3)，操作完成后a的值最可能是什么？",
+    "options": [
+      {
+        "text": "2",
+        "correct": true
+      },
+      {
+        "text": "5",
+        "correct": false
+      },
+      {
+        "text": "-3",
+        "correct": false
+      },
+      {
+        "text": "不确定，因为存在数据竞争",
+        "correct": false
+      }
+    ],
+    "explanation": "两个操作均为原子读-改-写，顺序执行，最终值为0+5-3=2。D错误，原子操作无数据竞争，结果确定。",
+    "id": "c-288",
+    "tags": [
+      "C"
+    ],
+    "section": "并发与原子操作"
+  },
+  {
+    "type": "single",
+    "question": "使用atomic_exchange(&obj, desired)时，该操作的行为是什么？",
+    "options": [
+      {
+        "text": "将obj设为desired并返回obj的旧值",
+        "correct": true
+      },
+      {
+        "text": "将obj设为desired并返回desired",
+        "correct": false
+      },
+      {
+        "text": "仅当obj等于desired时才交换",
+        "correct": false
+      },
+      {
+        "text": "比较obj和desired，相等则不变",
+        "correct": false
+      }
+    ],
+    "explanation": "atomic_exchange原子地将obj替换为desired，并返回替换前的值。C、D描述的是比较交换操作，B返回值错误。",
+    "id": "c-289",
+    "tags": [
+      "C"
+    ],
+    "section": "并发与原子操作"
+  },
+  {
+    "type": "single",
+    "question": "在C11中，memory_order_acq_rel内存序适用于哪种原子操作？",
+    "options": [
+      {
+        "text": "仅加载操作",
+        "correct": false
+      },
+      {
+        "text": "仅存储操作",
+        "correct": false
+      },
+      {
+        "text": "读-改-写操作",
+        "correct": true
+      },
+      {
+        "text": "所有原子操作",
+        "correct": false
+      }
+    ],
+    "explanation": "memory_order_acq_rel同时具有获取和释放语义，仅用于读-改-写操作。加载操作可用acquire，存储操作可用release，不能用于纯加载或纯存储。",
+    "id": "c-290",
+    "tags": [
+      "C"
+    ],
+    "section": "并发与原子操作"
+  },
+  {
+    "type": "single",
+    "question": "关于atomic_init函数，下列说法正确的是？",
+    "options": [
+      {
+        "text": "它原子地将原子对象初始化为指定值",
+        "correct": false
+      },
+      {
+        "text": "它非原子地初始化原子对象，且不应用于已初始化的对象",
+        "correct": true
+      },
+      {
+        "text": "它只能用于静态存储期的原子对象",
+        "correct": false
+      },
+      {
+        "text": "它等同于atomic_store",
+        "correct": false
+      }
+    ],
+    "explanation": "atomic_init用于初始化原子对象，非原子操作，不得对已初始化的对象调用。A错误，它非原子；C错误，可用于自动存储期；D错误，不同于store。",
+    "id": "c-291",
+    "tags": [
+      "C"
+    ],
+    "section": "并发与原子操作"
+  },
+  {
+    "type": "single",
+    "question": "使用原子操作实现自旋锁时，释放锁通常使用哪个操作？",
+    "options": [
+      {
+        "text": "atomic_load",
+        "correct": false
+      },
+      {
+        "text": "atomic_store",
+        "correct": true
+      },
+      {
+        "text": "atomic_fetch_add",
+        "correct": false
+      },
+      {
+        "text": "atomic_compare_exchange_weak",
+        "correct": false
+      }
+    ],
+    "explanation": "释放锁只需原子地存储一个表示未锁定的值，常用atomic_store。获取锁通常用比较交换或exchange。",
+    "id": "c-292",
+    "tags": [
+      "C"
+    ],
+    "section": "并发与原子操作"
+  },
+  {
+    "type": "single",
+    "question": "下列操作中，哪一个可能破坏原子性？",
+    "options": [
+      {
+        "text": "atomic_store(&x, 1)（x为atomic_int）",
+        "correct": false
+      },
+      {
+        "text": "x += 1（x为atomic_int）",
+        "correct": false
+      },
+      {
+        "text": "atomic_load(&x)（x为atomic_int）",
+        "correct": false
+      },
+      {
+        "text": "对非原子变量执行 x = x + 1 这样的读-改-写",
+        "correct": true
+      }
+    ],
+    "explanation": "对非原子变量的读-改-写由读、计算、写多个步骤组成，可能被其他线程交错；atomic_store、atomic_load 是原子访问，atomic_int 的复合赋值 += 是标准规定的原子读-改-写。普通写法 x = x + 1 对原子对象会拆成原子加载和原子存储，整体不是原子读-改-写。",
+    "id": "c-293",
+    "tags": [
+      "C"
+    ],
+    "section": "并发与原子操作"
+  },
+  {
+    "type": "single",
+    "question": "关于memory_order_consume，下列说法正确的是？",
+    "options": [
+      {
+        "text": "它比acquire更严格",
+        "correct": false
+      },
+      {
+        "text": "它仅对依赖于加载值的操作施加顺序约束",
+        "correct": true
+      },
+      {
+        "text": "它等同于seq_cst",
+        "correct": false
+      },
+      {
+        "text": "它常用于存储操作",
+        "correct": false
+      }
+    ],
+    "explanation": "memory_order_consume用于加载，仅对数据依赖的操作建立顺序，比acquire弱。不能用于存储操作，也不等同于seq_cst。",
+    "id": "c-294",
+    "tags": [
+      "C"
+    ],
+    "section": "并发与原子操作"
+  },
+  {
+    "type": "single",
+    "question": "以下关于原子类型与普通类型混合使用的说法，正确的是？",
+    "options": [
+      {
+        "text": "原子类型对象可以直接赋值给普通变量，且该赋值是原子的",
+        "correct": false
+      },
+      {
+        "text": "对原子类型对象使用非原子操作是未定义行为",
+        "correct": false
+      },
+      {
+        "text": "通过原子操作访问原子对象，同时通过非原子操作访问同一对象是数据竞争",
+        "correct": true
+      },
+      {
+        "text": "原子类型对象不能取地址",
+        "correct": false
+      }
+    ],
+    "explanation": "原子对象必须通过原子操作访问，若同时用非原子操作访问同一对象则构成数据竞争。A中赋值给普通变量涉及原子加载但非整体原子；B不准确；D错误，可取地址。",
+    "id": "c-295",
+    "tags": [
+      "C"
+    ],
+    "section": "并发与原子操作"
+  },
+  {
+    "type": "multiple",
+    "question": "下列哪些是C11标准中atomic_flag提供的操作？",
+    "options": [
+      {
+        "text": "atomic_flag_test_and_set",
+        "correct": true
+      },
+      {
+        "text": "atomic_flag_clear",
+        "correct": true
+      },
+      {
+        "text": "atomic_flag_load",
+        "correct": false
+      },
+      {
+        "text": "atomic_flag_exchange",
+        "correct": false
+      }
+    ],
+    "explanation": "atomic_flag仅保证test_and_set和clear两种操作，以及初始化。load和exchange不是atomic_flag的标准操作。",
+    "id": "c-296",
+    "tags": [
+      "C"
+    ],
+    "section": "并发与原子操作"
+  },
+  {
+    "type": "multiple",
+    "question": "关于memory_order_seq_cst，下列说法正确的有？",
+    "options": [
+      {
+        "text": "它提供顺序一致性的全局总顺序",
+        "correct": true
+      },
+      {
+        "text": "它同时具有acquire和release语义（对读-改-写操作）",
+        "correct": true
+      },
+      {
+        "text": "它比memory_order_relaxed性能更高",
+        "correct": false
+      },
+      {
+        "text": "它禁止所有编译器优化",
+        "correct": false
+      }
+    ],
+    "explanation": "seq_cst建立所有seq_cst操作的全局总顺序，读-改-写操作兼具acquire和release语义。它通常性能开销较大，但并非禁止所有优化。",
+    "id": "c-297",
+    "tags": [
+      "C"
+    ],
+    "section": "并发与原子操作"
+  },
+  {
+    "type": "multiple",
+    "question": "在C11中，哪些原子操作可用于实现“等待直到值变为特定值”的自旋？",
+    "options": [
+      {
+        "text": "atomic_load配合循环",
+        "correct": true
+      },
+      {
+        "text": "atomic_compare_exchange_weak",
+        "correct": true
+      },
+      {
+        "text": "atomic_store",
+        "correct": false
+      },
+      {
+        "text": "atomic_fetch_add",
+        "correct": false
+      }
+    ],
+    "explanation": "atomic_load可在循环中轮询；compare_exchange_weak可用作原子条件更新。store和fetch_add不直接用于等待特定值。",
+    "id": "c-298",
+    "tags": [
+      "C"
+    ],
+    "section": "并发与原子操作"
+  },
+  {
+    "type": "multiple",
+    "question": "下列关于原子操作与内存序的说法，正确的有？",
+    "options": [
+      {
+        "text": "relaxed操作不提供同步，但保证原子性",
+        "correct": true
+      },
+      {
+        "text": "当acquire操作读取到release操作所写入的值时，release操作之前的写对acquire操作之后的读可见",
+        "correct": true
+      },
+      {
+        "text": "acquire操作可防止后续读写被重排到该操作之前",
+        "correct": true
+      },
+      {
+        "text": "seq_cst操作之间没有顺序保证",
+        "correct": false
+      }
+    ],
+    "explanation": "relaxed仅保证原子性，不建立同步；release与acquire只有在该acquire读到该release所写值时才建立同步，使release之前的写对acquire之后的读可见；acquire具有单向屏障作用；seq_cst提供全局总顺序。",
+    "id": "c-299",
+    "tags": [
+      "C"
+    ],
+    "section": "并发与原子操作"
+  },
+  {
+    "type": "multiple",
+    "question": "下列哪些因素可能导致某个原子类型的操作不是无锁实现？",
+    "options": [
+      {
+        "text": "该原子类型的大小超过目标处理器原子指令支持的范围",
+        "correct": true
+      },
+      {
+        "text": "目标平台没有对应原子类型的硬件原子指令",
+        "correct": true
+      },
+      {
+        "text": "只要原子类型是atomic_int，标准就保证它一定无锁",
+        "correct": false
+      },
+      {
+        "text": "使用memory_order_relaxed会使atomic_int一定变成有锁实现",
+        "correct": false
+      }
+    ],
+    "explanation": "是否无锁由实现和平台决定；类型过大或缺少硬件原子指令时可能退化为锁实现。atomic_int是否无锁也不能由标准保证，内存序选择不影响锁性质。",
+    "id": "c-300",
+    "tags": [
+      "C"
+    ],
+    "section": "并发与原子操作"
+  }
+]

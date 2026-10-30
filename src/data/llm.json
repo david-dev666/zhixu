@@ -1,0 +1,8402 @@
+[
+  {
+    "type": "single",
+    "question": "在Transformer的自注意力机制中，缩放点积注意力除以√d_k的主要目的是什么？",
+    "options": [
+      {
+        "text": "防止点积结果过大导致softmax梯度消失",
+        "correct": true
+      },
+      {
+        "text": "减少计算复杂度",
+        "correct": false
+      },
+      {
+        "text": "增加模型的非线性",
+        "correct": false
+      },
+      {
+        "text": "允许模型处理更长的序列",
+        "correct": false
+      }
+    ],
+    "explanation": "缩放点积注意力中，点积结果随维度d_k增大而增大，除以√d_k可防止softmax输入过大导致梯度消失。计算复杂度、非线性和序列长度处理均不受此缩放直接影响。",
+    "id": "llm-001",
+    "tags": [
+      "LLM"
+    ],
+    "section": "Transformer"
+  },
+  {
+    "type": "single",
+    "question": "Transformer中的多头注意力机制的主要作用是什么？",
+    "options": [
+      {
+        "text": "允许模型同时关注不同位置的不同表示子空间",
+        "correct": true
+      },
+      {
+        "text": "减少注意力计算的时间复杂度",
+        "correct": false
+      },
+      {
+        "text": "替代前馈神经网络层",
+        "correct": false
+      },
+      {
+        "text": "增加模型的深度",
+        "correct": false
+      }
+    ],
+    "explanation": "多头注意力将查询、键、值线性投影到多个子空间，并行计算注意力，使模型能捕捉多样化的特征。它不降低复杂度，也不替代前馈层或增加深度。",
+    "id": "llm-002",
+    "tags": [
+      "LLM"
+    ],
+    "section": "Transformer"
+  },
+  {
+    "type": "single",
+    "question": "在Transformer中，位置编码的主要作用是什么？",
+    "options": [
+      {
+        "text": "为模型提供序列中单词的顺序信息",
+        "correct": true
+      },
+      {
+        "text": "减少模型参数量",
+        "correct": false
+      },
+      {
+        "text": "防止过拟合",
+        "correct": false
+      },
+      {
+        "text": "加速训练过程",
+        "correct": false
+      }
+    ],
+    "explanation": "Transformer自注意力本身无位置感知，位置编码注入绝对或相对位置信息，使模型能利用序列顺序。它不减少参数、防过拟合或加速训练。",
+    "id": "llm-003",
+    "tags": [
+      "LLM"
+    ],
+    "section": "Transformer"
+  },
+  {
+    "type": "single",
+    "question": "在现代Transformer实现常用的Pre-LN结构中，残差连接和层归一化的组合顺序是什么？",
+    "options": [
+      {
+        "text": "先对子层输入做层归一化，再送入子层计算，最后将子层输出与子层输入做残差相加",
+        "correct": true
+      },
+      {
+        "text": "先送入子层计算，再将子层输出与子层输入做残差相加，最后做层归一化",
+        "correct": false
+      },
+      {
+        "text": "先送入子层计算并做层归一化，再将归一化结果与子层输入做残差相加",
+        "correct": false
+      },
+      {
+        "text": "层归一化与残差连接并联，子层计算不参与归一化",
+        "correct": false
+      }
+    ],
+    "explanation": "Pre-LN在每个子层前先做层归一化，子层计算后再与子层输入相加；Post-LN则先做子层计算和残差相加，最后做层归一化。原始Transformer采用Post-LN，现代实现常采用Pre-LN以改善训练稳定性。",
+    "id": "llm-004",
+    "tags": [
+      "LLM"
+    ],
+    "section": "Transformer"
+  },
+  {
+    "type": "single",
+    "question": "在Transformer解码器中，掩码多头注意力（Masked Multi-Head Attention）的作用是什么？",
+    "options": [
+      {
+        "text": "防止当前位置关注未来位置的信息",
+        "correct": true
+      },
+      {
+        "text": "减少注意力头的数量",
+        "correct": false
+      },
+      {
+        "text": "加速解码过程",
+        "correct": false
+      },
+      {
+        "text": "允许模型看到完整序列",
+        "correct": false
+      }
+    ],
+    "explanation": "掩码多头注意力通过掩码矩阵将未来位置的注意力分数设为负无穷，确保自回归生成时只能依赖已生成的部分，防止信息泄露。它不改变头数或加速解码。",
+    "id": "llm-005",
+    "tags": [
+      "LLM"
+    ],
+    "section": "Transformer"
+  },
+  {
+    "type": "single",
+    "question": "Transformer的前馈神经网络（FFN）通常由什么组成？",
+    "options": [
+      {
+        "text": "两个线性变换，中间加ReLU激活",
+        "correct": true
+      },
+      {
+        "text": "一个线性变换加softmax",
+        "correct": false
+      },
+      {
+        "text": "两个卷积层加池化",
+        "correct": false
+      },
+      {
+        "text": "一个循环神经网络层",
+        "correct": false
+      }
+    ],
+    "explanation": "FFN由两个线性层构成，第一层后接ReLU（或GELU）激活，第二层输出。它不包含softmax、卷积或RNN结构。",
+    "id": "llm-006",
+    "tags": [
+      "LLM"
+    ],
+    "section": "Transformer"
+  },
+  {
+    "type": "single",
+    "question": "在Transformer中，自注意力机制的计算复杂度与序列长度n的关系是什么？",
+    "options": [
+      {
+        "text": "O(n^2)",
+        "correct": true
+      },
+      {
+        "text": "O(n)",
+        "correct": false
+      },
+      {
+        "text": "O(log n)",
+        "correct": false
+      },
+      {
+        "text": "O(1)",
+        "correct": false
+      }
+    ],
+    "explanation": "自注意力需要计算每对位置的注意力分数，因此时间复杂度为O(n^2·d)，其中d为维度。它不随n线性或对数增长，也非常数。",
+    "id": "llm-007",
+    "tags": [
+      "LLM"
+    ],
+    "section": "Transformer"
+  },
+  {
+    "type": "single",
+    "question": "Transformer模型最初是在哪篇论文中提出的？",
+    "options": [
+      {
+        "text": "Attention Is All You Need",
+        "correct": true
+      },
+      {
+        "text": "BERT: Pre-training of Deep Bidirectional Transformers",
+        "correct": false
+      },
+      {
+        "text": "Generative Pre-trained Transformer",
+        "correct": false
+      },
+      {
+        "text": "Sequence to Sequence Learning with Neural Networks",
+        "correct": false
+      }
+    ],
+    "explanation": "Transformer由Vaswani等人在2017年论文《Attention Is All You Need》中提出。BERT和GPT是基于Transformer的后续工作，Seq2Seq是更早的RNN模型。",
+    "id": "llm-008",
+    "tags": [
+      "LLM"
+    ],
+    "section": "Transformer"
+  },
+  {
+    "type": "single",
+    "question": "在Transformer中，编码器-解码器注意力（Encoder-Decoder Attention）的查询（Query）来自哪里？",
+    "options": [
+      {
+        "text": "解码器的上一层输出",
+        "correct": true
+      },
+      {
+        "text": "编码器的输出",
+        "correct": false
+      },
+      {
+        "text": "解码器的输入嵌入",
+        "correct": false
+      },
+      {
+        "text": "编码器的输入嵌入",
+        "correct": false
+      }
+    ],
+    "explanation": "编码器-解码器注意力中，查询来自解码器上一层的输出，键和值来自编码器的输出。这允许解码器在生成每个词时关注输入序列的相关部分。",
+    "id": "llm-009",
+    "tags": [
+      "LLM"
+    ],
+    "section": "Transformer"
+  },
+  {
+    "type": "single",
+    "question": "关于Transformer中的层归一化（Layer Normalization），以下说法正确的是？",
+    "options": [
+      {
+        "text": "对每个样本的特征维度进行归一化",
+        "correct": true
+      },
+      {
+        "text": "对批次维度进行归一化",
+        "correct": false
+      },
+      {
+        "text": "对序列长度维度进行归一化",
+        "correct": false
+      },
+      {
+        "text": "对注意力头数量进行归一化",
+        "correct": false
+      }
+    ],
+    "explanation": "层归一化对每个样本的所有特征计算均值和方差进行归一化，与批次大小无关。批次归一化才对批次维度操作。",
+    "id": "llm-010",
+    "tags": [
+      "LLM"
+    ],
+    "section": "Transformer"
+  },
+  {
+    "type": "single",
+    "question": "在Transformer中，位置编码通常如何与词嵌入结合？",
+    "options": [
+      {
+        "text": "相加",
+        "correct": true
+      },
+      {
+        "text": "拼接",
+        "correct": false
+      },
+      {
+        "text": "相乘",
+        "correct": false
+      },
+      {
+        "text": "取平均",
+        "correct": false
+      }
+    ],
+    "explanation": "原始Transformer将位置编码与词嵌入逐元素相加，使嵌入同时包含词义和位置信息。拼接、相乘或平均不是标准做法。",
+    "id": "llm-011",
+    "tags": [
+      "LLM"
+    ],
+    "section": "Transformer"
+  },
+  {
+    "type": "single",
+    "question": "Transformer中使用的正弦位置编码的波长和频率有什么特点？",
+    "options": [
+      {
+        "text": "波长随维度索引增加而指数增长",
+        "correct": true
+      },
+      {
+        "text": "波长随维度索引增加而线性增长",
+        "correct": false
+      },
+      {
+        "text": "所有维度使用相同频率",
+        "correct": false
+      },
+      {
+        "text": "波长随序列位置增加而增长",
+        "correct": false
+      }
+    ],
+    "explanation": "正弦位置编码中，不同维度使用不同频率，波长从2π到10000·2π几何增长。这使模型能区分不同位置，且可外推到更长序列。",
+    "id": "llm-012",
+    "tags": [
+      "LLM"
+    ],
+    "section": "Transformer"
+  },
+  {
+    "type": "single",
+    "question": "在Transformer中，为什么自注意力机制需要缩放点积？",
+    "options": [
+      {
+        "text": "防止点积结果过大导致softmax梯度消失",
+        "correct": true
+      },
+      {
+        "text": "减少计算复杂度",
+        "correct": false
+      },
+      {
+        "text": "增加模型的非线性",
+        "correct": false
+      },
+      {
+        "text": "允许模型处理更长的序列",
+        "correct": false
+      }
+    ],
+    "explanation": "点积结果随维度d_k增大而增大，除以√d_k可防止softmax输入过大导致梯度消失。计算复杂度、非线性和序列长度处理均不受此缩放直接影响。",
+    "id": "llm-013",
+    "tags": [
+      "LLM"
+    ],
+    "section": "Transformer"
+  },
+  {
+    "type": "multiple",
+    "question": "以下关于Transformer中自注意力机制的说法，哪些是正确的？",
+    "options": [
+      {
+        "text": "自注意力计算序列中每个位置与其他所有位置的关联权重",
+        "correct": true
+      },
+      {
+        "text": "自注意力机制可以并行计算",
+        "correct": true
+      },
+      {
+        "text": "自注意力机制的计算复杂度与序列长度成线性关系",
+        "correct": false
+      },
+      {
+        "text": "自注意力机制只能用于编码器",
+        "correct": false
+      }
+    ],
+    "explanation": "自注意力计算所有位置对的关联权重，且可并行处理，但复杂度为O(n^2)。它可用于编码器和解码器，因此选项A、B正确，C、D错误。",
+    "id": "llm-014",
+    "tags": [
+      "LLM"
+    ],
+    "section": "Transformer"
+  },
+  {
+    "type": "multiple",
+    "question": "在原始Transformer采用的正弦位置编码中，以下说法哪些正确？",
+    "options": [
+      {
+        "text": "为模型提供单词在序列中的顺序信息",
+        "correct": true
+      },
+      {
+        "text": "正弦位置编码由固定公式生成，可计算训练时未出现的位置编码",
+        "correct": true
+      },
+      {
+        "text": "正弦位置编码是训练中更新的可学习参数",
+        "correct": false
+      },
+      {
+        "text": "位置编码的维度必须与词嵌入维度相同，才能逐元素相加",
+        "correct": true
+      }
+    ],
+    "explanation": "正弦位置编码用不同频率的正弦和余弦函数为每个位置生成固定向量，注入顺序信息；其维度与词嵌入一致以便相加，且公式可计算任意位置的编码，但模型对更长序列的实际外推能力仍受训练分布影响。正弦编码不是训练中更新的可学习参数。",
+    "id": "llm-015",
+    "tags": [
+      "LLM"
+    ],
+    "section": "Transformer"
+  },
+  {
+    "type": "single",
+    "question": "在Transformer的自注意力计算中，若键向量维度d_k增大，点积结果的方差通常如何变化？",
+    "options": [
+      {
+        "text": "保持不变，因为点积是线性运算",
+        "correct": false
+      },
+      {
+        "text": "随d_k增大而增大，导致softmax梯度变小",
+        "correct": true
+      },
+      {
+        "text": "随d_k增大而减小，导致softmax输出更尖锐",
+        "correct": false
+      },
+      {
+        "text": "先增大后减小，与d_k无关",
+        "correct": false
+      }
+    ],
+    "explanation": "点积的方差与d_k成正比，d_k越大点积值越大，softmax输入过大时梯度会趋近于零，因此需要缩放。",
+    "id": "llm-016",
+    "tags": [
+      "LLM"
+    ],
+    "section": "Transformer"
+  },
+  {
+    "type": "single",
+    "question": "Transformer中多头注意力将输入投影到多个子空间后，各头的输出通常如何合并？",
+    "options": [
+      {
+        "text": "逐元素相加后直接输出",
+        "correct": false
+      },
+      {
+        "text": "按头维度拼接后再线性投影",
+        "correct": true
+      },
+      {
+        "text": "取各头输出的最大值",
+        "correct": false
+      },
+      {
+        "text": "对各头输出做softmax加权平均",
+        "correct": false
+      }
+    ],
+    "explanation": "多头注意力将各头输出沿特征维拼接，再通过输出权重矩阵投影回模型维度，使不同头的信息融合。",
+    "id": "llm-017",
+    "tags": [
+      "LLM"
+    ],
+    "section": "Transformer"
+  },
+  {
+    "type": "single",
+    "question": "在原始Transformer（Post-LN）的编码器中，每个子层的输出在进入下一子层前通常经过什么操作？",
+    "options": [
+      {
+        "text": "仅做层归一化",
+        "correct": false
+      },
+      {
+        "text": "先与子层输入做残差相加，再做层归一化",
+        "correct": true
+      },
+      {
+        "text": "仅做残差相加，不做层归一化",
+        "correct": false
+      },
+      {
+        "text": "先做Dropout再做卷积",
+        "correct": false
+      }
+    ],
+    "explanation": "原始Transformer的Post-LN结构对每个子层执行“子层计算→与子层输入残差相加→层归一化”，因此进入下一子层前已经完成残差相加和层归一化。现代Pre-LN结构则把层归一化放在子层之前，二者需明确区分。",
+    "id": "llm-018",
+    "tags": [
+      "LLM"
+    ],
+    "section": "Transformer"
+  },
+  {
+    "type": "single",
+    "question": "在Transformer解码器的训练阶段，掩码自注意力确保每个位置只能关注到什么？",
+    "options": [
+      {
+        "text": "包括未来位置在内的所有位置",
+        "correct": false
+      },
+      {
+        "text": "当前及之前的位置",
+        "correct": true
+      },
+      {
+        "text": "仅当前位置",
+        "correct": false
+      },
+      {
+        "text": "仅之前的位置，不含当前位置",
+        "correct": false
+      }
+    ],
+    "explanation": "掩码将未来位置的注意力分数置为负无穷，softmax后为零，因此每个位置只能看到当前及之前的位置，保持自回归性。",
+    "id": "llm-019",
+    "tags": [
+      "LLM"
+    ],
+    "section": "Transformer"
+  },
+  {
+    "type": "single",
+    "question": "Transformer中编码器-解码器注意力的键（Key）和值（Value）来自哪里？",
+    "options": [
+      {
+        "text": "解码器上一层的输出",
+        "correct": false
+      },
+      {
+        "text": "编码器的最终输出",
+        "correct": true
+      },
+      {
+        "text": "解码器的输入嵌入",
+        "correct": false
+      },
+      {
+        "text": "编码器的输入嵌入",
+        "correct": false
+      }
+    ],
+    "explanation": "编码器-解码器注意力中，查询来自解码器当前层，键和值来自编码器最终输出，使解码器能关注输入序列信息。",
+    "id": "llm-020",
+    "tags": [
+      "LLM"
+    ],
+    "section": "Transformer"
+  },
+  {
+    "type": "single",
+    "question": "Transformer前馈网络（FFN）中，第一个线性层通常将维度从d_model变换到多少？",
+    "options": [
+      {
+        "text": "d_model/2",
+        "correct": false
+      },
+      {
+        "text": "d_model",
+        "correct": false
+      },
+      {
+        "text": "4倍d_model",
+        "correct": true
+      },
+      {
+        "text": "8倍d_model",
+        "correct": false
+      }
+    ],
+    "explanation": "标准Transformer的FFN先将维度扩展到4倍d_model，经ReLU激活后再投影回d_model，以增强非线性表示能力。",
+    "id": "llm-021",
+    "tags": [
+      "LLM"
+    ],
+    "section": "Transformer"
+  },
+  {
+    "type": "single",
+    "question": "Transformer中正弦位置编码的每个维度对应不同频率，其频率随维度索引增大如何变化？",
+    "options": [
+      {
+        "text": "频率增大，波长变短",
+        "correct": false
+      },
+      {
+        "text": "频率减小，波长变长",
+        "correct": true
+      },
+      {
+        "text": "频率保持不变",
+        "correct": false
+      },
+      {
+        "text": "频率先增后减",
+        "correct": false
+      }
+    ],
+    "explanation": "正弦位置编码中，低维度使用高频（短波长），高维度使用低频（长波长），形成多尺度位置表示。",
+    "id": "llm-022",
+    "tags": [
+      "LLM"
+    ],
+    "section": "Transformer"
+  },
+  {
+    "type": "single",
+    "question": "关于Transformer中的自注意力，若序列长度为n，键维度为d，其计算复杂度主要取决于什么？",
+    "options": [
+      {
+        "text": "O(n*d)",
+        "correct": false
+      },
+      {
+        "text": "O(n^2*d)",
+        "correct": true
+      },
+      {
+        "text": "O(n*d^2)",
+        "correct": false
+      },
+      {
+        "text": "O(d^2)",
+        "correct": false
+      }
+    ],
+    "explanation": "自注意力需计算n个查询与n个键的点积，每个点积复杂度O(d)，因此总体为O(n^2*d)，是长序列的主要瓶颈。",
+    "id": "llm-023",
+    "tags": [
+      "LLM"
+    ],
+    "section": "Transformer"
+  },
+  {
+    "type": "single",
+    "question": "Transformer中Layer Normalization与Batch Normalization的关键区别是什么？",
+    "options": [
+      {
+        "text": "LayerNorm在批次维度上归一化",
+        "correct": false
+      },
+      {
+        "text": "LayerNorm对每个位置的d_model特征维度归一化，不依赖批次大小",
+        "correct": true
+      },
+      {
+        "text": "LayerNorm只用于输出层",
+        "correct": false
+      },
+      {
+        "text": "LayerNorm需要存储批次统计量",
+        "correct": false
+      }
+    ],
+    "explanation": "LayerNorm在Transformer中通常对每个token位置的d_model特征计算均值和方差，不跨批次统计，因此适合变长序列和自回归生成；BatchNorm则依赖批次维度统计。",
+    "id": "llm-024",
+    "tags": [
+      "LLM"
+    ],
+    "section": "Transformer"
+  },
+  {
+    "type": "single",
+    "question": "Transformer中，编码器堆叠多层时，每一层的自注意力是否共享参数？",
+    "options": [
+      {
+        "text": "是，所有层共享同一组权重",
+        "correct": false
+      },
+      {
+        "text": "否，每层有独立的自注意力参数",
+        "correct": true
+      },
+      {
+        "text": "仅前两层共享",
+        "correct": false
+      },
+      {
+        "text": "仅最后两层共享",
+        "correct": false
+      }
+    ],
+    "explanation": "标准Transformer中每个编码器层都有独立的注意力与前馈参数，不共享权重，以学习不同层次的表示。",
+    "id": "llm-025",
+    "tags": [
+      "LLM"
+    ],
+    "section": "Transformer"
+  },
+  {
+    "type": "single",
+    "question": "在Transformer解码器生成时，自回归解码每一步通常使用什么策略选择下一个词？",
+    "options": [
+      {
+        "text": "始终选择概率最高的词（贪心）",
+        "correct": false
+      },
+      {
+        "text": "根据任务可采用贪心、束搜索或采样等策略",
+        "correct": true
+      },
+      {
+        "text": "随机均匀采样",
+        "correct": false
+      },
+      {
+        "text": "固定选择词表第一个词",
+        "correct": false
+      }
+    ],
+    "explanation": "解码策略不唯一，贪心、束搜索、温度采样等均可使用，取决于任务对质量和多样性的需求。",
+    "id": "llm-026",
+    "tags": [
+      "LLM"
+    ],
+    "section": "Transformer"
+  },
+  {
+    "type": "multiple",
+    "question": "关于Transformer中残差连接的作用，以下说法正确的有哪些？",
+    "options": [
+      {
+        "text": "缓解深层网络梯度消失",
+        "correct": true
+      },
+      {
+        "text": "使子层只需学习残差映射",
+        "correct": true
+      },
+      {
+        "text": "替代层归一化",
+        "correct": false
+      },
+      {
+        "text": "增加模型参数量",
+        "correct": false
+      }
+    ],
+    "explanation": "残差连接提供恒等捷径，缓解梯度消失，并让子层学习残差；它不替代层归一化，本身通常不增加参数。",
+    "id": "llm-027",
+    "tags": [
+      "LLM"
+    ],
+    "section": "Transformer"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些属于Transformer自注意力中缩放点积注意力的必要计算步骤？",
+    "options": [
+      {
+        "text": "查询与键的点积",
+        "correct": true
+      },
+      {
+        "text": "除以√d_k",
+        "correct": true
+      },
+      {
+        "text": "对分数做softmax",
+        "correct": true
+      },
+      {
+        "text": "对值做卷积",
+        "correct": false
+      }
+    ],
+    "explanation": "缩放点积注意力依次计算QK^T、缩放、softmax得到权重，再与V加权求和；不包含卷积操作。",
+    "id": "llm-028",
+    "tags": [
+      "LLM"
+    ],
+    "section": "Transformer"
+  },
+  {
+    "type": "multiple",
+    "question": "关于Transformer位置编码，以下说法正确的有哪些？",
+    "options": [
+      {
+        "text": "位置编码可与词嵌入相加注入位置信息",
+        "correct": true
+      },
+      {
+        "text": "正弦位置编码的公式可直接计算训练长度之外的位置编码",
+        "correct": true
+      },
+      {
+        "text": "位置编码必须可学习",
+        "correct": false
+      },
+      {
+        "text": "位置编码会改变词嵌入的维度",
+        "correct": false
+      }
+    ],
+    "explanation": "位置编码与词嵌入通常维度相同并相加；正弦编码可按公式生成任意位置，但模型在超长序列上的外推效果不保证；也可用可学习编码，并非必须，位置编码不会改变词嵌入维度。",
+    "id": "llm-029",
+    "tags": [
+      "LLM"
+    ],
+    "section": "Transformer"
+  },
+  {
+    "type": "multiple",
+    "question": "在Transformer中，关于多头注意力与单头注意力的比较，正确的有哪些？",
+    "options": [
+      {
+        "text": "多头可关注不同表示子空间的信息",
+        "correct": true
+      },
+      {
+        "text": "多头总计算量与单头相同（总维度不变时）",
+        "correct": true
+      },
+      {
+        "text": "多头一定比单头参数量少",
+        "correct": false
+      },
+      {
+        "text": "多头注意力无需线性投影",
+        "correct": false
+      }
+    ],
+    "explanation": "多头将模型维度分成多个头，可捕捉不同子空间信息；总维度不变时总计算量相近；多头仍需各头的线性投影。",
+    "id": "llm-030",
+    "tags": [
+      "LLM"
+    ],
+    "section": "Transformer"
+  },
+  {
+    "type": "single",
+    "question": "在标准Transformer的自注意力中，缩放点积注意力除以√d_k的主要目的是什么？",
+    "options": [
+      {
+        "text": "防止点积随维度增大而方差过大，使softmax梯度更稳定",
+        "correct": true
+      },
+      {
+        "text": "把注意力权重归一化为整数",
+        "correct": false
+      },
+      {
+        "text": "减少键向量数量以降低显存",
+        "correct": false
+      },
+      {
+        "text": "将查询和键映射到同一子空间",
+        "correct": false
+      }
+    ],
+    "explanation": "当q、k各维独立且方差为1时，点积的方差随d_k线性增长，数值过大会让softmax进入饱和区、梯度变小。除以√d_k可把方差拉回约1，改善训练稳定性；它不改变向量数量或权重是否为整数。",
+    "id": "llm-031",
+    "tags": [
+      "LLM"
+    ],
+    "section": "注意力与位置编码"
+  },
+  {
+    "type": "single",
+    "question": "关于标准多头注意力，下列说法正确的是？",
+    "options": [
+      {
+        "text": "各头使用不同的线性投影，拼接后再做一次输出投影",
+        "correct": true
+      },
+      {
+        "text": "每个头独立对完整词表做softmax分类",
+        "correct": false
+      },
+      {
+        "text": "头数增加必然使总投影参数量成倍增加",
+        "correct": false
+      },
+      {
+        "text": "所有头共享同一组Q、K、V权重矩阵",
+        "correct": false
+      }
+    ],
+    "explanation": "多头注意力把Q、K、V分别投影到多个低维子空间并行计算注意力，各头结果拼接后经输出投影融合。标准实现中保持d_model固定时，总投影参数量通常不随头数改变；多头也不是对词表分类，且各头通常不共享投影矩阵。",
+    "id": "llm-032",
+    "tags": [
+      "LLM"
+    ],
+    "section": "注意力与位置编码"
+  },
+  {
+    "type": "single",
+    "question": "自注意力本身（不加位置编码）对输入序列具有什么性质？",
+    "options": [
+      {
+        "text": "具有置换等变性：输入元素重排后，输出按相同方式重排",
+        "correct": true
+      },
+      {
+        "text": "对每个向量整体加上同一常数后输出完全不变",
+        "correct": false
+      },
+      {
+        "text": "把序列长度截短一半后输出不变",
+        "correct": false
+      },
+      {
+        "text": "对所有向量统一乘以0后仍保留原语义",
+        "correct": false
+      }
+    ],
+    "explanation": "自注意力基于元素间两两相似度聚合，对输入顺序没有偏好，表现为置换等变：输入重排，输出相应重排，因此需要位置编码注入顺序信息。整体加常数会改变点积，截短或全乘0会改变语义或退化表示。",
+    "id": "llm-033",
+    "tags": [
+      "LLM"
+    ],
+    "section": "注意力与位置编码"
+  },
+  {
+    "type": "single",
+    "question": "正弦位置编码中不同维度使用不同频率的主要作用是什么？",
+    "options": [
+      {
+        "text": "让不同维度编码不同尺度的位置变化，形成多分辨率表示",
+        "correct": true
+      },
+      {
+        "text": "保证每个位置编码向量的L2范数都等于1",
+        "correct": false
+      },
+      {
+        "text": "使所有维度数值完全相同便于计算",
+        "correct": false
+      },
+      {
+        "text": "让位置编码只依赖序列长度",
+        "correct": false
+      }
+    ],
+    "explanation": "正弦编码各维度对应不同波长，低维变化快、高维变化慢，类似多分辨率二进制表示，便于模型区分相邻与较远位置。它并不保证单位范数，也不是所有维度相同或只依赖长度。",
+    "id": "llm-034",
+    "tags": [
+      "LLM"
+    ],
+    "section": "注意力与位置编码"
+  },
+  {
+    "type": "single",
+    "question": "RoPE（旋转位置编码）注入位置信息的基本方式是什么？",
+    "options": [
+      {
+        "text": "按位置对查询和键向量成对维度做旋转，使点积含相对位置信息",
+        "correct": true
+      },
+      {
+        "text": "在词嵌入上直接相加一个可学习标量",
+        "correct": false
+      },
+      {
+        "text": "在softmax之后加上位置偏置",
+        "correct": false
+      },
+      {
+        "text": "替换注意力中的值向量为位置向量",
+        "correct": false
+      }
+    ],
+    "explanation": "RoPE把Q、K的二维子空间按位置角度旋转，两个位置的旋转内积只依赖相对位移，从而在注意力打分中体现相对位置。它不是加标量、不是softmax后偏置，也不改动值向量的语义角色。",
+    "id": "llm-035",
+    "tags": [
+      "LLM"
+    ],
+    "section": "注意力与位置编码"
+  },
+  {
+    "type": "single",
+    "question": "ALiBi位置编码在注意力中的典型做法是？",
+    "options": [
+      {
+        "text": "给注意力分数加上与距离成比例的负偏置",
+        "correct": true
+      },
+      {
+        "text": "把位置编码乘到值向量上",
+        "correct": false
+      },
+      {
+        "text": "用可学习的绝对位置表替换词嵌入",
+        "correct": false
+      },
+      {
+        "text": "在每层之前做位置卷积",
+        "correct": false
+      }
+    ],
+    "explanation": "ALiBi对各注意力头使用不同斜率的线性负偏置惩罚远距离，直接作用于注意力分数，无需位置嵌入参数，并有一定长度外推能力。它不修改值向量，也不是绝对位置表或卷积。",
+    "id": "llm-036",
+    "tags": [
+      "LLM"
+    ],
+    "section": "注意力与位置编码"
+  },
+  {
+    "type": "single",
+    "question": "绝对位置编码与相对位置编码的核心区别是什么？",
+    "options": [
+      {
+        "text": "前者直接编码每个位置的绝对索引，后者建模元素间的位置差",
+        "correct": true
+      },
+      {
+        "text": "前者只能用于解码器，后者只能用于编码器",
+        "correct": false
+      },
+      {
+        "text": "前者不需要训练，后者一定需要训练",
+        "correct": false
+      },
+      {
+        "text": "前者会改变词表大小，后者不会",
+        "correct": false
+      }
+    ],
+    "explanation": "绝对位置编码关注“第几个位置”，相对位置编码关注“相隔多远”，后者更贴合注意力对相对位移的敏感性。二者都可用于编码器或解码器，是否需要训练取决于具体方案，也与词表大小无关。",
+    "id": "llm-037",
+    "tags": [
+      "LLM"
+    ],
+    "section": "注意力与位置编码"
+  },
+  {
+    "type": "single",
+    "question": "解码器自注意力中的因果掩码（causal mask）起什么作用？",
+    "options": [
+      {
+        "text": "阻止位置i关注未来位置j>i，保证自回归生成不泄露答案",
+        "correct": true
+      },
+      {
+        "text": "阻止位置i关注自身",
+        "correct": false
+      },
+      {
+        "text": "把注意力权重全部置零",
+        "correct": false
+      },
+      {
+        "text": "让不同样本之间互相可见",
+        "correct": false
+      }
+    ],
+    "explanation": "因果掩码把未来位置的注意力分数设为负无穷，softmax后权重约为0，使每个位置只能利用已生成的前文。通常允许关注自身；全置零会失去注意力，样本间可见则会造成批内信息泄露。",
+    "id": "llm-038",
+    "tags": [
+      "LLM"
+    ],
+    "section": "注意力与位置编码"
+  },
+  {
+    "type": "single",
+    "question": "在Transformer中，位置编码为何常与词嵌入相加而不是拼接？",
+    "options": [
+      {
+        "text": "相加保持维度不变且实现简单，模型仍能通过线性层区分二者成分",
+        "correct": true
+      },
+      {
+        "text": "相加后位置信息会被完全丢弃",
+        "correct": false
+      },
+      {
+        "text": "拼接会使序列长度翻倍导致无法训练",
+        "correct": false
+      },
+      {
+        "text": "相加能保证位置编码可逆还原原词",
+        "correct": false
+      }
+    ],
+    "explanation": "相加不增加维度、计算高效，后续线性变换可在联合表示中利用位置成分；实践中效果良好。相加并不等于丢弃位置信息，拼接也不一定导致长度翻倍，位置编码更不保证可逆还原。",
+    "id": "llm-039",
+    "tags": [
+      "LLM"
+    ],
+    "section": "注意力与位置编码"
+  },
+  {
+    "type": "single",
+    "question": "某模型训练长度512，推理时直接处理2048长度输入，使用固定正弦位置编码且未做外推处理，最可能出现什么问题？",
+    "options": [
+      {
+        "text": "超出训练范围的频率组合缺乏学习，注意力分布可能明显退化",
+        "correct": true
+      },
+      {
+        "text": "位置编码会自动变成可学习参数并适配",
+        "correct": false
+      },
+      {
+        "text": "序列变长会使注意力权重自动归一化为均匀分布",
+        "correct": false
+      },
+      {
+        "text": "词嵌入维度会自动扩展到2048",
+        "correct": false
+      }
+    ],
+    "explanation": "固定正弦编码可计算任意位置，但模型只在512内见过相应位置模式，超长后分布偏移可能使注意力失准。它不会自动变成可学习参数，也不会自动均匀化或改变嵌入维度，需外推方法或插值。",
+    "id": "llm-040",
+    "tags": [
+      "LLM"
+    ],
+    "section": "注意力与位置编码"
+  },
+  {
+    "type": "single",
+    "question": "在长序列 n≫d 时，标准自注意力中两两打分与加权聚合的主要计算开销是？",
+    "options": [
+      {
+        "text": "O(n²d)，来自两两打分与加权聚合",
+        "correct": true
+      },
+      {
+        "text": "O(nd²)且与n²无关",
+        "correct": false
+      },
+      {
+        "text": "O(n log n)由FFT实现",
+        "correct": false
+      },
+      {
+        "text": "O(d)与序列长度无关",
+        "correct": false
+      }
+    ],
+    "explanation": "查询与键的点积形成n×n分数矩阵，计算量约O(n²d)；softmax后对值加权求和同样约O(n²d)。线性投影约O(nd²)，在n≫d时不是主导项。标准注意力不经FFT，也不与序列长度无关。",
+    "id": "llm-041",
+    "tags": [
+      "LLM"
+    ],
+    "section": "注意力与位置编码"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些做法可用于缓解长序列下自注意力的二次复杂度？",
+    "options": [
+      {
+        "text": "使用稀疏或局部窗口注意力，只计算部分位置对",
+        "correct": true
+      },
+      {
+        "text": "采用线性注意力等核化近似方法",
+        "correct": true
+      },
+      {
+        "text": "把序列切块并设计跨块信息传递",
+        "correct": true
+      },
+      {
+        "text": "把所有注意力权重强制设为相同值",
+        "correct": false
+      }
+    ],
+    "explanation": "稀疏/局部注意力减少参与计算的位置对，线性注意力用核函数重排把复杂度降到近线性，分块可控制块内规模并跨块传递信息。强制均匀权重会丢失内容选择能力，不是合理近似。",
+    "id": "llm-042",
+    "tags": [
+      "LLM"
+    ],
+    "section": "注意力与位置编码"
+  },
+  {
+    "type": "multiple",
+    "question": "关于位置编码，下列哪些说法正确？",
+    "options": [
+      {
+        "text": "可学习绝对位置编码受最大训练长度限制，超出部分无对应参数",
+        "correct": true
+      },
+      {
+        "text": "相对位置编码通常更利于建模局部顺序关系",
+        "correct": true
+      },
+      {
+        "text": "无位置编码的自注意力对输入顺序是置换等变的",
+        "correct": true
+      },
+      {
+        "text": "位置编码必须与词嵌入维度相同才能使用",
+        "correct": false
+      }
+    ],
+    "explanation": "可学习位置表在训练长度外没有参数，需插值或外推；相对编码直接建模距离，适合局部顺序；无位置信息时自注意力对重排等变。位置编码也可经投影与词嵌入组合，维度不必相同。",
+    "id": "llm-043",
+    "tags": [
+      "LLM"
+    ],
+    "section": "注意力与位置编码"
+  },
+  {
+    "type": "multiple",
+    "question": "下列哪些属于在注意力分数层面注入位置信息的方式？",
+    "options": [
+      {
+        "text": "给分数加上可学习的相对位置偏置（如T5式相对位置桶）",
+        "correct": true
+      },
+      {
+        "text": "ALiBi按头设置距离线性惩罚",
+        "correct": true
+      },
+      {
+        "text": "在softmax前把位置向量与Q或K做旋转内积（RoPE）",
+        "correct": true
+      },
+      {
+        "text": "在softmax之后对输出做层归一化",
+        "correct": false
+      }
+    ],
+    "explanation": "相对位置偏置直接加到分数，ALiBi加线性负偏置，RoPE通过旋转Q、K使点积携带相对位置，三者都作用于打分环节。softmax后的层归一化属于输出稳定化，不注入位置信息。",
+    "id": "llm-044",
+    "tags": [
+      "LLM"
+    ],
+    "section": "注意力与位置编码"
+  },
+  {
+    "type": "multiple",
+    "question": "在实现多头注意力时，下列哪些是常见且合理的做法？",
+    "options": [
+      {
+        "text": "把Q、K、V投影到头数×每头维度的形状后拆分计算",
+        "correct": true
+      },
+      {
+        "text": "对每个头分别计算缩放点积注意力再拼接",
+        "correct": true
+      },
+      {
+        "text": "拼接后经过输出投影得到最终结果",
+        "correct": true
+      },
+      {
+        "text": "对每个头使用完全相同的投影矩阵以增加多样性",
+        "correct": false
+      }
+    ],
+    "explanation": "多头通常把投影拆成多个低维头并行计算，再拼接并经输出投影融合。各头使用不同投影才能学习不同子空间模式；完全相同投影会削弱多头多样性，不是常见设计。",
+    "id": "llm-045",
+    "tags": [
+      "LLM"
+    ],
+    "section": "注意力与位置编码"
+  },
+  {
+    "type": "single",
+    "question": "在标准Transformer中，自注意力的核心计算步骤是？",
+    "options": [
+      {
+        "text": "由查询与键的点积得到分数，缩放并softmax归一化后对值加权求和",
+        "correct": true
+      },
+      {
+        "text": "直接对输入进行卷积操作",
+        "correct": false
+      },
+      {
+        "text": "仅使用线性变换，无需softmax",
+        "correct": false
+      },
+      {
+        "text": "通过循环神经网络处理序列",
+        "correct": false
+      }
+    ],
+    "explanation": "自注意力先用查询与键的点积衡量相关性，缩放后经softmax得到权重，再对值向量加权求和。卷积、循环网络和省略softmax都不属于标准自注意力的核心步骤。",
+    "id": "llm-046",
+    "tags": [
+      "LLM"
+    ],
+    "section": "注意力与位置编码"
+  },
+  {
+    "type": "single",
+    "question": "在Transformer中，位置编码与词嵌入相加后，输入到编码器的表示维度通常如何变化？",
+    "options": [
+      {
+        "text": "维度增加一倍",
+        "correct": false
+      },
+      {
+        "text": "维度保持不变",
+        "correct": true
+      },
+      {
+        "text": "维度减半",
+        "correct": false
+      },
+      {
+        "text": "维度变为词表大小",
+        "correct": false
+      }
+    ],
+    "explanation": "位置编码与词嵌入维度相同，相加后维度不变。拼接会使维度增加，但标准做法是相加以保持模型维度一致。",
+    "id": "llm-047",
+    "tags": [
+      "LLM"
+    ],
+    "section": "注意力与位置编码"
+  },
+  {
+    "type": "single",
+    "question": "关于正弦位置编码，以下说法正确的是？",
+    "options": [
+      {
+        "text": "它只能表示绝对位置，不能表示相对位置",
+        "correct": false
+      },
+      {
+        "text": "它通过不同频率的正弦和余弦函数生成",
+        "correct": true
+      },
+      {
+        "text": "它的每个维度使用相同的频率",
+        "correct": false
+      },
+      {
+        "text": "它需要学习参数",
+        "correct": false
+      }
+    ],
+    "explanation": "正弦位置编码使用不同频率的正弦和余弦函数生成，无需学习参数，且能隐含相对位置信息。其他选项错误。",
+    "id": "llm-048",
+    "tags": [
+      "LLM"
+    ],
+    "section": "注意力与位置编码"
+  },
+  {
+    "type": "single",
+    "question": "在自注意力中，查询（Q）和键（K）的点积结果主要衡量了什么？",
+    "options": [
+      {
+        "text": "查询与键之间的相似度",
+        "correct": true
+      },
+      {
+        "text": "值向量的重要性",
+        "correct": false
+      },
+      {
+        "text": "序列的长度",
+        "correct": false
+      },
+      {
+        "text": "模型的参数量",
+        "correct": false
+      }
+    ],
+    "explanation": "Q和K的点积计算相似度，用于确定注意力权重。值向量在加权求和中使用，但不直接影响点积相似度。",
+    "id": "llm-049",
+    "tags": [
+      "LLM"
+    ],
+    "section": "注意力与位置编码"
+  },
+  {
+    "type": "single",
+    "question": "在Transformer解码器中，因果掩码（causal mask）通常应用于哪个阶段？",
+    "options": [
+      {
+        "text": "在计算注意力分数之后、softmax之前",
+        "correct": true
+      },
+      {
+        "text": "在softmax之后",
+        "correct": false
+      },
+      {
+        "text": "在计算查询、键、值之前",
+        "correct": false
+      },
+      {
+        "text": "在输出层之后",
+        "correct": false
+      }
+    ],
+    "explanation": "因果掩码在softmax之前将未来位置的注意力分数设为负无穷，确保softmax后这些位置权重为零。其他阶段不正确。",
+    "id": "llm-050",
+    "tags": [
+      "LLM"
+    ],
+    "section": "注意力与位置编码"
+  },
+  {
+    "type": "single",
+    "question": "相对位置编码与绝对位置编码相比，通常具有的主要优势是？",
+    "options": [
+      {
+        "text": "直接建模元素间距离，对位置偏移和长度变化通常更鲁棒",
+        "correct": true
+      },
+      {
+        "text": "一定减少模型参数量",
+        "correct": false
+      },
+      {
+        "text": "完全不需要位置信息",
+        "correct": false
+      },
+      {
+        "text": "一定提高计算速度",
+        "correct": false
+      }
+    ],
+    "explanation": "相对位置编码把元素间距离作为建模对象，参数或偏置可在不同位置间共享，对位置偏移和长度变化通常更鲁棒；但具体外推能力取决于编码方案，不保证减少参数或加速。",
+    "id": "llm-051",
+    "tags": [
+      "LLM"
+    ],
+    "section": "注意力与位置编码"
+  },
+  {
+    "type": "single",
+    "question": "在无位置编码的自注意力中，若对输入序列的元素顺序做置换，输出通常会如何变化？",
+    "options": [
+      {
+        "text": "输出按相同的置换重排，即具有置换等变性",
+        "correct": true
+      },
+      {
+        "text": "输出完全不变，即具有置换不变性",
+        "correct": false
+      },
+      {
+        "text": "输出只取决于序列长度",
+        "correct": false
+      },
+      {
+        "text": "输出只取决于值向量的维度",
+        "correct": false
+      }
+    ],
+    "explanation": "自注意力在无位置编码时对 token 排列是置换等变的：输入重排后输出也按相同方式重排；它不会提供顺序信息，但并非把不同顺序完全等同。",
+    "id": "llm-052",
+    "tags": [
+      "LLM"
+    ],
+    "section": "注意力与位置编码"
+  },
+  {
+    "type": "single",
+    "question": "在Transformer中，使用可学习的位置编码时，位置编码矩阵的维度通常是？",
+    "options": [
+      {
+        "text": "最大序列长度 × 模型维度",
+        "correct": true
+      },
+      {
+        "text": "词表大小 × 模型维度",
+        "correct": false
+      },
+      {
+        "text": "模型维度 × 模型维度",
+        "correct": false
+      },
+      {
+        "text": "批大小 × 序列长度",
+        "correct": false
+      }
+    ],
+    "explanation": "可学习位置编码为每个位置分配一个向量，矩阵形状为最大序列长度乘模型维度。其他形状不符合。",
+    "id": "llm-053",
+    "tags": [
+      "LLM"
+    ],
+    "section": "注意力与位置编码"
+  },
+  {
+    "type": "single",
+    "question": "在计算注意力权重时，softmax函数的作用是什么？",
+    "options": [
+      {
+        "text": "将注意力分数归一化为概率分布",
+        "correct": true
+      },
+      {
+        "text": "增加注意力分数的数值范围",
+        "correct": false
+      },
+      {
+        "text": "对注意力分数进行线性变换",
+        "correct": false
+      },
+      {
+        "text": "减少计算复杂度",
+        "correct": false
+      }
+    ],
+    "explanation": "softmax将分数转换为非负且和为1的权重，用于加权求和。它不增加范围、不是线性变换，也不降低复杂度。",
+    "id": "llm-054",
+    "tags": [
+      "LLM"
+    ],
+    "section": "注意力与位置编码"
+  },
+  {
+    "type": "single",
+    "question": "在长序列推理时，下列哪种位置编码方法最可能无需额外训练就能处理更长的序列？",
+    "options": [
+      {
+        "text": "ALiBi",
+        "correct": true
+      },
+      {
+        "text": "可学习绝对位置编码",
+        "correct": false
+      },
+      {
+        "text": "正弦位置编码",
+        "correct": false
+      },
+      {
+        "text": "One-hot位置编码",
+        "correct": false
+      }
+    ],
+    "explanation": "ALiBi通过线性偏置注入相对位置信息，设计上支持外推。可学习绝对编码受限于最大训练长度，正弦编码外推效果有限。",
+    "id": "llm-055",
+    "tags": [
+      "LLM"
+    ],
+    "section": "注意力与位置编码"
+  },
+  {
+    "type": "multiple",
+    "question": "关于多头注意力，下列哪些说法是正确的？",
+    "options": [
+      {
+        "text": "它允许模型同时关注不同位置的不同表示子空间",
+        "correct": true
+      },
+      {
+        "text": "每个头的输出通常被拼接后经过线性变换",
+        "correct": true
+      },
+      {
+        "text": "多头注意力一定比单头注意力计算量小",
+        "correct": false
+      },
+      {
+        "text": "每个头使用相同的查询、键、值权重矩阵",
+        "correct": false
+      }
+    ],
+    "explanation": "多头注意力并行多个头，关注不同子空间，输出拼接后线性变换。计算量通常更大，且各头权重独立。",
+    "id": "llm-056",
+    "tags": [
+      "LLM"
+    ],
+    "section": "注意力与位置编码"
+  },
+  {
+    "type": "multiple",
+    "question": "在实现Transformer时，下列哪些是常见且合理的做法？",
+    "options": [
+      {
+        "text": "对注意力分数进行缩放",
+        "correct": true
+      },
+      {
+        "text": "使用残差连接和层归一化",
+        "correct": true
+      },
+      {
+        "text": "在编码器和解码器之间共享所有参数",
+        "correct": false
+      },
+      {
+        "text": "在多头注意力中，每个头独立计算",
+        "correct": true
+      }
+    ],
+    "explanation": "缩放、残差连接、层归一化和多头独立计算都是标准做法。编码器和解码器通常不共享所有参数。",
+    "id": "llm-057",
+    "tags": [
+      "LLM"
+    ],
+    "section": "注意力与位置编码"
+  },
+  {
+    "type": "multiple",
+    "question": "关于位置编码，下列哪些说法是正确的？",
+    "options": [
+      {
+        "text": "正弦位置编码可以表示比训练时更长的序列",
+        "correct": true
+      },
+      {
+        "text": "可学习位置编码的外推能力通常较差",
+        "correct": true
+      },
+      {
+        "text": "相对位置编码关注元素间的距离",
+        "correct": true
+      },
+      {
+        "text": "位置编码必须与词嵌入拼接",
+        "correct": false
+      }
+    ],
+    "explanation": "正弦编码可外推但效果有限，可学习编码外推差，相对编码关注距离。位置编码常与词嵌入相加而非必须拼接。",
+    "id": "llm-058",
+    "tags": [
+      "LLM"
+    ],
+    "section": "注意力与位置编码"
+  },
+  {
+    "type": "multiple",
+    "question": "在自注意力中，下列哪些因素会影响注意力权重的分布（允许引入温度缩放时）？",
+    "options": [
+      {
+        "text": "查询和键的点积结果",
+        "correct": true
+      },
+      {
+        "text": "缩放因子√d_k",
+        "correct": true
+      },
+      {
+        "text": "softmax前的温度缩放（若引入）",
+        "correct": true
+      },
+      {
+        "text": "值向量的维度",
+        "correct": false
+      }
+    ],
+    "explanation": "权重由查询与键的点积、缩放因子以及softmax前的温度共同决定；温度改变分布的尖锐程度。值向量维度不参与权重计算，只影响加权后的输出维度。",
+    "id": "llm-059",
+    "tags": [
+      "LLM"
+    ],
+    "section": "注意力与位置编码"
+  },
+  {
+    "type": "single",
+    "question": "在标准Transformer中，若把位置编码由与词嵌入逐元素相加改为与词嵌入拼接后再经过线性变换，关于该修改的影响，下列说法最准确的是？",
+    "options": [
+      {
+        "text": "拼接后经线性层可映射回模型维度，参数量增加，模型仍可融合词义与位置信息",
+        "correct": true
+      },
+      {
+        "text": "拼接后必须把维度减半，否则无法进行自注意力计算",
+        "correct": false
+      },
+      {
+        "text": "拼接后只能使用固定正弦位置编码，不能使用可学习位置编码",
+        "correct": false
+      },
+      {
+        "text": "拼接不会改变输入表示的维度",
+        "correct": false
+      }
+    ],
+    "explanation": "拼接会增大输入维度，随后线性层可把它映射回模型维度并学习词义与位置信息的融合，因此参数量增加。维度匹配可由线性层完成，位置编码仍可固定或可学习，拼接本身会改变输入维度并注入顺序信息。",
+    "id": "llm-060",
+    "tags": [
+      "LLM"
+    ],
+    "section": "注意力与位置编码"
+  },
+  {
+    "type": "single",
+    "question": "在LLM中，将文本转换为模型可处理数值序列的第一步通常是？",
+    "options": [
+      {
+        "text": "分词",
+        "correct": true
+      },
+      {
+        "text": "词嵌入",
+        "correct": false
+      },
+      {
+        "text": "位置编码",
+        "correct": false
+      },
+      {
+        "text": "注意力计算",
+        "correct": false
+      }
+    ],
+    "explanation": "分词是将文本切分为子词或词元的过程，是后续嵌入和模型处理的基础。词嵌入在分词之后，位置编码和注意力计算是模型内部操作。",
+    "id": "llm-061",
+    "tags": [
+      "LLM"
+    ],
+    "section": "分词与嵌入"
+  },
+  {
+    "type": "single",
+    "question": "关于子词分词（如BPE），以下说法正确的是？",
+    "options": [
+      {
+        "text": "它基于完整单词进行分词，不会产生子词单元",
+        "correct": false
+      },
+      {
+        "text": "它通过合并频繁共现的字符对来构建词表",
+        "correct": true
+      },
+      {
+        "text": "它只能处理英文，无法处理其他语言",
+        "correct": false
+      },
+      {
+        "text": "它生成的词表大小固定为26个字母",
+        "correct": false
+      }
+    ],
+    "explanation": "BPE通过迭代合并最频繁的相邻字符对来构建子词词表，能平衡词表大小与序列长度。它不依赖完整单词，也支持多语言。",
+    "id": "llm-062",
+    "tags": [
+      "LLM"
+    ],
+    "section": "分词与嵌入"
+  },
+  {
+    "type": "single",
+    "question": "词嵌入矩阵的主要作用是什么？",
+    "options": [
+      {
+        "text": "将词元索引映射为稠密向量",
+        "correct": true
+      },
+      {
+        "text": "对词元进行独热编码",
+        "correct": false
+      },
+      {
+        "text": "计算词元之间的注意力权重",
+        "correct": false
+      },
+      {
+        "text": "对词元序列进行位置编码",
+        "correct": false
+      }
+    ],
+    "explanation": "嵌入矩阵是一个可学习的查找表，将离散的词元索引转换为连续向量表示。独热编码是稀疏表示，注意力权重和位置编码是不同机制。",
+    "id": "llm-063",
+    "tags": [
+      "LLM"
+    ],
+    "section": "分词与嵌入"
+  },
+  {
+    "type": "single",
+    "question": "在Transformer模型中，位置编码被加入词嵌入的主要原因是？",
+    "options": [
+      {
+        "text": "使模型能够利用序列的顺序信息",
+        "correct": true
+      },
+      {
+        "text": "增加词嵌入的维度",
+        "correct": false
+      },
+      {
+        "text": "减少词表的大小",
+        "correct": false
+      },
+      {
+        "text": "加速注意力计算",
+        "correct": false
+      }
+    ],
+    "explanation": "Transformer的自注意力机制本身不具备顺序感知能力，加入位置编码可注入词元的位置信息。它不改变维度或词表大小。",
+    "id": "llm-064",
+    "tags": [
+      "LLM"
+    ],
+    "section": "分词与嵌入"
+  },
+  {
+    "type": "single",
+    "question": "以下哪项是Word2Vec中Skip-gram模型的目标？",
+    "options": [
+      {
+        "text": "用中心词预测上下文词",
+        "correct": true
+      },
+      {
+        "text": "用上下文词预测中心词",
+        "correct": false
+      },
+      {
+        "text": "用整个句子预测下一个句子",
+        "correct": false
+      },
+      {
+        "text": "用词向量预测词性标签",
+        "correct": false
+      }
+    ],
+    "explanation": "Skip-gram用中心词预测周围上下文词，而CBOW用上下文预测中心词。其他选项描述的是句子级或任务特定目标。",
+    "id": "llm-065",
+    "tags": [
+      "LLM"
+    ],
+    "section": "分词与嵌入"
+  },
+  {
+    "type": "single",
+    "question": "在LLM中，词表大小（vocabulary size）通常如何影响模型？",
+    "options": [
+      {
+        "text": "词表越大，嵌入矩阵参数越多，但序列可能更短",
+        "correct": true
+      },
+      {
+        "text": "词表越大，模型计算量一定越小",
+        "correct": false
+      },
+      {
+        "text": "词表大小不影响模型参数数量",
+        "correct": false
+      },
+      {
+        "text": "词表越小，泛化能力一定越强",
+        "correct": false
+      }
+    ],
+    "explanation": "词表增大时，嵌入矩阵和输出层参数增加，但常见词元可能用更少token表示序列。计算量受序列长度和模型结构共同影响。",
+    "id": "llm-066",
+    "tags": [
+      "LLM"
+    ],
+    "section": "分词与嵌入"
+  },
+  {
+    "type": "single",
+    "question": "关于上下文嵌入（如ELMo、BERT），以下说法正确的是？",
+    "options": [
+      {
+        "text": "同一个词在不同上下文中的嵌入向量相同",
+        "correct": false
+      },
+      {
+        "text": "同一个词在不同上下文中的嵌入向量可以不同",
+        "correct": true
+      },
+      {
+        "text": "上下文嵌入仅依赖于词本身，与句子无关",
+        "correct": false
+      },
+      {
+        "text": "上下文嵌入无法用于下游任务",
+        "correct": false
+      }
+    ],
+    "explanation": "上下文嵌入根据整个句子动态生成词向量，因此相同词在不同语境下向量不同。静态词嵌入（如Word2Vec）才与上下文无关。",
+    "id": "llm-067",
+    "tags": [
+      "LLM"
+    ],
+    "section": "分词与嵌入"
+  },
+  {
+    "type": "single",
+    "question": "在分词过程中，将未登录词（OOV）切分为子词的主要好处是？",
+    "options": [
+      {
+        "text": "减少词表大小并缓解OOV问题",
+        "correct": true
+      },
+      {
+        "text": "完全消除OOV问题",
+        "correct": false
+      },
+      {
+        "text": "增加序列长度以提升效果",
+        "correct": false
+      },
+      {
+        "text": "使所有词元长度相同",
+        "correct": false
+      }
+    ],
+    "explanation": "子词分词通过将罕见词拆分为常见子词，降低词表大小并减少未登录词。但无法完全消除OOV，且可能增加序列长度。",
+    "id": "llm-068",
+    "tags": [
+      "LLM"
+    ],
+    "section": "分词与嵌入"
+  },
+  {
+    "type": "single",
+    "question": "在PyTorch中，nn.Embedding层的前向传播输入是什么？",
+    "options": [
+      {
+        "text": "整数索引张量",
+        "correct": true
+      },
+      {
+        "text": "浮点型词向量张量",
+        "correct": false
+      },
+      {
+        "text": "独热编码张量",
+        "correct": false
+      },
+      {
+        "text": "字符串列表",
+        "correct": false
+      }
+    ],
+    "explanation": "nn.Embedding接受整数索引张量，输出对应的嵌入向量。它内部进行查找操作，不需要预先独热编码。",
+    "id": "llm-069",
+    "tags": [
+      "LLM"
+    ],
+    "section": "分词与嵌入"
+  },
+  {
+    "type": "single",
+    "question": "在采用权重绑定（weight tying）的LLM中，输出层如何利用输入词嵌入矩阵计算下一个词元的logits？",
+    "options": [
+      {
+        "text": "将隐藏状态与嵌入矩阵的转置相乘得到logits",
+        "correct": true
+      },
+      {
+        "text": "将隐藏状态与一个独立的输出矩阵相乘得到logits",
+        "correct": false
+      },
+      {
+        "text": "直接对隐藏状态做softmax得到词元概率",
+        "correct": false
+      },
+      {
+        "text": "将嵌入矩阵与自身相乘后与隐藏状态相加得到logits",
+        "correct": false
+      }
+    ],
+    "explanation": "权重绑定令输出层复用输入嵌入矩阵E（形状为V×d）。给定隐藏状态h，计算h与E的转置相乘得到每个词元的logits，再经softmax得到概率分布。未采用绑定时才需要独立输出矩阵；直接对隐藏状态做softmax缺少词表投影；嵌入矩阵自乘不能产生词表logits。",
+    "id": "llm-070",
+    "tags": [
+      "LLM"
+    ],
+    "section": "分词与嵌入"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些属于常见的子词分词方法或工具？",
+    "options": [
+      {
+        "text": "BPE（字节对编码）",
+        "correct": true
+      },
+      {
+        "text": "WordPiece",
+        "correct": true
+      },
+      {
+        "text": "SentencePiece",
+        "correct": true
+      },
+      {
+        "text": "One-hot编码",
+        "correct": false
+      }
+    ],
+    "explanation": "BPE、WordPiece和SentencePiece常用于子词分词；其中SentencePiece是支持BPE和Unigram等方案的分词工具或框架。One-hot编码是词表示方法，不是分词方法。",
+    "id": "llm-071",
+    "tags": [
+      "LLM"
+    ],
+    "section": "分词与嵌入"
+  },
+  {
+    "type": "multiple",
+    "question": "关于词嵌入，以下哪些说法正确？",
+    "options": [
+      {
+        "text": "词嵌入是稠密向量表示",
+        "correct": true
+      },
+      {
+        "text": "词嵌入可以通过训练学习得到",
+        "correct": true
+      },
+      {
+        "text": "词嵌入的维度通常远小于词表大小",
+        "correct": true
+      },
+      {
+        "text": "词嵌入必须是独热编码",
+        "correct": false
+      }
+    ],
+    "explanation": "词嵌入是低维稠密向量，可通过训练学习，维度通常远小于词表大小。独热编码是稀疏表示，不是词嵌入。",
+    "id": "llm-072",
+    "tags": [
+      "LLM"
+    ],
+    "section": "分词与嵌入"
+  },
+  {
+    "type": "multiple",
+    "question": "在Transformer中，位置编码可以如何实现？",
+    "options": [
+      {
+        "text": "使用正弦和余弦函数",
+        "correct": true
+      },
+      {
+        "text": "使用可学习的嵌入矩阵",
+        "correct": true
+      },
+      {
+        "text": "使用独热编码表示位置",
+        "correct": false
+      },
+      {
+        "text": "使用相对位置偏置",
+        "correct": true
+      }
+    ],
+    "explanation": "正弦余弦编码、可学习位置嵌入和相对位置偏置都是常见实现。独热编码通常不直接用于位置编码，因为维度高且不连续。",
+    "id": "llm-073",
+    "tags": [
+      "LLM"
+    ],
+    "section": "分词与嵌入"
+  },
+  {
+    "type": "multiple",
+    "question": "分词质量可能影响LLM的哪些方面？",
+    "options": [
+      {
+        "text": "序列长度",
+        "correct": true
+      },
+      {
+        "text": "词表大小",
+        "correct": true
+      },
+      {
+        "text": "模型对罕见词的处理能力",
+        "correct": true
+      },
+      {
+        "text": "模型的并行计算能力",
+        "correct": false
+      }
+    ],
+    "explanation": "分词影响序列长度、词表大小和罕见词处理。并行计算能力主要由模型架构和硬件决定，与分词无直接关系。",
+    "id": "llm-074",
+    "tags": [
+      "LLM"
+    ],
+    "section": "分词与嵌入"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些属于静态词嵌入？",
+    "options": [
+      {
+        "text": "Word2Vec",
+        "correct": true
+      },
+      {
+        "text": "GloVe",
+        "correct": true
+      },
+      {
+        "text": "BERT",
+        "correct": false
+      },
+      {
+        "text": "FastText",
+        "correct": true
+      }
+    ],
+    "explanation": "Word2Vec、GloVe和FastText为每个词生成固定向量，属于静态词嵌入。BERT生成上下文相关的动态嵌入。",
+    "id": "llm-075",
+    "tags": [
+      "LLM"
+    ],
+    "section": "分词与嵌入"
+  },
+  {
+    "type": "single",
+    "question": "在基于BPE的分词中，训练过程主要依据什么来合并符号对？",
+    "options": [
+      {
+        "text": "相邻符号对在语料中出现的频率",
+        "correct": true
+      },
+      {
+        "text": "符号对的互信息值",
+        "correct": false
+      },
+      {
+        "text": "符号的Unicode编码顺序",
+        "correct": false
+      },
+      {
+        "text": "符号对在词汇表中的位置",
+        "correct": false
+      }
+    ],
+    "explanation": "BPE训练时迭代统计相邻符号对频率，合并最高频对。互信息是WordPiece的合并准则；Unicode顺序和词表位置与合并无关。关键误区是混淆BPE与WordPiece的合并标准。",
+    "id": "llm-076",
+    "tags": [
+      "LLM"
+    ],
+    "section": "分词与嵌入"
+  },
+  {
+    "type": "single",
+    "question": "关于WordPiece分词与BPE分词的比较，以下说法正确的是？",
+    "options": [
+      {
+        "text": "WordPiece合并时选择使语言模型概率提升最大的符号对",
+        "correct": true
+      },
+      {
+        "text": "WordPiece与BPE的合并准则完全相同",
+        "correct": false
+      },
+      {
+        "text": "BPE合并时选择似然增益最大的符号对",
+        "correct": false
+      },
+      {
+        "text": "WordPiece不依赖任何统计量",
+        "correct": false
+      }
+    ],
+    "explanation": "WordPiece合并准则基于语言模型似然增益，而非单纯频率；BPE基于频率。两者准则不同，WordPiece依赖统计量。误区是认为两者只有实现差异而无准则差异。",
+    "id": "llm-077",
+    "tags": [
+      "LLM"
+    ],
+    "section": "分词与嵌入"
+  },
+  {
+    "type": "single",
+    "question": "在LLM中，输入嵌入矩阵的形状通常为（V, d），其中V是词表大小，d是隐藏维度。若采用权重绑定（weight tying），输出层如何计算下一个词的概率分布？",
+    "options": [
+      {
+        "text": "将隐藏状态与嵌入矩阵的转置相乘后经softmax",
+        "correct": true
+      },
+      {
+        "text": "将隐藏状态与一个独立的输出矩阵相乘后经softmax",
+        "correct": false
+      },
+      {
+        "text": "直接使用隐藏状态经softmax",
+        "correct": false
+      },
+      {
+        "text": "将嵌入矩阵与自身相乘后经softmax",
+        "correct": false
+      }
+    ],
+    "explanation": "权重绑定令输出层复用输入嵌入矩阵，计算为h·E^T后softmax。独立输出矩阵是未绑定情形；直接softmax和自乘均错误。关键误区是混淆绑定与独立参数。",
+    "id": "llm-078",
+    "tags": [
+      "LLM"
+    ],
+    "section": "分词与嵌入"
+  },
+  {
+    "type": "single",
+    "question": "在Transformer中，绝对位置编码与相对位置编码的主要区别是什么？",
+    "options": [
+      {
+        "text": "绝对位置编码为每个位置分配固定向量，相对位置编码建模位置间的偏移关系",
+        "correct": true
+      },
+      {
+        "text": "绝对位置编码只能用于RNN，相对位置编码只能用于Transformer",
+        "correct": false
+      },
+      {
+        "text": "绝对位置编码需要学习，相对位置编码总是固定的正弦函数",
+        "correct": false
+      },
+      {
+        "text": "两者完全等价，只是实现方式不同",
+        "correct": false
+      }
+    ],
+    "explanation": "绝对位置编码为每个位置分配固定或可学习向量；相对位置编码建模位置间的偏移关系，常以注意力中的相对偏置或相对嵌入实现。绝对位置编码并非只能用于RNN，相对位置编码也不一定总是固定正弦函数；两者不等价。",
+    "id": "llm-079",
+    "tags": [
+      "LLM"
+    ],
+    "section": "分词与嵌入"
+  },
+  {
+    "type": "single",
+    "question": "在PyTorch中，nn.Embedding层的输入张量通常是什么类型？",
+    "options": [
+      {
+        "text": "LongTensor（int64）的索引张量",
+        "correct": true
+      },
+      {
+        "text": "FloatTensor的连续向量",
+        "correct": false
+      },
+      {
+        "text": "BoolTensor的掩码",
+        "correct": false
+      },
+      {
+        "text": "DoubleTensor的浮点索引",
+        "correct": false
+      }
+    ],
+    "explanation": "nn.Embedding要求输入为LongTensor索引，输出对应嵌入向量。浮点、布尔、双精度张量均不能作为索引。误区是误将嵌入层输入当作连续向量。",
+    "id": "llm-080",
+    "tags": [
+      "LLM"
+    ],
+    "section": "分词与嵌入"
+  },
+  {
+    "type": "single",
+    "question": "在训练词嵌入时，负采样（negative sampling）的主要作用是什么？",
+    "options": [
+      {
+        "text": "用少量负样本近似softmax，降低计算成本",
+        "correct": true
+      },
+      {
+        "text": "增加正样本数量以提高准确率",
+        "correct": false
+      },
+      {
+        "text": "完全替代softmax且不引入任何近似",
+        "correct": false
+      },
+      {
+        "text": "对嵌入向量进行归一化",
+        "correct": false
+      }
+    ],
+    "explanation": "负采样通过采样少量负例近似全softmax，显著降低计算量。它不增加正样本、不是精确替代、也不做归一化。误区是认为负采样等价于完整softmax。",
+    "id": "llm-081",
+    "tags": [
+      "LLM"
+    ],
+    "section": "分词与嵌入"
+  },
+  {
+    "type": "single",
+    "question": "在LLM中，若分词器将常见词切分为多个子词，可能带来什么主要影响？",
+    "options": [
+      {
+        "text": "增加序列长度，提高计算与内存开销",
+        "correct": true
+      },
+      {
+        "text": "减少序列长度，降低计算开销",
+        "correct": false
+      },
+      {
+        "text": "完全消除未登录词问题",
+        "correct": false
+      },
+      {
+        "text": "使模型无法处理该词",
+        "correct": false
+      }
+    ],
+    "explanation": "切分为多个子词会延长序列，增加注意力和前馈的计算量。它不减少长度，也不能完全消除OOV，更不会使模型无法处理。误区是低估子词切分对序列长度的影响。",
+    "id": "llm-082",
+    "tags": [
+      "LLM"
+    ],
+    "section": "分词与嵌入"
+  },
+  {
+    "type": "single",
+    "question": "关于上下文嵌入与静态词嵌入的差异，以下说法正确的是？",
+    "options": [
+      {
+        "text": "上下文嵌入随句子语境变化，静态词嵌入对同一词固定",
+        "correct": true
+      },
+      {
+        "text": "静态词嵌入随语境变化，上下文嵌入固定",
+        "correct": false
+      },
+      {
+        "text": "两者对同一词始终产生相同向量",
+        "correct": false
+      },
+      {
+        "text": "上下文嵌入仅适用于字符级任务",
+        "correct": false
+      }
+    ],
+    "explanation": "上下文嵌入（如BERT）根据句子动态生成向量；静态词嵌入（如Word2Vec）对同一词固定。B颠倒关系，C忽略差异，D限制过窄。误区是混淆两类嵌入的动态性。",
+    "id": "llm-083",
+    "tags": [
+      "LLM"
+    ],
+    "section": "分词与嵌入"
+  },
+  {
+    "type": "single",
+    "question": "在LLM中，词表大小V增大时，输出层softmax的计算量通常如何变化？",
+    "options": [
+      {
+        "text": "线性增加",
+        "correct": true
+      },
+      {
+        "text": "保持不变",
+        "correct": false
+      },
+      {
+        "text": "指数增加",
+        "correct": false
+      },
+      {
+        "text": "先增后减",
+        "correct": false
+      }
+    ],
+    "explanation": "输出层需对V个词计算logits和softmax，计算量随V线性增长。它不保持恒定、不指数增长、也无先增后减。误区是低估大词表对输出层的线性开销。",
+    "id": "llm-084",
+    "tags": [
+      "LLM"
+    ],
+    "section": "分词与嵌入"
+  },
+  {
+    "type": "single",
+    "question": "在基于字符的 BPE 分词器中，若遇到某个不在初始字符词表中的字符，通常如何处理？",
+    "options": [
+      {
+        "text": "映射为未登录符（UNK）",
+        "correct": true
+      },
+      {
+        "text": "直接丢弃该字符",
+        "correct": false
+      },
+      {
+        "text": "用随机向量替代该字符",
+        "correct": false
+      },
+      {
+        "text": "强制扩展词表并重新训练合并规则",
+        "correct": false
+      }
+    ],
+    "explanation": "字符级 BPE 的初始符号来自训练数据中的字符；推理时遇到未见字符，若无法由已有符号组合表示，通常映射为未登录符（UNK）。字节级 BPE 会先把文本转为字节序列，因此不出现字符级未登录问题。词表已满时不会在推理阶段强制扩展词表或重新训练合并规则。",
+    "id": "llm-085",
+    "tags": [
+      "LLM"
+    ],
+    "section": "分词与嵌入"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些属于子词分词算法？",
+    "options": [
+      {
+        "text": "BPE",
+        "correct": true
+      },
+      {
+        "text": "WordPiece",
+        "correct": true
+      },
+      {
+        "text": "Unigram",
+        "correct": true
+      },
+      {
+        "text": "TF-IDF",
+        "correct": false
+      }
+    ],
+    "explanation": "BPE、WordPiece、Unigram均为子词分词算法；TF-IDF是文本加权统计方法。误区是将TF-IDF误认为分词算法。",
+    "id": "llm-086",
+    "tags": [
+      "LLM"
+    ],
+    "section": "分词与嵌入"
+  },
+  {
+    "type": "single",
+    "question": "在训练 BPE 分词器时，关于合并操作的初始符号集合的构建，以下哪项描述是正确的？",
+    "options": [
+      {
+        "text": "将所有词拆分为单个字符，并在词尾添加结束符",
+        "correct": true
+      },
+      {
+        "text": "直接使用预训练词向量词典中的所有完整词作为初始符号",
+        "correct": false
+      },
+      {
+        "text": "合并操作从最长的子词开始，逐步拆分为短子词",
+        "correct": false
+      },
+      {
+        "text": "仅对频率最高的前 1000 个词进行拆分，其余词保留为完整词",
+        "correct": false
+      }
+    ],
+    "explanation": "BPE 训练通常先将每个词拆分为字符序列，并在词尾加结束符（如 </w>），再迭代合并最高频相邻符号对。选项 B 错误，因为初始符号是字符而非完整词；选项 C 方向反了，BPE 是从字符逐步合并为更长子词；选项 D 错误，所有词都应参与字符拆分。",
+    "id": "llm-087",
+    "tags": [
+      "LLM"
+    ],
+    "section": "分词与嵌入"
+  },
+  {
+    "type": "single",
+    "question": "在 Transformer 中，若对输入嵌入乘以一个缩放因子 √d（d 为隐藏维度），再将位置编码相加，主要目的是什么？",
+    "options": [
+      {
+        "text": "使词嵌入与位置编码在相加时的数值尺度更接近，避免任一方因尺度过大而主导表示",
+        "correct": true
+      },
+      {
+        "text": "减少词表大小，从而降低输出层 softmax 的计算量",
+        "correct": false
+      },
+      {
+        "text": "将嵌入矩阵的权重绑定到输出层，实现参数共享",
+        "correct": false
+      },
+      {
+        "text": "保证嵌入向量严格正交，从而消除词义之间的相关性",
+        "correct": false
+      }
+    ],
+    "explanation": "对嵌入乘以 √d 是在进入位置编码相加前调整数值尺度，使词嵌入和位置编码处于相近量级，避免任一方因尺度过大而主导表示。该操作不改变词表大小，不是输出层权重绑定，也不能使嵌入向量正交。",
+    "id": "llm-088",
+    "tags": [
+      "LLM"
+    ],
+    "section": "分词与嵌入"
+  },
+  {
+    "type": "multiple",
+    "question": "关于 Byte-level BPE（BBPE）与标准 BPE 的差异，以下说法正确的有哪些？",
+    "options": [
+      {
+        "text": "BBPE 以字节作为初始符号，可避免未登录词问题",
+        "correct": true
+      },
+      {
+        "text": "BBPE 的初始词表通常远小于基于字符的 BPE",
+        "correct": false
+      },
+      {
+        "text": "标准 BPE 通常以字符或 Unicode 码点作为初始符号",
+        "correct": true
+      },
+      {
+        "text": "BBPE 不需要进行任何合并操作即可使用",
+        "correct": false
+      }
+    ],
+    "explanation": "BBPE 将文本转为字节序列，初始词表大小为 256，因此不会出现未登录词；标准 BPE 常以字符为初始符号。选项 B 错误，字节初始词表（256）通常大于常见字符集；选项 D 错误，BBPE 仍需学习合并规则以形成常用子词。",
+    "id": "llm-089",
+    "tags": [
+      "LLM"
+    ],
+    "section": "分词与嵌入"
+  },
+  {
+    "type": "multiple",
+    "question": "在 PyTorch 中使用 nn.Embedding 时，以下哪些操作或说法是正确的？",
+    "options": [
+      {
+        "text": "输入张量应为 LongTensor，元素为词表中的整数索引",
+        "correct": true
+      },
+      {
+        "text": "输出张量的形状为输入索引形状加上嵌入维度",
+        "correct": true
+      },
+      {
+        "text": "该层内部维护一个形状为 (num_embeddings, embedding_dim) 的权重矩阵",
+        "correct": true
+      },
+      {
+        "text": "输入张量可以是 FloatTensor，系统会自动四舍五入为索引",
+        "correct": false
+      }
+    ],
+    "explanation": "nn.Embedding 的输入必须是整数索引（通常 torch.long），输出形状为 (*, embedding_dim)，其权重矩阵形状为 (num_embeddings, embedding_dim)。选项 D 错误，该层不接受浮点索引，也不会自动取整，传入 FloatTensor 会报错。",
+    "id": "llm-090",
+    "tags": [
+      "LLM"
+    ],
+    "section": "分词与嵌入"
+  },
+  {
+    "type": "single",
+    "question": "在Transformer的预训练中，自注意力机制的主要作用是？",
+    "options": [
+      {
+        "text": "捕捉序列中不同位置之间的依赖关系",
+        "correct": true
+      },
+      {
+        "text": "对输入序列进行卷积操作",
+        "correct": false
+      },
+      {
+        "text": "降低模型参数量",
+        "correct": false
+      },
+      {
+        "text": "实现循环神经网络的门控机制",
+        "correct": false
+      }
+    ],
+    "explanation": "自注意力通过计算序列中所有位置间的注意力权重，直接建模长距离依赖，是Transformer的核心。卷积、参数量降低、门控机制均非其作用。",
+    "id": "llm-091",
+    "tags": [
+      "LLM"
+    ],
+    "section": "预训练"
+  },
+  {
+    "type": "single",
+    "question": "在GPT系列模型的预训练中，通常采用的语言建模目标是？",
+    "options": [
+      {
+        "text": "自回归语言建模（预测下一个词）",
+        "correct": true
+      },
+      {
+        "text": "掩码语言建模（预测被掩码的词）",
+        "correct": false
+      },
+      {
+        "text": "序列到序列的翻译任务",
+        "correct": false
+      },
+      {
+        "text": "对比学习（区分正负样本）",
+        "correct": false
+      }
+    ],
+    "explanation": "GPT系列采用自回归语言建模，即根据上文预测下一个词。掩码语言建模是BERT的方法，翻译是对齐任务，对比学习常用于表示学习。",
+    "id": "llm-092",
+    "tags": [
+      "LLM"
+    ],
+    "section": "预训练"
+  },
+  {
+    "type": "single",
+    "question": "BERT预训练中使用的掩码语言建模（MLM）任务，其训练时随机掩码的比例通常约为？",
+    "options": [
+      {
+        "text": "15%",
+        "correct": true
+      },
+      {
+        "text": "50%",
+        "correct": false
+      },
+      {
+        "text": "5%",
+        "correct": false
+      },
+      {
+        "text": "30%",
+        "correct": false
+      }
+    ],
+    "explanation": "BERT原文中随机掩码15%的token，其中80%替换为[MASK]，10%随机词，10%保留。比例过高会导致训练信号不足，过低则效率低。",
+    "id": "llm-093",
+    "tags": [
+      "LLM"
+    ],
+    "section": "预训练"
+  },
+  {
+    "type": "single",
+    "question": "在预训练语言模型中，使用子词（subword）分词（如BPE）的主要目的是？",
+    "options": [
+      {
+        "text": "平衡词汇表大小与未登录词问题",
+        "correct": true
+      },
+      {
+        "text": "完全消除未登录词",
+        "correct": false
+      },
+      {
+        "text": "增加序列长度以提升模型能力",
+        "correct": false
+      },
+      {
+        "text": "简化模型结构",
+        "correct": false
+      }
+    ],
+    "explanation": "子词分词能在有限词汇表下表示任意词，缓解未登录词问题，同时控制词汇表规模。它不能完全消除OOV，也不直接简化模型结构。",
+    "id": "llm-094",
+    "tags": [
+      "LLM"
+    ],
+    "section": "预训练"
+  },
+  {
+    "type": "single",
+    "question": "在构建大规模预训练模型时，下列哪项是混合精度训练（如FP16）的主要优势？",
+    "options": [
+      {
+        "text": "减少显存占用并加速计算",
+        "correct": true
+      },
+      {
+        "text": "提高模型精度",
+        "correct": false
+      },
+      {
+        "text": "避免梯度消失",
+        "correct": false
+      },
+      {
+        "text": "减少训练数据需求",
+        "correct": false
+      }
+    ],
+    "explanation": "混合精度用半精度存储和计算，减少显存并利用Tensor Core加速，同时用FP32主权重保持稳定性。它不直接提高模型精度或避免梯度消失。",
+    "id": "llm-095",
+    "tags": [
+      "LLM"
+    ],
+    "section": "预训练"
+  },
+  {
+    "type": "single",
+    "question": "在预训练数据预处理中，常用MinHash进行去重，其核心思想是？",
+    "options": [
+      {
+        "text": "估计Jaccard相似度以识别近似重复文档",
+        "correct": true
+      },
+      {
+        "text": "精确计算文档的哈希值",
+        "correct": false
+      },
+      {
+        "text": "训练神经网络分类重复文档",
+        "correct": false
+      },
+      {
+        "text": "基于词频统计进行去重",
+        "correct": false
+      }
+    ],
+    "explanation": "MinHash通过哈希签名估计集合间的Jaccard相似度，高效找出近似重复文档。它不精确计算哈希，也不依赖神经网络或词频。",
+    "id": "llm-096",
+    "tags": [
+      "LLM"
+    ],
+    "section": "预训练"
+  },
+  {
+    "type": "single",
+    "question": "在语言模型预训练中，增大批次大小（batch size）通常带来的主要好处是？",
+    "options": [
+      {
+        "text": "提高硬件利用率和训练吞吐，并使梯度估计更平滑",
+        "correct": true
+      },
+      {
+        "text": "减少模型参数量",
+        "correct": false
+      },
+      {
+        "text": "保证避免过拟合",
+        "correct": false
+      },
+      {
+        "text": "降低总计算成本",
+        "correct": false
+      }
+    ],
+    "explanation": "大批次能更充分地并行利用加速器，提高吞吐，并因每步使用更多样本而使梯度估计更平滑；它不会减少参数量，不能保证避免过拟合，且总计算成本不一定降低。",
+    "id": "llm-097",
+    "tags": [
+      "LLM"
+    ],
+    "section": "预训练"
+  },
+  {
+    "type": "single",
+    "question": "下列哪项技术常用于缓解预训练语言模型中的性别偏见？",
+    "options": [
+      {
+        "text": "数据增强与对抗训练",
+        "correct": true
+      },
+      {
+        "text": "增加模型层数",
+        "correct": false
+      },
+      {
+        "text": "使用更大的词汇表",
+        "correct": false
+      },
+      {
+        "text": "提高学习率",
+        "correct": false
+      }
+    ],
+    "explanation": "数据增强（如性别交换）和对抗训练可减少模型对性别刻板印象的依赖。增加层数、更大词汇表、提高学习率并不直接针对偏见缓解。",
+    "id": "llm-098",
+    "tags": [
+      "LLM"
+    ],
+    "section": "预训练"
+  },
+  {
+    "type": "single",
+    "question": "在预训练模型的训练过程中，学习率预热（warmup）的主要作用是？",
+    "options": [
+      {
+        "text": "避免训练初期因学习率过大导致的不稳定",
+        "correct": true
+      },
+      {
+        "text": "加速训练后期的收敛",
+        "correct": false
+      },
+      {
+        "text": "减少模型参数",
+        "correct": false
+      },
+      {
+        "text": "防止梯度消失",
+        "correct": false
+      }
+    ],
+    "explanation": "预热使学习率从较小值逐渐增大，避免初期参数剧烈更新导致训练不稳定。它主要针对初期，而非后期收敛或梯度消失。",
+    "id": "llm-099",
+    "tags": [
+      "LLM"
+    ],
+    "section": "预训练"
+  },
+  {
+    "type": "single",
+    "question": "对比GPT和BERT的预训练任务，下列描述正确的是？",
+    "options": [
+      {
+        "text": "GPT是自回归的，BERT是自编码的",
+        "correct": true
+      },
+      {
+        "text": "GPT是自编码的，BERT是自回归的",
+        "correct": false
+      },
+      {
+        "text": "两者都是自回归的",
+        "correct": false
+      },
+      {
+        "text": "两者都是自编码的",
+        "correct": false
+      }
+    ],
+    "explanation": "GPT采用自回归语言建模，从左到右预测；BERT采用自编码式掩码语言建模，同时利用上下文。两者任务范式不同。",
+    "id": "llm-100",
+    "tags": [
+      "LLM"
+    ],
+    "section": "预训练"
+  },
+  {
+    "type": "single",
+    "question": "在预训练数据清洗中，常用启发式规则过滤低质量文本，下列哪项不是常见的启发式规则？",
+    "options": [
+      {
+        "text": "句子长度超过阈值",
+        "correct": false
+      },
+      {
+        "text": "包含大量符号的比例",
+        "correct": false
+      },
+      {
+        "text": "使用神经网络分类器打分",
+        "correct": true
+      },
+      {
+        "text": "重复n-gram的比例",
+        "correct": false
+      }
+    ],
+    "explanation": "启发式规则通常基于简单统计特征，如长度、符号比例、重复n-gram等。神经网络分类器属于模型打分，不是启发式规则。",
+    "id": "llm-101",
+    "tags": [
+      "LLM"
+    ],
+    "section": "预训练"
+  },
+  {
+    "type": "single",
+    "question": "在Transformer预训练中，位置编码的主要作用是？",
+    "options": [
+      {
+        "text": "为模型提供序列中token的顺序信息",
+        "correct": true
+      },
+      {
+        "text": "防止模型过拟合",
+        "correct": false
+      },
+      {
+        "text": "加速模型收敛",
+        "correct": false
+      },
+      {
+        "text": "降低计算复杂度",
+        "correct": false
+      }
+    ],
+    "explanation": "位置编码为Transformer注入序列顺序信息，因为自注意力本身对位置不敏感。过拟合、收敛速度和计算复杂度不是其主要目的，因此A正确。",
+    "id": "llm-102",
+    "tags": [
+      "LLM"
+    ],
+    "section": "预训练"
+  },
+  {
+    "type": "single",
+    "question": "在GPT系列模型的预训练中，预测下一个token时通常使用什么损失函数？",
+    "options": [
+      {
+        "text": "均方误差损失",
+        "correct": false
+      },
+      {
+        "text": "交叉熵损失",
+        "correct": true
+      },
+      {
+        "text": "对比损失",
+        "correct": false
+      },
+      {
+        "text": "三元组损失",
+        "correct": false
+      }
+    ],
+    "explanation": "语言建模是分类任务，预测词汇表上的概率分布，标准损失为交叉熵。均方误差用于回归，对比损失和三元组损失常用于表示学习，因此B正确。",
+    "id": "llm-103",
+    "tags": [
+      "LLM"
+    ],
+    "section": "预训练"
+  },
+  {
+    "type": "single",
+    "question": "BERT预训练中，除了掩码语言建模（MLM），还使用了哪个预训练任务？",
+    "options": [
+      {
+        "text": "下一句预测（NSP）",
+        "correct": true
+      },
+      {
+        "text": "下一词预测（NWP）",
+        "correct": false
+      },
+      {
+        "text": "句子顺序预测（SOP）",
+        "correct": false
+      },
+      {
+        "text": "替换词检测（RTD）",
+        "correct": false
+      }
+    ],
+    "explanation": "BERT原始论文使用MLM和下一句预测（NSP）两个任务。NWP是GPT的任务，SOP是ALBERT提出的，RTD是ELECTRA使用的，因此A正确。",
+    "id": "llm-104",
+    "tags": [
+      "LLM"
+    ],
+    "section": "预训练"
+  },
+  {
+    "type": "single",
+    "question": "在预训练数据规模极大时，常采用流式加载（streaming）而非一次性加载全部数据，主要原因是？",
+    "options": [
+      {
+        "text": "提高模型精度",
+        "correct": false
+      },
+      {
+        "text": "减少内存占用",
+        "correct": true
+      },
+      {
+        "text": "加快推理速度",
+        "correct": false
+      },
+      {
+        "text": "避免过拟合",
+        "correct": false
+      }
+    ],
+    "explanation": "流式加载按需读取数据，避免将整个数据集载入内存，从而降低内存压力。它不直接提升精度或推理速度，也不是正则化手段，因此B正确。",
+    "id": "llm-105",
+    "tags": [
+      "LLM"
+    ],
+    "section": "预训练"
+  },
+  {
+    "type": "single",
+    "question": "在预训练中，梯度裁剪（gradient clipping）的主要目的是？",
+    "options": [
+      {
+        "text": "防止梯度爆炸",
+        "correct": true
+      },
+      {
+        "text": "防止梯度消失",
+        "correct": false
+      },
+      {
+        "text": "加速收敛",
+        "correct": false
+      },
+      {
+        "text": "减少参数量",
+        "correct": false
+      }
+    ],
+    "explanation": "梯度裁剪限制梯度范数，防止训练中梯度爆炸导致参数更新过大。它不解决梯度消失，也不直接加速收敛或减少参数量，因此A正确。",
+    "id": "llm-106",
+    "tags": [
+      "LLM"
+    ],
+    "section": "预训练"
+  },
+  {
+    "type": "single",
+    "question": "在Transformer预训练中，使用残差连接（residual connection）的主要作用是？",
+    "options": [
+      {
+        "text": "缓解深层网络的梯度消失问题",
+        "correct": true
+      },
+      {
+        "text": "增加模型参数量",
+        "correct": false
+      },
+      {
+        "text": "替代层归一化",
+        "correct": false
+      },
+      {
+        "text": "减少计算量",
+        "correct": false
+      }
+    ],
+    "explanation": "残差连接提供捷径路径，使梯度更易回传，缓解深层网络梯度消失。它不替代层归一化，也不以减少计算量为目的，因此A正确。",
+    "id": "llm-107",
+    "tags": [
+      "LLM"
+    ],
+    "section": "预训练"
+  },
+  {
+    "type": "single",
+    "question": "在预训练中，层归一化（LayerNorm）通常被应用在Transformer的哪个位置？",
+    "options": [
+      {
+        "text": "每个子层之后（Post-LN）或之前（Pre-LN）",
+        "correct": true
+      },
+      {
+        "text": "仅输入嵌入层之后",
+        "correct": false
+      },
+      {
+        "text": "仅输出层之前",
+        "correct": false
+      },
+      {
+        "text": "仅注意力机制内部",
+        "correct": false
+      }
+    ],
+    "explanation": "Transformer中LayerNorm通常置于每个子层（自注意力、前馈网络）之后（Post-LN）或之前（Pre-LN）。它不局限于输入、输出或注意力内部，因此A正确。",
+    "id": "llm-108",
+    "tags": [
+      "LLM"
+    ],
+    "section": "预训练"
+  },
+  {
+    "type": "single",
+    "question": "在预训练数据构建中，使用文档级去重（document-level deduplication）的主要目的是？",
+    "options": [
+      {
+        "text": "减少训练数据中的重复内容，降低记忆风险",
+        "correct": true
+      },
+      {
+        "text": "提高分词效率",
+        "correct": false
+      },
+      {
+        "text": "增加数据多样性",
+        "correct": false
+      },
+      {
+        "text": "加快模型推理",
+        "correct": false
+      }
+    ],
+    "explanation": "文档级去重移除重复文档，减少模型对重复内容的记忆，降低生成泄露风险。它不直接提高分词效率或推理速度，去重是减少而非增加多样性，因此A正确。",
+    "id": "llm-109",
+    "tags": [
+      "LLM"
+    ],
+    "section": "预训练"
+  },
+  {
+    "type": "single",
+    "question": "在预训练中，使用AdamW优化器相比标准Adam的主要改进是？",
+    "options": [
+      {
+        "text": "将权重衰减与梯度更新解耦",
+        "correct": true
+      },
+      {
+        "text": "引入动量",
+        "correct": false
+      },
+      {
+        "text": "使用二阶矩估计",
+        "correct": false
+      },
+      {
+        "text": "自适应学习率",
+        "correct": false
+      }
+    ],
+    "explanation": "AdamW将权重衰减从梯度更新中解耦，直接作用于参数，更有效地正则化。动量、二阶矩和自适应学习率是Adam本身的特点，因此A正确。",
+    "id": "llm-110",
+    "tags": [
+      "LLM"
+    ],
+    "section": "预训练"
+  },
+  {
+    "type": "single",
+    "question": "在Transformer预训练中，前馈网络（FFN）通常采用什么结构？",
+    "options": [
+      {
+        "text": "两层线性变换加非线性激活",
+        "correct": true
+      },
+      {
+        "text": "单层线性变换",
+        "correct": false
+      },
+      {
+        "text": "卷积层加池化",
+        "correct": false
+      },
+      {
+        "text": "循环神经网络",
+        "correct": false
+      }
+    ],
+    "explanation": "Transformer的FFN通常是两个线性层，中间加ReLU或GELU等非线性激活。它不是单层线性、卷积或循环结构，因此A正确。",
+    "id": "llm-111",
+    "tags": [
+      "LLM"
+    ],
+    "section": "预训练"
+  },
+  {
+    "type": "multiple",
+    "question": "下列哪些技术常用于提升预训练模型训练稳定性？",
+    "options": [
+      {
+        "text": "梯度裁剪",
+        "correct": true
+      },
+      {
+        "text": "学习率预热",
+        "correct": true
+      },
+      {
+        "text": "使用更大的批次大小",
+        "correct": false
+      },
+      {
+        "text": "混合精度训练中配合损失缩放（loss scaling）",
+        "correct": true
+      }
+    ],
+    "explanation": "梯度裁剪限制异常梯度范数，学习率预热避免训练初期参数更新过大；混合精度训练配合损失缩放可避免梯度下溢，均有助于稳定训练。更大批次本身不是稳定性技术，且通常需要相应调整学习率。",
+    "id": "llm-112",
+    "tags": [
+      "LLM"
+    ],
+    "section": "预训练"
+  },
+  {
+    "type": "multiple",
+    "question": "在预训练数据清洗中，下列哪些属于常见的启发式过滤规则？",
+    "options": [
+      {
+        "text": "移除包含过多重复字符的文本",
+        "correct": true
+      },
+      {
+        "text": "过滤长度过短的文档",
+        "correct": true
+      },
+      {
+        "text": "保留所有包含HTML标签的文本",
+        "correct": false
+      },
+      {
+        "text": "移除包含大量非字母字符的文本",
+        "correct": true
+      }
+    ],
+    "explanation": "常见启发式规则包括过滤重复字符过多、长度过短、非字母字符比例过高的文本。保留所有HTML标签通常不是清洗目标，反而可能引入噪声。",
+    "id": "llm-113",
+    "tags": [
+      "LLM"
+    ],
+    "section": "预训练"
+  },
+  {
+    "type": "multiple",
+    "question": "下列哪些属于自监督预训练任务？",
+    "options": [
+      {
+        "text": "掩码语言建模（MLM）",
+        "correct": true
+      },
+      {
+        "text": "下一句预测（NSP）",
+        "correct": true
+      },
+      {
+        "text": "情感分类",
+        "correct": false
+      },
+      {
+        "text": "因果语言建模（CLM）",
+        "correct": true
+      }
+    ],
+    "explanation": "MLM、NSP和CLM均利用数据自身构造监督信号，属于自监督预训练任务。情感分类需要人工标签，是下游有监督任务，不属于自监督预训练。",
+    "id": "llm-114",
+    "tags": [
+      "LLM"
+    ],
+    "section": "预训练"
+  },
+  {
+    "type": "multiple",
+    "question": "在Transformer预训练中，下列哪些模型结构因素会直接影响前向计算量？",
+    "options": [
+      {
+        "text": "序列长度",
+        "correct": true
+      },
+      {
+        "text": "模型层数",
+        "correct": true
+      },
+      {
+        "text": "隐藏层维度",
+        "correct": true
+      },
+      {
+        "text": "优化器类型",
+        "correct": false
+      }
+    ],
+    "explanation": "注意力与前馈网络的计算量会随序列长度、模型层数和隐藏层维度增长。优化器类型影响训练更新开销和训练动态，但不属于模型结构的前向计算量。",
+    "id": "llm-115",
+    "tags": [
+      "LLM"
+    ],
+    "section": "预训练"
+  },
+  {
+    "type": "multiple",
+    "question": "关于预训练中的子词分词（如BPE），下列描述正确的是？",
+    "options": [
+      {
+        "text": "可以缓解未登录词问题",
+        "correct": true
+      },
+      {
+        "text": "词表大小是超参数",
+        "correct": true
+      },
+      {
+        "text": "分词结果完全由语言规则决定",
+        "correct": false
+      },
+      {
+        "text": "通常基于统计频率合并字符或子词",
+        "correct": true
+      }
+    ],
+    "explanation": "BPE等子词分词通过统计合并高频字符对，能缓解未登录词问题，词表大小可调。其分词基于数据统计而非纯语言规则，因此A、B、D正确。",
+    "id": "llm-116",
+    "tags": [
+      "LLM"
+    ],
+    "section": "预训练"
+  },
+  {
+    "type": "single",
+    "question": "在预训练语言模型训练初期，如果学习率直接设置为较大值，最可能导致什么问题？",
+    "options": [
+      {
+        "text": "模型参数更新幅度过大，训练损失剧烈震荡甚至发散",
+        "correct": true
+      },
+      {
+        "text": "模型会立刻收敛到全局最优解",
+        "correct": false
+      },
+      {
+        "text": "梯度消失问题完全消失",
+        "correct": false
+      },
+      {
+        "text": "模型自动获得更强的泛化能力",
+        "correct": false
+      }
+    ],
+    "explanation": "训练初期参数随机初始化，大学习率会使更新步长过大，损失剧烈震荡甚至发散，因此常用warmup逐步增大学习率。其余选项均非大学习率初期的主要后果。",
+    "id": "llm-117",
+    "tags": [
+      "LLM"
+    ],
+    "section": "预训练"
+  },
+  {
+    "type": "single",
+    "question": "某团队在预训练中使用文档级去重，发现训练集重复文档比例很高。这一操作最直接改善的是？",
+    "options": [
+      {
+        "text": "减少模型对重复内容的过度记忆，并节省训练算力",
+        "correct": true
+      },
+      {
+        "text": "保证模型在推理时不会生成重复文本",
+        "correct": false
+      },
+      {
+        "text": "使分词器自动学习到更优的子词表",
+        "correct": false
+      },
+      {
+        "text": "完全消除预训练数据中的事实性错误",
+        "correct": false
+      }
+    ],
+    "explanation": "文档级去重可降低重复样本对模型记忆的放大作用，并避免在冗余数据上浪费算力。它不能保证生成不重复，也不直接影响分词器学习，更不能消除事实错误。",
+    "id": "llm-118",
+    "tags": [
+      "LLM"
+    ],
+    "section": "预训练"
+  },
+  {
+    "type": "multiple",
+    "question": "在Transformer预训练中，下列哪些做法有助于提升训练稳定性？",
+    "options": [
+      {
+        "text": "使用学习率预热（warmup）",
+        "correct": true
+      },
+      {
+        "text": "应用梯度裁剪（gradient clipping）",
+        "correct": true
+      },
+      {
+        "text": "使用残差连接与层归一化",
+        "correct": true
+      },
+      {
+        "text": "完全移除所有归一化层以简化计算",
+        "correct": false
+      }
+    ],
+    "explanation": "warmup避免初期大更新，梯度裁剪限制异常梯度范数，残差连接与层归一化缓解深层训练困难，均提升稳定性。移除归一化层通常损害稳定性，不是正确做法。",
+    "id": "llm-119",
+    "tags": [
+      "LLM"
+    ],
+    "section": "预训练"
+  },
+  {
+    "type": "single",
+    "question": "在自回归语言模型预训练中，若某序列长度为4，模型对前三个位置分别预测后一个词，训练时通常如何组织输入与标签以避免信息泄漏？",
+    "options": [
+      {
+        "text": "输入整段序列，模型同时预测每个位置的下一个词，标签为下一位置词且通过因果掩码禁止看见未来",
+        "correct": true
+      },
+      {
+        "text": "输入整段序列，模型同时预测每个位置本身，标签为当前位置词且不使用掩码",
+        "correct": false
+      },
+      {
+        "text": "输入整段序列，随机遮盖一个词，标签为被遮盖词且可双向注意",
+        "correct": false
+      },
+      {
+        "text": "输入整段序列，模型同时预测每个位置的下一个词，标签为下一位置词且不做任何掩码",
+        "correct": false
+      }
+    ],
+    "explanation": "自回归预训练用因果掩码保证位置t只能看到≤t的上下文，标签是下一词；无掩码会泄漏未来。随机遮盖加双向注意是掩码语言建模，不是自回归目标。",
+    "id": "llm-120",
+    "tags": [
+      "LLM"
+    ],
+    "section": "预训练"
+  },
+  {
+    "type": "single",
+    "question": "在监督微调（SFT）中，损失函数通常采用哪种形式？",
+    "options": [
+      {
+        "text": "对输入和输出所有token计算交叉熵并求平均",
+        "correct": false
+      },
+      {
+        "text": "只对回答token计算自回归交叉熵，提示token作为上下文输入但不计算损失",
+        "correct": true
+      },
+      {
+        "text": "使用对比损失最大化正负样本间距",
+        "correct": false
+      },
+      {
+        "text": "使用强化学习奖励作为唯一优化目标",
+        "correct": false
+      }
+    ],
+    "explanation": "SFT本质是最大似然训练，常见做法是只对回答token计算自回归交叉熵，提示token仍参与前向传播但被mask掉损失。对比损失和奖励最大化属于偏好优化或RLHF范畴，不是SFT的标准目标。",
+    "id": "llm-121",
+    "tags": [
+      "LLM"
+    ],
+    "section": "SFT与偏好优化"
+  },
+  {
+    "type": "single",
+    "question": "关于SFT数据中的loss mask，下列说法正确的是？",
+    "options": [
+      {
+        "text": "对提示token做loss mask可减少模型从提示部分获得复述式监督",
+        "correct": true
+      },
+      {
+        "text": "mask必须同时去掉回答中的换行符",
+        "correct": false
+      },
+      {
+        "text": "不mask提示会导致训练完全无法收敛",
+        "correct": false
+      },
+      {
+        "text": "loss mask只影响推理速度不影响训练目标",
+        "correct": false
+      }
+    ],
+    "explanation": "对提示token做loss mask，使监督信号集中在回答上，降低模型学习复述输入的倾向；不mask通常仍可训练，只是优化目标不同。mask影响训练目标，不直接决定推理速度。",
+    "id": "llm-122",
+    "tags": [
+      "LLM"
+    ],
+    "section": "SFT与偏好优化"
+  },
+  {
+    "type": "single",
+    "question": "RLHF中奖励模型（RM）的训练数据通常来自？",
+    "options": [
+      {
+        "text": "人工对同一提示下多个回答的偏好排序",
+        "correct": true
+      },
+      {
+        "text": "模型生成的伪标签且无需人工参与",
+        "correct": false
+      },
+      {
+        "text": "预训练语料的下一词预测标签",
+        "correct": false
+      },
+      {
+        "text": "SFT数据的原始交叉熵损失值",
+        "correct": false
+      }
+    ],
+    "explanation": "奖励模型通常用人类对同一提示下多个回答的偏好比较数据训练，常采用Bradley-Terry成对损失。伪标签、下一词预测和SFT损失值都不是RM的标准监督信号，这是RLHF流程的常见考点。",
+    "id": "llm-123",
+    "tags": [
+      "LLM"
+    ],
+    "section": "SFT与偏好优化"
+  },
+  {
+    "type": "single",
+    "question": "DPO（直接偏好优化）相比PPO类RLHF的主要特点是？",
+    "options": [
+      {
+        "text": "需要显式训练独立奖励模型并在线采样",
+        "correct": false
+      },
+      {
+        "text": "用偏好对构造分类式损失直接优化策略，无需显式奖励模型",
+        "correct": true
+      },
+      {
+        "text": "完全不需要参考模型即可避免退化",
+        "correct": false
+      },
+      {
+        "text": "只能用于回归任务不能用于语言模型",
+        "correct": false
+      }
+    ],
+    "explanation": "DPO把偏好建模转化为基于策略与参考模型对数概率差的分类损失，免去显式奖励模型和在线RL采样。它仍需要参考模型来约束偏移，否则易退化，因此“无需参考模型”是错误的。",
+    "id": "llm-124",
+    "tags": [
+      "LLM"
+    ],
+    "section": "SFT与偏好优化"
+  },
+  {
+    "type": "single",
+    "question": "在偏好优化中引入参考模型（reference model）的主要作用是？",
+    "options": [
+      {
+        "text": "提升推理速度",
+        "correct": false
+      },
+      {
+        "text": "约束策略不要偏离SFT模型过远，防止奖励 hacking",
+        "correct": true
+      },
+      {
+        "text": "替代tokenizer进行分词",
+        "correct": false
+      },
+      {
+        "text": "提供额外的训练标签",
+        "correct": false
+      }
+    ],
+    "explanation": "参考模型用于KL或隐式KL约束，限制优化后策略相对SFT模型的偏移，缓解过度优化奖励导致的退化。它与推理速度、分词和标签无关，是偏好优化稳定性的关键机制。",
+    "id": "llm-125",
+    "tags": [
+      "LLM"
+    ],
+    "section": "SFT与偏好优化"
+  },
+  {
+    "type": "single",
+    "question": "关于SFT数据质量与数量的关系，下列判断较合理的是？",
+    "options": [
+      {
+        "text": "只要数量足够大，低质量数据不会影响效果",
+        "correct": false
+      },
+      {
+        "text": "少量高质量、多样化的数据常优于大量低质重复数据",
+        "correct": true
+      },
+      {
+        "text": "SFT数据必须全部由人工逐条编写才有效",
+        "correct": false
+      },
+      {
+        "text": "数据去重对SFT没有意义",
+        "correct": false
+      }
+    ],
+    "explanation": "SFT更看重示范质量与多样性，少量高质量数据往往优于大量噪声或重复样本。数据可由强模型生成再筛选，去重能减少过拟合与重复偏好，因此其他选项均不成立。",
+    "id": "llm-126",
+    "tags": [
+      "LLM"
+    ],
+    "section": "SFT与偏好优化"
+  },
+  {
+    "type": "single",
+    "question": "以下哪种情况最可能导致SFT后模型出现严重的复述用户输入问题？",
+    "options": [
+      {
+        "text": "对回答部分计算损失且数据多样",
+        "correct": false
+      },
+      {
+        "text": "训练数据中提示与回答高度相似且未做loss mask",
+        "correct": true
+      },
+      {
+        "text": "学习率设置得很小",
+        "correct": false
+      },
+      {
+        "text": "训练轮数很少",
+        "correct": false
+      }
+    ],
+    "explanation": "若提示与回答内容高度相似又未mask提示，模型会被鼓励复制输入，形成复述倾向。小学习率、少轮数和正常mask回答损失都不会直接导致该问题，这是数据构造与mask设计的典型情境题。",
+    "id": "llm-127",
+    "tags": [
+      "LLM"
+    ],
+    "section": "SFT与偏好优化"
+  },
+  {
+    "type": "single",
+    "question": "Bradley-Terry模型在偏好建模中假设？",
+    "options": [
+      {
+        "text": "回答质量评分服从均匀分布",
+        "correct": false
+      },
+      {
+        "text": "偏好概率由两个回答的潜在奖励差经sigmoid得到",
+        "correct": true
+      },
+      {
+        "text": "偏好与奖励无关，只由长度决定",
+        "correct": false
+      },
+      {
+        "text": "所有偏好对必须完全一致",
+        "correct": false
+      }
+    ],
+    "explanation": "Bradley-Terry假设P(y_w优于y_l)=σ(r(y_w)-r(y_l))，偏好由潜在奖励差决定。它不假设均匀分布、不由长度决定，也不要求偏好完全一致，这是奖励模型损失的理论基础。",
+    "id": "llm-128",
+    "tags": [
+      "LLM"
+    ],
+    "section": "SFT与偏好优化"
+  },
+  {
+    "type": "single",
+    "question": "PPO在RLHF训练中通常需要以下哪组模型配合？",
+    "options": [
+      {
+        "text": "仅策略模型一个",
+        "correct": false
+      },
+      {
+        "text": "策略、参考、奖励、价值四个模型",
+        "correct": true
+      },
+      {
+        "text": "仅奖励模型与tokenizer",
+        "correct": false
+      },
+      {
+        "text": "仅参考模型与价值模型",
+        "correct": false
+      }
+    ],
+    "explanation": "经典RLHF-PPO需要策略模型生成、参考模型算KL、奖励模型给分、价值模型估计基线，共四个模型。只提策略或奖励都不完整，这是框架机制题而非具体API题。",
+    "id": "llm-129",
+    "tags": [
+      "LLM"
+    ],
+    "section": "SFT与偏好优化"
+  },
+  {
+    "type": "single",
+    "question": "关于偏好数据中“长度偏差”的说法，正确的是？",
+    "options": [
+      {
+        "text": "标注者可能偏好更长回答，导致奖励模型学到长度捷径",
+        "correct": true
+      },
+      {
+        "text": "长度偏差只影响SFT不影响偏好优化",
+        "correct": false
+      },
+      {
+        "text": "只要增加数据量长度偏差会自动消失",
+        "correct": false
+      },
+      {
+        "text": "DPO天然完全消除长度偏差",
+        "correct": false
+      }
+    ],
+    "explanation": "人类标注常倾向更详尽的长回答，奖励模型可能把长度当作质量捷径。该偏差同样影响偏好优化，增加数据或使用DPO并不能自动消除，需要长度控制或去偏策略。",
+    "id": "llm-130",
+    "tags": [
+      "LLM"
+    ],
+    "section": "SFT与偏好优化"
+  },
+  {
+    "type": "single",
+    "question": "SFT阶段通常采用哪种学习率策略较为常见？",
+    "options": [
+      {
+        "text": "使用相对预训练更小或适中的学习率，并配合warmup与衰减",
+        "correct": true
+      },
+      {
+        "text": "使用零学习率以冻结模型",
+        "correct": false
+      },
+      {
+        "text": "固定极大学习率且不衰减",
+        "correct": false
+      },
+      {
+        "text": "学习率与batch size完全无关且无需调参",
+        "correct": false
+      }
+    ],
+    "explanation": "SFT通常用较小或适中的学习率在预训练权重上做指令微调，并配合warmup和衰减以稳定训练；零学习率无法学习，固定极大学习率易破坏模型，学习率与批量大小等超参需要联合调节。",
+    "id": "llm-131",
+    "tags": [
+      "LLM"
+    ],
+    "section": "SFT与偏好优化"
+  },
+  {
+    "type": "single",
+    "question": "在DPO损失中，若策略模型与参考模型对某回答的对数概率差在偏好回答上增大，通常意味着？",
+    "options": [
+      {
+        "text": "模型相对参考模型更倾向该偏好回答",
+        "correct": true
+      },
+      {
+        "text": "模型完全遗忘该回答",
+        "correct": false
+      },
+      {
+        "text": "参考模型被更新",
+        "correct": false
+      },
+      {
+        "text": "奖励模型被删除",
+        "correct": false
+      }
+    ],
+    "explanation": "DPO用策略与参考模型对数概率差刻画隐式奖励，偏好回答上的差增大表示策略相对参考更倾向被选回答。参考模型在DPO中通常冻结，不涉及奖励模型删除或遗忘。",
+    "id": "llm-132",
+    "tags": [
+      "LLM"
+    ],
+    "section": "SFT与偏好优化"
+  },
+  {
+    "type": "single",
+    "question": "关于拒绝采样微调（RFT）与SFT的区别，较准确的是？",
+    "options": [
+      {
+        "text": "RFT先从模型采样多个回答并按奖励筛选后再做SFT",
+        "correct": true
+      },
+      {
+        "text": "RFT不需要任何筛选直接全量训练",
+        "correct": false
+      },
+      {
+        "text": "RFT与SFT完全等价",
+        "correct": false
+      },
+      {
+        "text": "RFT只能用负样本训练",
+        "correct": false
+      }
+    ],
+    "explanation": "拒绝采样微调先让当前策略对提示采样多个候选，用奖励或验证器筛选优质回答，再对这些回答做监督微调。它依赖筛选步骤，并非全量训练，也不等价于普通SFT或只用负样本。",
+    "id": "llm-133",
+    "tags": [
+      "LLM"
+    ],
+    "section": "SFT与偏好优化"
+  },
+  {
+    "type": "single",
+    "question": "偏好优化中出现“奖励 hacking”的典型表现是？",
+    "options": [
+      {
+        "text": "模型输出变短且信息量下降",
+        "correct": false
+      },
+      {
+        "text": "模型钻奖励模型漏洞，表面得分高但实际质量下降",
+        "correct": true
+      },
+      {
+        "text": "训练损失恒为零",
+        "correct": false
+      },
+      {
+        "text": "tokenizer词表扩大",
+        "correct": false
+      }
+    ],
+    "explanation": "奖励 hacking指策略利用奖励模型的缺陷获得高分，而人类实际评价下降，常表现为冗长、谄媚或格式投机。它不是输出必然变短、损失恒零或词表变化，需要KL约束与奖励改进来缓解。",
+    "id": "llm-134",
+    "tags": [
+      "LLM"
+    ],
+    "section": "SFT与偏好优化"
+  },
+  {
+    "type": "single",
+    "question": "关于SFT与偏好优化的顺序，常见实践是？",
+    "options": [
+      {
+        "text": "先做偏好优化再做SFT以节省数据",
+        "correct": false
+      },
+      {
+        "text": "先SFT获得基础指令能力，再做偏好优化对齐偏好",
+        "correct": true
+      },
+      {
+        "text": "两者必须同时进行且不能分阶段",
+        "correct": false
+      },
+      {
+        "text": "偏好优化可以完全替代预训练",
+        "correct": false
+      }
+    ],
+    "explanation": "常见流程是先预训练，再SFT获得指令跟随与格式能力，最后用偏好优化对齐人类偏好。偏好优化替代不了预训练和SFT，分阶段训练也更稳定，顺序颠倒通常不利于效果。",
+    "id": "llm-135",
+    "tags": [
+      "LLM"
+    ],
+    "section": "SFT与偏好优化"
+  },
+  {
+    "type": "single",
+    "question": "在SFT中，对输入部分（prompt）的token通常如何处理？",
+    "options": [
+      {
+        "text": "计算损失并参与梯度回传",
+        "correct": false
+      },
+      {
+        "text": "不计算损失，但参与前向传播",
+        "correct": true
+      },
+      {
+        "text": "从输入中完全移除",
+        "correct": false
+      },
+      {
+        "text": "仅用于计算准确率",
+        "correct": false
+      }
+    ],
+    "explanation": "SFT通常只对回答部分计算损失，prompt部分不计算损失但作为上下文参与前向传播，以便模型根据输入生成回答。误选A会混淆训练目标，误选C会破坏上下文。",
+    "id": "llm-136",
+    "tags": [
+      "LLM"
+    ],
+    "section": "SFT与偏好优化"
+  },
+  {
+    "type": "single",
+    "question": "关于SFT数据中prompt与response的拼接方式，以下哪项最合理？",
+    "options": [
+      {
+        "text": "将prompt和response随机打乱后拼接",
+        "correct": false
+      },
+      {
+        "text": "仅使用response训练，忽略prompt",
+        "correct": false
+      },
+      {
+        "text": "按模板拼接，并在response部分计算损失",
+        "correct": true
+      },
+      {
+        "text": "将prompt重复多次以增强记忆",
+        "correct": false
+      }
+    ],
+    "explanation": "SFT需要模型学习在给定prompt下生成response，因此按模板拼接并在response部分计算损失是标准做法。忽略prompt或打乱顺序会破坏条件生成关系。",
+    "id": "llm-137",
+    "tags": [
+      "LLM"
+    ],
+    "section": "SFT与偏好优化"
+  },
+  {
+    "type": "single",
+    "question": "在基于成对偏好数据训练RLHF奖励模型时，最常用的损失形式是？",
+    "options": [
+      {
+        "text": "对每个回答单独做多分类交叉熵",
+        "correct": false
+      },
+      {
+        "text": "均方误差回归",
+        "correct": false
+      },
+      {
+        "text": "Bradley-Terry成对偏好负对数似然损失",
+        "correct": true
+      },
+      {
+        "text": "对比学习InfoNCE损失",
+        "correct": false
+      }
+    ],
+    "explanation": "奖励模型常用成对偏好数据，按Bradley-Terry模型用负对数似然训练，该损失等价于成对二分类交叉熵；不是对单个回答做多分类交叉熵、均方误差回归或InfoNCE对比学习。",
+    "id": "llm-138",
+    "tags": [
+      "LLM"
+    ],
+    "section": "SFT与偏好优化"
+  },
+  {
+    "type": "single",
+    "question": "在PPO-RLHF中，价值模型（critic）的作用是什么？",
+    "options": [
+      {
+        "text": "生成最终回答",
+        "correct": false
+      },
+      {
+        "text": "估计状态价值以计算优势函数",
+        "correct": true
+      },
+      {
+        "text": "计算奖励模型的损失",
+        "correct": false
+      },
+      {
+        "text": "对偏好数据进行排序",
+        "correct": false
+      }
+    ],
+    "explanation": "PPO需要优势函数来指导策略更新，价值模型用于估计状态价值，从而计算优势。生成回答的是策略模型，奖励模型提供奖励信号，排序是数据预处理。",
+    "id": "llm-139",
+    "tags": [
+      "LLM"
+    ],
+    "section": "SFT与偏好优化"
+  },
+  {
+    "type": "single",
+    "question": "在DPO训练中，以下哪个超参数控制对参考模型的偏离程度？",
+    "options": [
+      {
+        "text": "学习率",
+        "correct": false
+      },
+      {
+        "text": "批量大小",
+        "correct": false
+      },
+      {
+        "text": "β（beta）",
+        "correct": true
+      },
+      {
+        "text": "折扣因子",
+        "correct": false
+      }
+    ],
+    "explanation": "DPO损失中的β参数控制策略模型与参考模型之间的KL惩罚强度，β越大偏离越小。学习率和批量大小影响优化过程，但不直接控制偏离程度。",
+    "id": "llm-140",
+    "tags": [
+      "LLM"
+    ],
+    "section": "SFT与偏好优化"
+  },
+  {
+    "type": "single",
+    "question": "关于SFT中的灾难性遗忘，以下说法正确的是？",
+    "options": [
+      {
+        "text": "SFT一定不会导致灾难性遗忘",
+        "correct": false
+      },
+      {
+        "text": "SFT数据分布与预训练差异过大可能加剧遗忘",
+        "correct": true
+      },
+      {
+        "text": "灾难性遗忘只发生在偏好优化阶段",
+        "correct": false
+      },
+      {
+        "text": "增加SFT数据量一定能消除遗忘",
+        "correct": false
+      }
+    ],
+    "explanation": "SFT数据若与预训练分布差异大，模型可能过度拟合新数据而遗忘原有能力。增加数据量不一定消除遗忘，可能加剧过拟合。灾难性遗忘在SFT和偏好优化中均可能发生。",
+    "id": "llm-141",
+    "tags": [
+      "LLM"
+    ],
+    "section": "SFT与偏好优化"
+  },
+  {
+    "type": "single",
+    "question": "在偏好数据由标注者给出时，长度偏差通常表现为标注者更倾向于选择哪类回答？",
+    "options": [
+      {
+        "text": "更长的回答",
+        "correct": true
+      },
+      {
+        "text": "更短的回答",
+        "correct": false
+      },
+      {
+        "text": "与长度无关的随机回答",
+        "correct": false
+      },
+      {
+        "text": "包含语法错误的回答",
+        "correct": false
+      }
+    ],
+    "explanation": "人类标注中常见长度偏差，标注者更可能偏好更长、看似信息更丰富的回答，导致模型学会冗长。可通过长度平衡、交换回答顺序和多标注者聚合来减少这种偏差。",
+    "id": "llm-142",
+    "tags": [
+      "LLM"
+    ],
+    "section": "SFT与偏好优化"
+  },
+  {
+    "type": "single",
+    "question": "在SFT中，若训练数据包含大量重复样本，最可能的结果是？",
+    "options": [
+      {
+        "text": "模型泛化能力显著提升",
+        "correct": false
+      },
+      {
+        "text": "模型对重复模式过拟合",
+        "correct": true
+      },
+      {
+        "text": "模型完全忘记预训练知识",
+        "correct": false
+      },
+      {
+        "text": "训练损失无法下降",
+        "correct": false
+      }
+    ],
+    "explanation": "大量重复样本会使模型过度拟合这些模式，降低泛化能力，并可能增加复述倾向。重复样本通常使训练损失容易下降，不会导致无法下降。",
+    "id": "llm-143",
+    "tags": [
+      "LLM"
+    ],
+    "section": "SFT与偏好优化"
+  },
+  {
+    "type": "single",
+    "question": "在RLHF中，KL惩罚项的作用是什么？",
+    "options": [
+      {
+        "text": "鼓励策略模型大胆探索",
+        "correct": false
+      },
+      {
+        "text": "限制策略模型偏离参考模型过远",
+        "correct": true
+      },
+      {
+        "text": "提高奖励模型的准确率",
+        "correct": false
+      },
+      {
+        "text": "加速PPO的收敛",
+        "correct": false
+      }
+    ],
+    "explanation": "KL惩罚项用于约束策略模型，防止其为了追求高奖励而偏离参考模型过远，导致输出退化。它不直接提高奖励模型准确率或加速收敛。",
+    "id": "llm-144",
+    "tags": [
+      "LLM"
+    ],
+    "section": "SFT与偏好优化"
+  },
+  {
+    "type": "single",
+    "question": "以下哪种方法属于无需奖励模型的偏好优化方法？",
+    "options": [
+      {
+        "text": "PPO",
+        "correct": false
+      },
+      {
+        "text": "DPO",
+        "correct": true
+      },
+      {
+        "text": "A2C",
+        "correct": false
+      },
+      {
+        "text": "REINFORCE",
+        "correct": false
+      }
+    ],
+    "explanation": "DPO直接利用偏好数据优化策略，无需显式训练奖励模型。PPO、A2C、REINFORCE通常需要奖励信号，在RLHF中常依赖奖励模型。",
+    "id": "llm-145",
+    "tags": [
+      "LLM"
+    ],
+    "section": "SFT与偏好优化"
+  },
+  {
+    "type": "multiple",
+    "question": "关于SFT与偏好优化的关系，以下说法正确的有？",
+    "options": [
+      {
+        "text": "SFT通常作为偏好优化的初始化步骤",
+        "correct": true
+      },
+      {
+        "text": "偏好优化可以在SFT模型基础上进一步对齐人类偏好",
+        "correct": true
+      },
+      {
+        "text": "偏好优化完全替代SFT",
+        "correct": false
+      },
+      {
+        "text": "SFT和偏好优化使用完全相同的数据格式",
+        "correct": false
+      }
+    ],
+    "explanation": "常见流程是先SFT再偏好优化，SFT提供基础能力，偏好优化进一步对齐偏好。偏好优化不能完全替代SFT，两者数据格式不同：SFT是输入-输出对，偏好数据是成对比较。",
+    "id": "llm-146",
+    "tags": [
+      "LLM"
+    ],
+    "section": "SFT与偏好优化"
+  },
+  {
+    "type": "multiple",
+    "question": "在构建偏好数据时，以下哪些做法有助于减少偏差？",
+    "options": [
+      {
+        "text": "对回答长度进行平衡或控制",
+        "correct": true
+      },
+      {
+        "text": "让多个标注者独立标注并聚合",
+        "correct": true
+      },
+      {
+        "text": "只使用单一标注者的偏好",
+        "correct": false
+      },
+      {
+        "text": "随机交换回答顺序以消除位置偏差",
+        "correct": true
+      }
+    ],
+    "explanation": "控制长度、多标注者聚合、随机交换顺序均可减少长度偏差、个体偏差和位置偏差。仅使用单一标注者会放大个人偏差。",
+    "id": "llm-147",
+    "tags": [
+      "LLM"
+    ],
+    "section": "SFT与偏好优化"
+  },
+  {
+    "type": "multiple",
+    "question": "关于DPO的损失函数，以下理解正确的有？",
+    "options": [
+      {
+        "text": "它隐式地优化了策略模型与参考模型的KL散度",
+        "correct": true
+      },
+      {
+        "text": "它需要同时计算偏好回答和拒绝回答的对数概率",
+        "correct": true
+      },
+      {
+        "text": "它直接最大化奖励模型的输出",
+        "correct": false
+      },
+      {
+        "text": "它不需要参考模型即可训练",
+        "correct": false
+      }
+    ],
+    "explanation": "DPO损失基于策略模型和参考模型对偏好/拒绝回答的对数概率差，隐式控制KL散度。它不直接使用奖励模型，且需要参考模型来计算概率比。",
+    "id": "llm-148",
+    "tags": [
+      "LLM"
+    ],
+    "section": "SFT与偏好优化"
+  },
+  {
+    "type": "multiple",
+    "question": "在RLHF的PPO训练中，以下哪些模型或组件的参数通常会在训练过程中被更新？",
+    "options": [
+      {
+        "text": "策略模型（actor）",
+        "correct": true
+      },
+      {
+        "text": "价值模型（critic）",
+        "correct": true
+      },
+      {
+        "text": "奖励模型（reward model）",
+        "correct": false
+      },
+      {
+        "text": "参考模型（reference model）",
+        "correct": false
+      }
+    ],
+    "explanation": "PPO-RLHF通常更新策略模型和价值模型。奖励模型用于提供奖励信号且通常保持冻结，参考模型用于计算KL约束且通常也保持冻结，不参与参数更新。",
+    "id": "llm-149",
+    "tags": [
+      "LLM"
+    ],
+    "section": "SFT与偏好优化"
+  },
+  {
+    "type": "multiple",
+    "question": "关于SFT数据中的损失掩码（loss mask），以下说法正确的有？",
+    "options": [
+      {
+        "text": "掩码用于忽略prompt部分的损失",
+        "correct": true
+      },
+      {
+        "text": "掩码通常将prompt位置的标签设为-100",
+        "correct": true
+      },
+      {
+        "text": "掩码会改变模型前向传播的输入",
+        "correct": false
+      },
+      {
+        "text": "掩码用于忽略response部分的损失",
+        "correct": false
+      }
+    ],
+    "explanation": "损失掩码用于在计算损失时忽略prompt部分，常见做法是将prompt位置的标签设为-100（PyTorch忽略索引）。掩码不改变前向传播输入，只影响损失计算。",
+    "id": "llm-150",
+    "tags": [
+      "LLM"
+    ],
+    "section": "SFT与偏好优化"
+  },
+  {
+    "type": "single",
+    "question": "在LLM自回归生成中，贪心解码（greedy decoding）每次选择概率最高的下一个token。以下关于贪心解码的说法哪一项正确？",
+    "options": [
+      {
+        "text": "贪心解码保证生成全局最优序列",
+        "correct": false
+      },
+      {
+        "text": "贪心解码可能陷入重复循环，因为局部最优不等于全局最优",
+        "correct": true
+      },
+      {
+        "text": "贪心解码每次从概率分布中随机采样一个token",
+        "correct": false
+      },
+      {
+        "text": "贪心解码必须配合温度参数使用",
+        "correct": false
+      }
+    ],
+    "explanation": "贪心解码每步取最大概率token，是局部最优决策，无法保证全局最优，容易导致重复。随机采样需从分布抽样，与贪心不同；温度仅影响采样分布，贪心不依赖它。",
+    "id": "llm-151",
+    "tags": [
+      "LLM"
+    ],
+    "section": "推理与采样"
+  },
+  {
+    "type": "single",
+    "question": "关于温度参数（temperature）在LLM采样中的作用，以下描述正确的是？",
+    "options": [
+      {
+        "text": "温度越高，采样分布越尖锐，输出越确定",
+        "correct": false
+      },
+      {
+        "text": "温度趋于0时，采样近似于贪心解码",
+        "correct": true
+      },
+      {
+        "text": "温度必须大于1才能进行采样",
+        "correct": false
+      },
+      {
+        "text": "温度参数会改变模型参数权重",
+        "correct": false
+      }
+    ],
+    "explanation": "温度T缩放logits：T越小分布越尖锐，T→0时最大概率token概率趋近1，等效贪心；T越大分布越平坦。温度不改变模型权重，且T>0即可采样。",
+    "id": "llm-152",
+    "tags": [
+      "LLM"
+    ],
+    "section": "推理与采样"
+  },
+  {
+    "type": "single",
+    "question": "Top-k采样和Top-p（nucleus）采样是两种常用的截断采样策略。以下哪项是它们的关键区别？",
+    "options": [
+      {
+        "text": "Top-k固定候选token数量，Top-p根据累积概率动态确定候选集大小",
+        "correct": true
+      },
+      {
+        "text": "Top-k根据累积概率动态确定候选集，Top-p固定候选token数量",
+        "correct": false
+      },
+      {
+        "text": "Top-k只能用于分类任务，Top-p只能用于生成任务",
+        "correct": false
+      },
+      {
+        "text": "Top-k会改变模型输出层的维度，Top-p不会",
+        "correct": false
+      }
+    ],
+    "explanation": "Top-k保留概率最高的k个token，k固定；Top-p保留累积概率达到p的最小token集合，集合大小随分布变化。两者都不改变模型结构。",
+    "id": "llm-153",
+    "tags": [
+      "LLM"
+    ],
+    "section": "推理与采样"
+  },
+  {
+    "type": "single",
+    "question": "以下关于束搜索（beam search）的说法哪一项错误？",
+    "options": [
+      {
+        "text": "束搜索维护多个候选序列，每步扩展并保留得分最高的若干序列",
+        "correct": false
+      },
+      {
+        "text": "束宽越大，计算开销通常越高",
+        "correct": false
+      },
+      {
+        "text": "束搜索保证找到全局最优序列",
+        "correct": true
+      },
+      {
+        "text": "束搜索可能生成缺乏多样性的文本",
+        "correct": false
+      }
+    ],
+    "explanation": "束搜索是启发式搜索，只保留每步得分最高的若干候选，不保证全局最优；束宽增大会增加计算开销；保留高分序列会使输出趋同、多样性降低。因此错误说法是保证找到全局最优序列。",
+    "id": "llm-154",
+    "tags": [
+      "LLM"
+    ],
+    "section": "推理与采样"
+  },
+  {
+    "type": "single",
+    "question": "在LLM推理中，重复惩罚（repetition penalty）常用于缓解生成重复文本的问题。以下哪项最准确地描述了其常见实现机制？",
+    "options": [
+      {
+        "text": "对已出现token的概率进行惩罚，降低其再次被选中的可能性",
+        "correct": true
+      },
+      {
+        "text": "强制模型在生成每个新token时必须选择未出现过的token",
+        "correct": false
+      },
+      {
+        "text": "直接修改模型最后一层的权重矩阵",
+        "correct": false
+      },
+      {
+        "text": "在训练阶段对重复文本进行降采样",
+        "correct": false
+      }
+    ],
+    "explanation": "重复惩罚通常在解码时对已生成token的logits施加惩罚（如除以惩罚系数或减去常数），降低其概率，而非强制禁用或改权重。",
+    "id": "llm-155",
+    "tags": [
+      "LLM"
+    ],
+    "section": "推理与采样"
+  },
+  {
+    "type": "single",
+    "question": "以下哪种方法通过引入Gumbel噪声并结合softmax松弛，为离散采样提供可微近似？",
+    "options": [
+      {
+        "text": "Gumbel-Softmax",
+        "correct": true
+      },
+      {
+        "text": "Top-k采样",
+        "correct": false
+      },
+      {
+        "text": "束搜索",
+        "correct": false
+      },
+      {
+        "text": "贪心解码",
+        "correct": false
+      }
+    ],
+    "explanation": "Gumbel-Softmax向logits加入Gumbel噪声，再用带温度的softmax得到可微松弛，低温时接近离散采样。Top-k是截断采样策略，束搜索和贪心解码不涉及这种随机噪声与可微松弛机制。",
+    "id": "llm-156",
+    "tags": [
+      "LLM"
+    ],
+    "section": "推理与采样"
+  },
+  {
+    "type": "single",
+    "question": "在LLM推理中，核采样（nucleus sampling）的动态候选集大小会随上下文变化。以下哪种情况最可能导致核采样候选集变小？",
+    "options": [
+      {
+        "text": "模型对下一个token的预测分布非常尖锐（某个token概率接近1）",
+        "correct": true
+      },
+      {
+        "text": "模型对下一个token的预测分布非常平坦",
+        "correct": false
+      },
+      {
+        "text": "温度参数设置为一个很大的值",
+        "correct": false
+      },
+      {
+        "text": "Top-p参数设置为1.0",
+        "correct": false
+      }
+    ],
+    "explanation": "核采样保留累积概率达到p的最小集合。分布越尖锐，少数token即可达到p，候选集越小；分布平坦或温度高时，需更多token达到p，集合变大。",
+    "id": "llm-157",
+    "tags": [
+      "LLM"
+    ],
+    "section": "推理与采样"
+  },
+  {
+    "type": "single",
+    "question": "关于LLM推理中的对比解码（contrastive decoding），以下描述正确的是？",
+    "options": [
+      {
+        "text": "它通过对比大模型和小模型的预测分布来提升生成质量",
+        "correct": true
+      },
+      {
+        "text": "它只能用于图像生成任务",
+        "correct": false
+      },
+      {
+        "text": "它通过增加模型层数来提升推理能力",
+        "correct": false
+      },
+      {
+        "text": "它要求模型在训练时使用对比损失",
+        "correct": false
+      }
+    ],
+    "explanation": "对比解码在推理时利用专家模型（大模型）和业余模型（小模型）的logits差异来调整分布，增强生成质量，无需额外训练。",
+    "id": "llm-158",
+    "tags": [
+      "LLM"
+    ],
+    "section": "推理与采样"
+  },
+  {
+    "type": "single",
+    "question": "在LLM推理中，使用KV缓存（KV cache）的主要目的是什么？",
+    "options": [
+      {
+        "text": "避免自回归生成时重复计算已生成token的键值对，加速推理",
+        "correct": true
+      },
+      {
+        "text": "减少模型参数量以降低内存占用",
+        "correct": false
+      },
+      {
+        "text": "在训练时加速反向传播",
+        "correct": false
+      },
+      {
+        "text": "提高模型输出的准确性",
+        "correct": false
+      }
+    ],
+    "explanation": "KV缓存存储已计算过的键和值，生成新token时直接复用，避免重复计算注意力中的KV，显著提升自回归推理速度，不改变模型参数或输出。",
+    "id": "llm-159",
+    "tags": [
+      "LLM"
+    ],
+    "section": "推理与采样"
+  },
+  {
+    "type": "single",
+    "question": "在LLM推理中，推测解码（speculative decoding）可以加速生成。以下哪项正确描述了其核心思想？",
+    "options": [
+      {
+        "text": "使用一个小模型快速生成多个候选token，再由大模型并行验证并接受其中正确的部分",
+        "correct": true
+      },
+      {
+        "text": "直接跳过部分注意力计算以减少计算量",
+        "correct": false
+      },
+      {
+        "text": "使用量化技术降低模型精度以加速推理",
+        "correct": false
+      },
+      {
+        "text": "在训练时使用更大的批量大小",
+        "correct": false
+      }
+    ],
+    "explanation": "推测解码利用小模型草稿多个token，大模型一次前向并行验证，保持输出分布不变的同时加速。它不跳过注意力，也不依赖量化或训练批量。",
+    "id": "llm-160",
+    "tags": [
+      "LLM"
+    ],
+    "section": "推理与采样"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些方法可以用于控制LLM生成文本的多样性？",
+    "options": [
+      {
+        "text": "调节温度参数（temperature）",
+        "correct": true
+      },
+      {
+        "text": "使用Top-p采样并调节p值",
+        "correct": true
+      },
+      {
+        "text": "调节重复惩罚系数",
+        "correct": true
+      },
+      {
+        "text": "增加模型层数",
+        "correct": false
+      }
+    ],
+    "explanation": "温度、Top-p和重复惩罚都在解码阶段影响token选择分布，从而控制多样性。增加模型层数改变模型容量，需重新训练，非推理时多样性控制手段。",
+    "id": "llm-161",
+    "tags": [
+      "LLM"
+    ],
+    "section": "推理与采样"
+  },
+  {
+    "type": "multiple",
+    "question": "关于LLM推理中的采样策略，以下哪些说法正确？",
+    "options": [
+      {
+        "text": "贪心解码是确定性的，相同输入总是产生相同输出",
+        "correct": true
+      },
+      {
+        "text": "温度参数T=1时，softmax分布与原始logits的softmax相同",
+        "correct": true
+      },
+      {
+        "text": "Top-k采样中k=1等价于贪心解码",
+        "correct": true
+      },
+      {
+        "text": "束搜索是一种随机采样方法",
+        "correct": false
+      }
+    ],
+    "explanation": "贪心解码无随机性；温度T=1不缩放logits；Top-k中k=1只保留最大概率token，等效贪心。束搜索是确定性启发式搜索，非随机采样。",
+    "id": "llm-162",
+    "tags": [
+      "LLM"
+    ],
+    "section": "推理与采样"
+  },
+  {
+    "type": "multiple",
+    "question": "在LLM自回归生成中，以下哪些因素可能导致生成文本出现重复？",
+    "options": [
+      {
+        "text": "使用贪心解码或低温度采样",
+        "correct": true
+      },
+      {
+        "text": "训练数据中存在大量重复模式",
+        "correct": true
+      },
+      {
+        "text": "未使用重复惩罚等缓解机制",
+        "correct": true
+      },
+      {
+        "text": "使用高温度和大Top-p值",
+        "correct": false
+      }
+    ],
+    "explanation": "贪心/低温易陷入局部循环，训练数据重复会强化重复模式，缺乏惩罚机制则重复不受抑制。高温度和大Top-p增加随机性，通常减少重复。",
+    "id": "llm-163",
+    "tags": [
+      "LLM"
+    ],
+    "section": "推理与采样"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些技术可以在LLM推理阶段加速生成过程？",
+    "options": [
+      {
+        "text": "KV缓存（KV cache）",
+        "correct": true
+      },
+      {
+        "text": "推测解码（speculative decoding）",
+        "correct": true
+      },
+      {
+        "text": "量化（quantization）",
+        "correct": true
+      },
+      {
+        "text": "束搜索（beam search）",
+        "correct": false
+      }
+    ],
+    "explanation": "KV缓存复用已计算键值，推测解码并行验证草稿token，量化降低计算精度提升速度。束搜索维护多个序列，通常增加计算开销，非加速技术。",
+    "id": "llm-164",
+    "tags": [
+      "LLM"
+    ],
+    "section": "推理与采样"
+  },
+  {
+    "type": "multiple",
+    "question": "关于LLM推理中的退出（exit）策略或提前终止，以下哪些说法正确？",
+    "options": [
+      {
+        "text": "生成到最大长度时强制停止是一种终止策略",
+        "correct": true
+      },
+      {
+        "text": "当模型生成结束符（如<EOS>）时停止生成",
+        "correct": true
+      },
+      {
+        "text": "可以基于输出概率设置阈值提前终止生成",
+        "correct": true
+      },
+      {
+        "text": "提前终止总是提高生成文本的质量",
+        "correct": false
+      }
+    ],
+    "explanation": "最大长度、EOS和概率阈值都是常见终止策略；但提前终止可能截断有用信息，不一定提高质量，需根据任务权衡。",
+    "id": "llm-165",
+    "tags": [
+      "LLM"
+    ],
+    "section": "推理与采样"
+  },
+  {
+    "type": "single",
+    "question": "在LLM的随机采样中，温度参数T趋近于0时，采样行为最接近于以下哪种解码策略？",
+    "options": [
+      {
+        "text": "贪心解码",
+        "correct": true
+      },
+      {
+        "text": "束搜索",
+        "correct": false
+      },
+      {
+        "text": "Top-k采样",
+        "correct": false
+      },
+      {
+        "text": "纯随机采样",
+        "correct": false
+      }
+    ],
+    "explanation": "温度T趋近0时，softmax分布趋于one-hot，概率最高的token概率趋近1，因此采样结果几乎总是选择最高概率token，等价于贪心解码。其他选项均不准确。",
+    "id": "llm-166",
+    "tags": [
+      "LLM"
+    ],
+    "section": "推理与采样"
+  },
+  {
+    "type": "single",
+    "question": "在Top-p（核采样）中，若给定累积概率阈值p=0.9，则候选集是如何确定的？",
+    "options": [
+      {
+        "text": "选择概率最高的token，直到累积概率达到或超过0.9的最小集合",
+        "correct": true
+      },
+      {
+        "text": "固定选择概率最高的前90%的token",
+        "correct": false
+      },
+      {
+        "text": "选择概率大于0.9的所有token",
+        "correct": false
+      },
+      {
+        "text": "随机选择90%的token作为候选",
+        "correct": false
+      }
+    ],
+    "explanation": "核采样按概率降序累加，取使累积概率达到或超过阈值p的最小token集合；它不是固定数量选择，也不是按单个token概率阈值或随机比例选择。",
+    "id": "llm-167",
+    "tags": [
+      "LLM"
+    ],
+    "section": "推理与采样"
+  },
+  {
+    "type": "single",
+    "question": "在推测解码（speculative decoding）中，以下哪项正确描述了其核心思想？",
+    "options": [
+      {
+        "text": "使用一个小模型快速生成多个候选token，再由大模型并行验证",
+        "correct": true
+      },
+      {
+        "text": "直接使用小模型替代大模型进行生成",
+        "correct": false
+      },
+      {
+        "text": "对大模型的输出进行量化以加速推理",
+        "correct": false
+      },
+      {
+        "text": "同时运行多个大模型并投票选择输出",
+        "correct": false
+      }
+    ],
+    "explanation": "推测解码利用小模型草拟多个token，大模型并行验证并接受符合其分布的token，从而加速生成且保持输出分布不变。它不替代大模型，也不涉及量化或多模型投票。",
+    "id": "llm-168",
+    "tags": [
+      "LLM"
+    ],
+    "section": "推理与采样"
+  },
+  {
+    "type": "single",
+    "question": "在LLM生成中，重复惩罚（repetition penalty）通常如何实现？",
+    "options": [
+      {
+        "text": "对已出现token的logit减去一个固定惩罚值",
+        "correct": false
+      },
+      {
+        "text": "对已出现token的概率乘以一个小于1的系数",
+        "correct": false
+      },
+      {
+        "text": "根据token出现次数动态调整其概率",
+        "correct": false
+      },
+      {
+        "text": "对已出现token的logit除以一个大于1的惩罚系数，负logit通常乘以该系数",
+        "correct": true
+      }
+    ],
+    "explanation": "重复惩罚在logits层面操作，常见做法是正logit除以大于1的系数、负logit乘以该系数，使已出现token概率下降；固定减logit、概率乘系数或按次数动态调整属于其他惩罚形式。",
+    "id": "llm-169",
+    "tags": [
+      "LLM"
+    ],
+    "section": "推理与采样"
+  },
+  {
+    "type": "single",
+    "question": "在LLM推理与采样中，以下哪种方法通过引入Gumbel噪声并用带温度的softmax进行连续松弛，以近似离散采样并保持可微？",
+    "options": [
+      {
+        "text": "Gumbel-Softmax",
+        "correct": true
+      },
+      {
+        "text": "Top-k采样",
+        "correct": false
+      },
+      {
+        "text": "核采样",
+        "correct": false
+      },
+      {
+        "text": "束搜索",
+        "correct": false
+      }
+    ],
+    "explanation": "Gumbel-Softmax是Gumbel-Max技巧的松弛版本，向logits加入Gumbel噪声，再用带温度的softmax得到可微的近似样本；Top-k和核采样是截断策略，束搜索是确定性搜索。",
+    "id": "llm-170",
+    "tags": [
+      "LLM"
+    ],
+    "section": "推理与采样"
+  },
+  {
+    "type": "single",
+    "question": "在LLM推理中，对比解码（contrastive decoding）通常用于什么目的？",
+    "options": [
+      {
+        "text": "通过对比两个模型的输出来减少幻觉或提高生成质量",
+        "correct": true
+      },
+      {
+        "text": "加速推理过程",
+        "correct": false
+      },
+      {
+        "text": "增加生成文本的多样性",
+        "correct": false
+      },
+      {
+        "text": "减少模型参数量",
+        "correct": false
+      }
+    ],
+    "explanation": "对比解码通过对比大模型和小模型（或专家模型和业余模型）的预测分布，惩罚小模型偏好的token，从而减少幻觉、提高生成质量。它不主要用于加速或增加多样性。",
+    "id": "llm-171",
+    "tags": [
+      "LLM"
+    ],
+    "section": "推理与采样"
+  },
+  {
+    "type": "single",
+    "question": "在LLM自回归生成中，以下哪种情况最可能导致核采样的候选集变小？",
+    "options": [
+      {
+        "text": "模型对下一个token的预测分布非常尖锐（概率集中）",
+        "correct": true
+      },
+      {
+        "text": "模型对下一个token的预测分布非常平坦（概率均匀）",
+        "correct": false
+      },
+      {
+        "text": "温度参数设置为较大的值",
+        "correct": false
+      },
+      {
+        "text": "Top-k中的k值设置得很大",
+        "correct": false
+      }
+    ],
+    "explanation": "核采样的候选集大小取决于累积概率达到阈值p所需的token数。分布越尖锐，少数token就占据大部分概率，候选集越小；分布越平坦，候选集越大。温度增大使分布更平坦，候选集变大。",
+    "id": "llm-172",
+    "tags": [
+      "LLM"
+    ],
+    "section": "推理与采样"
+  },
+  {
+    "type": "single",
+    "question": "在LLM推理中，以下哪项关于束搜索（beam search）的说法正确？",
+    "options": [
+      {
+        "text": "束搜索通过维护多个候选序列来扩大搜索范围，但可能生成重复或通用文本",
+        "correct": true
+      },
+      {
+        "text": "束搜索总是比贪心解码生成更高质量的文本",
+        "correct": false
+      },
+      {
+        "text": "束搜索是一种随机采样方法",
+        "correct": false
+      },
+      {
+        "text": "束搜索的束宽越大，生成速度越快",
+        "correct": false
+      }
+    ],
+    "explanation": "束搜索维护多个候选序列，探索更广的路径，但可能导致重复或缺乏多样性的文本。它不总是优于贪心解码，且是确定性方法，束宽增大会增加计算量、降低速度。",
+    "id": "llm-173",
+    "tags": [
+      "LLM"
+    ],
+    "section": "推理与采样"
+  },
+  {
+    "type": "single",
+    "question": "在LLM生成中，以下哪项是提前终止（early stopping）的常见应用？",
+    "options": [
+      {
+        "text": "当生成概率低于阈值时提前结束序列",
+        "correct": false
+      },
+      {
+        "text": "当生成达到最大长度或遇到结束符时停止",
+        "correct": true
+      },
+      {
+        "text": "当束搜索的得分不再提高时提前终止",
+        "correct": false
+      },
+      {
+        "text": "当温度参数为0时提前终止",
+        "correct": false
+      }
+    ],
+    "explanation": "常见的提前终止包括达到预设最大长度或生成结束符（如<EOS>）时停止。束搜索中得分不再提高时提前终止是束搜索的优化，并非LLM生成中通用的提前终止策略。",
+    "id": "llm-174",
+    "tags": [
+      "LLM"
+    ],
+    "section": "推理与采样"
+  },
+  {
+    "type": "single",
+    "question": "在LLM推理中，以下哪项关于温度参数和Top-p采样的组合使用说法正确？",
+    "options": [
+      {
+        "text": "通常先应用温度缩放，再应用Top-p截断",
+        "correct": true
+      },
+      {
+        "text": "通常先应用Top-p截断，再应用温度缩放",
+        "correct": false
+      },
+      {
+        "text": "两者不能同时使用",
+        "correct": false
+      },
+      {
+        "text": "温度缩放会改变Top-p的阈值",
+        "correct": false
+      }
+    ],
+    "explanation": "标准做法是先通过温度调整logits的分布，再计算softmax概率并应用Top-p截断。顺序颠倒会改变候选集。两者可以同时使用，温度缩放不直接改变Top-p的阈值，但影响概率分布进而影响候选集。",
+    "id": "llm-175",
+    "tags": [
+      "LLM"
+    ],
+    "section": "推理与采样"
+  },
+  {
+    "type": "single",
+    "question": "某LLM词表含4个token：A(0.5)、B(0.3)、C(0.15)、D(0.05)。采用Top-p=0.7的核采样，先按概率降序累加。下列候选集正确的是？",
+    "options": [
+      {
+        "text": "{A}",
+        "correct": false
+      },
+      {
+        "text": "{A,B}",
+        "correct": true
+      },
+      {
+        "text": "{A,B,C}",
+        "correct": false
+      },
+      {
+        "text": "{A,B,C,D}",
+        "correct": false
+      }
+    ],
+    "explanation": "按概率降序累加：A为0.5未达0.7，加入B后为0.8≥0.7，因此候选集为{A,B}。常见误区是只取超过阈值的单个token，或把累加达到阈值前一个token也排除。",
+    "id": "llm-176",
+    "tags": [
+      "LLM"
+    ],
+    "section": "推理与采样"
+  },
+  {
+    "type": "single",
+    "question": "自回归生成时对logits施加重复惩罚。若某已出现token的原logit为2.0，惩罚系数1.2按常见logit除法实现，其调整后logit约为？",
+    "options": [
+      {
+        "text": "2.4",
+        "correct": false
+      },
+      {
+        "text": "0.8",
+        "correct": false
+      },
+      {
+        "text": "1.67",
+        "correct": true
+      },
+      {
+        "text": "0.4",
+        "correct": false
+      }
+    ],
+    "explanation": "常见实现是正logit除以惩罚系数，2.0/1.2≈1.67，从而降低该token被再次选中的概率。误区包括误用乘法调高、误减固定值，或把惩罚系数与温度混为一谈。",
+    "id": "llm-177",
+    "tags": [
+      "LLM"
+    ],
+    "section": "推理与采样"
+  },
+  {
+    "type": "single",
+    "question": "设当前分布为P，空上下文下的均匀分布为U。若按p=0.9P+0.1U混合后再采样，与直接用P采样相比，最直接的效果是？",
+    "options": [
+      {
+        "text": "所有token概率被等比例放大，分布更尖锐",
+        "correct": false
+      },
+      {
+        "text": "低概率token获得额外质量，分布更平坦",
+        "correct": true
+      },
+      {
+        "text": "等价于把温度精确设为0.9",
+        "correct": false
+      },
+      {
+        "text": "只保留累积概率前90%的token",
+        "correct": false
+      }
+    ],
+    "explanation": "与均匀分布做凸组合会给每个token至少0.1/|V|的质量，使低概率token概率上升、分布更平坦；它不是温度缩放，也不是Top-p截断。",
+    "id": "llm-178",
+    "tags": [
+      "LLM"
+    ],
+    "section": "推理与采样"
+  },
+  {
+    "type": "multiple",
+    "question": "关于温度T对softmax分布的影响（T>0），下列说法正确的有？",
+    "options": [
+      {
+        "text": "T越小，分布越尖锐，越接近argmax",
+        "correct": true
+      },
+      {
+        "text": "T越大，熵通常越大，采样更随机",
+        "correct": true
+      },
+      {
+        "text": "T趋于无穷时，分布趋于均匀分布",
+        "correct": true
+      },
+      {
+        "text": "T改变后，各token概率的排序通常发生反转",
+        "correct": false
+      }
+    ],
+    "explanation": "温度缩放为softmax(z/T)：T小使高logit优势放大、分布尖锐；T大趋于均匀、熵增大；单调变换不改变logit排序，故概率排序通常不变。误区是把温度当作截断阈值。",
+    "id": "llm-179",
+    "tags": [
+      "LLM"
+    ],
+    "section": "推理与采样"
+  },
+  {
+    "type": "multiple",
+    "question": "推测解码（speculative decoding）用于加速LLM生成。下列描述正确的有？",
+    "options": [
+      {
+        "text": "用小模型或草稿模型先提出多个候选token",
+        "correct": true
+      },
+      {
+        "text": "大模型并行验证候选，按接受规则决定接受长度",
+        "correct": true
+      },
+      {
+        "text": "在被接受前缀下，保持与目标模型采样一致的分布",
+        "correct": true
+      },
+      {
+        "text": "它通过降低目标模型权重精度来换取速度",
+        "correct": false
+      }
+    ],
+    "explanation": "推测解码由草稿模型提出候选，目标模型一次前向并行验证，并按接受-拒绝规则保证输出分布与目标模型一致。量化权重属于模型压缩，不是推测解码的机制。",
+    "id": "llm-180",
+    "tags": [
+      "LLM"
+    ],
+    "section": "推理与采样"
+  },
+  {
+    "type": "single",
+    "question": "在Transformer自回归推理中，KV Cache的主要作用是：",
+    "options": [
+      {
+        "text": "缓存每一层的键值对，避免重复计算历史token的K和V",
+        "correct": true
+      },
+      {
+        "text": "缓存注意力权重，加速当前token的注意力计算",
+        "correct": false
+      },
+      {
+        "text": "缓存输入token的嵌入表示，减少嵌入层计算",
+        "correct": false
+      },
+      {
+        "text": "缓存模型参数，减少显存占用",
+        "correct": false
+      }
+    ],
+    "explanation": "KV Cache缓存历史token在每一层的Key和Value，使生成新token时只需计算当前token的Q并与缓存的K、V做注意力，避免重复计算。注意力权重是动态计算的，不缓存；嵌入和参数也不在KV Cache中。",
+    "id": "llm-181",
+    "tags": [
+      "LLM"
+    ],
+    "section": "KV Cache"
+  },
+  {
+    "type": "single",
+    "question": "关于KV Cache的显存占用，以下说法正确的是：",
+    "options": [
+      {
+        "text": "KV Cache大小与序列长度、批次大小、层数、头数、头维度成正比",
+        "correct": true
+      },
+      {
+        "text": "KV Cache大小与序列长度无关，只与模型参数量有关",
+        "correct": false
+      },
+      {
+        "text": "KV Cache大小与批次大小成反比",
+        "correct": false
+      },
+      {
+        "text": "KV Cache大小只取决于注意力头数",
+        "correct": false
+      }
+    ],
+    "explanation": "KV Cache的显存占用约为 2 × 层数 × 头数 × 头维度 × 序列长度 × 批次大小 × 数据类型字节数，因此与这些因素均成正比。它随序列长度和批次线性增长，与头数等相关，并非无关或成反比。",
+    "id": "llm-182",
+    "tags": [
+      "LLM"
+    ],
+    "section": "KV Cache"
+  },
+  {
+    "type": "single",
+    "question": "在KV Cache的上下文中，PagedAttention的主要创新点是：",
+    "options": [
+      {
+        "text": "将KV Cache分页存储，减少内存碎片并支持高效共享",
+        "correct": true
+      },
+      {
+        "text": "压缩KV Cache的数值精度以降低显存",
+        "correct": false
+      },
+      {
+        "text": "只缓存注意力权重以加速计算",
+        "correct": false
+      },
+      {
+        "text": "动态剪枝注意力头以减少计算量",
+        "correct": false
+      }
+    ],
+    "explanation": "PagedAttention借鉴操作系统虚拟内存分页思想，将KV Cache划分为固定大小的块，非连续存储，从而减少内存碎片，并支持多个序列共享相同块。它不涉及精度压缩或注意力权重缓存。",
+    "id": "llm-183",
+    "tags": [
+      "LLM"
+    ],
+    "section": "KV Cache"
+  },
+  {
+    "type": "single",
+    "question": "以下哪项技术通过合并或驱逐不重要的KV Cache条目来减少显存占用？",
+    "options": [
+      {
+        "text": "KV Cache量化",
+        "correct": false
+      },
+      {
+        "text": "KV Cache剪枝/驱逐（如H2O）",
+        "correct": true
+      },
+      {
+        "text": "分页注意力（PagedAttention）",
+        "correct": false
+      },
+      {
+        "text": "FlashAttention",
+        "correct": false
+      }
+    ],
+    "explanation": "KV Cache剪枝或驱逐技术（如H2O）根据重要性评分丢弃部分历史KV条目，直接减少缓存数量。量化是降低精度，分页是管理内存，FlashAttention是优化计算过程，它们不直接驱逐条目。",
+    "id": "llm-184",
+    "tags": [
+      "LLM"
+    ],
+    "section": "KV Cache"
+  },
+  {
+    "type": "single",
+    "question": "在Transformer解码器中，KV Cache通常缓存哪些内容？",
+    "options": [
+      {
+        "text": "每一层自注意力模块的Key和Value张量",
+        "correct": true
+      },
+      {
+        "text": "每一层前馈网络的中间激活",
+        "correct": false
+      },
+      {
+        "text": "每一层交叉注意力的Query张量",
+        "correct": false
+      },
+      {
+        "text": "输出层的logits",
+        "correct": false
+      }
+    ],
+    "explanation": "KV Cache仅缓存解码器每一层自注意力中的Key和Value，用于后续token的注意力计算。前馈网络激活、Query和logits都不在缓存范围内，因为它们要么每步变化，要么不需要历史信息。",
+    "id": "llm-185",
+    "tags": [
+      "LLM"
+    ],
+    "section": "KV Cache"
+  },
+  {
+    "type": "single",
+    "question": "使用KV Cache后，生成第t个token时，自注意力计算中Query来自：",
+    "options": [
+      {
+        "text": "当前token的隐藏状态",
+        "correct": true
+      },
+      {
+        "text": "缓存中所有历史token的Query",
+        "correct": false
+      },
+      {
+        "text": "当前token的Key",
+        "correct": false
+      },
+      {
+        "text": "缓存中所有历史token的Value",
+        "correct": false
+      }
+    ],
+    "explanation": "生成第t个token时，只有当前token的隐藏状态会生成Query，并与缓存中历史token的Key、Value以及当前token的Key、Value做注意力。历史Query不需要缓存，因此Query仅来自当前token。",
+    "id": "llm-186",
+    "tags": [
+      "LLM"
+    ],
+    "section": "KV Cache"
+  },
+  {
+    "type": "single",
+    "question": "下列哪种情况会使得KV Cache的显存占用显著增加？",
+    "options": [
+      {
+        "text": "增大批次大小和序列长度",
+        "correct": true
+      },
+      {
+        "text": "减少模型层数",
+        "correct": false
+      },
+      {
+        "text": "减小注意力头维度",
+        "correct": false
+      },
+      {
+        "text": "使用更小的数据类型",
+        "correct": false
+      }
+    ],
+    "explanation": "KV Cache大小与批次大小和序列长度成正比，因此增大它们会显著增加显存占用。减少层数、减小头维度或使用更小的数据类型都会降低显存占用。",
+    "id": "llm-187",
+    "tags": [
+      "LLM"
+    ],
+    "section": "KV Cache"
+  },
+  {
+    "type": "single",
+    "question": "KV Cache量化技术的主要目的是：",
+    "options": [
+      {
+        "text": "降低KV Cache的数值精度以减少显存占用和带宽",
+        "correct": true
+      },
+      {
+        "text": "提高KV Cache的数值精度以提升模型准确率",
+        "correct": false
+      },
+      {
+        "text": "将KV Cache存储在磁盘上以扩展容量",
+        "correct": false
+      },
+      {
+        "text": "压缩KV Cache的序列长度",
+        "correct": false
+      }
+    ],
+    "explanation": "KV Cache量化将缓存的Key和Value从高精度（如FP16）转换为低精度（如INT8），减少显存占用和内存带宽需求，可能带来轻微精度损失。它不提高精度、不涉及磁盘存储，也不改变序列长度。",
+    "id": "llm-188",
+    "tags": [
+      "LLM"
+    ],
+    "section": "KV Cache"
+  },
+  {
+    "type": "single",
+    "question": "在多头注意力中，KV Cache的存储形状通常包含以下哪个维度？",
+    "options": [
+      {
+        "text": "批次大小、头数、序列长度、头维度",
+        "correct": true
+      },
+      {
+        "text": "批次大小、序列长度、隐藏维度、层数",
+        "correct": false
+      },
+      {
+        "text": "头数、头维度、层数、批次大小",
+        "correct": false
+      },
+      {
+        "text": "序列长度、词表大小、头数、头维度",
+        "correct": false
+      }
+    ],
+    "explanation": "KV Cache通常按层存储，每层的张量形状为（批次大小，头数，序列长度，头维度）。它不包含隐藏维度（因为隐藏维度等于头数乘以头维度）和词表大小。层数对应不同层的缓存。",
+    "id": "llm-189",
+    "tags": [
+      "LLM"
+    ],
+    "section": "KV Cache"
+  },
+  {
+    "type": "single",
+    "question": "以下关于KV Cache与推理吞吐量的关系，正确的是：",
+    "options": [
+      {
+        "text": "KV Cache减少重复计算，但增加显存占用，可能限制批次大小从而影响吞吐",
+        "correct": true
+      },
+      {
+        "text": "KV Cache总是提高吞吐量，因为它减少计算",
+        "correct": false
+      },
+      {
+        "text": "KV Cache降低吞吐量，因为它增加计算量",
+        "correct": false
+      },
+      {
+        "text": "KV Cache对吞吐量没有影响",
+        "correct": false
+      }
+    ],
+    "explanation": "KV Cache通过避免重复计算历史token的K和V来加速每个token的生成，但缓存本身占用显存，可能限制可处理的批次大小，从而间接影响吞吐量。因此它并非总是提高吞吐量，需要权衡。",
+    "id": "llm-190",
+    "tags": [
+      "LLM"
+    ],
+    "section": "KV Cache"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些技术可用于减少KV Cache的显存占用？",
+    "options": [
+      {
+        "text": "KV Cache量化",
+        "correct": true
+      },
+      {
+        "text": "KV Cache剪枝/驱逐",
+        "correct": true
+      },
+      {
+        "text": "使用PagedAttention管理内存",
+        "correct": true
+      },
+      {
+        "text": "增大批次大小",
+        "correct": false
+      }
+    ],
+    "explanation": "量化降低精度，剪枝/驱逐减少条目，PagedAttention通过分页减少碎片并支持共享，三者都能降低显存占用。增大批次大小反而会增加KV Cache的显存占用。",
+    "id": "llm-191",
+    "tags": [
+      "LLM"
+    ],
+    "section": "KV Cache"
+  },
+  {
+    "type": "multiple",
+    "question": "关于PagedAttention，以下说法正确的是：",
+    "options": [
+      {
+        "text": "它将KV Cache划分为固定大小的块，非连续存储",
+        "correct": true
+      },
+      {
+        "text": "它支持多个序列共享相同的KV Cache块",
+        "correct": true
+      },
+      {
+        "text": "它通过压缩KV Cache的数值精度来减少显存",
+        "correct": false
+      },
+      {
+        "text": "它减少了内存碎片，提高了内存利用率",
+        "correct": true
+      }
+    ],
+    "explanation": "PagedAttention将KV Cache分块管理，块可以非连续存放，从而减少内存碎片；同时支持块级共享（如并行采样或束搜索）。它不涉及数值精度压缩，那是量化的范畴。",
+    "id": "llm-192",
+    "tags": [
+      "LLM"
+    ],
+    "section": "KV Cache"
+  },
+  {
+    "type": "multiple",
+    "question": "KV Cache在以下哪些场景中可能带来显著收益？",
+    "options": [
+      {
+        "text": "长序列文本生成",
+        "correct": true
+      },
+      {
+        "text": "大批次推理",
+        "correct": true
+      },
+      {
+        "text": "需要频繁重复计算历史token的场景",
+        "correct": true
+      },
+      {
+        "text": "训练阶段的前向传播",
+        "correct": false
+      }
+    ],
+    "explanation": "KV Cache主要用于自回归推理，长序列生成和大批次推理中避免重复计算收益明显。训练时通常并行处理整个序列，不使用KV Cache。因此训练阶段不是受益场景。",
+    "id": "llm-193",
+    "tags": [
+      "LLM"
+    ],
+    "section": "KV Cache"
+  },
+  {
+    "type": "multiple",
+    "question": "KV Cache剪枝（如H2O）通常考虑哪些因素来决定保留或丢弃缓存条目？",
+    "options": [
+      {
+        "text": "注意力分数的重要性",
+        "correct": true
+      },
+      {
+        "text": "最近性（近期token可能更重要）",
+        "correct": true
+      },
+      {
+        "text": "随机选择部分条目丢弃",
+        "correct": false
+      },
+      {
+        "text": "令牌的累计注意力权重",
+        "correct": true
+      }
+    ],
+    "explanation": "KV Cache剪枝方法如H2O根据注意力分数的重要性（如累计注意力权重）和最近性来保留重要KV条目，丢弃不重要的。随机丢弃不是典型策略，会损害性能。",
+    "id": "llm-194",
+    "tags": [
+      "LLM"
+    ],
+    "section": "KV Cache"
+  },
+  {
+    "type": "single",
+    "question": "在KV Cache的上下文中，以下哪项描述是正确的？",
+    "options": [
+      {
+        "text": "KV Cache仅在推理时使用，训练时通常不使用",
+        "correct": true
+      },
+      {
+        "text": "KV Cache在训练和推理时都必须使用",
+        "correct": false
+      },
+      {
+        "text": "KV Cache缓存了所有层的Query",
+        "correct": false
+      },
+      {
+        "text": "KV Cache的大小与批次大小无关",
+        "correct": false
+      }
+    ],
+    "explanation": "KV Cache用于自回归推理中避免重复计算，训练时由于可以并行处理整个序列，通常不适用KV Cache。它缓存Key和Value而非Query，且大小与批次大小成正比。",
+    "id": "llm-195",
+    "tags": [
+      "LLM"
+    ],
+    "section": "KV Cache"
+  },
+  {
+    "type": "single",
+    "question": "在Transformer自回归生成中，KV Cache缓存了历史token的Key和Value向量。若模型有L层、H个注意力头、每个头维度为D，序列长度为S，batch size为B，则KV Cache的总元素数量为：",
+    "options": [
+      {
+        "text": "2 * L * H * D * S * B",
+        "correct": true
+      },
+      {
+        "text": "L * H * D * S * B",
+        "correct": false
+      },
+      {
+        "text": "2 * L * H * D * S",
+        "correct": false
+      },
+      {
+        "text": "H * D * S * B",
+        "correct": false
+      }
+    ],
+    "explanation": "KV Cache为每层每个注意力头缓存Key和Value两个矩阵，每个矩阵形状为[S, D]，因此总元素数为2*L*H*D*S*B。选项B漏乘2，选项C漏乘batch维度，选项D漏乘层数且漏乘2。",
+    "id": "llm-196",
+    "tags": [
+      "LLM"
+    ],
+    "section": "KV Cache"
+  },
+  {
+    "type": "single",
+    "question": "在自回归生成中，KV Cache能够加速推理的根本原因是：",
+    "options": [
+      {
+        "text": "避免了为历史token重新计算Key和Value投影",
+        "correct": true
+      },
+      {
+        "text": "减少了模型参数的数量",
+        "correct": false
+      },
+      {
+        "text": "降低了注意力计算的复杂度从O(S^2)到O(S)",
+        "correct": false
+      },
+      {
+        "text": "使得Query不再需要与历史Key计算注意力分数",
+        "correct": false
+      }
+    ],
+    "explanation": "KV Cache的核心是复用已计算的历史Key和Value，避免每步重复进行线性投影。模型参数量不变；注意力复杂度仍为O(S^2)，因为当前Query仍需与所有历史Key计算分数；Query仍需参与注意力计算。",
+    "id": "llm-197",
+    "tags": [
+      "LLM"
+    ],
+    "section": "KV Cache"
+  },
+  {
+    "type": "single",
+    "question": "在标准Transformer解码器中，使用KV Cache后，生成第t个token时，自注意力中Query的来源是：",
+    "options": [
+      {
+        "text": "仅当前第t个token的隐藏状态经线性投影得到",
+        "correct": true
+      },
+      {
+        "text": "从KV Cache中读取的历史Query",
+        "correct": false
+      },
+      {
+        "text": "所有历史token的Query拼接而成",
+        "correct": false
+      },
+      {
+        "text": "当前token与历史token的Query平均值",
+        "correct": false
+      }
+    ],
+    "explanation": "KV Cache只缓存Key和Value，不缓存Query。每步生成时，仅用当前token的隐藏状态计算Query，再与缓存的所有历史Key和Value计算注意力。因此Query仅来自当前token。",
+    "id": "llm-198",
+    "tags": [
+      "LLM"
+    ],
+    "section": "KV Cache"
+  },
+  {
+    "type": "single",
+    "question": "以下哪种技术通过合并或驱逐不重要的KV Cache条目来减少显存占用？",
+    "options": [
+      {
+        "text": "H2O（Heavy Hitter Oracle）",
+        "correct": true
+      },
+      {
+        "text": "PagedAttention",
+        "correct": false
+      },
+      {
+        "text": "FlashAttention",
+        "correct": false
+      },
+      {
+        "text": "混合精度训练",
+        "correct": false
+      }
+    ],
+    "explanation": "H2O基于注意力分数识别重要token（heavy hitters），驱逐不重要的KV条目以减少显存。PagedAttention优化内存管理但不驱逐条目；FlashAttention优化注意力计算；混合精度训练与KV Cache驱逐无关。",
+    "id": "llm-199",
+    "tags": [
+      "LLM"
+    ],
+    "section": "KV Cache"
+  },
+  {
+    "type": "single",
+    "question": "在KV Cache中，为什么通常不缓存Query？",
+    "options": [
+      {
+        "text": "因为每个解码步只需要当前token的Query与历史Key计算注意力",
+        "correct": true
+      },
+      {
+        "text": "因为Query的维度比Key和Value大",
+        "correct": false
+      },
+      {
+        "text": "因为Query在训练阶段已被丢弃",
+        "correct": false
+      },
+      {
+        "text": "因为缓存Query会导致梯度消失",
+        "correct": false
+      }
+    ],
+    "explanation": "自回归解码时，每步仅当前token产生新的Query，历史Query不再参与后续注意力计算，因此缓存它们没有复用价值。Query维度通常与Key/Value相同；训练阶段不涉及此缓存机制。",
+    "id": "llm-200",
+    "tags": [
+      "LLM"
+    ],
+    "section": "KV Cache"
+  },
+  {
+    "type": "single",
+    "question": "假设两个请求共享相同的系统提示前缀，使用KV Cache时如何高效处理？",
+    "options": [
+      {
+        "text": "可复用该前缀的KV Cache，避免为每个请求重复计算前缀",
+        "correct": true
+      },
+      {
+        "text": "必须为每个请求单独重新计算前缀的KV Cache",
+        "correct": false
+      },
+      {
+        "text": "共享前缀的KV Cache无法复用因为batch不同",
+        "correct": false
+      },
+      {
+        "text": "只能复用Query缓存而不能复用Key/Value缓存",
+        "correct": false
+      }
+    ],
+    "explanation": "相同前缀的Key和Value计算结果是确定的，可以缓存并跨请求复用（如前缀缓存），从而减少重复计算。batch不同不影响复用前缀的KV Cache；Query本身不被缓存。",
+    "id": "llm-201",
+    "tags": [
+      "LLM"
+    ],
+    "section": "KV Cache"
+  },
+  {
+    "type": "single",
+    "question": "在Transformer自回归生成中，启用KV Cache后，每生成一个新token时，自注意力计算中Key和Value的来源是：",
+    "options": [
+      {
+        "text": "仅来自当前新token的隐藏状态",
+        "correct": false
+      },
+      {
+        "text": "来自历史token的缓存K/V与当前新token的K/V拼接",
+        "correct": true
+      },
+      {
+        "text": "来自历史token的缓存K/V，当前新token不产生K/V",
+        "correct": false
+      },
+      {
+        "text": "来自整个序列的重新计算",
+        "correct": false
+      }
+    ],
+    "explanation": "启用KV Cache后，历史token的K/V被缓存，当前新token仍需计算其K/V并与缓存拼接，从而避免重复计算历史K/V。A忽略历史，C错误认为当前不产生K/V，D是未用缓存的做法。",
+    "id": "llm-202",
+    "tags": [
+      "LLM"
+    ],
+    "section": "KV Cache"
+  },
+  {
+    "type": "single",
+    "question": "在标准Transformer解码器中，使用KV Cache后，生成第t个token时自注意力计算中Query的来源是：",
+    "options": [
+      {
+        "text": "仅当前第t个token的隐藏状态经线性投影得到",
+        "correct": true
+      },
+      {
+        "text": "历史所有token的Query缓存与当前Query拼接",
+        "correct": false
+      },
+      {
+        "text": "当前token的Key经线性投影得到",
+        "correct": false
+      },
+      {
+        "text": "历史所有token的Value缓存",
+        "correct": false
+      }
+    ],
+    "explanation": "Query只由当前待生成token的隐藏状态计算，不需要缓存历史Query。历史Query不参与后续token的注意力计算，因此B错误；C混淆Key与Query；D混淆Value与Query。",
+    "id": "llm-203",
+    "tags": [
+      "LLM"
+    ],
+    "section": "KV Cache"
+  },
+  {
+    "type": "single",
+    "question": "在KV Cache中通常只缓存Key和Value而不缓存Query，主要原因是：",
+    "options": [
+      {
+        "text": "Query的维度比Key和Value大，缓存开销过高",
+        "correct": false
+      },
+      {
+        "text": "生成新token时只需要当前Query与历史Key/Value计算注意力，历史Query不再被使用",
+        "correct": true
+      },
+      {
+        "text": "Query在推理过程中保持不变，无需重复计算",
+        "correct": false
+      },
+      {
+        "text": "缓存Query会破坏因果掩码的正确性",
+        "correct": false
+      }
+    ],
+    "explanation": "自回归生成中，每个新token的注意力只需当前Query与所有历史Key/Value，历史Query不参与后续计算，缓存无收益。A维度说法不成立；C Query随token变化；D因果掩码与是否缓存Query无关。",
+    "id": "llm-204",
+    "tags": [
+      "LLM"
+    ],
+    "section": "KV Cache"
+  },
+  {
+    "type": "single",
+    "question": "某推理服务使用KV Cache处理多个请求，当一个请求生成结束并释放其KV Cache后，最可能直接带来的影响是：",
+    "options": [
+      {
+        "text": "模型权重被卸载，后续请求需要重新加载权重",
+        "correct": false
+      },
+      {
+        "text": "释放的显存可被其他请求的KV Cache或新请求使用，提升并发容量",
+        "correct": true
+      },
+      {
+        "text": "已生成序列的注意力计算结果被回滚",
+        "correct": false
+      },
+      {
+        "text": "后续请求的KV Cache显存占用变为零",
+        "correct": false
+      }
+    ],
+    "explanation": "请求结束释放KV Cache后，这部分显存可被回收再利用，从而提高并发请求数或容纳更长序列。模型权重不受影响；已生成结果不会回滚；后续请求仍需要自己的KV Cache。",
+    "id": "llm-205",
+    "tags": [
+      "LLM"
+    ],
+    "section": "KV Cache"
+  },
+  {
+    "type": "single",
+    "question": "在长序列自回归生成中，KV Cache 的显存占用随序列长度增长；以下哪种做法能在不改变模型结构的前提下减少显存分配浪费、提高显存利用率？",
+    "options": [
+      {
+        "text": "增大 batch size 以分摊显存",
+        "correct": false
+      },
+      {
+        "text": "对 KV Cache 采用分页管理并按需分配显存块",
+        "correct": true
+      },
+      {
+        "text": "提高学习率重新训练模型",
+        "correct": false
+      },
+      {
+        "text": "减少注意力头数并重新训练",
+        "correct": false
+      }
+    ],
+    "explanation": "分页管理把 KV Cache 按块分配，减少连续大块预留和外部碎片，从而提高变长、长序列请求下的显存利用率；它不改变模型结构，也不改变每个 token 的 K/V 本身。增大 batch 会增加 KV Cache 总量；重新训练或减少注意力头数会改变模型结构。",
+    "id": "llm-206",
+    "tags": [
+      "LLM"
+    ],
+    "section": "KV Cache"
+  },
+  {
+    "type": "single",
+    "question": "关于KV Cache与批处理（batching）推理的关系，以下说法正确的是：",
+    "options": [
+      {
+        "text": "批处理中每个请求的KV Cache必须物理连续且大小相同",
+        "correct": false
+      },
+      {
+        "text": "批处理可提高GPU利用率，但KV Cache显存随并发请求数和序列长度增长",
+        "correct": true
+      },
+      {
+        "text": "使用KV Cache后批处理不再需要填充（padding）",
+        "correct": false
+      },
+      {
+        "text": "批处理会使得KV Cache无法被复用",
+        "correct": false
+      }
+    ],
+    "explanation": "批处理提升吞吐，但每个请求维护独立KV Cache，显存随并发数和长度增加。物理连续且等长并非必需（分页可解决）；填充仍可能存在；KV Cache在请求内复用。",
+    "id": "llm-207",
+    "tags": [
+      "LLM"
+    ],
+    "section": "KV Cache"
+  },
+  {
+    "type": "single",
+    "question": "在自回归文本生成中，启用KV Cache后，生成第t个token时自注意力计算中Key和Value的来源是：",
+    "options": [
+      {
+        "text": "仅当前token的Key和Value",
+        "correct": false
+      },
+      {
+        "text": "历史token的Key和Value与当前token的Key和Value拼接",
+        "correct": true
+      },
+      {
+        "text": "仅历史token的Key和Value",
+        "correct": false
+      },
+      {
+        "text": "历史token的Key和当前token的Value拼接",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项B：KV Cache缓存历史token的K和V，每步将当前token的K、V追加后参与注意力计算。误区是误以为只使用当前或仅历史，忽略当前token的贡献。",
+    "id": "llm-208",
+    "tags": [
+      "LLM"
+    ],
+    "section": "KV Cache"
+  },
+  {
+    "type": "single",
+    "question": "某推理服务同时处理多个长度不同的请求，若为每个请求单独分配连续显存存放KV Cache，最可能导致的问题是：",
+    "options": [
+      {
+        "text": "计算精度下降",
+        "correct": false
+      },
+      {
+        "text": "显存碎片化与利用率低",
+        "correct": true
+      },
+      {
+        "text": "模型参数更新延迟",
+        "correct": false
+      },
+      {
+        "text": "注意力头数减少",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项B：变长请求独立连续分配易产生外部碎片，浪费显存。分页管理（如PagedAttention）可缓解。误区是误将显存问题归因于计算精度或模型结构。",
+    "id": "llm-209",
+    "tags": [
+      "LLM"
+    ],
+    "section": "KV Cache"
+  },
+  {
+    "type": "multiple",
+    "question": "以下关于KV Cache的表述，正确的有：",
+    "options": [
+      {
+        "text": "KV Cache消除了自注意力计算中Query与Key的点积运算",
+        "correct": false
+      },
+      {
+        "text": "KV Cache存储了每层注意力中历史token的Key和Value",
+        "correct": true
+      },
+      {
+        "text": "使用KV Cache后，生成每个token时仍需计算当前token的Query",
+        "correct": true
+      },
+      {
+        "text": "KV Cache的显存占用与批大小和序列长度无关",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项B、C：缓存的是各层历史K、V，当前token仍需计算Query。误区是认为缓存能省去QK点积，或忽略显存随批大小和序列长度增长。",
+    "id": "llm-210",
+    "tags": [
+      "LLM"
+    ],
+    "section": "KV Cache"
+  },
+  {
+    "type": "single",
+    "question": "在LLM量化中，将FP16权重转换为INT8时，如果采用对称量化，且量化后的数值范围为[-127, 127]，则以下哪项描述是正确的？",
+    "options": [
+      {
+        "text": "零点（zero point）固定为0",
+        "correct": true
+      },
+      {
+        "text": "零点需要根据权重的最小值动态计算",
+        "correct": false
+      },
+      {
+        "text": "量化后的数值范围必须包含-128",
+        "correct": false
+      },
+      {
+        "text": "对称量化适用于非对称分布的权重",
+        "correct": false
+      }
+    ],
+    "explanation": "对称量化的零点固定为0，使得量化过程简单。选项B是非对称量化的特点；C错误，因为对称量化常用[-127,127]以保持对称且避免-128的潜在问题；D错误，对称量化假设权重分布关于0对称，非对称分布时可能效果较差。",
+    "id": "llm-211",
+    "tags": [
+      "LLM"
+    ],
+    "section": "量化与部署"
+  },
+  {
+    "type": "single",
+    "question": "关于LLM的INT8量化，以下哪种说法是正确的？",
+    "options": [
+      {
+        "text": "量化只减少模型存储，完全不影响推理速度",
+        "correct": false
+      },
+      {
+        "text": "INT8量化必须同时将权重和激活值都量化为INT8",
+        "correct": false
+      },
+      {
+        "text": "量化可能引入精度损失，需通过校准或算法设计减少",
+        "correct": true
+      },
+      {
+        "text": "INT8量化必须使用对称量化",
+        "correct": false
+      }
+    ],
+    "explanation": "把浮点权重和/或激活值映射为低精度整数会减少存储并可能影响推理吞吐，但也会引入量化误差；校准数据或量化算法设计可帮助降低误差。实现上可以只量化权重而保留激活为浮点，也可以同时量化权重与激活；对称量化和非对称量化都常用，并非只能使用对称量化。",
+    "id": "llm-212",
+    "tags": [
+      "LLM"
+    ],
+    "section": "量化与部署"
+  },
+  {
+    "type": "single",
+    "question": "在部署量化LLM时，如果使用GPTQ算法对模型进行4-bit量化，以下哪项描述最准确？",
+    "options": [
+      {
+        "text": "GPTQ是一种训练后量化方法，利用近似二阶信息逐层量化权重",
+        "correct": true
+      },
+      {
+        "text": "GPTQ需要完整的模型微调以恢复精度",
+        "correct": false
+      },
+      {
+        "text": "GPTQ只能用于对称量化",
+        "correct": false
+      },
+      {
+        "text": "GPTQ量化后推理时必须使用FP16激活",
+        "correct": false
+      }
+    ],
+    "explanation": "GPTQ是一种训练后量化（PTQ）方法，基于Hessian矩阵的近似进行逐层权重量化，支持非对称量化。它不需要微调，推理时激活值精度取决于具体配置，不一定为FP16。",
+    "id": "llm-213",
+    "tags": [
+      "LLM"
+    ],
+    "section": "量化与部署"
+  },
+  {
+    "type": "single",
+    "question": "在LLM推理中，KV cache量化主要用于缓解什么问题？",
+    "options": [
+      {
+        "text": "减少模型权重的存储占用",
+        "correct": false
+      },
+      {
+        "text": "降低长序列生成时的显存占用",
+        "correct": true
+      },
+      {
+        "text": "加速注意力计算中的矩阵乘法",
+        "correct": false
+      },
+      {
+        "text": "提高模型输出的准确性",
+        "correct": false
+      }
+    ],
+    "explanation": "KV cache存储历史键值对，长序列时显存占用大，量化KV cache可降低显存占用以便部署更长上下文。A是权重量化的目标；C量化可能略微加速但主要目的是省显存；D量化通常不提高准确性。",
+    "id": "llm-214",
+    "tags": [
+      "LLM"
+    ],
+    "section": "量化与部署"
+  },
+  {
+    "type": "single",
+    "question": "使用AWQ（Activation-aware Weight Quantization）方法量化LLM时，其核心思想是什么？",
+    "options": [
+      {
+        "text": "根据激活值分布识别重要权重通道并保护其精度",
+        "correct": true
+      },
+      {
+        "text": "对所有权重均匀量化到4-bit",
+        "correct": false
+      },
+      {
+        "text": "仅量化激活值而不量化权重",
+        "correct": false
+      },
+      {
+        "text": "通过量化感知训练重新训练模型",
+        "correct": false
+      }
+    ],
+    "explanation": "AWQ观察到激活值大的通道对应的权重更重要，通过缩放保护这些显著权重，减少量化误差。它不重新训练，也不是均匀量化或仅量化激活。",
+    "id": "llm-215",
+    "tags": [
+      "LLM"
+    ],
+    "section": "量化与部署"
+  },
+  {
+    "type": "single",
+    "question": "在LLM部署中，使用动态量化（如PyTorch的quantize_dynamic）通常对哪些部分进行量化？",
+    "options": [
+      {
+        "text": "仅量化模型权重，激活值在运行时动态量化",
+        "correct": true
+      },
+      {
+        "text": "同时静态量化权重和激活值",
+        "correct": false
+      },
+      {
+        "text": "仅量化激活值",
+        "correct": false
+      },
+      {
+        "text": "量化整个计算图为INT8",
+        "correct": false
+      }
+    ],
+    "explanation": "动态量化在推理时动态计算激活的量化参数，权重预先量化，常用于LSTM/Transformer等。静态量化需要校准数据提前确定激活参数；C、D不准确。",
+    "id": "llm-216",
+    "tags": [
+      "LLM"
+    ],
+    "section": "量化与部署"
+  },
+  {
+    "type": "single",
+    "question": "在量化LLM时，校准（calibration）的主要目的是什么？",
+    "options": [
+      {
+        "text": "确定激活值的动态范围以计算量化参数",
+        "correct": true
+      },
+      {
+        "text": "微调模型权重以恢复精度",
+        "correct": false
+      },
+      {
+        "text": "选择量化算法（如GPTQ或AWQ）",
+        "correct": false
+      },
+      {
+        "text": "压缩模型文件大小",
+        "correct": false
+      }
+    ],
+    "explanation": "校准通过代表性数据运行模型，收集激活值分布，从而确定量化缩放因子和零点。它不是微调或选择算法，压缩文件是量化的结果而非目的。",
+    "id": "llm-217",
+    "tags": [
+      "LLM"
+    ],
+    "section": "量化与部署"
+  },
+  {
+    "type": "single",
+    "question": "以下哪种情况最可能导致LLM量化后精度显著下降？",
+    "options": [
+      {
+        "text": "权重分布存在大量离群值",
+        "correct": true
+      },
+      {
+        "text": "权重分布均匀且范围小",
+        "correct": false
+      },
+      {
+        "text": "使用对称量化且权重对称",
+        "correct": false
+      },
+      {
+        "text": "校准数据与测试数据分布一致",
+        "correct": false
+      }
+    ],
+    "explanation": "离群值会增大量化范围，导致大多数值量化步长过大，精度损失严重。均匀分布、对称分布和匹配的校准数据都有利于量化。",
+    "id": "llm-218",
+    "tags": [
+      "LLM"
+    ],
+    "section": "量化与部署"
+  },
+  {
+    "type": "single",
+    "question": "在部署4-bit量化的LLM时，以下哪项操作通常能减少精度损失？",
+    "options": [
+      {
+        "text": "保留部分重要层为FP16（混合精度量化）",
+        "correct": true
+      },
+      {
+        "text": "对所有层使用相同的4-bit量化",
+        "correct": false
+      },
+      {
+        "text": "增加批量大小",
+        "correct": false
+      },
+      {
+        "text": "使用更大的学习率",
+        "correct": false
+      }
+    ],
+    "explanation": "混合精度量化将敏感层（如第一层和最后一层）保留为高精度，平衡精度和效率。均匀量化可能损失大；批大小和学习率是训练参数，与量化精度无关。",
+    "id": "llm-219",
+    "tags": [
+      "LLM"
+    ],
+    "section": "量化与部署"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些是LLM量化中常用的训练后量化（PTQ）方法？",
+    "options": [
+      {
+        "text": "GPTQ",
+        "correct": true
+      },
+      {
+        "text": "AWQ",
+        "correct": true
+      },
+      {
+        "text": "QAT（量化感知训练）",
+        "correct": false
+      },
+      {
+        "text": "SmoothQuant",
+        "correct": true
+      }
+    ],
+    "explanation": "GPTQ、AWQ、SmoothQuant都是PTQ方法，在训练后对模型量化。QAT是量化感知训练，属于训练时方法，不属于PTQ。",
+    "id": "llm-220",
+    "tags": [
+      "LLM"
+    ],
+    "section": "量化与部署"
+  },
+  {
+    "type": "multiple",
+    "question": "在LLM推理中，量化可以带来哪些好处？",
+    "options": [
+      {
+        "text": "减少模型内存占用",
+        "correct": true
+      },
+      {
+        "text": "提高计算吞吐量",
+        "correct": true
+      },
+      {
+        "text": "降低能耗",
+        "correct": true
+      },
+      {
+        "text": "提高模型准确率",
+        "correct": false
+      }
+    ],
+    "explanation": "量化降低数值精度，减少内存占用和带宽需求，从而提升吞吐量和能效。但量化通常会导致轻微精度下降，不会提高准确率（除非正则化效应，但非常见）。",
+    "id": "llm-221",
+    "tags": [
+      "LLM"
+    ],
+    "section": "量化与部署"
+  },
+  {
+    "type": "multiple",
+    "question": "关于SmoothQuant方法，以下哪些描述是正确的？",
+    "options": [
+      {
+        "text": "它通过数学变换将激活的量化难度转移到权重",
+        "correct": true
+      },
+      {
+        "text": "它使用逐通道缩放因子平衡激活和权重量化",
+        "correct": true
+      },
+      {
+        "text": "它需要重新训练模型",
+        "correct": false
+      },
+      {
+        "text": "它主要针对权重仅量化（weight-only）场景",
+        "correct": false
+      }
+    ],
+    "explanation": "SmoothQuant是一种PTQ方法，通过缩放将激活的离群值转移到权重，使两者都易于量化，支持W8A8。它不需要训练，也不是weight-only量化。",
+    "id": "llm-222",
+    "tags": [
+      "LLM"
+    ],
+    "section": "量化与部署"
+  },
+  {
+    "type": "multiple",
+    "question": "量化LLM时，导致精度损失的可能原因包括哪些？",
+    "options": [
+      {
+        "text": "激活值存在显著离群值",
+        "correct": true
+      },
+      {
+        "text": "量化比特数过低（如2-bit）",
+        "correct": true
+      },
+      {
+        "text": "使用非对称量化",
+        "correct": false
+      },
+      {
+        "text": "校准数据不具代表性",
+        "correct": true
+      }
+    ],
+    "explanation": "离群值、低比特和校准数据偏差都会增大量化误差。非对称量化本身不是精度损失的原因，反而能更好处理非对称分布。",
+    "id": "llm-223",
+    "tags": [
+      "LLM"
+    ],
+    "section": "量化与部署"
+  },
+  {
+    "type": "multiple",
+    "question": "在部署量化LLM时，以下哪些做法通常能直接降低推理阶段的计算或访存开销并可能提升吞吐量？",
+    "options": [
+      {
+        "text": "使用INT8矩阵乘法指令（如DP4A）",
+        "correct": true
+      },
+      {
+        "text": "对KV cache进行量化",
+        "correct": true
+      },
+      {
+        "text": "将所有层从低精度回退为FP16且不做其他优化",
+        "correct": false
+      },
+      {
+        "text": "使用算子融合",
+        "correct": true
+      }
+    ],
+    "explanation": "低精度矩阵乘法指令可提高单位时间乘加吞吐；KV cache量化减少缓存读写和显存占用；算子融合减少内核启动与中间张量搬运。把所有层回退为FP16且不做其他优化会放弃低精度计算和存储收益，不能视为直接加速技术。",
+    "id": "llm-224",
+    "tags": [
+      "LLM"
+    ],
+    "section": "量化与部署"
+  },
+  {
+    "type": "multiple",
+    "question": "关于LLM量化的校准过程，以下哪些说法正确？",
+    "options": [
+      {
+        "text": "校准通常使用少量无标签数据",
+        "correct": true
+      },
+      {
+        "text": "校准数据应尽可能接近实际部署数据分布",
+        "correct": true
+      },
+      {
+        "text": "校准会更新模型权重",
+        "correct": false
+      },
+      {
+        "text": "校准主要用于确定激活的量化参数",
+        "correct": true
+      }
+    ],
+    "explanation": "校准使用无标签数据运行模型，收集激活统计量以确定量化参数，不更新权重。数据分布匹配很重要，否则量化参数不准确。",
+    "id": "llm-225",
+    "tags": [
+      "LLM"
+    ],
+    "section": "量化与部署"
+  },
+  {
+    "type": "single",
+    "question": "在GPU上对LLM进行仅权重量化并用于自回归解码（batch较小）时，以下哪项通常是主要挑战？",
+    "options": [
+      {
+        "text": "反量化与混合精度计算需要高效内核融合，否则额外开销可能抵消带宽收益",
+        "correct": true
+      },
+      {
+        "text": "权重无法被压缩存储",
+        "correct": false
+      },
+      {
+        "text": "KV cache必须被删除",
+        "correct": false
+      },
+      {
+        "text": "模型结构必须改变",
+        "correct": false
+      }
+    ],
+    "explanation": "仅权重量化减少权重存储与读取字节，但计算时仍需把低位宽权重转换为高精度再与高精度激活运算；若缺少融合内核，反量化、类型转换和低并行度会带来额外开销。权重仍可压缩存储，KV cache和模型结构无需因此改变。",
+    "id": "llm-226",
+    "tags": [
+      "LLM"
+    ],
+    "section": "量化与部署"
+  },
+  {
+    "type": "single",
+    "question": "在LLM部署中，使用分组量化（group-wise quantization）相比逐张量量化，主要优势是什么？",
+    "options": [
+      {
+        "text": "每组独立缩放，能更好地适应权重分布差异",
+        "correct": true
+      },
+      {
+        "text": "完全消除反量化开销",
+        "correct": false
+      },
+      {
+        "text": "使量化位数自动降为1-bit",
+        "correct": false
+      },
+      {
+        "text": "不再需要校准数据",
+        "correct": false
+      }
+    ],
+    "explanation": "分组量化将权重按组划分并分别计算缩放因子，可降低组内动态范围差异带来的误差。它不消除反量化开销，也不自动改变位数或免除校准。",
+    "id": "llm-227",
+    "tags": [
+      "LLM"
+    ],
+    "section": "量化与部署"
+  },
+  {
+    "type": "single",
+    "question": "关于GPTQ量化算法，以下哪项描述最准确？",
+    "options": [
+      {
+        "text": "它利用Hessian近似进行逐层权重量化，并补偿量化误差",
+        "correct": true
+      },
+      {
+        "text": "它通过改变模型注意力头数来降低计算量",
+        "correct": false
+      },
+      {
+        "text": "它必须使用强化学习进行微调",
+        "correct": false
+      },
+      {
+        "text": "它仅适用于FP32模型且不能用于LLM",
+        "correct": false
+      }
+    ],
+    "explanation": "GPTQ是一种训练后权重量化方法，基于近似二阶信息逐层量化并更新剩余权重以补偿误差。它不改变模型结构，也不依赖强化学习。",
+    "id": "llm-228",
+    "tags": [
+      "LLM"
+    ],
+    "section": "量化与部署"
+  },
+  {
+    "type": "single",
+    "question": "在LLM推理服务中，将KV cache量化为INT8后，以下哪项最可能发生？",
+    "options": [
+      {
+        "text": "长上下文场景的显存占用降低，但可能引入注意力输出误差",
+        "correct": true
+      },
+      {
+        "text": "模型参数量永久减少一半",
+        "correct": false
+      },
+      {
+        "text": "解码速度必然提升且精度无损",
+        "correct": false
+      },
+      {
+        "text": "预填充阶段不再需要计算注意力",
+        "correct": false
+      }
+    ],
+    "explanation": "KV cache量化压缩缓存显存，利于长上下文，但量化会引入误差，可能影响注意力输出。它不改变模型参数量，也不保证速度提升或跳过注意力计算。",
+    "id": "llm-229",
+    "tags": [
+      "LLM"
+    ],
+    "section": "量化与部署"
+  },
+  {
+    "type": "single",
+    "question": "在部署4-bit量化LLM时，以下哪项做法最有助于减少精度损失？",
+    "options": [
+      {
+        "text": "使用与目标领域相近的校准数据并采用分组量化",
+        "correct": true
+      },
+      {
+        "text": "将所有层统一量化为1-bit以节省显存",
+        "correct": false
+      },
+      {
+        "text": "完全跳过校准直接量化",
+        "correct": false
+      },
+      {
+        "text": "仅量化输出层而保留其他层为FP32",
+        "correct": false
+      }
+    ],
+    "explanation": "校准数据分布影响量化参数，与目标领域相近可减少偏差；分组量化能适应权重差异。1-bit过度压缩、跳过校准或仅量化输出层均非有效通用策略。",
+    "id": "llm-230",
+    "tags": [
+      "LLM"
+    ],
+    "section": "量化与部署"
+  },
+  {
+    "type": "single",
+    "question": "关于AWQ（Activation-aware Weight Quantization）方法，以下哪项描述正确？",
+    "options": [
+      {
+        "text": "它根据激活值重要性对权重进行缩放保护，减少显著通道的量化误差",
+        "correct": true
+      },
+      {
+        "text": "它通过删除注意力头来压缩模型",
+        "correct": false
+      },
+      {
+        "text": "它要求训练时使用对抗样本",
+        "correct": false
+      },
+      {
+        "text": "它将所有激活值量化为4-bit且无需校准",
+        "correct": false
+      }
+    ],
+    "explanation": "AWQ观察到少量显著权重通道对激活影响大，通过激活感知缩放保护这些通道，降低量化误差。它不删除注意力头，也不要求对抗训练。",
+    "id": "llm-231",
+    "tags": [
+      "LLM"
+    ],
+    "section": "量化与部署"
+  },
+  {
+    "type": "single",
+    "question": "在LLM量化中，校准（calibration）过程通常使用什么数据？",
+    "options": [
+      {
+        "text": "少量无标签的领域相关文本",
+        "correct": true
+      },
+      {
+        "text": "大量人工标注的分类标签",
+        "correct": false
+      },
+      {
+        "text": "强化学习奖励信号",
+        "correct": false
+      },
+      {
+        "text": "模型训练时的完整梯度",
+        "correct": false
+      }
+    ],
+    "explanation": "校准通常使用少量无标签文本，通过前向传播收集激活统计以确定量化参数。它不需要人工标签、奖励信号或训练梯度。",
+    "id": "llm-232",
+    "tags": [
+      "LLM"
+    ],
+    "section": "量化与部署"
+  },
+  {
+    "type": "single",
+    "question": "在GPU上部署量化LLM时，以下哪项技术可直接降低权重读取带宽？",
+    "options": [
+      {
+        "text": "使用低位宽权重存储并在计算时反量化",
+        "correct": true
+      },
+      {
+        "text": "增大batch size",
+        "correct": false
+      },
+      {
+        "text": "提高学习率",
+        "correct": false
+      },
+      {
+        "text": "增加注意力头数",
+        "correct": false
+      }
+    ],
+    "explanation": "低位宽权重存储减少显存读取量，计算时反量化可降低带宽压力。增大batch size或注意力头数不直接降低权重带宽，提高学习率与推理部署无关。",
+    "id": "llm-233",
+    "tags": [
+      "LLM"
+    ],
+    "section": "量化与部署"
+  },
+  {
+    "type": "single",
+    "question": "在LLM部署中，动态量化与静态量化的主要区别是什么？",
+    "options": [
+      {
+        "text": "动态量化在运行时根据激活值确定量化参数，静态量化使用校准得到的固定参数",
+        "correct": true
+      },
+      {
+        "text": "动态量化只能用于权重，静态量化只能用于激活",
+        "correct": false
+      },
+      {
+        "text": "动态量化不需要任何量化参数",
+        "correct": false
+      },
+      {
+        "text": "静态量化必须在训练中完成",
+        "correct": false
+      }
+    ],
+    "explanation": "动态量化在推理时动态计算激活的量化参数，静态量化则离线校准并固定参数。两者均可用于权重/激活，静态量化也可在训练后完成。",
+    "id": "llm-234",
+    "tags": [
+      "LLM"
+    ],
+    "section": "量化与部署"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些属于LLM训练后量化（PTQ）方法？",
+    "options": [
+      {
+        "text": "GPTQ",
+        "correct": true
+      },
+      {
+        "text": "AWQ",
+        "correct": true
+      },
+      {
+        "text": "SmoothQuant",
+        "correct": true
+      },
+      {
+        "text": "LoRA",
+        "correct": false
+      }
+    ],
+    "explanation": "GPTQ、AWQ和SmoothQuant均为训练后量化方法。LoRA是低秩适配微调方法，不属于量化方法。本题正确项为前三项。",
+    "id": "llm-235",
+    "tags": [
+      "LLM"
+    ],
+    "section": "量化与部署"
+  },
+  {
+    "type": "multiple",
+    "question": "在LLM量化部署中，以下哪些做法有助于降低精度损失？",
+    "options": [
+      {
+        "text": "使用领域相关的校准数据",
+        "correct": true
+      },
+      {
+        "text": "对激活离群值进行平滑处理",
+        "correct": true
+      },
+      {
+        "text": "采用分组量化",
+        "correct": true
+      },
+      {
+        "text": "将所有层量化为1-bit",
+        "correct": false
+      }
+    ],
+    "explanation": "领域相关校准、激活平滑和分组量化均能缓解量化误差。1-bit量化过度压缩，通常导致严重精度下降。本题正确项为前三项。",
+    "id": "llm-236",
+    "tags": [
+      "LLM"
+    ],
+    "section": "量化与部署"
+  },
+  {
+    "type": "multiple",
+    "question": "关于SmoothQuant方法，以下哪些描述正确？",
+    "options": [
+      {
+        "text": "它将激活的量化难度部分迁移到权重",
+        "correct": true
+      },
+      {
+        "text": "它通过数学等价变换缩放激活和权重",
+        "correct": true
+      },
+      {
+        "text": "它通常用于改善INT8量化的精度",
+        "correct": true
+      },
+      {
+        "text": "它必须改变模型层数",
+        "correct": false
+      }
+    ],
+    "explanation": "SmoothQuant通过等价缩放将激活离群值压力转移到权重，改善INT8量化精度，不改变模型层数。本题正确项为前三项。",
+    "id": "llm-237",
+    "tags": [
+      "LLM"
+    ],
+    "section": "量化与部署"
+  },
+  {
+    "type": "single",
+    "question": "在LLM部署中，若采用仅权重量化（weight-only quantization）将FP16权重转为INT8，但激活值保持FP16，推理时通常需要执行什么操作？",
+    "options": [
+      {
+        "text": "直接使用INT8权重与FP16激活进行矩阵乘法",
+        "correct": false
+      },
+      {
+        "text": "将INT8权重反量化为FP16后再与FP16激活计算",
+        "correct": true
+      },
+      {
+        "text": "将FP16激活量化为INT8后再与INT8权重计算",
+        "correct": false
+      },
+      {
+        "text": "无需任何转换，硬件自动混合精度计算",
+        "correct": false
+      }
+    ],
+    "explanation": "仅权重量化中权重为INT8，而激活为FP16，矩阵乘法前需将权重量化值乘以缩放因子反量化回FP16，才能与激活计算。直接混合精度计算或自动转换通常不被通用硬件支持，除非有专用内核。",
+    "id": "llm-238",
+    "tags": [
+      "LLM"
+    ],
+    "section": "量化与部署"
+  },
+  {
+    "type": "single",
+    "question": "在LLM推理中，对KV cache进行INT8量化后，以下哪项是最可能直接带来的收益？",
+    "options": [
+      {
+        "text": "减少模型权重的存储占用",
+        "correct": false
+      },
+      {
+        "text": "降低自注意力计算中的矩阵乘法次数",
+        "correct": false
+      },
+      {
+        "text": "减少KV cache的内存占用，支持更大批量或更长上下文",
+        "correct": true
+      },
+      {
+        "text": "提升模型输出的数值精度",
+        "correct": false
+      }
+    ],
+    "explanation": "KV cache量化针对的是推理过程中缓存的键值对，量化后每个元素占用字节减少，从而降低内存占用，允许更大批量或更长上下文。它不减少权重存储，也不改变计算次数，更不会提升精度。",
+    "id": "llm-239",
+    "tags": [
+      "LLM"
+    ],
+    "section": "量化与部署"
+  },
+  {
+    "type": "multiple",
+    "question": "在LLM训练后量化（PTQ）中，以下哪些方法属于常见的量化算法？",
+    "options": [
+      {
+        "text": "GPTQ",
+        "correct": true
+      },
+      {
+        "text": "AWQ",
+        "correct": true
+      },
+      {
+        "text": "SmoothQuant",
+        "correct": true
+      },
+      {
+        "text": "LoRA",
+        "correct": false
+      }
+    ],
+    "explanation": "GPTQ、AWQ和SmoothQuant都是面向LLM的PTQ量化方法，分别基于误差补偿、激活感知和通道缩放。LoRA是一种参数高效微调方法，不属于量化算法。",
+    "id": "llm-240",
+    "tags": [
+      "LLM"
+    ],
+    "section": "量化与部署"
+  },
+  {
+    "type": "single",
+    "question": "在RAG系统中，以下哪个组件负责将用户查询转换为向量以进行相似度检索？",
+    "options": [
+      {
+        "text": "检索器（Retriever）",
+        "correct": false
+      },
+      {
+        "text": "生成器（Generator）",
+        "correct": false
+      },
+      {
+        "text": "嵌入模型（Embedding Model）",
+        "correct": true
+      },
+      {
+        "text": "重排序器（Reranker）",
+        "correct": false
+      }
+    ],
+    "explanation": "嵌入模型将文本（查询或文档）映射为向量，是检索的基础。检索器负责执行搜索，生成器产生答案，重排序器对初步结果精排。关键误区是混淆嵌入模型与检索器的职责。",
+    "id": "llm-241",
+    "tags": [
+      "LLM"
+    ],
+    "section": "RAG与评测"
+  },
+  {
+    "type": "single",
+    "question": "在RAG系统的检索阶段评估中，以下哪个指标直接衡量检索到的上下文与用户查询之间的相关性？",
+    "options": [
+      {
+        "text": "答案准确性（Answer Accuracy）",
+        "correct": false
+      },
+      {
+        "text": "上下文相关性（Context Relevance）",
+        "correct": true
+      },
+      {
+        "text": "检索召回率（Recall）",
+        "correct": false
+      },
+      {
+        "text": "生成流畅度（Fluency）",
+        "correct": false
+      }
+    ],
+    "explanation": "上下文相关性衡量检索到的文档或上下文是否与用户查询相关，属于检索质量评估；答案准确性关注最终答案是否正确，召回率关注相关文档是否被检索到，流畅度关注语言表达质量。生成答案是否由检索文档支持属于忠实度，而不是上下文相关性。",
+    "id": "llm-242",
+    "tags": [
+      "LLM"
+    ],
+    "section": "RAG与评测"
+  },
+  {
+    "type": "single",
+    "question": "在RAG流程中，重排序（Reranking）阶段的主要作用是什么？",
+    "options": [
+      {
+        "text": "对检索到的文档进行精细排序以提高相关性",
+        "correct": true
+      },
+      {
+        "text": "生成最终答案",
+        "correct": false
+      },
+      {
+        "text": "将查询转换为向量",
+        "correct": false
+      },
+      {
+        "text": "减少检索延迟",
+        "correct": false
+      }
+    ],
+    "explanation": "重排序使用更精细的模型对初步检索结果重新排序，提升相关文档的排名。生成答案由生成器完成，查询向量化由嵌入模型完成，重排序可能增加延迟。误区是认为重排序用于加速或生成。",
+    "id": "llm-243",
+    "tags": [
+      "LLM"
+    ],
+    "section": "RAG与评测"
+  },
+  {
+    "type": "single",
+    "question": "以下哪项是RAG系统中减少幻觉（Hallucination）的有效方法？",
+    "options": [
+      {
+        "text": "增加生成器的温度参数",
+        "correct": false
+      },
+      {
+        "text": "在提示中要求模型仅基于检索文档回答",
+        "correct": true
+      },
+      {
+        "text": "减少检索文档的数量",
+        "correct": false
+      },
+      {
+        "text": "使用更大的生成模型",
+        "correct": false
+      }
+    ],
+    "explanation": "通过提示约束模型仅基于检索内容回答，可降低幻觉。提高温度增加随机性，可能加剧幻觉；减少文档可能丢失信息；更大模型不一定减少幻觉。关键误区是认为模型规模或随机性可解决幻觉。",
+    "id": "llm-244",
+    "tags": [
+      "LLM"
+    ],
+    "section": "RAG与评测"
+  },
+  {
+    "type": "single",
+    "question": "在RAG评估中，'忠实度（Faithfulness）'指标主要评估什么？",
+    "options": [
+      {
+        "text": "答案是否基于检索到的上下文",
+        "correct": true
+      },
+      {
+        "text": "检索到的文档是否与查询相关",
+        "correct": false
+      },
+      {
+        "text": "答案的语言流畅性",
+        "correct": false
+      },
+      {
+        "text": "检索的召回率",
+        "correct": false
+      }
+    ],
+    "explanation": "忠实度衡量生成答案是否忠实于检索到的上下文，即答案中的信息是否可由上下文支持。上下文相关性评估检索质量，流畅性评估语言质量。误区是混淆忠实度与上下文相关性。",
+    "id": "llm-245",
+    "tags": [
+      "LLM"
+    ],
+    "section": "RAG与评测"
+  },
+  {
+    "type": "single",
+    "question": "以下哪种分块（Chunking）策略通常有助于提升RAG的检索效果？",
+    "options": [
+      {
+        "text": "固定大小分块且无重叠",
+        "correct": false
+      },
+      {
+        "text": "按语义边界分块并保留上下文重叠",
+        "correct": true
+      },
+      {
+        "text": "将整个文档作为一个块",
+        "correct": false
+      },
+      {
+        "text": "随机切分文档",
+        "correct": false
+      }
+    ],
+    "explanation": "按语义边界分块并保留重叠可保持上下文连贯，提高检索相关性。固定大小无重叠可能切断语义，过大块降低检索精度，随机切分破坏结构。误区是认为分块越简单越好。",
+    "id": "llm-246",
+    "tags": [
+      "LLM"
+    ],
+    "section": "RAG与评测"
+  },
+  {
+    "type": "single",
+    "question": "在RAG中，使用混合检索（Hybrid Search）通常结合哪两种检索方式？",
+    "options": [
+      {
+        "text": "稠密检索和稀疏检索",
+        "correct": true
+      },
+      {
+        "text": "精确匹配和模糊匹配",
+        "correct": false
+      },
+      {
+        "text": "基于规则和基于统计",
+        "correct": false
+      },
+      {
+        "text": "单路检索和多路检索",
+        "correct": false
+      }
+    ],
+    "explanation": "混合检索结合稠密向量检索（语义）和稀疏检索（如BM25，关键词），以兼顾语义和精确匹配。精确/模糊匹配是另一维度，基于规则/统计是分类方式。误区是混淆检索的表示方式。",
+    "id": "llm-247",
+    "tags": [
+      "LLM"
+    ],
+    "section": "RAG与评测"
+  },
+  {
+    "type": "single",
+    "question": "在RAG评估中，'答案相关性（Answer Relevance）'指标主要衡量什么？",
+    "options": [
+      {
+        "text": "答案是否直接回答了用户查询",
+        "correct": true
+      },
+      {
+        "text": "答案是否基于检索文档",
+        "correct": false
+      },
+      {
+        "text": "检索文档是否与查询相关",
+        "correct": false
+      },
+      {
+        "text": "答案的语法正确性",
+        "correct": false
+      }
+    ],
+    "explanation": "答案相关性评估生成答案与用户查询的相关程度，即是否直接回应查询。忠实度评估答案基于上下文程度，上下文相关性评估检索质量。误区是混淆答案相关性与忠实度。",
+    "id": "llm-248",
+    "tags": [
+      "LLM"
+    ],
+    "section": "RAG与评测"
+  },
+  {
+    "type": "single",
+    "question": "以下哪个指标常用于评估检索阶段的质量？",
+    "options": [
+      {
+        "text": "BLEU分数",
+        "correct": false
+      },
+      {
+        "text": "ROUGE分数",
+        "correct": false
+      },
+      {
+        "text": "NDCG",
+        "correct": true
+      },
+      {
+        "text": "困惑度（Perplexity）",
+        "correct": false
+      }
+    ],
+    "explanation": "NDCG（归一化折损累计增益）是检索评估常用指标，考虑排序位置。BLEU和ROUGE用于生成文本评估，困惑度用于语言模型评估。误区是将生成指标用于检索评估。",
+    "id": "llm-249",
+    "tags": [
+      "LLM"
+    ],
+    "section": "RAG与评测"
+  },
+  {
+    "type": "single",
+    "question": "在RAG系统中，'查询改写（Query Rewriting）'技术的主要目的是什么？",
+    "options": [
+      {
+        "text": "提高检索的召回率和相关性",
+        "correct": true
+      },
+      {
+        "text": "减少生成器的计算量",
+        "correct": false
+      },
+      {
+        "text": "降低嵌入模型的维度",
+        "correct": false
+      },
+      {
+        "text": "替代重排序模块",
+        "correct": false
+      }
+    ],
+    "explanation": "查询改写通过扩展、澄清或重述用户查询，提升检索效果。它不直接减少生成计算、降低嵌入维度或替代重排序。误区是认为查询改写用于优化生成或嵌入。",
+    "id": "llm-250",
+    "tags": [
+      "LLM"
+    ],
+    "section": "RAG与评测"
+  },
+  {
+    "type": "single",
+    "question": "在RAG评估中，如果检索到的文档包含答案但生成器未利用，这主要反映了哪方面的问题？",
+    "options": [
+      {
+        "text": "检索质量差",
+        "correct": false
+      },
+      {
+        "text": "生成器未能忠实于上下文",
+        "correct": true
+      },
+      {
+        "text": "嵌入模型不佳",
+        "correct": false
+      },
+      {
+        "text": "分块策略不当",
+        "correct": false
+      }
+    ],
+    "explanation": "检索到包含答案的文档说明检索可能有效，但生成器忽略该信息，属于忠实度问题。检索质量差指未检索到相关文档，嵌入模型或分块不当会影响检索。误区是归咎于检索而非生成。",
+    "id": "llm-251",
+    "tags": [
+      "LLM"
+    ],
+    "section": "RAG与评测"
+  },
+  {
+    "type": "single",
+    "question": "以下哪种方法可用于RAG系统的端到端评估？",
+    "options": [
+      {
+        "text": "仅评估检索召回率",
+        "correct": false
+      },
+      {
+        "text": "仅评估生成BLEU分数",
+        "correct": false
+      },
+      {
+        "text": "使用LLM作为评判员（LLM-as-a-Judge）评估答案质量",
+        "correct": true
+      },
+      {
+        "text": "仅测量系统延迟",
+        "correct": false
+      }
+    ],
+    "explanation": "LLM作为评判员可对最终答案的质量进行综合评估，实现端到端评价。仅评估检索或生成是局部评估，延迟是性能指标。误区是认为局部指标可代表整体效果。",
+    "id": "llm-252",
+    "tags": [
+      "LLM"
+    ],
+    "section": "RAG与评测"
+  },
+  {
+    "type": "single",
+    "question": "在RAG中，'上下文窗口限制'通常导致什么问题？",
+    "options": [
+      {
+        "text": "检索到的文档过多无法全部输入生成器",
+        "correct": true
+      },
+      {
+        "text": "嵌入模型无法处理长文本",
+        "correct": false
+      },
+      {
+        "text": "检索器无法返回足够文档",
+        "correct": false
+      },
+      {
+        "text": "生成器无法处理短查询",
+        "correct": false
+      }
+    ],
+    "explanation": "生成器的上下文窗口有限，无法容纳所有检索文档，需筛选或压缩。嵌入模型有各自长度限制，但非生成上下文窗口问题；检索器返回数量可调。误区是混淆不同组件的限制。",
+    "id": "llm-253",
+    "tags": [
+      "LLM"
+    ],
+    "section": "RAG与评测"
+  },
+  {
+    "type": "single",
+    "question": "在RAG评估中，'检索召回率（Recall）'的定义是什么？",
+    "options": [
+      {
+        "text": "检索到的相关文档数占所有相关文档数的比例",
+        "correct": true
+      },
+      {
+        "text": "检索到的文档中相关文档的比例",
+        "correct": false
+      },
+      {
+        "text": "生成答案中正确信息比例",
+        "correct": false
+      },
+      {
+        "text": "检索结果排序的准确性",
+        "correct": false
+      }
+    ],
+    "explanation": "召回率衡量检索系统找到所有相关文档的能力，即检索到的相关文档数除以总相关文档数。精确率是检索到的文档中相关文档的比例。误区是混淆召回率与精确率。",
+    "id": "llm-254",
+    "tags": [
+      "LLM"
+    ],
+    "section": "RAG与评测"
+  },
+  {
+    "type": "single",
+    "question": "以下哪项是RAG系统中'检索增强'的核心思想？",
+    "options": [
+      {
+        "text": "在生成前从外部知识库检索相关信息",
+        "correct": true
+      },
+      {
+        "text": "在生成后对答案进行检索验证",
+        "correct": false
+      },
+      {
+        "text": "使用检索模型替代生成模型",
+        "correct": false
+      },
+      {
+        "text": "仅使用检索结果作为最终答案",
+        "correct": false
+      }
+    ],
+    "explanation": "RAG的核心是在生成答案前检索外部知识，将检索信息作为生成的条件。生成后验证是后处理，检索不能替代生成，最终答案需生成器整合。误区是认为检索增强是后处理或替代生成。",
+    "id": "llm-255",
+    "tags": [
+      "LLM"
+    ],
+    "section": "RAG与评测"
+  },
+  {
+    "type": "single",
+    "question": "在RAG系统中，嵌入模型（Embedding Model）的主要作用是什么？",
+    "options": [
+      {
+        "text": "将文本转换为稠密向量表示",
+        "correct": true
+      },
+      {
+        "text": "对检索结果进行重排序",
+        "correct": false
+      },
+      {
+        "text": "生成最终答案",
+        "correct": false
+      },
+      {
+        "text": "控制生成文本的长度",
+        "correct": false
+      }
+    ],
+    "explanation": "嵌入模型负责将查询和文档编码为向量，用于相似度计算。重排序由重排序模型完成，生成答案由生成器完成，长度控制是解码策略。",
+    "id": "llm-256",
+    "tags": [
+      "LLM"
+    ],
+    "section": "RAG与评测"
+  },
+  {
+    "type": "single",
+    "question": "在RAG评估中，上下文精确度（Context Precision）指标主要衡量什么？",
+    "options": [
+      {
+        "text": "检索到的相关文档在结果列表中的排名位置",
+        "correct": true
+      },
+      {
+        "text": "生成答案的流畅程度",
+        "correct": false
+      },
+      {
+        "text": "检索到的文档总数",
+        "correct": false
+      },
+      {
+        "text": "答案与问题的语义相似度",
+        "correct": false
+      }
+    ],
+    "explanation": "上下文精确度关注相关文档是否排在前面，排名越高得分越高。它不评估生成流畅度、文档总数或答案相关性。",
+    "id": "llm-257",
+    "tags": [
+      "LLM"
+    ],
+    "section": "RAG与评测"
+  },
+  {
+    "type": "single",
+    "question": "以下哪种检索方式基于关键词匹配而非语义相似度？",
+    "options": [
+      {
+        "text": "BM25",
+        "correct": true
+      },
+      {
+        "text": "稠密向量检索",
+        "correct": false
+      },
+      {
+        "text": "基于嵌入的最近邻检索",
+        "correct": false
+      },
+      {
+        "text": "语义检索",
+        "correct": false
+      }
+    ],
+    "explanation": "BM25是经典的稀疏检索方法，依赖词频和逆文档频率进行关键词匹配。其余选项均基于稠密向量表示语义相似度。",
+    "id": "llm-258",
+    "tags": [
+      "LLM"
+    ],
+    "section": "RAG与评测"
+  },
+  {
+    "type": "single",
+    "question": "在RAG系统中，当用户查询较短且模糊时，以下哪种方法最有助于提升检索效果？",
+    "options": [
+      {
+        "text": "查询扩展（Query Expansion）",
+        "correct": true
+      },
+      {
+        "text": "增加生成温度",
+        "correct": false
+      },
+      {
+        "text": "减少检索文档数量",
+        "correct": false
+      },
+      {
+        "text": "缩短生成答案长度",
+        "correct": false
+      }
+    ],
+    "explanation": "查询扩展通过添加同义词或相关词丰富查询语义，缓解短查询的模糊性。调整生成参数或减少检索数量不能直接改善检索。",
+    "id": "llm-259",
+    "tags": [
+      "LLM"
+    ],
+    "section": "RAG与评测"
+  },
+  {
+    "type": "single",
+    "question": "以下哪项是RAG系统中“检索器”与“生成器”联合训练的主要挑战？",
+    "options": [
+      {
+        "text": "检索过程的离散性导致梯度难以回传",
+        "correct": true
+      },
+      {
+        "text": "生成器无法处理长文本",
+        "correct": false
+      },
+      {
+        "text": "检索器需要大量标注数据",
+        "correct": false
+      },
+      {
+        "text": "联合训练会降低检索速度",
+        "correct": false
+      }
+    ],
+    "explanation": "检索操作通常涉及离散选择（如top-k文档），梯度无法直接穿过检索步骤回传到检索器，这是联合训练的核心难点。",
+    "id": "llm-260",
+    "tags": [
+      "LLM"
+    ],
+    "section": "RAG与评测"
+  },
+  {
+    "type": "single",
+    "question": "在RAG评估中，答案正确性（Answer Correctness）通常如何综合衡量？",
+    "options": [
+      {
+        "text": "结合答案与标准答案的语义相似度和事实重叠",
+        "correct": true
+      },
+      {
+        "text": "仅计算答案的BLEU分数",
+        "correct": false
+      },
+      {
+        "text": "仅比较答案长度",
+        "correct": false
+      },
+      {
+        "text": "仅判断答案是否包含检索文档中的原句",
+        "correct": false
+      }
+    ],
+    "explanation": "答案正确性常综合语义相似度（如嵌入余弦相似度）和事实重叠（如F1）来评估，单一指标或长度比较不够全面。",
+    "id": "llm-261",
+    "tags": [
+      "LLM"
+    ],
+    "section": "RAG与评测"
+  },
+  {
+    "type": "single",
+    "question": "在RAG系统中，以下哪种情况最可能导致生成答案出现幻觉？",
+    "options": [
+      {
+        "text": "检索到的文档与问题无关",
+        "correct": true
+      },
+      {
+        "text": "检索到的文档数量过多",
+        "correct": false
+      },
+      {
+        "text": "生成模型参数量较大",
+        "correct": false
+      },
+      {
+        "text": "查询被改写为多个子查询",
+        "correct": false
+      }
+    ],
+    "explanation": "检索文档不相关时，生成器缺乏可靠依据，容易编造内容。文档数量、模型规模或查询改写不直接导致幻觉。",
+    "id": "llm-262",
+    "tags": [
+      "LLM"
+    ],
+    "section": "RAG与评测"
+  },
+  {
+    "type": "single",
+    "question": "在RAG评估中，上下文召回率（Context Recall）指标主要评估什么？",
+    "options": [
+      {
+        "text": "标准答案中的信息有多少被检索到的上下文覆盖",
+        "correct": true
+      },
+      {
+        "text": "检索到的文档中有多少是相关的",
+        "correct": false
+      },
+      {
+        "text": "生成答案的长度是否合适",
+        "correct": false
+      },
+      {
+        "text": "检索延迟是否在可接受范围",
+        "correct": false
+      }
+    ],
+    "explanation": "上下文召回率衡量检索上下文对标准答案所需信息的覆盖程度。检索文档的相关比例是精确率，长度和延迟不是召回率。",
+    "id": "llm-263",
+    "tags": [
+      "LLM"
+    ],
+    "section": "RAG与评测"
+  },
+  {
+    "type": "single",
+    "question": "以下哪项技术通过让LLM生成多个查询变体来提升RAG检索的召回率？",
+    "options": [
+      {
+        "text": "多查询检索（Multi-Query Retrieval）",
+        "correct": true
+      },
+      {
+        "text": "温度采样",
+        "correct": false
+      },
+      {
+        "text": "束搜索",
+        "correct": false
+      },
+      {
+        "text": "对比解码",
+        "correct": false
+      }
+    ],
+    "explanation": "多查询检索让LLM生成多个查询变体，分别检索后合并结果，提高召回率。温度采样、束搜索和对比解码是生成策略。",
+    "id": "llm-264",
+    "tags": [
+      "LLM"
+    ],
+    "section": "RAG与评测"
+  },
+  {
+    "type": "single",
+    "question": "在RAG系统中，以下哪种方法可用于缓解检索到的文档过长导致上下文窗口不足的问题？",
+    "options": [
+      {
+        "text": "对检索文档进行摘要压缩",
+        "correct": true
+      },
+      {
+        "text": "增大生成温度",
+        "correct": false
+      },
+      {
+        "text": "减少嵌入维度",
+        "correct": false
+      },
+      {
+        "text": "使用更大的批量大小",
+        "correct": false
+      }
+    ],
+    "explanation": "摘要压缩可缩短文档长度，保留关键信息，缓解上下文窗口限制。温度、嵌入维度和批量大小不直接解决长度问题。",
+    "id": "llm-265",
+    "tags": [
+      "LLM"
+    ],
+    "section": "RAG与评测"
+  },
+  {
+    "type": "multiple",
+    "question": "在RAG评估中，以下哪些指标属于检索阶段的质量评估？",
+    "options": [
+      {
+        "text": "上下文精确度（Context Precision）",
+        "correct": true
+      },
+      {
+        "text": "上下文召回率（Context Recall）",
+        "correct": true
+      },
+      {
+        "text": "答案忠实度（Faithfulness）",
+        "correct": false
+      },
+      {
+        "text": "答案相关性（Answer Relevance）",
+        "correct": false
+      }
+    ],
+    "explanation": "上下文精确度和召回率评估检索结果的质量。忠实度和答案相关性属于生成阶段评估，关注答案与上下文及问题的一致性。",
+    "id": "llm-266",
+    "tags": [
+      "LLM"
+    ],
+    "section": "RAG与评测"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些方法可用于提升RAG系统的检索效果？",
+    "options": [
+      {
+        "text": "使用混合检索结合稀疏和稠密检索",
+        "correct": true
+      },
+      {
+        "text": "引入重排序模型对候选文档排序",
+        "correct": true
+      },
+      {
+        "text": "对查询进行改写或扩展",
+        "correct": true
+      },
+      {
+        "text": "增加生成模型的最大输出长度",
+        "correct": false
+      }
+    ],
+    "explanation": "混合检索、重排序和查询改写均直接优化检索阶段。增加生成输出长度影响生成阶段，不提升检索效果。",
+    "id": "llm-267",
+    "tags": [
+      "LLM"
+    ],
+    "section": "RAG与评测"
+  },
+  {
+    "type": "multiple",
+    "question": "在RAG系统的端到端评估中，以下哪些方面通常需要被评估？",
+    "options": [
+      {
+        "text": "检索上下文与问题的相关性",
+        "correct": true
+      },
+      {
+        "text": "生成答案对检索上下文的忠实度",
+        "correct": true
+      },
+      {
+        "text": "生成答案与问题的相关性",
+        "correct": true
+      },
+      {
+        "text": "嵌入模型的参数量大小",
+        "correct": false
+      }
+    ],
+    "explanation": "端到端评估涵盖检索相关性、答案忠实度和答案相关性。嵌入模型参数量是模型属性，不是RAG输出质量的评估维度。",
+    "id": "llm-268",
+    "tags": [
+      "LLM"
+    ],
+    "section": "RAG与评测"
+  },
+  {
+    "type": "multiple",
+    "question": "关于RAG中的分块（Chunking）策略，以下哪些说法是正确的？",
+    "options": [
+      {
+        "text": "按语义边界分块有助于保持上下文完整性",
+        "correct": true
+      },
+      {
+        "text": "重叠分块可减少边界信息丢失",
+        "correct": true
+      },
+      {
+        "text": "分块过大可能引入无关噪声",
+        "correct": true
+      },
+      {
+        "text": "分块越小检索效果一定越好",
+        "correct": false
+      }
+    ],
+    "explanation": "语义分块保持完整性，重叠减少边界丢失，过大分块引入噪声。分块过小会丢失上下文，并非越小越好。",
+    "id": "llm-269",
+    "tags": [
+      "LLM"
+    ],
+    "section": "RAG与评测"
+  },
+  {
+    "type": "multiple",
+    "question": "在RAG系统中，以下哪些技术可用于减少生成答案的幻觉？",
+    "options": [
+      {
+        "text": "要求生成器仅基于检索到的上下文作答",
+        "correct": true
+      },
+      {
+        "text": "引入答案忠实度评估并过滤低分答案",
+        "correct": true
+      },
+      {
+        "text": "使用重排序提升检索上下文的相关性",
+        "correct": true
+      },
+      {
+        "text": "提高生成模型的温度以增加多样性",
+        "correct": false
+      }
+    ],
+    "explanation": "约束生成依据、忠实度过滤和提升检索相关性均可减少幻觉。提高温度会增加随机性，可能加剧幻觉。",
+    "id": "llm-270",
+    "tags": [
+      "LLM"
+    ],
+    "section": "RAG与评测"
+  },
+  {
+    "type": "single",
+    "question": "在 MoE（混合专家）模型中，门控网络（router）的核心作用是什么？",
+    "options": [
+      {
+        "text": "为每个输入 token 计算各专家的权重并选择激活的专家",
+        "correct": true
+      },
+      {
+        "text": "对所有专家参数做全量梯度同步",
+        "correct": false
+      },
+      {
+        "text": "存储每个专家输出的中间激活值",
+        "correct": false
+      },
+      {
+        "text": "决定专家层应放在哪张 GPU 上",
+        "correct": false
+      }
+    ],
+    "explanation": "门控网络根据 token 表示计算对各专家的打分，选 top-k 专家并加权求和；它不负责参数同步、激活存储或设备放置，这些分别由通信、显存管理和并行策略处理。",
+    "id": "llm-271",
+    "tags": [
+      "LLM"
+    ],
+    "section": "MoE与分布式训练"
+  },
+  {
+    "type": "single",
+    "question": "Top-1 门控 MoE 相比稠密模型在相同总参数量下的主要计算优势是？",
+    "options": [
+      {
+        "text": "每个 token 只经过一个专家，激活计算量远小于全参数计算",
+        "correct": true
+      },
+      {
+        "text": "反向传播时不需要计算门控梯度",
+        "correct": false
+      },
+      {
+        "text": "专家参数可以在推理时完全省略加载",
+        "correct": false
+      },
+      {
+        "text": "注意力层的计算复杂度降为线性",
+        "correct": false
+      }
+    ],
+    "explanation": "MoE 的稀疏激活使每 token 仅计算被选中专家，总参数量可远大于单 token 计算量；门控仍需梯度，专家参数仍需存储加载，注意力复杂度不受 MoE 影响。",
+    "id": "llm-272",
+    "tags": [
+      "LLM"
+    ],
+    "section": "MoE与分布式训练"
+  },
+  {
+    "type": "single",
+    "question": "MoE 训练中常出现的“专家负载不均衡”会导致什么直接后果？",
+    "options": [
+      {
+        "text": "部分专家过载而其他专家闲置，降低并行效率并可能造成显存瓶颈",
+        "correct": true
+      },
+      {
+        "text": "模型总参数量自动减小",
+        "correct": false
+      },
+      {
+        "text": "注意力头数被迫减少",
+        "correct": false
+      },
+      {
+        "text": "梯度消失问题被彻底消除",
+        "correct": false
+      }
+    ],
+    "explanation": "负载不均使热门专家所在设备成为计算与显存瓶颈，冷门专家利用率低；它不会改变参数量或注意力结构，也与梯度消失无直接因果关系。",
+    "id": "llm-273",
+    "tags": [
+      "LLM"
+    ],
+    "section": "MoE与分布式训练"
+  },
+  {
+    "type": "single",
+    "question": "关于 MoE 中辅助负载均衡损失（auxiliary load balancing loss）的描述，正确的是？",
+    "options": [
+      {
+        "text": "它鼓励门控把 token 更均匀地分配到各专家",
+        "correct": true
+      },
+      {
+        "text": "它直接约束每个专家的输出范数一致",
+        "correct": false
+      },
+      {
+        "text": "它替代了主任务的交叉熵损失",
+        "correct": false
+      },
+      {
+        "text": "它只在推理阶段计算",
+        "correct": false
+      }
+    ],
+    "explanation": "辅助损失通常基于各专家被选中的比例或门控概率分布，惩罚过度集中以促进均衡；它不约束输出范数，也不替代主损失，且只在训练时使用。",
+    "id": "llm-274",
+    "tags": [
+      "LLM"
+    ],
+    "section": "MoE与分布式训练"
+  },
+  {
+    "type": "single",
+    "question": "在专家并行（expert parallelism）中，一个 MoE 层的不同专家分布在不同设备上，前向传播通常需要哪种通信？",
+    "options": [
+      {
+        "text": "将 token 按门控路由结果发送到对应专家所在设备，再收回输出",
+        "correct": true
+      },
+      {
+        "text": "对所有设备广播完整的专家参数",
+        "correct": false
+      },
+      {
+        "text": "在每个设备上复制全部 token 并本地计算所有专家",
+        "correct": false
+      },
+      {
+        "text": "只在反向传播时通信，前向无需通信",
+        "correct": false
+      }
+    ],
+    "explanation": "专家并行下 token 需 all-to-all 式分发到目标专家并回收结果；广播参数或本地全算会失去并行意义，前向同样需要通信。",
+    "id": "llm-275",
+    "tags": [
+      "LLM"
+    ],
+    "section": "MoE与分布式训练"
+  },
+  {
+    "type": "single",
+    "question": "MoE 中容量因子（capacity factor）设置过小最可能导致什么？",
+    "options": [
+      {
+        "text": "超出专家容量的 token 被丢弃，影响训练质量",
+        "correct": true
+      },
+      {
+        "text": "专家数量自动增加",
+        "correct": false
+      },
+      {
+        "text": "门控网络退化为均匀路由",
+        "correct": false
+      },
+      {
+        "text": "梯度裁剪阈值自动提高",
+        "correct": false
+      }
+    ],
+    "explanation": "容量因子决定每个专家可处理的 token 上限，过小会丢弃溢出 token，造成信息损失；它不会改变专家数量或使路由均匀，也与梯度裁剪无关。",
+    "id": "llm-276",
+    "tags": [
+      "LLM"
+    ],
+    "section": "MoE与分布式训练"
+  },
+  {
+    "type": "single",
+    "question": "在分布式数据并行（DDP）训练稠密模型时，每步反向传播后通常执行什么通信？",
+    "options": [
+      {
+        "text": "对所有设备上的梯度做 all-reduce 求平均",
+        "correct": true
+      },
+      {
+        "text": "对输入数据做 all-gather",
+        "correct": false
+      },
+      {
+        "text": "对模型输出做广播",
+        "correct": false
+      },
+      {
+        "text": "只在第一步同步一次参数",
+        "correct": false
+      }
+    ],
+    "explanation": "DDP 在每个反向传播后 all-reduce 梯度以保持各副本参数一致；数据 all-gather、输出广播并非其标准步骤，且同步需每步进行。",
+    "id": "llm-277",
+    "tags": [
+      "LLM"
+    ],
+    "section": "MoE与分布式训练"
+  },
+  {
+    "type": "single",
+    "question": "ZeRO 优化器的核心思想是什么？",
+    "options": [
+      {
+        "text": "将优化器状态、梯度和参数分片到不同设备以降低单卡显存",
+        "correct": true
+      },
+      {
+        "text": "用低精度替换全部注意力计算",
+        "correct": false
+      },
+      {
+        "text": "在每张卡上保存完整模型副本以减少通信",
+        "correct": false
+      },
+      {
+        "text": "只对嵌入层做量化",
+        "correct": false
+      }
+    ],
+    "explanation": "ZeRO 通过分片优化器状态、梯度、参数来消除数据并行中的显存冗余，代价是增加通信；它不改变注意力精度，也非只量化嵌入层。",
+    "id": "llm-278",
+    "tags": [
+      "LLM"
+    ],
+    "section": "MoE与分布式训练"
+  },
+  {
+    "type": "single",
+    "question": "下列关于 MoE 模型推理的说法，正确的是？",
+    "options": [
+      {
+        "text": "仍需加载全部专家参数，即使单 token 只激活少数专家",
+        "correct": true
+      },
+      {
+        "text": "只加载被激活的专家即可，其余可永久删除",
+        "correct": false
+      },
+      {
+        "text": "门控网络在推理时可以不运行",
+        "correct": false
+      },
+      {
+        "text": "专家数量越多，单 token 延迟必然线性下降",
+        "correct": false
+      }
+    ],
+    "explanation": "推理时不同 token 可能激活不同专家，故通常需保留全部专家权重；门控必须运行以决定路由；专家增多不会必然降低延迟，还可能增加显存压力。",
+    "id": "llm-279",
+    "tags": [
+      "LLM"
+    ],
+    "section": "MoE与分布式训练"
+  },
+  {
+    "type": "single",
+    "question": "在流水线并行中，将模型按层切分到多设备后，微批次（micro-batch）的主要作用是？",
+    "options": [
+      {
+        "text": "填充流水线气泡，提高设备利用率",
+        "correct": true
+      },
+      {
+        "text": "减少模型总参数量",
+        "correct": false
+      },
+      {
+        "text": "替代梯度 all-reduce",
+        "correct": false
+      },
+      {
+        "text": "消除层间依赖关系",
+        "correct": false
+      }
+    ],
+    "explanation": "流水线并行把批次切成微批次交替执行，使前后阶段重叠以减少空闲气泡；它不减少参数量，不能替代梯度同步，也不消除层间依赖。",
+    "id": "llm-280",
+    "tags": [
+      "LLM"
+    ],
+    "section": "MoE与分布式训练"
+  },
+  {
+    "type": "single",
+    "question": "分布式训练中梯度累积（gradient accumulation）的主要作用是？",
+    "options": [
+      {
+        "text": "在有限显存下用小微批次累加梯度以模拟更大批次",
+        "correct": true
+      },
+      {
+        "text": "减少模型参数量以节省显存",
+        "correct": false
+      },
+      {
+        "text": "替代优化器中的动量计算",
+        "correct": false
+      },
+      {
+        "text": "自动实现专家并行",
+        "correct": false
+      }
+    ],
+    "explanation": "梯度累积通过多次前向反向累加梯度再更新，等价于更大有效批次，适合显存受限场景；它不减少参数量，不替代动量，也不实现专家并行。",
+    "id": "llm-281",
+    "tags": [
+      "LLM"
+    ],
+    "section": "MoE与分布式训练"
+  },
+  {
+    "type": "single",
+    "question": "MoE 模型中，门控网络为每个 token 选择 top-k 专家时，k 值增大最直接的影响是什么？",
+    "options": [
+      {
+        "text": "每个 token 的计算量线性增加，但模型总参数量不变",
+        "correct": true
+      },
+      {
+        "text": "模型总参数量随 k 线性增加",
+        "correct": false
+      },
+      {
+        "text": "专家负载不均衡问题自动消失",
+        "correct": false
+      },
+      {
+        "text": "通信开销与 k 无关",
+        "correct": false
+      }
+    ],
+    "explanation": "k 增大意味着每个 token 激活更多专家，计算量增加，但专家总数和总参数量不变。总参数量由专家数量决定，不随 k 变化；负载不均衡需辅助损失缓解；通信开销通常随 k 增加而增加。",
+    "id": "llm-282",
+    "tags": [
+      "LLM"
+    ],
+    "section": "MoE与分布式训练"
+  },
+  {
+    "type": "single",
+    "question": "在 MoE 训练中，使用辅助负载均衡损失时，若系数设置过大，最可能导致什么？",
+    "options": [
+      {
+        "text": "路由决策过度均匀，损害模型主任务性能",
+        "correct": true
+      },
+      {
+        "text": "专家负载不均衡加剧",
+        "correct": false
+      },
+      {
+        "text": "训练完全无法进行",
+        "correct": false
+      },
+      {
+        "text": "门控网络输出变为常数",
+        "correct": false
+      }
+    ],
+    "explanation": "辅助损失系数过大会迫使路由过于均匀，偏离主任务最优路由，损害性能。系数过小才会导致负载不均衡加剧；完全无法进行或输出常数通常不会仅因系数过大发生。",
+    "id": "llm-283",
+    "tags": [
+      "LLM"
+    ],
+    "section": "MoE与分布式训练"
+  },
+  {
+    "type": "single",
+    "question": "关于分布式训练中的 All-Reduce 操作，以下描述正确的是？",
+    "options": [
+      {
+        "text": "将所有设备的梯度求和后广播到所有设备",
+        "correct": true
+      },
+      {
+        "text": "仅将梯度从主设备广播到其他设备",
+        "correct": false
+      },
+      {
+        "text": "将梯度按设备编号拼接",
+        "correct": false
+      },
+      {
+        "text": "只做归约不广播结果",
+        "correct": false
+      }
+    ],
+    "explanation": "All-Reduce 对各设备数据做归约（如求和）并将结果分发到所有设备，常用于 DDP 梯度同步。仅广播是 Broadcast；拼接是 All-Gather；只归约不广播是 Reduce。",
+    "id": "llm-284",
+    "tags": [
+      "LLM"
+    ],
+    "section": "MoE与分布式训练"
+  },
+  {
+    "type": "single",
+    "question": "在专家并行中，每个设备持有不同专家，当门控将 token 路由到其他设备上的专家时，通常需要哪种通信？",
+    "options": [
+      {
+        "text": "All-to-All",
+        "correct": true
+      },
+      {
+        "text": "All-Reduce",
+        "correct": false
+      },
+      {
+        "text": "Broadcast",
+        "correct": false
+      },
+      {
+        "text": "Reduce-Scatter",
+        "correct": false
+      }
+    ],
+    "explanation": "专家并行下 token 需按路由发送到对应专家设备，这是多对多通信，通常用 All-to-All。All-Reduce 用于梯度同步；Broadcast 是一对多；Reduce-Scatter 是归约后分散。",
+    "id": "llm-285",
+    "tags": [
+      "LLM"
+    ],
+    "section": "MoE与分布式训练"
+  },
+  {
+    "type": "single",
+    "question": "在单设备部署或专家参数按需加载、非专家并行跨设备路由的 MoE 推理中，若 batch 内 token 路由到的专家分布非常分散，可能带来的主要开销是什么？",
+    "options": [
+      {
+        "text": "需要加载更多专家参数，增加显存与访存压力",
+        "correct": true
+      },
+      {
+        "text": "门控网络计算量指数增长",
+        "correct": false
+      },
+      {
+        "text": "模型总参数量动态增加",
+        "correct": false
+      },
+      {
+        "text": "所有专家必须同时进行反向传播",
+        "correct": false
+      }
+    ],
+    "explanation": "在专家参数按需加载或未全部驻留显存的推理场景中，路由越分散，需要参与计算的专家越多，参数加载和访存压力越大。门控计算量不会指数增长，模型总参数量固定，推理也不进行反向传播。",
+    "id": "llm-286",
+    "tags": [
+      "LLM"
+    ],
+    "section": "MoE与分布式训练"
+  },
+  {
+    "type": "single",
+    "question": "在流水线并行中，1F1B（一前一后）调度相比朴素流水线的主要优势是什么？",
+    "options": [
+      {
+        "text": "减少流水线气泡，提高设备利用率",
+        "correct": true
+      },
+      {
+        "text": "完全消除设备间的通信",
+        "correct": false
+      },
+      {
+        "text": "使每个微批次的计算量减半",
+        "correct": false
+      },
+      {
+        "text": "不再需要梯度累积",
+        "correct": false
+      }
+    ],
+    "explanation": "1F1B 交错执行前向和反向，缩短流水线气泡，提升利用率。它不能消除通信，也不改变微批次计算量；流水线并行通常仍需梯度累积来填满流水线。",
+    "id": "llm-287",
+    "tags": [
+      "LLM"
+    ],
+    "section": "MoE与分布式训练"
+  },
+  {
+    "type": "single",
+    "question": "关于 ZeRO 不同阶段的描述，正确的是？",
+    "options": [
+      {
+        "text": "ZeRO-1 切分优化器状态，ZeRO-2 额外切分梯度，ZeRO-3 额外切分参数",
+        "correct": true
+      },
+      {
+        "text": "ZeRO-1 切分参数，ZeRO-2 切分梯度，ZeRO-3 切分优化器状态",
+        "correct": false
+      },
+      {
+        "text": "ZeRO 各阶段均只切分梯度",
+        "correct": false
+      },
+      {
+        "text": "ZeRO-3 不切分任何状态，仅做梯度累积",
+        "correct": false
+      }
+    ],
+    "explanation": "ZeRO 逐级切分：阶段1切优化器状态，阶段2加切梯度，阶段3再加切参数。其他选项颠倒或错误描述了切分对象，ZeRO-3 并非不切分。",
+    "id": "llm-288",
+    "tags": [
+      "LLM"
+    ],
+    "section": "MoE与分布式训练"
+  },
+  {
+    "type": "single",
+    "question": "在 MoE 训练中，若某个专家在多个连续批次中持续接收不到 token，最可能发生什么？",
+    "options": [
+      {
+        "text": "该专家参数得不到更新，形成“死专家”",
+        "correct": true
+      },
+      {
+        "text": "该专家会自动复制到其他设备",
+        "correct": false
+      },
+      {
+        "text": "门控网络会自动增加该专家的权重",
+        "correct": false
+      },
+      {
+        "text": "训练损失立即变为 NaN",
+        "correct": false
+      }
+    ],
+    "explanation": "专家长期无 token 输入则无梯度更新，逐渐成为死专家，浪费容量。系统不会自动复制专家或强制增加权重；损失也不会因此立即变为 NaN。",
+    "id": "llm-289",
+    "tags": [
+      "LLM"
+    ],
+    "section": "MoE与分布式训练"
+  },
+  {
+    "type": "single",
+    "question": "关于张量并行（Tensor Parallelism）在 Transformer 中的应用，以下说法正确的是？",
+    "options": [
+      {
+        "text": "将线性层的权重矩阵按列或按行切分到不同设备，并行计算后拼接或求和",
+        "correct": true
+      },
+      {
+        "text": "将不同 Transformer 层分配到不同设备",
+        "correct": false
+      },
+      {
+        "text": "将同一个批次的数据切分到不同设备",
+        "correct": false
+      },
+      {
+        "text": "仅用于推理阶段，训练时不可用",
+        "correct": false
+      }
+    ],
+    "explanation": "张量并行切分单层内的权重矩阵，按列切分后拼接、按行切分后求和。按层切分是流水线并行；切分数据是数据并行；张量并行训练和推理均可用。",
+    "id": "llm-290",
+    "tags": [
+      "LLM"
+    ],
+    "section": "MoE与分布式训练"
+  },
+  {
+    "type": "single",
+    "question": "在 MoE 中，门控网络输出经过 softmax 后，若温度参数设置过高，会导致什么？",
+    "options": [
+      {
+        "text": "路由分布更平滑，专家选择更均匀但区分度下降",
+        "correct": true
+      },
+      {
+        "text": "路由分布更尖锐，几乎总选同一个专家",
+        "correct": false
+      },
+      {
+        "text": "门控网络不再需要计算 softmax",
+        "correct": false
+      },
+      {
+        "text": "专家数量自动增加",
+        "correct": false
+      }
+    ],
+    "explanation": "温度高使 softmax 输出更平滑，路由更均匀但区分度降低；温度低才更尖锐。温度不影响是否需要 softmax，也不改变专家数量。",
+    "id": "llm-291",
+    "tags": [
+      "LLM"
+    ],
+    "section": "MoE与分布式训练"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些技术可用于缓解 MoE 训练中的专家负载不均衡？",
+    "options": [
+      {
+        "text": "辅助负载均衡损失",
+        "correct": true
+      },
+      {
+        "text": "专家容量限制与 token 丢弃",
+        "correct": true
+      },
+      {
+        "text": "随机路由（不训练门控）",
+        "correct": false
+      },
+      {
+        "text": "门控网络噪声注入",
+        "correct": true
+      }
+    ],
+    "explanation": "辅助损失、容量限制和门控噪声均可促进负载均衡。随机路由虽可能均匀但破坏学习能力，不是合理缓解手段，因此不选。",
+    "id": "llm-292",
+    "tags": [
+      "LLM"
+    ],
+    "section": "MoE与分布式训练"
+  },
+  {
+    "type": "multiple",
+    "question": "关于数据并行、流水线并行和张量并行的组合使用，以下说法正确的有？",
+    "options": [
+      {
+        "text": "数据并行复制模型副本，流水线并行按层切分，张量并行切分层内张量",
+        "correct": true
+      },
+      {
+        "text": "三种并行可以组合形成 3D 并行",
+        "correct": true
+      },
+      {
+        "text": "组合使用时通信开销可能来自多个维度",
+        "correct": true
+      },
+      {
+        "text": "组合使用后不再需要任何通信",
+        "correct": false
+      }
+    ],
+    "explanation": "三种并行分别对应数据、层和层内张量切分，可组合为3D并行，通信来自数据同步、流水线激活传输和张量并行归约等。组合后仍需通信，故不选最后一项。",
+    "id": "llm-293",
+    "tags": [
+      "LLM"
+    ],
+    "section": "MoE与分布式训练"
+  },
+  {
+    "type": "multiple",
+    "question": "MoE 模型在分布式训练时，专家并行常与哪些技术结合以提升效率？",
+    "options": [
+      {
+        "text": "数据并行",
+        "correct": true
+      },
+      {
+        "text": "张量并行",
+        "correct": true
+      },
+      {
+        "text": "流水线并行",
+        "correct": true
+      },
+      {
+        "text": "仅使用单设备训练",
+        "correct": false
+      }
+    ],
+    "explanation": "专家并行常与数据、张量、流水线并行组合，形成大规模分布式训练方案。单设备训练无法体现专家并行的分布式优势，且与题意矛盾。",
+    "id": "llm-294",
+    "tags": [
+      "LLM"
+    ],
+    "section": "MoE与分布式训练"
+  },
+  {
+    "type": "multiple",
+    "question": "在 MoE 模型的前向传播中，以下哪些因素会直接影响门控网络的路由决策？",
+    "options": [
+      {
+        "text": "输入 token 的表示",
+        "correct": true
+      },
+      {
+        "text": "门控网络的参数",
+        "correct": true
+      },
+      {
+        "text": "温度参数",
+        "correct": true
+      },
+      {
+        "text": "专家输出的梯度",
+        "correct": false
+      }
+    ],
+    "explanation": "路由由 token 表示经门控参数计算得到，温度参数影响 softmax 分布的平滑或尖锐程度，因此直接影响前向路由。专家输出的梯度用于训练更新，不直接参与当前前向路由决策计算。",
+    "id": "llm-295",
+    "tags": [
+      "LLM"
+    ],
+    "section": "MoE与分布式训练"
+  },
+  {
+    "type": "multiple",
+    "question": "关于梯度累积与大批次训练的关系，以下说法正确的有？",
+    "options": [
+      {
+        "text": "梯度累积可在有限显存下模拟更大 batch size",
+        "correct": true
+      },
+      {
+        "text": "梯度累积步数增加时，等效 batch size 增大",
+        "correct": true
+      },
+      {
+        "text": "梯度累积会减少每一步反向传播的计算量",
+        "correct": false
+      },
+      {
+        "text": "梯度累积通常需要配合学习率调整",
+        "correct": true
+      }
+    ],
+    "explanation": "梯度累积通过多次前向反向累加梯度再更新，可模拟大 batch，等效 batch 随累积步数增大，常需调整学习率。每步反向计算量不变，只是更新频率降低。",
+    "id": "llm-296",
+    "tags": [
+      "LLM"
+    ],
+    "section": "MoE与分布式训练"
+  },
+  {
+    "type": "single",
+    "question": "在MoE模型的分布式训练中，采用专家并行（Expert Parallelism）时，每个设备存放不同的专家。前向传播中，当门控网络将某个token分配给位于另一设备上的专家时，通常需要执行什么操作？",
+    "options": [
+      {
+        "text": "通过All-to-All通信将token发送到对应设备，计算后再将结果传回",
+        "correct": true
+      },
+      {
+        "text": "通过All-Reduce通信将所有设备的token求和后广播",
+        "correct": false
+      },
+      {
+        "text": "通过广播通信将token复制到所有设备，由每个设备自行选择专家",
+        "correct": false
+      },
+      {
+        "text": "无需通信，因为门控网络只选择本地设备上的专家",
+        "correct": false
+      }
+    ],
+    "explanation": "专家并行下专家分布在不同设备，token需跨设备路由，因此使用All-to-All进行token分发与结果回收。All-Reduce用于梯度归约，广播用于参数同步，均不适用于按token路由。",
+    "id": "llm-297",
+    "tags": [
+      "LLM"
+    ],
+    "section": "MoE与分布式训练"
+  },
+  {
+    "type": "multiple",
+    "question": "在MoE训练中，为缓解专家负载不均衡，以下哪些方法是有效的？",
+    "options": [
+      {
+        "text": "在损失函数中加入辅助负载均衡损失，鼓励门控均匀分配token",
+        "correct": true
+      },
+      {
+        "text": "使用专家容量因子（capacity factor）限制每个专家处理的token数，超出部分丢弃或绕过",
+        "correct": true
+      },
+      {
+        "text": "采用可学习的门控温度或噪声注入，增加路由的随机性",
+        "correct": true
+      },
+      {
+        "text": "强制所有token只路由到编号最小的专家",
+        "correct": false
+      }
+    ],
+    "explanation": "辅助损失、容量因子和路由随机化均可缓解负载不均。强制路由到固定专家会加剧不均衡并丧失MoE优势，因此错误。",
+    "id": "llm-298",
+    "tags": [
+      "LLM"
+    ],
+    "section": "MoE与分布式训练"
+  },
+  {
+    "type": "single",
+    "question": "在专家并行部署、不同专家位于不同设备的 MoE 推理阶段，若一个 batch 内 token 被路由到的专家分布非常分散，最可能带来的主要开销是什么？",
+    "options": [
+      {
+        "text": "需要频繁跨设备通信和专家切换，增加延迟",
+        "correct": true
+      },
+      {
+        "text": "模型总参数量会动态增大",
+        "correct": false
+      },
+      {
+        "text": "门控网络的计算量会指数级增长",
+        "correct": false
+      },
+      {
+        "text": "所有专家必须同时被激活，计算量等于稠密模型",
+        "correct": false
+      }
+    ],
+    "explanation": "专家并行下专家分布在不同设备，token 路由分散会导致更多跨设备分发与回收结果，增加通信和切换延迟。模型总参数量固定，门控计算量不会指数增长，MoE 也只激活部分专家。",
+    "id": "llm-299",
+    "tags": [
+      "LLM"
+    ],
+    "section": "MoE与分布式训练"
+  },
+  {
+    "type": "single",
+    "question": "在流水线并行训练中，1F1B（一前一后）调度相比朴素流水线（所有微批次先完成前向再统一反向）的主要优势是什么？",
+    "options": [
+      {
+        "text": "减少流水线气泡（bubble）并降低激活内存占用",
+        "correct": true
+      },
+      {
+        "text": "完全消除设备间的通信开销",
+        "correct": false
+      },
+      {
+        "text": "使每个设备同时处理所有微批次的前向和反向",
+        "correct": false
+      },
+      {
+        "text": "将数据并行转换为模型并行",
+        "correct": false
+      }
+    ],
+    "explanation": "1F1B交错执行前向和反向，缩短流水线空闲时间并限制同时驻留的激活数量。它不能消除通信，也不能让设备同时处理所有微批次，更不改变并行类型。",
+    "id": "llm-300",
+    "tags": [
+      "LLM"
+    ],
+    "section": "MoE与分布式训练"
+  }
+]

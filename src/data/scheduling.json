@@ -1,0 +1,8402 @@
+[
+  {
+    "type": "single",
+    "question": "在一个 Agent 项目调度系统中，将大任务分解为子任务后构建 DAG。下列关于 DAG 的说法，正确的是？",
+    "options": [
+      {
+        "text": "DAG 中允许存在环，只要环上节点能并行执行",
+        "correct": false
+      },
+      {
+        "text": "DAG 中不存在有向环，因此可以对其进行拓扑排序",
+        "correct": true
+      },
+      {
+        "text": "DAG 中每个节点都必须有入边和出边",
+        "correct": false
+      },
+      {
+        "text": "DAG 的边只能表示时间先后，不能表示数据依赖",
+        "correct": false
+      }
+    ],
+    "explanation": "DAG 即无环有向图，无环保证至少存在一个拓扑序，可用于确定调度顺序。A 错在环会破坏依赖；C 错在源点可无入边、汇点可无出边；D 错在边既可表示控制依赖也可表示数据依赖。",
+    "id": "scheduling-001",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务分解与DAG"
+  },
+  {
+    "type": "single",
+    "question": "某调度器对任务 DAG 做拓扑排序，得到唯一拓扑序。由此可推断该 DAG 的什么性质？",
+    "options": [
+      {
+        "text": "图中任意两节点之间都存在有向路径",
+        "correct": false
+      },
+      {
+        "text": "图中存在一条经过所有节点的有向哈密顿路径",
+        "correct": true
+      },
+      {
+        "text": "任意两个不同节点之间都存在一条有向边，形成全序",
+        "correct": false
+      },
+      {
+        "text": "该图一定是一棵二叉树",
+        "correct": false
+      }
+    ],
+    "explanation": "拓扑序唯一意味着在唯一序列中相邻的两个任务之间必须存在从前到后的有向边；否则二者不可比较，可以交换而得到另一个拓扑序。把这些相邻边依次连接起来，就得到一条经过所有节点的有向哈密顿路径。任意两个节点之间都有直接边是过强条件，例如简单链式依赖的拓扑序唯一，但首尾之间没有直接边；强连通或二叉树也与该性质无关。",
+    "id": "scheduling-002",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务分解与DAG"
+  },
+  {
+    "type": "single",
+    "question": "Agent 项目将任务拆成 A→B、A→C、B→D、C→D 四个子任务。若 A 完成后 B、C 可并行，则 D 的最早开始条件是什么？",
+    "options": [
+      {
+        "text": "B 完成即可，C 可稍后完成",
+        "correct": false
+      },
+      {
+        "text": "C 完成即可，B 可稍后完成",
+        "correct": false
+      },
+      {
+        "text": "B 与 C 都完成后才能开始",
+        "correct": true
+      },
+      {
+        "text": "A 完成后即可开始，无需等待 B、C",
+        "correct": false
+      }
+    ],
+    "explanation": "D 有来自 B 和 C 的两条入边，表示 D 依赖两者结果，必须等 B、C 都完成。A 只满足直接前驱 A 的完成，不能替代 B、C；只等其中一个会遗漏另一分支的数据或状态。",
+    "id": "scheduling-003",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务分解与DAG"
+  },
+  {
+    "type": "single",
+    "question": "在任务 DAG 中，某节点入度为 0。该节点在调度语义上通常表示什么？",
+    "options": [
+      {
+        "text": "该任务依赖所有其他任务",
+        "correct": false
+      },
+      {
+        "text": "该任务是起始任务，没有前置依赖，可优先被调度",
+        "correct": true
+      },
+      {
+        "text": "该任务一定是关键路径终点",
+        "correct": false
+      },
+      {
+        "text": "该任务不能被任何后续任务依赖",
+        "correct": false
+      }
+    ],
+    "explanation": "入度为 0 表示没有前置依赖，是 DAG 的源点，可作为调度起点。出度为 0 才是终点汇点；关键路径终点通常是出度为 0 的节点之一，不能由入度判断；它仍可被后续依赖。",
+    "id": "scheduling-004",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务分解与DAG"
+  },
+  {
+    "type": "single",
+    "question": "某 Agent 系统用 DAG 表示任务依赖，边 u→v 表示 v 必须在 u 完成后开始。若在执行中发现 u 失败，合理的调度处理是？",
+    "options": [
+      {
+        "text": "继续执行 v，因为 v 已进入就绪队列",
+        "correct": false
+      },
+      {
+        "text": "仅回滚 u，v 仍按原计划执行",
+        "correct": false
+      },
+      {
+        "text": "将 u 的所有后继任务标记为阻塞或取消，并触发补偿/重试策略",
+        "correct": true
+      },
+      {
+        "text": "直接删除 u 节点，DAG 自动变为无环图",
+        "correct": false
+      }
+    ],
+    "explanation": "u 失败意味着依赖 u 结果的后继无法获得有效输入，应传播失败状态，阻塞其后继并按策略重试或补偿。继续执行会使用无效输入；仅回滚 u 不解决下游依赖；删除节点会破坏依赖语义。",
+    "id": "scheduling-005",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务分解与DAG"
+  },
+  {
+    "type": "single",
+    "question": "关于 DAG 上任务调度的“关键路径”，下列描述正确的是？",
+    "options": [
+      {
+        "text": "关键路径是节点数最少的路径",
+        "correct": false
+      },
+      {
+        "text": "关键路径长度决定整个 DAG 的最短可能完成时间下界",
+        "correct": true
+      },
+      {
+        "text": "关键路径上的任务都可以任意延迟而不影响总工期",
+        "correct": false
+      },
+      {
+        "text": "每个 DAG 只有一条关键路径",
+        "correct": false
+      }
+    ],
+    "explanation": "在资源充足、任务可并行的模型下，总工期受最长依赖路径约束，即关键路径给出完成时间下界。关键路径通常是最长路径而非最短；其上任务延迟会影响总工期；可能有多条等长关键路径。",
+    "id": "scheduling-006",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务分解与DAG"
+  },
+  {
+    "type": "single",
+    "question": "Agent 调度器基于 DAG 计算每个任务的“最早开始时间”。在边权表示任务持续时间的活动在边模型下，某任务的最早开始时间应如何确定？",
+    "options": [
+      {
+        "text": "等于所有前驱任务最早完成时间的最大值",
+        "correct": true
+      },
+      {
+        "text": "等于所有前驱任务最早完成时间的最小值",
+        "correct": false
+      },
+      {
+        "text": "等于该任务自身持续时间的最大值",
+        "correct": false
+      },
+      {
+        "text": "等于源点最早开始时间加上固定值",
+        "correct": false
+      }
+    ],
+    "explanation": "任务必须等所有前驱完成，因此最早开始时间取各前驱最早完成时间的最大值。取最小值会忽略部分依赖；与自身持续时间无关；固定值无法反映不同路径的依赖长度。",
+    "id": "scheduling-007",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务分解与DAG"
+  },
+  {
+    "type": "single",
+    "question": "某 Agent 项目将任务分解后，发现两个子任务之间没有依赖，但都需要写同一个共享文件。调度时应注意什么？",
+    "options": [
+      {
+        "text": "无依赖即可完全并行，无需任何约束",
+        "correct": false
+      },
+      {
+        "text": "应在 DAG 中补充互斥或资源依赖约束，避免并发写冲突",
+        "correct": true
+      },
+      {
+        "text": "把两个任务合并成一个任务即可消除风险，无需考虑其他",
+        "correct": false
+      },
+      {
+        "text": "只要两个任务都成功，写入顺序无关紧要",
+        "correct": false
+      }
+    ],
+    "explanation": "DAG 的控制/数据依赖不充分时，资源冲突需显式建模为互斥边或资源锁。直接并行会导致写覆盖或损坏；合并虽可行但可能损失并行性，不是唯一方案；写入顺序会影响最终内容。",
+    "id": "scheduling-008",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务分解与DAG"
+  },
+  {
+    "type": "single",
+    "question": "对任务 DAG 做拓扑排序时，若某一步存在多个入度为 0 的节点，调度器选择其中一个执行。这主要体现了什么？",
+    "options": [
+      {
+        "text": "DAG 一定存在环",
+        "correct": false
+      },
+      {
+        "text": "拓扑排序结果不唯一，调度存在可并行的候选集合",
+        "correct": true
+      },
+      {
+        "text": "这些节点之间存在强制先后依赖",
+        "correct": false
+      },
+      {
+        "text": "该 DAG 无法完成调度",
+        "correct": false
+      }
+    ],
+    "explanation": "多个入度为 0 节点说明当前就有多个无前置依赖任务可执行，拓扑序可有多种选择，也提示可并行调度。存在环时不会出现完整拓扑序；这些节点无边约束才能同时入度为零；仍可继续调度。",
+    "id": "scheduling-009",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务分解与DAG"
+  },
+  {
+    "type": "single",
+    "question": "在 Agent 任务分解中，将任务粒度拆得过细，可能带来的主要调度开销是？",
+    "options": [
+      {
+        "text": "依赖图规模增大，调度、通信与状态管理开销上升",
+        "correct": true
+      },
+      {
+        "text": "DAG 自动变成有环图",
+        "correct": false
+      },
+      {
+        "text": "所有任务都无法并行",
+        "correct": false
+      },
+      {
+        "text": "任务持续时间自动变为零",
+        "correct": false
+      }
+    ],
+    "explanation": "粒度过细会产生更多节点和边，增加拓扑计算、队列管理、Agent 间通信与结果汇总成本，甚至调度开销超过计算收益。粒度与是否有环无必然关系；细粒度通常更利于并行；持续时间不会因此归零。",
+    "id": "scheduling-010",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务分解与DAG"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些情形适合用 DAG 来表达 Agent 项目中的任务关系？",
+    "options": [
+      {
+        "text": "任务之间存在明确先后依赖，且依赖不会形成循环",
+        "correct": true
+      },
+      {
+        "text": "多个子任务需要并行执行并在汇合点汇总结果",
+        "correct": true
+      },
+      {
+        "text": "两个任务需要反复互相等待对方输出，形成循环依赖",
+        "correct": false
+      },
+      {
+        "text": "需要计算某任务的最早开始时间和关键路径",
+        "correct": true
+      }
+    ],
+    "explanation": "DAG 适合表达无环的先后依赖、并行分支与汇合，并支持拓扑排序、最早开始时间和关键路径计算。循环依赖违反 DAG 无环前提，应改用迭代或状态机等方式处理，不应直接建成 DAG。",
+    "id": "scheduling-011",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务分解与DAG"
+  },
+  {
+    "type": "multiple",
+    "question": "在 DAG 调度中，判断某任务是否可以进入“就绪”状态，通常需要考虑哪些条件？",
+    "options": [
+      {
+        "text": "其所有前驱任务均已完成",
+        "correct": true
+      },
+      {
+        "text": "其所需资源（如Agent、锁、配额）当前可用",
+        "correct": true
+      },
+      {
+        "text": "该任务在拓扑序中一定排第一",
+        "correct": false
+      },
+      {
+        "text": "没有未满足的额外约束，如人工审批或互斥锁",
+        "correct": true
+      }
+    ],
+    "explanation": "就绪不仅要看依赖完成，还要看资源与附加约束是否满足。拓扑序第一只是可能的初始节点之一，并非所有就绪任务的必要条件；多个无依赖任务都可就绪，因此 C 错误。",
+    "id": "scheduling-012",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务分解与DAG"
+  },
+  {
+    "type": "multiple",
+    "question": "关于 DAG 中“汇合节点”的调度，下列说法正确的有？",
+    "options": [
+      {
+        "text": "汇合节点必须等待其所有直接前驱完成",
+        "correct": true
+      },
+      {
+        "text": "汇合节点可能成为新的关键路径组成部分",
+        "correct": true
+      },
+      {
+        "text": "只要任一前驱完成，汇合节点就可读取全部所需结果",
+        "correct": false
+      },
+      {
+        "text": "若某前驱失败，汇合节点可能需要阻塞或走补偿分支",
+        "correct": true
+      }
+    ],
+    "explanation": "汇合节点有多条入边，需等全部直接前驱完成才能汇总。它位于多条路径交汇处，可能影响关键路径；任一前驱完成并不代表所需结果齐全；前驱失败会破坏输入完整性，需要阻塞或补偿。",
+    "id": "scheduling-013",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务分解与DAG"
+  },
+  {
+    "type": "multiple",
+    "question": "某 Agent 调度器发现 DAG 中存在环，下列处理思路合理的有？",
+    "options": [
+      {
+        "text": "识别环上的任务，要求设计者拆分或消除循环依赖",
+        "correct": true
+      },
+      {
+        "text": "将循环依赖改为带状态迭代的有限步骤流程，而不是直接当 DAG 调度",
+        "correct": true
+      },
+      {
+        "text": "直接对含环图做拓扑排序并照常执行",
+        "correct": false
+      },
+      {
+        "text": "通过合并强连通分量把环内任务视为一个调度单元，再处理单元间无环依赖",
+        "correct": true
+      }
+    ],
+    "explanation": "含环图不能直接拓扑排序，需消除环、改为迭代流程，或将强连通分量缩点形成新的 DAG 再调度。直接拓扑排序会失败或产生错误顺序，因此 C 不可取；A、B、D 都是常见治理思路。",
+    "id": "scheduling-014",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务分解与DAG"
+  },
+  {
+    "type": "single",
+    "question": "某 DAG 中任务 A 的持续时间为 5，B 为 3，C 为 4，依赖为 A→B、A→C、B→D、C→D，D 持续时间为 2。若从时刻 0 开始且资源充足，D 的最早完成时间是多少？",
+    "options": [
+      {
+        "text": "7",
+        "correct": false
+      },
+      {
+        "text": "9",
+        "correct": false
+      },
+      {
+        "text": "11",
+        "correct": true
+      },
+      {
+        "text": "14",
+        "correct": false
+      }
+    ],
+    "explanation": "A 在 0 到 5 执行；B 在 5 到 8，C 在 5 到 9；D 需等 B、C 都完成，最早 9 开始，持续 2，故 11 完成。7 忽略了 C 的更长分支；9 是 D 的最早开始时间；14 错误累加了路径。",
+    "id": "scheduling-015",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务分解与DAG"
+  },
+  {
+    "type": "single",
+    "question": "在 Agent 项目中，将任务分解为若干子任务并用 DAG 表示依赖关系。若子任务 v 有多个前驱，v 的开始执行条件通常是什么？",
+    "options": [
+      {
+        "text": "所有前驱均已完成",
+        "correct": true
+      },
+      {
+        "text": "任意一个前驱完成即可",
+        "correct": false
+      },
+      {
+        "text": "所有前驱均开始执行",
+        "correct": false
+      },
+      {
+        "text": "前驱中耗时最长者完成",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项是“所有前驱均已完成”。DAG 中边表示依赖，有多个前驱意味着必须等待全部前置任务结束才能保证输入齐全。误区是误以为任一前驱完成就可开始，或把“开始执行”当作完成条件。",
+    "id": "scheduling-016",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务分解与DAG"
+  },
+  {
+    "type": "single",
+    "question": "某 Agent 调度系统用 DAG 建模任务依赖，边 u→v 表示 u 完成后 v 才能开始。关于该 DAG 的拓扑序，下列说法正确的是？",
+    "options": [
+      {
+        "text": "拓扑序中每条边的起点都排在终点之前",
+        "correct": true
+      },
+      {
+        "text": "拓扑序中每条边的终点都排在起点之前",
+        "correct": false
+      },
+      {
+        "text": "拓扑序必须按任务持续时间升序排列",
+        "correct": false
+      },
+      {
+        "text": "拓扑序必须唯一才可调度",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项体现了拓扑序的定义：对每条有向边 u→v，u 在序列中位于 v 之前。拓扑序不要求按持续时间排序，也不要求唯一；不唯一的拓扑序同样可用于调度。",
+    "id": "scheduling-017",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务分解与DAG"
+  },
+  {
+    "type": "single",
+    "question": "Agent 项目分解得到子任务 A、B、C、D，依赖为 A→B、B→D、A→C、C→D。若 A 在时刻 0 开始且持续 2，B 持续 3，C 持续 4，D 持续 1，资源充足。D 的最早开始时刻是多少？",
+    "options": [
+      {
+        "text": "5",
+        "correct": false
+      },
+      {
+        "text": "6",
+        "correct": true
+      },
+      {
+        "text": "7",
+        "correct": false
+      },
+      {
+        "text": "9",
+        "correct": false
+      }
+    ],
+    "explanation": "A 在 0 开始持续 2，于 2 完成；B 于 2 开始持续 3，于 5 完成；C 于 2 开始持续 4，于 6 完成。D 需等待 B 和 C 都完成，故最早开始时刻为 max(5,6)=6。误区是只取较短路径或把持续时间相加。",
+    "id": "scheduling-018",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务分解与DAG"
+  },
+  {
+    "type": "single",
+    "question": "在任务 DAG 中，某节点的出度为 0。该节点在调度语义上通常表示什么？",
+    "options": [
+      {
+        "text": "项目的最终产出节点，无后续依赖",
+        "correct": true
+      },
+      {
+        "text": "项目的起始节点，无前置依赖",
+        "correct": false
+      },
+      {
+        "text": "必须最先执行的关键任务",
+        "correct": false
+      },
+      {
+        "text": "与其他任务完全无关的孤立任务",
+        "correct": false
+      }
+    ],
+    "explanation": "出度为 0 表示没有从该节点出发的依赖边，即没有后续任务依赖它，通常是汇点或最终产出。入度为 0 才表示无前置依赖的起始节点。误区是混淆入度和出度的调度含义。",
+    "id": "scheduling-019",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务分解与DAG"
+  },
+  {
+    "type": "single",
+    "question": "某 Agent 调度器基于 DAG 统计任务的可并行度，发现某层有 5 个入度均为 0 的节点。调度器决定将它们同时分派给不同执行单元。这一决定主要依据什么？",
+    "options": [
+      {
+        "text": "这些节点之间没有依赖，且无前置未完成任务",
+        "correct": true
+      },
+      {
+        "text": "这些节点持续时间完全相同",
+        "correct": false
+      },
+      {
+        "text": "这些节点都是关键路径上的节点",
+        "correct": false
+      },
+      {
+        "text": "这些节点的出度都为 0",
+        "correct": false
+      }
+    ],
+    "explanation": "入度为 0 且当前无未完成前驱，说明这些任务已就绪；它们之间没有直接依赖边，因此可并行。并行调度不要求持续时间相同，也不要求是关键路径或出度为 0。",
+    "id": "scheduling-020",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务分解与DAG"
+  },
+  {
+    "type": "single",
+    "question": "Agent 项目将任务分解为子任务并构建 DAG 后，在执行前发现某子任务 T 的持续时间被严重低估。这可能主要影响什么？",
+    "options": [
+      {
+        "text": "依赖 T 的后续任务的最早开始时间",
+        "correct": true
+      },
+      {
+        "text": "T 的前驱任务的拓扑序",
+        "correct": false
+      },
+      {
+        "text": "DAG 中边的方向",
+        "correct": false
+      },
+      {
+        "text": "T 的入度大小",
+        "correct": false
+      }
+    ],
+    "explanation": "T 的持续时间变化会推迟其完成时刻，从而影响所有后继任务的最早开始时间，甚至关键路径长度。它不会改变前驱关系、边方向或入度，因为这些由依赖结构决定。",
+    "id": "scheduling-021",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务分解与DAG"
+  },
+  {
+    "type": "single",
+    "question": "某 Agent 项目采用离线调度，已知各子任务持续时间和依赖 DAG，并希望在有限执行资源下尽量缩短项目总工期。下列做法最合理的是？",
+    "options": [
+      {
+        "text": "优先调度关键路径上的就绪任务",
+        "correct": true
+      },
+      {
+        "text": "优先调度持续时间最短的就绪任务",
+        "correct": false
+      },
+      {
+        "text": "优先调度出度最大的就绪任务",
+        "correct": false
+      },
+      {
+        "text": "随机选择就绪任务以保持负载均衡",
+        "correct": false
+      }
+    ],
+    "explanation": "关键路径上的任务一旦延误，更可能拉长项目总工期，因此在有限资源调度中优先调度关键路径上的就绪任务是常用启发式。按持续时间最短主要优化平均周转或等待，出度最大不一定对应关键任务，随机选择不能稳定缩短总工期。",
+    "id": "scheduling-022",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务分解与DAG"
+  },
+  {
+    "type": "single",
+    "question": "在 Agent 任务 DAG 中，节点 X 有前驱 P1、P2，且 P1 和 P2 之间没有依赖。调度器在 P1 完成后就允许 X 开始，但 X 需要 P1 和 P2 的输出。这种做法的主要问题是什么？",
+    "options": [
+      {
+        "text": "违反 DAG 依赖语义，X 可能在缺少 P2 输出时执行",
+        "correct": true
+      },
+      {
+        "text": "会使 DAG 产生环",
+        "correct": false
+      },
+      {
+        "text": "会改变 P1 的持续时间",
+        "correct": false
+      },
+      {
+        "text": "会增大 X 的入度",
+        "correct": false
+      }
+    ],
+    "explanation": "DAG 中汇合节点必须等待全部前驱完成，才能保证所需输入齐全。P1 完成即启动 X 会违反依赖语义，可能导致错误。提前执行不会动态制造环，也不会改变持续时间或入度。",
+    "id": "scheduling-023",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务分解与DAG"
+  },
+  {
+    "type": "single",
+    "question": "某 Agent 项目将原本一个子任务拆成 50 个更细粒度的子任务，且它们之间依赖关系复杂。与粗粒度分解相比，最可能增加的主要开销是什么？",
+    "options": [
+      {
+        "text": "调度、依赖管理和通信协调的开销",
+        "correct": true
+      },
+      {
+        "text": "单个子任务的计算量",
+        "correct": false
+      },
+      {
+        "text": "DAG 中边的方向数量",
+        "correct": false
+      },
+      {
+        "text": "每个子任务所需的 CPU 主频",
+        "correct": false
+      }
+    ],
+    "explanation": "粒度越细，任务数量、依赖边和状态转换越多，调度器需要更频繁地做就绪判断、分派和结果汇总，通信协调成本也上升。拆细不会增加单个子任务计算量，也不必然改变边方向或硬件主频。",
+    "id": "scheduling-024",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务分解与DAG"
+  },
+  {
+    "type": "single",
+    "question": "某 Agent 系统在调度前对任务 DAG 做检查，发现存在一条路径 A→B→C→A。该现象说明什么？",
+    "options": [
+      {
+        "text": "依赖关系存在环，不能按 DAG 语义正常调度",
+        "correct": true
+      },
+      {
+        "text": "该图是强连通的 DAG",
+        "correct": false
+      },
+      {
+        "text": "A、B、C 可以按任意顺序执行",
+        "correct": false
+      },
+      {
+        "text": "该环表示三个任务可并行",
+        "correct": false
+      }
+    ],
+    "explanation": "DAG 不允许有向环，A→B→C→A 形成循环依赖，无法确定合理的执行先后，会导致死锁或无法拓扑排序。强连通图若含环则不是 DAG；有环也不表示可任意顺序或可并行。",
+    "id": "scheduling-025",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务分解与DAG"
+  },
+  {
+    "type": "multiple",
+    "question": "在基于 DAG 的 Agent 调度中，判断某任务是否进入“就绪”状态，通常需要考虑哪些条件？",
+    "options": [
+      {
+        "text": "该任务的所有前置任务均已完成",
+        "correct": true
+      },
+      {
+        "text": "该任务尚未开始或尚未被调度",
+        "correct": true
+      },
+      {
+        "text": "该任务所需的资源当前可用",
+        "correct": false
+      },
+      {
+        "text": "该任务在拓扑序中必须排在第一位",
+        "correct": false
+      }
+    ],
+    "explanation": "就绪主要取决于依赖是否满足以及自身是否尚未执行；资源可用是能否立即分派的条件，不是就绪的必要条件。任务不必在拓扑序中排第一，只要其前驱全部完成即可就绪。",
+    "id": "scheduling-026",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务分解与DAG"
+  },
+  {
+    "type": "multiple",
+    "question": "某 Agent 调度器发现任务 DAG 中存在环。下列处理思路合理的有？",
+    "options": [
+      {
+        "text": "检查建模错误，确认是否误加了双向依赖",
+        "correct": true
+      },
+      {
+        "text": "将循环依赖拆解为有明确先后顺序的子任务或引入协调节点",
+        "correct": true
+      },
+      {
+        "text": "直接对含环图做拓扑排序并照常调度",
+        "correct": false
+      },
+      {
+        "text": "在无法消除环时报告错误并拒绝按 DAG 语义调度",
+        "correct": true
+      }
+    ],
+    "explanation": "存在环时应先排查建模错误，再通过拆解或引入协调机制消除循环；无法消除时应报告错误，不能强行拓扑排序。含环图不存在拓扑序，直接照常调度会导致依赖无法满足。",
+    "id": "scheduling-027",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务分解与DAG"
+  },
+  {
+    "type": "multiple",
+    "question": "在 Agent 项目调度中，对任务 DAG 进行拓扑排序的主要作用包括哪些？",
+    "options": [
+      {
+        "text": "给出一个满足所有依赖关系的执行顺序",
+        "correct": true
+      },
+      {
+        "text": "检测图中是否存在循环依赖",
+        "correct": true
+      },
+      {
+        "text": "保证项目总工期最短",
+        "correct": false
+      },
+      {
+        "text": "确定哪些任务在当前时刻可以进入就绪队列",
+        "correct": true
+      }
+    ],
+    "explanation": "拓扑排序可给出满足依赖的执行顺序，若无法完成排序则说明存在环；调度中还可据此识别入度为 0 的就绪任务。但拓扑排序本身不优化工期，不能保证最短总工期。",
+    "id": "scheduling-028",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务分解与DAG"
+  },
+  {
+    "type": "single",
+    "question": "Agent 调度器将原本的父任务 P 拆成子任务 P1、P2、P3，且三者无相互依赖，但都依赖父任务的前置输入 I。关于该分解对应 DAG 的结构，最准确的是？",
+    "options": [
+      {
+        "text": "I 应分别指向 P1、P2、P3，且不新增 P1、P2、P3 之间的边",
+        "correct": true
+      },
+      {
+        "text": "I 指向 P1，再依次加边 P1→P2→P3，表示拆分顺序",
+        "correct": false
+      },
+      {
+        "text": "P1、P2、P3 之间必须两两加边，否则 DAG 不连通",
+        "correct": false
+      },
+      {
+        "text": "I 只指向 P1，P2、P3 通过 P1 获得输入即可",
+        "correct": false
+      }
+    ],
+    "explanation": "无依赖的并行子任务应共享同一前置输入，即 I 分别连到 P1、P2、P3，三者间无边，这才表达可并行。若串行连边会人为制造依赖；DAG 不要求连通；P2、P3 不经过 P1 获取输入。",
+    "id": "scheduling-029",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务分解与DAG"
+  },
+  {
+    "type": "single",
+    "question": "某 Agent 项目 DAG 中，任务 X 的唯一前驱为 P，但 P 的执行结果被标记为“部分成功”，仅生成 X 所需三份输入中的两份。调度器此时对 X 最稳妥的处理是？",
+    "options": [
+      {
+        "text": "把 X 标记为阻塞，先触发补全缺失输入或让 P 重试，再重新判定就绪",
+        "correct": true
+      },
+      {
+        "text": "只要 P 已结束就立刻启动 X，缺失输入由 X 自行猜测补齐",
+        "correct": false
+      },
+      {
+        "text": "删除 X，因为部分成功等价于整条依赖路径永久不可用",
+        "correct": false
+      },
+      {
+        "text": "直接启动 X 并把 P 的部分成功结果作为完整输入传入",
+        "correct": false
+      }
+    ],
+    "explanation": "就绪条件要求所有依赖输入可用，部分成功不满足。应阻塞并补全或重试，避免在缺输入时执行。立即启动或以部分结果冒充完整输入会造成错误传播；删除任务判断过度。",
+    "id": "scheduling-030",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务分解与DAG"
+  },
+  {
+    "type": "single",
+    "question": "在 Agent 项目调度中，任务间的依赖关系最适合用哪种数据结构表示？",
+    "options": [
+      {
+        "text": "有向图",
+        "correct": true
+      },
+      {
+        "text": "无向图",
+        "correct": false
+      },
+      {
+        "text": "线性表",
+        "correct": false
+      },
+      {
+        "text": "二叉树",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项为有向图。任务依赖具有方向性，如任务A必须先于B完成，需用有向边表示。无向图无法体现方向；线性表难以表达复杂依赖；二叉树只适合层次结构，无法表示一般依赖关系。",
+    "id": "scheduling-031",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "依赖与拓扑排序"
+  },
+  {
+    "type": "single",
+    "question": "对任务依赖图进行拓扑排序，其前提是该图必须是？",
+    "options": [
+      {
+        "text": "有向无环图",
+        "correct": true
+      },
+      {
+        "text": "无向连通图",
+        "correct": false
+      },
+      {
+        "text": "有向完全图",
+        "correct": false
+      },
+      {
+        "text": "强连通图",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项为有向无环图。拓扑排序要求图中不存在环，否则无法确定线性顺序。有向完全图可能含环；无向连通图无方向性；强连通图必然含环，均不满足前提。",
+    "id": "scheduling-032",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "依赖与拓扑排序"
+  },
+  {
+    "type": "single",
+    "question": "使用 Kahn 算法进行拓扑排序时，初始入度为 0 的节点集合表示什么？",
+    "options": [
+      {
+        "text": "没有前置依赖的任务",
+        "correct": true
+      },
+      {
+        "text": "没有后续任务的任务",
+        "correct": false
+      },
+      {
+        "text": "入度最大的任务",
+        "correct": false
+      },
+      {
+        "text": "出度最大的任务",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项为没有前置依赖的任务。入度为0表示该节点没有来自其他节点的依赖边，即该任务不需要等待任何前置任务完成，可以首先调度。出度为0才表示没有后续任务。",
+    "id": "scheduling-033",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "依赖与拓扑排序"
+  },
+  {
+    "type": "single",
+    "question": "采用 DFS 后序并将节点前插到结果列表头部时，DFS 完成一个节点后应如何处理，才能直接得到拓扑序？",
+    "options": [
+      {
+        "text": "将节点插入结果列表头部",
+        "correct": true
+      },
+      {
+        "text": "将节点追加到结果列表尾部且不再反转",
+        "correct": false
+      },
+      {
+        "text": "将节点插入结果列表的随机位置",
+        "correct": false
+      },
+      {
+        "text": "按节点编号插入结果列表",
+        "correct": false
+      }
+    ],
+    "explanation": "DFS 后序保证一个节点的所有后继先被处理；完成该节点后将其前插到结果头部，可使当前节点排在已完成后继之前，从而直接得到满足依赖关系的拓扑序。若追加到尾部，通常还需要最终反转；随机插入或按编号插入会破坏依赖顺序。",
+    "id": "scheduling-034",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "依赖与拓扑排序"
+  },
+  {
+    "type": "single",
+    "question": "在一个任务依赖图中，若存在环，则对该图进行拓扑排序的结果是？",
+    "options": [
+      {
+        "text": "无法得到完整的拓扑序列",
+        "correct": true
+      },
+      {
+        "text": "得到一个部分序列",
+        "correct": false
+      },
+      {
+        "text": "仍然可以得到完整序列",
+        "correct": false
+      },
+      {
+        "text": "自动忽略环中的边",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项为无法得到完整的拓扑序列。环意味着任务间存在循环依赖，无法满足所有先后约束，因此不存在拓扑序。算法可能检测到环或输出不完整序列，但不应视为成功。",
+    "id": "scheduling-035",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "依赖与拓扑排序"
+  },
+  {
+    "type": "single",
+    "question": "某 Agent 项目有任务 A、B、C、D，依赖关系为 A→B、A→C、B→D、C→D。以下哪个是合法的拓扑排序？",
+    "options": [
+      {
+        "text": "A, B, C, D",
+        "correct": true
+      },
+      {
+        "text": "B, A, C, D",
+        "correct": false
+      },
+      {
+        "text": "A, D, B, C",
+        "correct": false
+      },
+      {
+        "text": "D, B, C, A",
+        "correct": false
+      }
+    ],
+    "explanation": "依赖关系要求 A 先于 B、C，B、C 均先于 D，因此 A 必须最先出现，D 必须最后出现，B 与 C 之间无依赖可互换。给出的合法序列为 A、B、C、D；B 先于 A 违反 A→B，D 早于 B、C 违反 B→D 和 C→D，D 最先且 A 最后也违反依赖方向。",
+    "id": "scheduling-036",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "依赖与拓扑排序"
+  },
+  {
+    "type": "single",
+    "question": "Kahn 算法初始扫描发现多个入度为 0 的节点时，标准做法是？",
+    "options": [
+      {
+        "text": "将它们全部加入队列，之后逐个取出处理",
+        "correct": true
+      },
+      {
+        "text": "只任选一个加入队列，其他暂不加入",
+        "correct": false
+      },
+      {
+        "text": "必须按节点编号顺序加入队列",
+        "correct": false
+      },
+      {
+        "text": "随机丢弃多余节点",
+        "correct": false
+      }
+    ],
+    "explanation": "所有入度为 0 的节点都已满足前置依赖，标准 Kahn 算法会把它们全部加入就绪队列，然后按任意可行顺序逐个取出处理。只加入一个会遗漏其他可调度节点，按编号不是必要约束，丢弃节点会导致结果不完整。",
+    "id": "scheduling-037",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "依赖与拓扑排序"
+  },
+  {
+    "type": "single",
+    "question": "使用 Kahn 算法进行拓扑排序，当队列为空但仍有未输出的节点时，说明什么？",
+    "options": [
+      {
+        "text": "图中存在环",
+        "correct": true
+      },
+      {
+        "text": "图不连通",
+        "correct": false
+      },
+      {
+        "text": "存在孤立节点",
+        "correct": false
+      },
+      {
+        "text": "排序已经完成",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项为图中存在环。若队列为空但输出节点数小于总节点数，说明剩余节点入度均不为0，即它们相互依赖形成环。图不连通不一定导致此现象；孤立节点入度为0会被处理；排序未完成。",
+    "id": "scheduling-038",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "依赖与拓扑排序"
+  },
+  {
+    "type": "single",
+    "question": "在 Agent 项目调度中，拓扑排序的主要作用是？",
+    "options": [
+      {
+        "text": "确定任务执行的先后顺序",
+        "correct": true
+      },
+      {
+        "text": "计算任务的最短完成时间",
+        "correct": false
+      },
+      {
+        "text": "分配任务给具体 Agent",
+        "correct": false
+      },
+      {
+        "text": "检测任务资源冲突",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项为确定任务执行的先后顺序。拓扑排序给出满足所有依赖约束的线性序列。最短完成时间需关键路径法；任务分配需调度策略；资源冲突检测需额外资源模型，均不是拓扑排序直接作用。",
+    "id": "scheduling-039",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "依赖与拓扑排序"
+  },
+  {
+    "type": "single",
+    "question": "以下哪种场景最可能产生循环依赖，从而无法拓扑排序？",
+    "options": [
+      {
+        "text": "任务 A 依赖 B，B 依赖 C，C 依赖 A",
+        "correct": true
+      },
+      {
+        "text": "任务 A 依赖 B，B 依赖 C，C 无依赖",
+        "correct": false
+      },
+      {
+        "text": "任务 A 和 B 均无依赖",
+        "correct": false
+      },
+      {
+        "text": "任务 A 依赖 B 和 C，B 和 C 无依赖",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项为 A→B→C→A，形成环。其余选项均为有向无环图：A→B→C 是链；A、B 孤立；A 依赖 B、C 是汇聚结构，均可拓扑排序。",
+    "id": "scheduling-040",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "依赖与拓扑排序"
+  },
+  {
+    "type": "single",
+    "question": "在拓扑排序中，节点的入度表示什么？",
+    "options": [
+      {
+        "text": "该节点依赖的前置任务数量",
+        "correct": true
+      },
+      {
+        "text": "依赖该节点的后续任务数量",
+        "correct": false
+      },
+      {
+        "text": "该节点的执行时间",
+        "correct": false
+      },
+      {
+        "text": "该节点的优先级",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项为该节点依赖的前置任务数量。入度是指向该节点的边数，即有多少任务必须先完成。出度才表示后续任务数量；执行时间和优先级是节点属性，与入度无关。",
+    "id": "scheduling-041",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "依赖与拓扑排序"
+  },
+  {
+    "type": "single",
+    "question": "Agent 项目调度中，若需在拓扑排序时优先处理执行时间短的任务，最适合采用哪种数据结构管理就绪任务？",
+    "options": [
+      {
+        "text": "优先队列（按执行时间排序）",
+        "correct": true
+      },
+      {
+        "text": "普通队列（先进先出）",
+        "correct": false
+      },
+      {
+        "text": "栈（后进先出）",
+        "correct": false
+      },
+      {
+        "text": "哈希表",
+        "correct": false
+      }
+    ],
+    "explanation": "优先队列能根据任务执行时间动态调整就绪任务的出队顺序，实现短任务优先的拓扑调度。普通队列和栈只能固定顺序，哈希表不维护顺序。",
+    "id": "scheduling-042",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "依赖与拓扑排序"
+  },
+  {
+    "type": "single",
+    "question": "某 Agent 项目依赖图使用邻接表存储，拓扑排序时删除一个入度为1的节点后，其直接后继节点入度减1。该操作的时间复杂度主要取决于？",
+    "options": [
+      {
+        "text": "该节点的出度",
+        "correct": true
+      },
+      {
+        "text": "该节点的入度",
+        "correct": false
+      },
+      {
+        "text": "图中节点总数",
+        "correct": false
+      },
+      {
+        "text": "图中边总数",
+        "correct": false
+      }
+    ],
+    "explanation": "删除节点时需遍历其所有出边，将后继节点入度减1，因此时间开销与出度成正比。入度不影响此操作，节点总数和边总数是整体规模。",
+    "id": "scheduling-043",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "依赖与拓扑排序"
+  },
+  {
+    "type": "single",
+    "question": "在 Agent 调度中，若任务依赖图包含多个弱连通分量，对每个分量分别拓扑排序后合并结果，能否得到全图拓扑排序？",
+    "options": [
+      {
+        "text": "能，因为分量间无依赖边",
+        "correct": true
+      },
+      {
+        "text": "不能，必须整体排序",
+        "correct": false
+      },
+      {
+        "text": "仅当分量数不超过2时能",
+        "correct": false
+      },
+      {
+        "text": "仅当每个分量都是链时能",
+        "correct": false
+      }
+    ],
+    "explanation": "弱连通分量之间没有边，任意交错合并各分量的拓扑序都不会违反依赖约束。整体排序不是必须的，分量数或结构也不影响可行性。",
+    "id": "scheduling-044",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "依赖与拓扑排序"
+  },
+  {
+    "type": "single",
+    "question": "使用 DFS 进行拓扑排序时，若在递归过程中遇到已访问但尚未完全处理（仍在递归栈中）的节点，说明什么？",
+    "options": [
+      {
+        "text": "图中存在环，无法拓扑排序",
+        "correct": true
+      },
+      {
+        "text": "图是弱连通的",
+        "correct": false
+      },
+      {
+        "text": "存在多个入度为0的节点",
+        "correct": false
+      },
+      {
+        "text": "排序结果不唯一",
+        "correct": false
+      }
+    ],
+    "explanation": "DFS中遇到递归栈内的节点表明存在后向边，即环，此时拓扑排序无解。弱连通、多入度0节点和排序不唯一均不导致此现象。",
+    "id": "scheduling-045",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "依赖与拓扑排序"
+  },
+  {
+    "type": "single",
+    "question": "某 Agent 调度器需要动态添加任务和依赖，并频繁检测有向依赖图是否出现环。以下哪种方法最适合在线增量检测？",
+    "options": [
+      {
+        "text": "维护当前拓扑序和入度；新增依赖 u→v 时检查是否已存在从 v 到 u 的路径，若存在则成环",
+        "correct": true
+      },
+      {
+        "text": "每次新增依赖后都用并查集维护无向连通性，以判断是否成环",
+        "correct": false
+      },
+      {
+        "text": "仅用哈希表记录每个节点的入度，不维护其他结构",
+        "correct": false
+      },
+      {
+        "text": "每次新增依赖后都对全图重新运行一次 DFS 拓扑排序",
+        "correct": false
+      }
+    ],
+    "explanation": "在线增量检测应在加边时判断是否形成有向环。新增依赖 u→v 时，若 v 已能到达 u，则加入后形成环；同时维护入度和拓扑序可支持后续调度。并查集只能处理无向连通性；仅记录入度不够；每次全图 DFS 虽能检测但重复开销大。",
+    "id": "scheduling-046",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "依赖与拓扑排序"
+  },
+  {
+    "type": "single",
+    "question": "在 Agent 项目调度中，拓扑排序结果不唯一的根本原因是？",
+    "options": [
+      {
+        "text": "在某一步存在至少两个入度为0的就绪节点",
+        "correct": true
+      },
+      {
+        "text": "图中存在环",
+        "correct": false
+      },
+      {
+        "text": "图是弱连通的",
+        "correct": false
+      },
+      {
+        "text": "图中只有一个入度为0的节点",
+        "correct": false
+      }
+    ],
+    "explanation": "拓扑序不唯一当且仅当算法执行过程中某一步有多个入度为0的节点可选。初始只有一个入度0节点并不排除后续出现多解；环导致无解；弱连通和节点编号不影响唯一性。",
+    "id": "scheduling-047",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "依赖与拓扑排序"
+  },
+  {
+    "type": "single",
+    "question": "在 Agent 调度中，若任务依赖图有 n 个节点和 m 条边，使用 Kahn 算法拓扑排序，队列操作总次数约为？",
+    "options": [
+      {
+        "text": "n 次入队和 n 次出队",
+        "correct": true
+      },
+      {
+        "text": "m 次入队和 m 次出队",
+        "correct": false
+      },
+      {
+        "text": "n+m 次入队和 n+m 次出队",
+        "correct": false
+      },
+      {
+        "text": "n^2 次入队和 n^2 次出队",
+        "correct": false
+      }
+    ],
+    "explanation": "每个节点入队一次、出队一次，总操作2n次。边只影响出队时对后继入度的更新，不直接导致入队出队次数变化。",
+    "id": "scheduling-048",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "依赖与拓扑排序"
+  },
+  {
+    "type": "single",
+    "question": "某 Agent 项目任务依赖图用邻接矩阵存储，拓扑排序时查找入度为0的节点，最坏时间复杂度为？",
+    "options": [
+      {
+        "text": "O(V^2)",
+        "correct": true
+      },
+      {
+        "text": "O(V+E)",
+        "correct": false
+      },
+      {
+        "text": "O(E log V)",
+        "correct": false
+      },
+      {
+        "text": "O(V)",
+        "correct": false
+      }
+    ],
+    "explanation": "邻接矩阵下，每次寻找入度为0的节点需扫描矩阵一行或一列，最坏O(V)，总共O(V^2)。邻接表下用队列可达O(V+E)。",
+    "id": "scheduling-049",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "依赖与拓扑排序"
+  },
+  {
+    "type": "single",
+    "question": "在 Agent 调度中，若任务依赖图存在环，但业务允许打破环（如降级依赖），拓扑排序前应优先？",
+    "options": [
+      {
+        "text": "识别环中节点并移除部分依赖边",
+        "correct": true
+      },
+      {
+        "text": "直接运行 Kahn 算法输出部分节点",
+        "correct": false
+      },
+      {
+        "text": "将图转为无向图再排序",
+        "correct": false
+      },
+      {
+        "text": "随机打乱节点顺序后排序",
+        "correct": false
+      }
+    ],
+    "explanation": "存在环时拓扑排序无解，需先打破环，如移除或降级某些依赖边。直接运行只能输出部分节点，转无向图或随机打乱不能解决依赖约束。",
+    "id": "scheduling-050",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "依赖与拓扑排序"
+  },
+  {
+    "type": "single",
+    "question": "某 Agent 项目依赖图有 6 个节点，拓扑排序结果为 [1,2,3,4,5,6]，若交换节点2和节点3后仍为合法拓扑序，则说明？",
+    "options": [
+      {
+        "text": "节点2和3之间无直接或间接依赖",
+        "correct": true
+      },
+      {
+        "text": "节点2和3入度均为0",
+        "correct": false
+      },
+      {
+        "text": "图中存在环",
+        "correct": false
+      },
+      {
+        "text": "节点2和3出度均为0",
+        "correct": false
+      }
+    ],
+    "explanation": "交换后仍合法，说明2和3之间没有路径约束，即无直接或间接依赖。入度或出度为0不是必要条件，环则无拓扑序。",
+    "id": "scheduling-051",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "依赖与拓扑排序"
+  },
+  {
+    "type": "single",
+    "question": "在 Agent 项目调度中，用邻接表存储任务依赖图。拓扑排序过程中需要反复查找当前入度为 0 的任务。若额外维护一个就绪任务集合，则每次取出就绪任务的平均时间复杂度为？",
+    "options": [
+      {
+        "text": "O(1)",
+        "correct": true
+      },
+      {
+        "text": "O(n)",
+        "correct": false
+      },
+      {
+        "text": "O(m)",
+        "correct": false
+      },
+      {
+        "text": "O(n+m)",
+        "correct": false
+      }
+    ],
+    "explanation": "Kahn 算法用队列或栈保存入度为 0 的节点，取出操作平均 O(1)。若每次都重新扫描所有节点找入度 0，才是 O(n)。维护就绪集合是关键优化。",
+    "id": "scheduling-052",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "依赖与拓扑排序"
+  },
+  {
+    "type": "single",
+    "question": "某 Agent 项目的依赖图有 4 个任务：P 依赖 Q，Q 依赖 R，S 无依赖。以下哪个拓扑排序结果合法？",
+    "options": [
+      {
+        "text": "S, R, Q, P",
+        "correct": true
+      },
+      {
+        "text": "R, P, Q, S",
+        "correct": false
+      },
+      {
+        "text": "P, Q, R, S",
+        "correct": false
+      },
+      {
+        "text": "S, P, Q, R",
+        "correct": false
+      }
+    ],
+    "explanation": "合法拓扑序必须满足所有依赖边方向：R 在 Q 前，Q 在 P 前，S 无约束可任意。只有 S,R,Q,P 同时满足 R→Q→P。其余选项均把后继排在了前驱之前。",
+    "id": "scheduling-053",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "依赖与拓扑排序"
+  },
+  {
+    "type": "single",
+    "question": "在 Agent 调度中，使用 DFS 进行拓扑排序。若从节点 u 出发递归访问时遇到一个已访问但尚未完成（仍在递归栈中）的节点 v，此时应如何处理？",
+    "options": [
+      {
+        "text": "立即判定图中存在环，拓扑排序失败",
+        "correct": true
+      },
+      {
+        "text": "忽略 v，继续递归其他邻居",
+        "correct": false
+      },
+      {
+        "text": "将 v 加入结果列表后继续",
+        "correct": false
+      },
+      {
+        "text": "交换 u 和 v 的访问顺序后重试",
+        "correct": false
+      }
+    ],
+    "explanation": "DFS 中遇到递归栈内的节点说明存在后向边，即环。拓扑排序要求有向无环图，因此应立即报告失败。忽略或继续都会得到错误结果。",
+    "id": "scheduling-054",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "依赖与拓扑排序"
+  },
+  {
+    "type": "single",
+    "question": "某 Agent 项目依赖图有 5 个任务和 6 条依赖边，使用 Kahn 算法拓扑排序。若最终输出节点数为 4，则说明？",
+    "options": [
+      {
+        "text": "图中存在环，且环上节点未被输出",
+        "correct": true
+      },
+      {
+        "text": "图中存在孤立节点，不影响拓扑排序",
+        "correct": false
+      },
+      {
+        "text": "入度计算错误，但排序结果仍合法",
+        "correct": false
+      },
+      {
+        "text": "队列容量不足，需增大队列",
+        "correct": false
+      }
+    ],
+    "explanation": "Kahn 算法输出节点数小于总节点数，说明剩余节点入度始终不为 0，即存在环。孤立节点入度为 0 会被正常输出。队列不会因容量不足而漏输出。",
+    "id": "scheduling-055",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "依赖与拓扑排序"
+  },
+  {
+    "type": "single",
+    "question": "在 Agent 项目调度中，需要按拓扑序执行任务，同时要求同一时刻优先执行预计耗时短的就绪任务。最合适的管理就绪任务的数据结构是？",
+    "options": [
+      {
+        "text": "最小堆，以预计耗时为键",
+        "correct": true
+      },
+      {
+        "text": "普通队列，按发现顺序",
+        "correct": false
+      },
+      {
+        "text": "栈，按后进先出",
+        "correct": false
+      },
+      {
+        "text": "哈希表，按任务编号",
+        "correct": false
+      }
+    ],
+    "explanation": "需要在就绪集合中动态取出耗时最小者，最小堆的插入和取最小均为 O(log n)。队列和栈无法按耗时优先，哈希表不提供有序取出。",
+    "id": "scheduling-056",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "依赖与拓扑排序"
+  },
+  {
+    "type": "single",
+    "question": "某 Agent 项目依赖图中，任务 A 依赖 B，B 依赖 C，C 依赖 A，同时 D 无依赖。对该图运行 Kahn 算法，初始入度为 0 的节点是？",
+    "options": [
+      {
+        "text": "仅 D",
+        "correct": true
+      },
+      {
+        "text": "A 和 D",
+        "correct": false
+      },
+      {
+        "text": "A、B、C",
+        "correct": false
+      },
+      {
+        "text": "所有节点",
+        "correct": false
+      }
+    ],
+    "explanation": "A、B、C 构成环，每个节点入度均为 1，没有入度为 0 的节点。D 无依赖，入度为 0。因此初始就绪集合只有 D，随后算法终止并报告存在环。",
+    "id": "scheduling-057",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "依赖与拓扑排序"
+  },
+  {
+    "type": "single",
+    "question": "某 Agent 调度器在拓扑排序后得到顺序 [T1, T2, T3, T4]。若将 T2 与 T3 交换后仍为合法拓扑序，则最可能说明？",
+    "options": [
+      {
+        "text": "T2 与 T3 之间没有依赖路径",
+        "correct": true
+      },
+      {
+        "text": "T2 与 T3 之间存在直接依赖",
+        "correct": false
+      },
+      {
+        "text": "图中存在环但被忽略",
+        "correct": false
+      },
+      {
+        "text": "拓扑排序算法一定出错",
+        "correct": false
+      }
+    ],
+    "explanation": "若两节点可交换且仍合法，则它们之间不能有依赖路径，否则交换会破坏先后约束。直接依赖或间接路径都会导致交换后非法。存在环则根本无法拓扑排序。",
+    "id": "scheduling-058",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "依赖与拓扑排序"
+  },
+  {
+    "type": "multiple",
+    "question": "在 Agent 项目调度中，关于拓扑排序与依赖图，以下说法正确的有？",
+    "options": [
+      {
+        "text": "拓扑排序结果不唯一时，说明图中存在多个入度为 0 的节点或就绪选择不唯一",
+        "correct": true
+      },
+      {
+        "text": "若图中存在环，则不存在任何拓扑排序",
+        "correct": true
+      },
+      {
+        "text": "拓扑排序要求图中每条有向边从序列中较早的节点指向较晚的节点",
+        "correct": true
+      },
+      {
+        "text": "拓扑排序结果唯一当且仅当图中每个节点入度均为 1",
+        "correct": false
+      }
+    ],
+    "explanation": "拓扑序不唯一常因多个就绪节点可选；有环则无拓扑序；边方向要求前驱在前。D 错误：入度均为 1 不可能含入度 0 的起点，且唯一性与入度全为 1 无此等价关系。",
+    "id": "scheduling-059",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "依赖与拓扑排序"
+  },
+  {
+    "type": "multiple",
+    "question": "某 Agent 调度器使用 Kahn 算法，并需在运行中动态加入新任务及依赖。以下做法或判断正确的有？",
+    "options": [
+      {
+        "text": "新增依赖边 u→v 后，若 v 原入度为0，则需将 v 移出就绪集合",
+        "correct": true
+      },
+      {
+        "text": "处理节点出队并删除其出边时，若某个后继入度减为0，应将其加入就绪集合",
+        "correct": true
+      },
+      {
+        "text": "若新增边导致环，则最终输出节点数会小于当前总节点数",
+        "correct": true
+      },
+      {
+        "text": "动态加边后必须从头重新拓扑排序才能保证正确",
+        "correct": false
+      }
+    ],
+    "explanation": "动态维护入度是关键：新增依赖边会增大目标节点入度，原本就绪的目标节点要移出集合；处理节点出队并删除出边时，后继入度可能减为0，应加入就绪集合。若新增边成环，Kahn 最终输出节点数会少于当前总节点数。增量更新入度和就绪集合即可，不必每次全量重排。",
+    "id": "scheduling-060",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "依赖与拓扑排序"
+  },
+  {
+    "type": "single",
+    "question": "在基于线程池的Agent任务调度器中，当所有工作线程均处于忙碌状态且任务队列已满时，若采用AbortPolicy拒绝策略，新提交的任务会怎样？",
+    "options": [
+      {
+        "text": "任务被放入队列，等待线程空闲",
+        "correct": false
+      },
+      {
+        "text": "任务被静默丢弃，不通知提交者",
+        "correct": false
+      },
+      {
+        "text": "抛出RejectedExecutionException异常",
+        "correct": true
+      },
+      {
+        "text": "提交者线程自己执行该任务",
+        "correct": false
+      }
+    ],
+    "explanation": "AbortPolicy是默认拒绝策略，队列满时直接抛出RejectedExecutionException。静默丢弃对应DiscardPolicy，提交者执行对应CallerRunsPolicy。",
+    "id": "scheduling-061",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "并发与资源限制"
+  },
+  {
+    "type": "single",
+    "question": "某Agent调度系统使用信号量限制同时访问共享知识库的并发数。若信号量许可数为5，当前已有3个线程持有许可，此时又有4个线程尝试获取许可，最终会有几个线程进入阻塞等待？",
+    "options": [
+      {
+        "text": "1",
+        "correct": false
+      },
+      {
+        "text": "2",
+        "correct": true
+      },
+      {
+        "text": "3",
+        "correct": false
+      },
+      {
+        "text": "4",
+        "correct": false
+      }
+    ],
+    "explanation": "剩余许可2个，4个线程中2个可立即获取，另外2个进入阻塞等待。注意不是按持有数直接计算。",
+    "id": "scheduling-062",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "并发与资源限制"
+  },
+  {
+    "type": "single",
+    "question": "在Python 3的asyncio中，若一个协程内部执行了阻塞式I/O（如time.sleep(5)），会对事件循环产生什么影响？",
+    "options": [
+      {
+        "text": "事件循环自动将该协程切换到后台线程",
+        "correct": false
+      },
+      {
+        "text": "事件循环会并行执行其他协程，不受影响",
+        "correct": false
+      },
+      {
+        "text": "事件循环被阻塞，其他协程无法运行",
+        "correct": true
+      },
+      {
+        "text": "事件循环抛出RuntimeError并终止",
+        "correct": false
+      }
+    ],
+    "explanation": "阻塞式I/O会独占事件循环线程，导致其他协程无法调度。应使用asyncio.sleep或run_in_executor。",
+    "id": "scheduling-063",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "并发与资源限制"
+  },
+  {
+    "type": "single",
+    "question": "Agent调度器使用固定大小线程池。若任务平均到达率为20个/秒，每个任务平均处理时间为100毫秒，系统至少要配置多少个工作线程才能使平均到达率不超过服务率（忽略排队）？",
+    "options": [
+      {
+        "text": "1",
+        "correct": false
+      },
+      {
+        "text": "2",
+        "correct": true
+      },
+      {
+        "text": "3",
+        "correct": false
+      },
+      {
+        "text": "4",
+        "correct": false
+      }
+    ],
+    "explanation": "单线程服务率为1/0.1=10个/秒，到达率20个/秒，至少需要2个线程。这是吞吐量匹配的基本计算。",
+    "id": "scheduling-064",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "并发与资源限制"
+  },
+  {
+    "type": "single",
+    "question": "以下哪种并发控制机制最适合保护Agent调度器中一个被频繁读取、偶尔更新的配置对象，且读性能要求高？",
+    "options": [
+      {
+        "text": "互斥锁（Mutex）",
+        "correct": false
+      },
+      {
+        "text": "读写锁（ReadWriteLock）",
+        "correct": true
+      },
+      {
+        "text": "信号量（Semaphore）",
+        "correct": false
+      },
+      {
+        "text": "条件变量（Condition）",
+        "correct": false
+      }
+    ],
+    "explanation": "读写锁允许多个读并发，写独占，适合读多写少场景。互斥锁读也互斥，信号量用于限流，条件变量用于等待通知。",
+    "id": "scheduling-065",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "并发与资源限制"
+  },
+  {
+    "type": "single",
+    "question": "在Agent分布式调度中，使用令牌桶算法进行限流。若桶容量为10，令牌生成速率为2个/秒，当前桶中有5个令牌。经过3秒后，桶中令牌数最多为多少？",
+    "options": [
+      {
+        "text": "5",
+        "correct": false
+      },
+      {
+        "text": "8",
+        "correct": false
+      },
+      {
+        "text": "10",
+        "correct": true
+      },
+      {
+        "text": "11",
+        "correct": false
+      }
+    ],
+    "explanation": "3秒生成6个令牌，5+6=11，但桶容量为10，因此最多10个。令牌桶不会超过容量。",
+    "id": "scheduling-066",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "并发与资源限制"
+  },
+  {
+    "type": "single",
+    "question": "Agent调度器采用工作窃取（Work-Stealing）线程池。以下描述正确的是？",
+    "options": [
+      {
+        "text": "所有线程共享一个全局任务队列",
+        "correct": false
+      },
+      {
+        "text": "空闲线程从其他线程的本地队列尾部窃取任务",
+        "correct": true
+      },
+      {
+        "text": "任务必须严格按提交顺序执行",
+        "correct": false
+      },
+      {
+        "text": "窃取任务时不需要任何同步开销",
+        "correct": false
+      }
+    ],
+    "explanation": "工作窃取中每个线程有本地双端队列，空闲线程从其他队列尾部窃取，减少竞争。共享全局队列是传统线程池。",
+    "id": "scheduling-067",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "并发与资源限制"
+  },
+  {
+    "type": "single",
+    "question": "在Agent任务调度中，若多个任务需要按依赖顺序执行，且允许并行执行无依赖任务，最适合使用哪种并发模型？",
+    "options": [
+      {
+        "text": "单个全局锁串行执行所有任务",
+        "correct": false
+      },
+      {
+        "text": "基于有向无环图（DAG）的任务调度",
+        "correct": true
+      },
+      {
+        "text": "固定大小线程池加FIFO队列",
+        "correct": false
+      },
+      {
+        "text": "轮询调度（Round-Robin）",
+        "correct": false
+      }
+    ],
+    "explanation": "DAG可以表达任务依赖，并并行执行无依赖分支。FIFO队列无法表达依赖，全局锁牺牲并行性。",
+    "id": "scheduling-068",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "并发与资源限制"
+  },
+  {
+    "type": "single",
+    "question": "在 Python 3.8 及以后版本中，假设 os.cpu_count() 返回有效的 CPU 核心数，concurrent.futures.ThreadPoolExecutor 的 max_workers 参数默认值是什么？",
+    "options": [
+      {
+        "text": "1",
+        "correct": false
+      },
+      {
+        "text": "CPU 核心数",
+        "correct": false
+      },
+      {
+        "text": "min(32, os.cpu_count() + 4)",
+        "correct": true
+      },
+      {
+        "text": "固定为 10",
+        "correct": false
+      }
+    ],
+    "explanation": "Python 3.8 起 ThreadPoolExecutor 默认 max_workers 为 min(32, os.cpu_count() + 4)；更早的 Python 3 版本默认值不同，因此本题限定 3.8 及以后。该默认值适合 I/O 密集型任务，并不等同于 CPU 核心数。",
+    "id": "scheduling-069",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "并发与资源限制"
+  },
+  {
+    "type": "single",
+    "question": "在Agent资源调度中，若使用乐观并发控制（如版本号），当多个Agent同时更新同一资源时，冲突检测发生在哪个阶段？",
+    "options": [
+      {
+        "text": "读取阶段",
+        "correct": false
+      },
+      {
+        "text": "提交阶段",
+        "correct": true
+      },
+      {
+        "text": "加锁阶段",
+        "correct": false
+      },
+      {
+        "text": "回滚阶段",
+        "correct": false
+      }
+    ],
+    "explanation": "乐观并发控制在提交时检查版本号是否变化，若冲突则失败重试。读取阶段不加锁。",
+    "id": "scheduling-070",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "并发与资源限制"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些是 Agent 调度器中限制并发数量的有效方法？",
+    "options": [
+      {
+        "text": "使用信号量（Semaphore）控制许可数",
+        "correct": true
+      },
+      {
+        "text": "使用固定大小的线程池",
+        "correct": true
+      },
+      {
+        "text": "使用无界队列缓存所有任务",
+        "correct": false
+      },
+      {
+        "text": "使用令牌桶算法进行限流",
+        "correct": false
+      }
+    ],
+    "explanation": "信号量通过许可数量直接限制同时进入临界区的任务数；固定大小线程池通过工作线程上限限制同时执行的任务数。无界队列只缓存任务，不限制并发，可能造成积压；令牌桶限制单位时间内的提交或处理速率，属于速率限流，不直接限制同时在途任务数量。",
+    "id": "scheduling-071",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "并发与资源限制"
+  },
+  {
+    "type": "multiple",
+    "question": "在Python 3的asyncio中，以下哪些做法可以避免事件循环被阻塞？",
+    "options": [
+      {
+        "text": "使用asyncio.sleep代替time.sleep",
+        "correct": true
+      },
+      {
+        "text": "使用loop.run_in_executor执行阻塞调用",
+        "correct": true
+      },
+      {
+        "text": "在协程中直接调用requests.get",
+        "correct": false
+      },
+      {
+        "text": "使用await调用异步库（如aiohttp）",
+        "correct": true
+      }
+    ],
+    "explanation": "直接调用同步阻塞函数（如requests.get）会阻塞事件循环；应使用异步库或线程池执行。",
+    "id": "scheduling-072",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "并发与资源限制"
+  },
+  {
+    "type": "multiple",
+    "question": "关于Agent调度中的死锁，以下说法正确的是？",
+    "options": [
+      {
+        "text": "死锁的必要条件包括互斥、持有并等待、不可剥夺和循环等待",
+        "correct": true
+      },
+      {
+        "text": "按固定顺序获取锁可以预防循环等待",
+        "correct": true
+      },
+      {
+        "text": "设置锁超时时间可以完全避免死锁",
+        "correct": false
+      },
+      {
+        "text": "资源分配图存在环一定导致死锁",
+        "correct": false
+      }
+    ],
+    "explanation": "死锁四个必要条件；固定顺序加锁破坏循环等待。超时只能避免无限等待，不能完全避免死锁；资源分配图有环且每类资源单实例才一定死锁。",
+    "id": "scheduling-073",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "并发与资源限制"
+  },
+  {
+    "type": "multiple",
+    "question": "在Agent任务调度器中，使用线程池时，以下哪些策略可以防止任务队列无限增长导致内存溢出？",
+    "options": [
+      {
+        "text": "使用有界队列并设置合理的拒绝策略",
+        "correct": true
+      },
+      {
+        "text": "动态调整线程池大小以加快消费",
+        "correct": true
+      },
+      {
+        "text": "使用无界队列并增加线程数",
+        "correct": false
+      },
+      {
+        "text": "对提交任务进行限流或背压（Backpressure）",
+        "correct": true
+      }
+    ],
+    "explanation": "无界队列无法防止内存溢出；有界队列、动态扩容和背压机制可控制队列增长。",
+    "id": "scheduling-074",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "并发与资源限制"
+  },
+  {
+    "type": "multiple",
+    "question": "在分布式Agent调度中，用于实现分布式互斥的常见机制有哪些？",
+    "options": [
+      {
+        "text": "基于Redis的SETNX命令",
+        "correct": true
+      },
+      {
+        "text": "ZooKeeper临时顺序节点",
+        "correct": true
+      },
+      {
+        "text": "本地线程锁（threading.Lock）",
+        "correct": false
+      },
+      {
+        "text": "数据库行锁或唯一约束",
+        "correct": true
+      }
+    ],
+    "explanation": "Redis SETNX、ZooKeeper节点和数据库锁均可用于分布式互斥；本地线程锁仅限单进程。",
+    "id": "scheduling-075",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "并发与资源限制"
+  },
+  {
+    "type": "single",
+    "question": "Agent 调度器使用固定线程池，核心线程数 4，最大线程数 8，任务队列容量 10。当线程池中已有 8 个线程忙碌，队列已满，此时再提交任务，若拒绝策略为 CallerRunsPolicy，会发生什么？",
+    "options": [
+      {
+        "text": "新任务被丢弃并抛出异常",
+        "correct": false
+      },
+      {
+        "text": "新任务由提交任务的线程直接执行",
+        "correct": true
+      },
+      {
+        "text": "新任务被放入队列头部等待",
+        "correct": false
+      },
+      {
+        "text": "线程池扩容到 9 个线程执行新任务",
+        "correct": false
+      }
+    ],
+    "explanation": "CallerRunsPolicy 在饱和时让提交任务的线程直接运行该任务，从而减缓提交速度；不丢弃、不扩容、不插队。常见误区是认为总由工作线程执行。",
+    "id": "scheduling-076",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "并发与资源限制"
+  },
+  {
+    "type": "single",
+    "question": "某 Agent 调度系统用 Semaphore(4) 控制对某外部 API 的并发访问。当前已有 2 个线程持有许可，随后线程 A 和 B 依次调用 acquire()，但都未调用 release()。此时信号量内部计数值为多少？",
+    "options": [
+      {
+        "text": "0",
+        "correct": true
+      },
+      {
+        "text": "2",
+        "correct": false
+      },
+      {
+        "text": "-2",
+        "correct": false
+      },
+      {
+        "text": "4",
+        "correct": false
+      }
+    ],
+    "explanation": "初始许可 4，两个线程已占用，剩余 2；A、B 再获取后计数值降为 0。Python 的 Semaphore 不会变成负数，等待线程在内部条件变量上阻塞。误区是以为会记录负数。",
+    "id": "scheduling-077",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "并发与资源限制"
+  },
+  {
+    "type": "single",
+    "question": "在 Python 3 的 asyncio 事件循环中，某协程调用了 loop.run_in_executor() 将 CPU 密集任务交给默认线程池执行，并 await 其返回。关于事件循环状态，下列描述正确的是？",
+    "options": [
+      {
+        "text": "事件循环会阻塞直到线程池任务完成",
+        "correct": false
+      },
+      {
+        "text": "事件循环可继续调度其他协程，等待结果时挂起当前协程",
+        "correct": true
+      },
+      {
+        "text": "默认线程池会强制串行执行所有任务",
+        "correct": false
+      },
+      {
+        "text": "run_in_executor 会抛出异常，因为不能在事件循环中调用",
+        "correct": false
+      }
+    ],
+    "explanation": "run_in_executor 把任务交给线程池，返回可等待的 Future；await 时当前协程挂起，事件循环继续运行其他协程。误区是以为等待会阻塞整个循环。",
+    "id": "scheduling-078",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "并发与资源限制"
+  },
+  {
+    "type": "single",
+    "question": "Agent 调度器的线程池使用有界队列，队列容量为 100，核心线程 10，最大线程 20。当活跃线程 15 个、队列中有 80 个任务时，再提交一个任务，且线程数未达最大，调度器一般会如何处理？",
+    "options": [
+      {
+        "text": "直接放入队列，因为队列未满",
+        "correct": true
+      },
+      {
+        "text": "立即创建新线程执行",
+        "correct": false
+      },
+      {
+        "text": "触发拒绝策略",
+        "correct": false
+      },
+      {
+        "text": "阻塞提交线程直到队列有空位",
+        "correct": false
+      }
+    ],
+    "explanation": "Java ThreadPoolExecutor 等常见实现中，核心线程满后先入队，队列满后才扩容到最大线程数。本题队列未满，故入队。误区是以为活跃线程未达最大就立即建线程。",
+    "id": "scheduling-079",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "并发与资源限制"
+  },
+  {
+    "type": "single",
+    "question": "Agent 调度器需要限制对数据库连接池的并发使用，初始许可为 10，且希望在获取不到许可时最多等待 2 秒，超时则放弃。下列哪种方式最直接？",
+    "options": [
+      {
+        "text": "使用 Semaphore(10)，acquire() 不带超时",
+        "correct": false
+      },
+      {
+        "text": "使用 BoundedSemaphore(10)，acquire(timeout=2)",
+        "correct": true
+      },
+      {
+        "text": "使用 Lock()，acquire(timeout=2)",
+        "correct": false
+      },
+      {
+        "text": "使用 Event()，wait(timeout=2)",
+        "correct": false
+      }
+    ],
+    "explanation": "Semaphore/BoundedSemaphore 支持 acquire(timeout)，可限制并发数并设置等待上限。Lock 只允许一个持有者；Event 不计数。BoundedSemaphore 还能防止 release 超过初始值。",
+    "id": "scheduling-080",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "并发与资源限制"
+  },
+  {
+    "type": "single",
+    "question": "Agent 调度器采用令牌桶限流，桶容量 8，令牌生成速率 4 个/秒，当前桶中有 6 个令牌。经过 0.5 秒后，桶中令牌数量为多少（假设期间无请求消耗）？",
+    "options": [
+      {
+        "text": "6",
+        "correct": false
+      },
+      {
+        "text": "8",
+        "correct": true
+      },
+      {
+        "text": "10",
+        "correct": false
+      },
+      {
+        "text": "4",
+        "correct": false
+      }
+    ],
+    "explanation": "0.5 秒生成 2 个令牌，6+2=8，恰好等于桶容量，不会溢出。若计算为 10 则忽略了容量上限。令牌桶允许突发至容量，但不会超过容量。",
+    "id": "scheduling-081",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "并发与资源限制"
+  },
+  {
+    "type": "single",
+    "question": "在 Agent 调度器中，多个任务依赖同一资源，使用版本号实现乐观并发控制。当 Agent A 读取资源版本 v1 并修改，提交更新时发现当前版本已变为 v2。此时正确的处理是？",
+    "options": [
+      {
+        "text": "直接覆盖为 A 的修改，忽略版本冲突",
+        "correct": false
+      },
+      {
+        "text": "拒绝本次更新，由 A 重试或按冲突策略处理",
+        "correct": true
+      },
+      {
+        "text": "将版本号改为 v3 并继续提交",
+        "correct": false
+      },
+      {
+        "text": "回滚整个调度器的所有任务",
+        "correct": false
+      }
+    ],
+    "explanation": "乐观并发控制在提交时校验版本，不一致则拒绝更新，调用方重试或走冲突解决。直接覆盖会丢失更新；改版本号不解决冲突。误区是以为冲突在读取时检测。",
+    "id": "scheduling-082",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "并发与资源限制"
+  },
+  {
+    "type": "single",
+    "question": "在 Python 3.8 及以后版本中，concurrent.futures.ThreadPoolExecutor 在未指定 max_workers 时，其默认值规则是？",
+    "options": [
+      {
+        "text": "固定为 4",
+        "correct": false
+      },
+      {
+        "text": "固定为 CPU 核数",
+        "correct": false
+      },
+      {
+        "text": "min(32, (os.cpu_count() or 1) + 4)",
+        "correct": true
+      },
+      {
+        "text": "与任务队列容量相同",
+        "correct": false
+      }
+    ],
+    "explanation": "Python 3.8 起 ThreadPoolExecutor 的默认 max_workers 为 min(32, (os.cpu_count() or 1) + 4)，其中 os.cpu_count() 可能返回 None，因此需回退到 1。把默认值理解为 CPU 核数对应的是 ProcessPoolExecutor 的常见默认行为，不是该线程池的规则。",
+    "id": "scheduling-083",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "并发与资源限制"
+  },
+  {
+    "type": "single",
+    "question": "Agent 调度器使用工作窃取线程池，工作线程拥有本地双端队列；拥有者通常从本地队列尾部取任务。当一个线程空闲时，它通常从其他线程本地队列的哪一端窃取任务？",
+    "options": [
+      {
+        "text": "从其他线程本地队列的头部窃取",
+        "correct": true
+      },
+      {
+        "text": "从其他线程本地队列的尾部窃取",
+        "correct": false
+      },
+      {
+        "text": "从全局队列的头部窃取",
+        "correct": false
+      },
+      {
+        "text": "随机选择队列中间位置窃取",
+        "correct": false
+      }
+    ],
+    "explanation": "工作窃取让拥有者在一端操作自己的任务，空闲线程从另一端窃取，以降低竞争。若拥有者从本地队列尾部取任务，窃取者通常从头部取最旧的任务；若实现约定不同，窃取端也与拥有者操作端相反。全局队列不是工作窃取的核心结构，队列中间也不是常规窃取位置。",
+    "id": "scheduling-084",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "并发与资源限制"
+  },
+  {
+    "type": "single",
+    "question": "Agent 调度器需要让若干无依赖任务并行执行，并在全部完成后汇总结果；若有任务失败则整体失败。下列哪种并发原语最合适？",
+    "options": [
+      {
+        "text": "CountDownLatch 等待计数归零",
+        "correct": false
+      },
+      {
+        "text": "CyclicBarrier 让线程相互等待",
+        "correct": false
+      },
+      {
+        "text": "Future 列表配合 all_of 等待全部完成",
+        "correct": true
+      },
+      {
+        "text": "Semaphore 限制并发数为 1",
+        "correct": false
+      }
+    ],
+    "explanation": "提交多个任务得到 Future 列表，等待全部完成并检查异常，可自然汇总结果和失败。CountDownLatch 只计数不携带结果；CyclicBarrier 用于阶段同步；Semaphore 限流不负责汇总。",
+    "id": "scheduling-085",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "并发与资源限制"
+  },
+  {
+    "type": "single",
+    "question": "Agent 调度器采用固定线程池处理任务，任务内部可能再次向同一线程池提交子任务并等待其结果。在池满且队列有界时，最可能引发什么问题？",
+    "options": [
+      {
+        "text": "线程饥饿死锁",
+        "correct": true
+      },
+      {
+        "text": "内存泄漏",
+        "correct": false
+      },
+      {
+        "text": "活锁",
+        "correct": false
+      },
+      {
+        "text": "优先级反转",
+        "correct": false
+      }
+    ],
+    "explanation": "父任务占用工作线程并等待子任务，而子任务需同一池的空闲线程才能执行；池满时无空闲线程，父子互相等待形成线程饥饿死锁。内存泄漏、活锁、优先级反转不是此场景的典型结果。",
+    "id": "scheduling-086",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "并发与资源限制"
+  },
+  {
+    "type": "single",
+    "question": "某 Agent 调度器用信号量限制并发访问共享缓存，许可数 3。三个线程已各持有一个许可并运行，此时第四个线程调用 acquire() 会怎样？",
+    "options": [
+      {
+        "text": "立即获得许可并运行",
+        "correct": false
+      },
+      {
+        "text": "阻塞等待，直到有线程 release()",
+        "correct": true
+      },
+      {
+        "text": "抛出异常并终止",
+        "correct": false
+      },
+      {
+        "text": "自动将许可数扩容为 4",
+        "correct": false
+      }
+    ],
+    "explanation": "信号量许可耗尽后，后续 acquire 会阻塞直到有持有者 release。不会自动扩容，也不会默认抛异常。误区是以为 acquire 会无限成功或直接失败。",
+    "id": "scheduling-087",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "并发与资源限制"
+  },
+  {
+    "type": "single",
+    "question": "在 Agent 分布式调度中，多个节点需协调对共享资源的访问。下列哪项最适合实现跨节点的互斥？",
+    "options": [
+      {
+        "text": "单机 threading.Lock",
+        "correct": false
+      },
+      {
+        "text": "基于租约的分布式锁（如带过期时间）",
+        "correct": true
+      },
+      {
+        "text": "单机 asyncio.Lock",
+        "correct": false
+      },
+      {
+        "text": "进程内信号量",
+        "correct": false
+      }
+    ],
+    "explanation": "跨节点互斥需要分布式协调机制，如带租约和过期时间的分布式锁，避免节点崩溃导致锁永久占用。单机 Lock、asyncio.Lock、进程内信号量都只作用于本进程。",
+    "id": "scheduling-088",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "并发与资源限制"
+  },
+  {
+    "type": "single",
+    "question": "Agent 调度器使用有界任务队列，当队列满且线程数达到最大时，希望在不丢弃任务的前提下平滑提交压力。下列哪种拒绝策略最合适？",
+    "options": [
+      {
+        "text": "AbortPolicy",
+        "correct": false
+      },
+      {
+        "text": "DiscardPolicy",
+        "correct": false
+      },
+      {
+        "text": "CallerRunsPolicy",
+        "correct": true
+      },
+      {
+        "text": "DiscardOldestPolicy",
+        "correct": false
+      }
+    ],
+    "explanation": "CallerRunsPolicy 让提交线程亲自执行任务，从而降低提交速率、形成反压，且不丢弃任务。Abort 抛异常，Discard 丢弃新任务，DiscardOldest 丢弃旧任务，均不满足不丢弃要求。",
+    "id": "scheduling-089",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "并发与资源限制"
+  },
+  {
+    "type": "single",
+    "question": "在 Python 3.9 及以后版本中，使用 asyncio 编写 Agent 调度器时，若某协程需要执行一个无法避免的阻塞函数，为避免阻塞事件循环，较合适的做法是？",
+    "options": [
+      {
+        "text": "直接调用该阻塞函数",
+        "correct": false
+      },
+      {
+        "text": "使用 asyncio.to_thread() 将其放到线程中执行",
+        "correct": true
+      },
+      {
+        "text": "使用 time.sleep() 替换",
+        "correct": false
+      },
+      {
+        "text": "增加事件循环的 debug 选项",
+        "correct": false
+      }
+    ],
+    "explanation": "阻塞函数会占用事件循环线程，使其他协程无法推进。asyncio.to_thread() 把阻塞调用交给线程池执行并返回可等待对象，从而避免阻塞事件循环。直接调用和 time.sleep() 仍会阻塞；debug 选项只辅助诊断，不改变阻塞行为。较早的 Python 3 版本可用事件循环的 run_in_executor 达到类似效果。",
+    "id": "scheduling-090",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "并发与资源限制"
+  },
+  {
+    "type": "single",
+    "question": "Agent 调度系统中，任务队列使用 FIFO 策略。现有任务 A、B、C 依次入队，A 执行失败后按“失败任务重新入队到队尾”处理，接着应执行哪个任务？",
+    "options": [
+      {
+        "text": "A",
+        "correct": false
+      },
+      {
+        "text": "B",
+        "correct": true
+      },
+      {
+        "text": "C",
+        "correct": false
+      },
+      {
+        "text": "三个任务并行执行",
+        "correct": false
+      }
+    ],
+    "explanation": "FIFO 下 A 失败被移到队尾，队列变为 B、C、A，故下一个执行 B。常见误区是认为失败任务立即重试；只有在重试策略明确为原地重试时才先执行 A。题目未说明并发行，不能选并行。",
+    "id": "scheduling-091",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务队列"
+  },
+  {
+    "type": "single",
+    "question": "某 Agent 任务队列同时支持优先级和 FIFO。任务 P（优先级 5）、Q（优先级 1）、R（优先级 5）按此顺序入队，数值越小优先级越高。忽略其他因素，出队顺序是？",
+    "options": [
+      {
+        "text": "P、Q、R",
+        "correct": false
+      },
+      {
+        "text": "Q、P、R",
+        "correct": true
+      },
+      {
+        "text": "Q、R、P",
+        "correct": false
+      },
+      {
+        "text": "P、R、Q",
+        "correct": false
+      }
+    ],
+    "explanation": "优先级数值越小越先出队，故 Q 最先；P 与 R 同优先级，按 FIFO 保证 P 先于 R。正确答案 Q、P、R。误区是把数值大当作高优先级，或同优先级时忽略入队顺序。",
+    "id": "scheduling-092",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务队列"
+  },
+  {
+    "type": "single",
+    "question": "Agent 队列的消费者采用“预取即标记运行中”的机制。某任务已出队给 Agent 但尚未收到完成确认时进程崩溃，重启后最容易出现什么问题？",
+    "options": [
+      {
+        "text": "任务永远重复入队",
+        "correct": false
+      },
+      {
+        "text": "任务丢失，除非有超时或可见性超时回收机制",
+        "correct": true
+      },
+      {
+        "text": "队列自动扩容",
+        "correct": false
+      },
+      {
+        "text": "优先级被自动反转",
+        "correct": false
+      }
+    ],
+    "explanation": "出队即标记运行中，若消费者崩溃且无确认，任务会停留在“运行中”状态，表现为丢失。需要可见性超时或租约到期后重新入队。误区是认为出队即完成；也可能重复执行，但不是“永远重复入队”。",
+    "id": "scheduling-093",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务队列"
+  },
+  {
+    "type": "single",
+    "question": "以下哪种场景最适合使用延迟任务队列而不是普通 FIFO 队列？",
+    "options": [
+      {
+        "text": "任务需要按任意访问顺序随机读取",
+        "correct": false
+      },
+      {
+        "text": "任务需在指定时间点之后才可被 Agent 领取",
+        "correct": true
+      },
+      {
+        "text": "任务需要永久保存以便审计",
+        "correct": false
+      },
+      {
+        "text": "任务之间需要强事务回滚",
+        "correct": false
+      }
+    ],
+    "explanation": "延迟队列的核心是任务在到期前不可见，到期后才可被消费，适合定时重试、预约执行等。随机读取是索引结构的需求，审计是持久化存储问题，事务回滚是事务机制问题，均不是延迟队列的主要用途。",
+    "id": "scheduling-094",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务队列"
+  },
+  {
+    "type": "single",
+    "question": "Agent 任务队列设置最大重试次数为 3（即初始执行失败后最多再执行 3 次）。某任务初始执行失败，随后连续重试 3 次仍失败。调度器接下来应如何处理？",
+    "options": [
+      {
+        "text": "继续第 5 次执行",
+        "correct": false
+      },
+      {
+        "text": "将任务转入死信队列或标记为最终失败",
+        "correct": true
+      },
+      {
+        "text": "清空该任务的重试计数并重新入队",
+        "correct": false
+      },
+      {
+        "text": "提升该任务优先级后再次重试",
+        "correct": false
+      }
+    ],
+    "explanation": "最大重试次数 3 表示初始执行之外最多再执行 3 次，连同初始执行共 4 次。已经重试 3 次仍失败时，继续重试会造成无限循环，应停止重试并转入死信队列或标记为最终失败；清空计数或仅提升优先级都不能解决失败根因。",
+    "id": "scheduling-095",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务队列"
+  },
+  {
+    "type": "single",
+    "question": "关于 Agent 任务队列的“至少一次”投递语义，下列说法正确的是？",
+    "options": [
+      {
+        "text": "每个任务保证恰好执行一次",
+        "correct": false
+      },
+      {
+        "text": "任务可能被重复投递，消费者需具备幂等处理能力",
+        "correct": true
+      },
+      {
+        "text": "任务最多投递一次，不会重复",
+        "correct": false
+      },
+      {
+        "text": "任务不会丢失也不会重复",
+        "correct": false
+      }
+    ],
+    "explanation": "至少一次语义保证不丢，但确认丢失、超时重投等会导致重复投递，因此消费端要幂等。恰好一次需要额外去重或事务协调，并非该语义默认提供。误区是把“至少一次”误解为“仅一次”。",
+    "id": "scheduling-096",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务队列"
+  },
+  {
+    "type": "single",
+    "question": "任务队列中，多个 Agent 通过竞争消费同一队列。若要保证同一任务不会被两个 Agent 同时执行，最直接的机制是？",
+    "options": [
+      {
+        "text": "为队列设置更大的内存",
+        "correct": false
+      },
+      {
+        "text": "出队时原子地标记任务为已占用（如租约/可见性超时）",
+        "correct": true
+      },
+      {
+        "text": "让所有 Agent 共享同一个随机种子",
+        "correct": false
+      },
+      {
+        "text": "增加任务描述的长度",
+        "correct": false
+      }
+    ],
+    "explanation": "竞争消费需要原子领取语义，出队即加锁或设置租约，避免两个消费者拿到同一任务。内存、随机种子和任务描述长度都不能提供互斥。误区是认为 FIFO 本身能防止并发重复领取。",
+    "id": "scheduling-097",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务队列"
+  },
+  {
+    "type": "single",
+    "question": "Agent 队列中，任务 A 依赖任务 B。调度器误将 A 排在 B 之前执行，最可能的结果是？",
+    "options": [
+      {
+        "text": "A 因依赖未满足而失败或阻塞，需要失败重试或等待",
+        "correct": true
+      },
+      {
+        "text": "A 自动等待 B 完成而不会占用 Agent",
+        "correct": false
+      },
+      {
+        "text": "B 被自动取消",
+        "correct": false
+      },
+      {
+        "text": "队列自动按依赖重新排序",
+        "correct": false
+      }
+    ],
+    "explanation": "普通队列不感知依赖，若调度器没有 DAG 或依赖检查，A 先执行会因前置条件缺失而失败或阻塞。自动等待需要依赖调度机制显式支持。误区是假设队列会自动推断依赖并重排。",
+    "id": "scheduling-098",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务队列"
+  },
+  {
+    "type": "single",
+    "question": "某 Agent 队列以固定速率出队，但 Agent 处理能力不足，导致运行中任务持续堆积。最合理的队列侧改进是？",
+    "options": [
+      {
+        "text": "提高出队速率",
+        "correct": false
+      },
+      {
+        "text": "限制并发领取数并结合背压，避免无限堆积",
+        "correct": true
+      },
+      {
+        "text": "缩短任务过期时间但不做回收",
+        "correct": false
+      },
+      {
+        "text": "取消所有确认机制",
+        "correct": false
+      }
+    ],
+    "explanation": "处理能力不足时应通过背压和并发上限控制领取速度，使队列长度可控。提高出队速率会加剧堆积；缩短过期时间而不回收可能造成任务丢失；取消确认会破坏可靠性。",
+    "id": "scheduling-099",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务队列"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些属于 Agent 任务队列常见的可靠性机制？",
+    "options": [
+      {
+        "text": "消费者完成确认（ack）",
+        "correct": true
+      },
+      {
+        "text": "可见性超时或租约机制",
+        "correct": true
+      },
+      {
+        "text": "依赖注入容器",
+        "correct": false
+      },
+      {
+        "text": "死信队列",
+        "correct": true
+      }
+    ],
+    "explanation": "ack、租约/可见性超时、死信队列都用于保证任务不丢、可回收和失败可追踪。依赖注入容器是应用对象的组装模式，与队列投递可靠性没有直接关系。误区是把框架能力当成队列语义。",
+    "id": "scheduling-100",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务队列"
+  },
+  {
+    "type": "multiple",
+    "question": "关于任务优先级队列，下列描述正确的有？",
+    "options": [
+      {
+        "text": "高优先级任务饥饿可通过老化（aging）缓解",
+        "correct": true
+      },
+      {
+        "text": "同优先级任务通常可用 FIFO 保证公平",
+        "correct": true
+      },
+      {
+        "text": "优先级队列必然保证任务不丢失",
+        "correct": false
+      },
+      {
+        "text": "数值越大一定表示优先级越高",
+        "correct": false
+      }
+    ],
+    "explanation": "优先级队列可采用老化提升低优先级任务，避免饥饿；同优先级常用 FIFO 排序。优先级本身不提供持久化和确认，不能保证不丢。优先级数值方向取决于约定，不能一概而论。",
+    "id": "scheduling-101",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务队列"
+  },
+  {
+    "type": "multiple",
+    "question": "Agent 任务被重复执行可能带来副作用。以下哪些做法有助于降低重复执行的影响？",
+    "options": [
+      {
+        "text": "为任务设置唯一幂等键并在消费端去重",
+        "correct": true
+      },
+      {
+        "text": "使用事务或条件更新保证状态转换只生效一次",
+        "correct": true
+      },
+      {
+        "text": "每次重试都生成新的随机任务 ID",
+        "correct": false
+      },
+      {
+        "text": "关闭所有完成确认以加快速度",
+        "correct": false
+      }
+    ],
+    "explanation": "幂等键去重和条件更新/事务都能抑制重复副作用。每次重试换新 ID 会破坏去重依据；关闭确认会增加重复和丢失风险。误区是认为重试次数少就不会重复。",
+    "id": "scheduling-102",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务队列"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些情况可能导致任务在队列中“长期不可见但未完成”？",
+    "options": [
+      {
+        "text": "消费者领取后崩溃且未 ack",
+        "correct": true
+      },
+      {
+        "text": "可见性超时设置过长且未续租",
+        "correct": true
+      },
+      {
+        "text": "任务优先级数值为负数",
+        "correct": false
+      },
+      {
+        "text": "队列采用 FIFO 而非 LIFO",
+        "correct": false
+      }
+    ],
+    "explanation": "领取后未确认、租约过长且不续租都会使任务停留在运行中状态，直到超时回收。优先级数值和 FIFO/LIFO 顺序本身不会导致任务不可见。误区是把调度顺序与可见性语义混为一谈。",
+    "id": "scheduling-103",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务队列"
+  },
+  {
+    "type": "single",
+    "question": "某任务队列支持最大并发为 2 的消费者。任务 T1、T2、T3 依次入队，T1 执行很慢，T2 很快完成。在理想情况下，T1、T2、T3 的执行启动顺序最可能是？",
+    "options": [
+      {
+        "text": "T1、T2 先并行启动，T2 完成后启动 T3",
+        "correct": true
+      },
+      {
+        "text": "T1、T3 先并行启动，T2 等待",
+        "correct": false
+      },
+      {
+        "text": "三个任务同时启动",
+        "correct": false
+      },
+      {
+        "text": "T2、T3 先启动，T1 最后",
+        "correct": false
+      }
+    ],
+    "explanation": "并发上限为 2，因此最先出队的 T1 和 T2 启动；T2 完成后空出并发槽，再领取 T3。误区是忽略并发上限，认为三个任务可同时启动，或按完成时间而不是出队顺序推断。",
+    "id": "scheduling-104",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务队列"
+  },
+  {
+    "type": "single",
+    "question": "在 Agent 调度系统中，任务队列与调度器的职责划分，下列哪项最准确？",
+    "options": [
+      {
+        "text": "队列负责任务的缓冲、持久化和投递，调度器负责决定何时、由哪个 Agent 执行",
+        "correct": true
+      },
+      {
+        "text": "队列负责执行任务，调度器只负责日志",
+        "correct": false
+      },
+      {
+        "text": "调度器必须直接读写数据库，不能通过队列",
+        "correct": false
+      },
+      {
+        "text": "队列必须实现业务逻辑，否则无法调度",
+        "correct": false
+      }
+    ],
+    "explanation": "队列主要承担任务的暂存、持久化、投递和确认语义；调度器根据策略选择可执行任务并分配给合适的 Agent。执行由 Agent 完成，业务逻辑不应由队列承担，调度器也不必须绕过队列直接读写数据库。",
+    "id": "scheduling-105",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务队列"
+  },
+  {
+    "type": "single",
+    "question": "Agent 任务队列采用先进先出（FIFO）策略，任务按顺序 A、B、C、D 入队。A 已成功执行完成；B 在执行过程中因临时资源不足被标记为“延迟重试”并放到队尾，随后 C 和 D 也相继成功执行。接下来应执行哪个任务？",
+    "options": [
+      {
+        "text": "A",
+        "correct": false
+      },
+      {
+        "text": "B",
+        "correct": true
+      },
+      {
+        "text": "C",
+        "correct": false
+      },
+      {
+        "text": "D",
+        "correct": false
+      }
+    ],
+    "explanation": "B 被移到队尾后，A、C、D 已完成，队列中只剩 B，因此接下来执行 B。重试到队尾不会保留原队首位置，也不会插到新任务前面。",
+    "id": "scheduling-106",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务队列"
+  },
+  {
+    "type": "single",
+    "question": "某 Agent 任务队列允许多个消费者同时拉取任务。为避免同一任务被两个 Agent 同时执行，队列侧最直接且通用的机制是？",
+    "options": [
+      {
+        "text": "为每个任务设置更高的优先级",
+        "correct": false
+      },
+      {
+        "text": "让所有 Agent 串行执行任务",
+        "correct": false
+      },
+      {
+        "text": "出队时使用原子操作将任务标记为“运行中”",
+        "correct": true
+      },
+      {
+        "text": "在任务完成后立即删除任务记录",
+        "correct": false
+      }
+    ],
+    "explanation": "原子性地将任务标记为运行中，可确保只有一个消费者成功获得执行权，这是避免重复执行的直接机制。提高优先级或删除任务记录并不能防止并发拉取，串行执行则牺牲了并发能力，不是队列侧通用做法。",
+    "id": "scheduling-107",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务队列"
+  },
+  {
+    "type": "single",
+    "question": "Agent 任务队列中，任务 T 的重试策略为“指数退避，最大重试 3 次”。T 首次执行失败后，调度器将下一次重试安排在 2 秒后；第 1 次重试失败后安排在 4 秒后。若第 2 次重试仍失败且尚未超过最大重试次数，下一次重试延迟最可能是？",
+    "options": [
+      {
+        "text": "2 秒",
+        "correct": false
+      },
+      {
+        "text": "4 秒",
+        "correct": false
+      },
+      {
+        "text": "6 秒",
+        "correct": false
+      },
+      {
+        "text": "8 秒",
+        "correct": true
+      }
+    ],
+    "explanation": "指数退避通常按固定基数翻倍，延迟序列为 2、4、8 秒等。第 2 次重试失败后，下一次重试是第 3 次重试，延迟应继续翻倍为 8 秒；线性增长 6 秒或保持 4 秒都不符合指数退避。",
+    "id": "scheduling-108",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务队列"
+  },
+  {
+    "type": "single",
+    "question": "在 Agent 任务队列中，若采用“至多一次”投递语义，最需要警惕的风险是？",
+    "options": [
+      {
+        "text": "任务被重复执行多次",
+        "correct": false
+      },
+      {
+        "text": "任务可能丢失且不会自动重投",
+        "correct": true
+      },
+      {
+        "text": "任务永远无法被消费者拉取",
+        "correct": false
+      },
+      {
+        "text": "任务优先级自动提升",
+        "correct": false
+      }
+    ],
+    "explanation": "至多一次语义保证消息最多被投递一次，因此不会重复，但一旦投递后消费者未处理成功，队列也不会重投，任务可能丢失。重复执行是至少一次语义的典型风险，不可拉取或优先级自动提升与投递语义无关。",
+    "id": "scheduling-109",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务队列"
+  },
+  {
+    "type": "single",
+    "question": "某 Agent 队列采用租约机制：任务出队后获得 30 秒可见性超时，若消费者未在超时前确认完成，任务将重新入队。某任务实际执行需 45 秒。最可能发生什么？",
+    "options": [
+      {
+        "text": "任务被立即标记为完成",
+        "correct": false
+      },
+      {
+        "text": "任务在 30 秒后被重新投递，可能被另一个 Agent 再次执行",
+        "correct": true
+      },
+      {
+        "text": "队列自动将超时延长至 45 秒",
+        "correct": false
+      },
+      {
+        "text": "消费者进程被队列强制终止",
+        "correct": false
+      }
+    ],
+    "explanation": "可见性超时到期后，未确认的任务会重新变为可见并被其他消费者拉取，导致重复执行。队列不会自动按实际耗时延长租约，也不会强制终止消费者进程，需要消费者主动续租或合理设置超时。",
+    "id": "scheduling-110",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务队列"
+  },
+  {
+    "type": "single",
+    "question": "Agent 队列中任务存在依赖关系：任务 C 依赖任务 A 和 B 的输出。调度器采用“就绪队列”模型。下列哪种做法最符合该模型？",
+    "options": [
+      {
+        "text": "A、B、C 同时入队并立即并发执行",
+        "correct": false
+      },
+      {
+        "text": "C 入队后等待，直到 A 和 B 均完成才进入就绪队列",
+        "correct": true
+      },
+      {
+        "text": "C 在 A 完成后立即执行，无需等待 B",
+        "correct": false
+      },
+      {
+        "text": "C 优先于 A 和 B 执行以缩短关键路径",
+        "correct": false
+      }
+    ],
+    "explanation": "就绪队列模型要求任务的所有前置依赖完成后才变为可调度状态，因此 C 需等待 A 和 B 都完成。只满足部分依赖就执行 C 会读取不完整输入，提前执行则违背依赖约束，均可能导致错误结果。",
+    "id": "scheduling-111",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务队列"
+  },
+  {
+    "type": "single",
+    "question": "某 Agent 任务队列的消费者在拉取任务后、执行业务逻辑前崩溃，且队列采用“出队即删除”策略。此时最可能的结果是？",
+    "options": [
+      {
+        "text": "任务被自动重新入队并重试",
+        "correct": false
+      },
+      {
+        "text": "任务丢失且无记录可恢复",
+        "correct": true
+      },
+      {
+        "text": "任务被标记为死信",
+        "correct": false
+      },
+      {
+        "text": "队列自动回滚到上一个检查点",
+        "correct": false
+      }
+    ],
+    "explanation": "出队即删除意味着任务在消费者确认前已从队列移除，消费者崩溃后该任务既不在队列中，也未被执行完成，因而丢失且无记录可恢复。自动重入队、死信标记或回滚检查点都需要额外机制，不是该策略的默认行为。",
+    "id": "scheduling-112",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务队列"
+  },
+  {
+    "type": "single",
+    "question": "Agent 任务队列中，某任务被多次重试后仍失败，最终被移入死信队列。下列哪项是对死信队列最合理的用途？",
+    "options": [
+      {
+        "text": "替代主队列继续自动重试所有失败任务",
+        "correct": false
+      },
+      {
+        "text": "存储无法正常处理的任务，供人工排查或补偿处理",
+        "correct": true
+      },
+      {
+        "text": "提升任务优先级后立即重新执行",
+        "correct": false
+      },
+      {
+        "text": "作为任务日志的永久存储，不再需要监控",
+        "correct": false
+      }
+    ],
+    "explanation": "死信队列用于隔离经过多次重试仍失败的任务，避免其阻塞主队列，并保留现场供人工分析、修复或补偿。它不是自动无限重试的通道，也不会自动提升优先级，更不应放弃监控。",
+    "id": "scheduling-113",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务队列"
+  },
+  {
+    "type": "single",
+    "question": "某 Agent 任务队列支持延迟任务。任务 X 需要在 10 分钟后执行，但当前队列为空。调度器应如何处理最合理？",
+    "options": [
+      {
+        "text": "立即将 X 放入就绪队列并执行",
+        "correct": false
+      },
+      {
+        "text": "将 X 放入延迟队列，到达执行时间后再转入就绪队列",
+        "correct": true
+      },
+      {
+        "text": "丢弃 X 并等待用户重新提交",
+        "correct": false
+      },
+      {
+        "text": "将 X 放入死信队列等待人工处理",
+        "correct": false
+      }
+    ],
+    "explanation": "延迟任务应在延迟队列中等待，到期后转入就绪队列参与调度。立即执行违背延迟语义，丢弃或放入死信队列都不符合正常业务需求。",
+    "id": "scheduling-114",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务队列"
+  },
+  {
+    "type": "single",
+    "question": "Agent 队列中，任务入队后长时间处于“可见”状态却始终没有被消费者拉取。下列哪项最不可能是原因？",
+    "options": [
+      {
+        "text": "消费者进程全部宕机",
+        "correct": false
+      },
+      {
+        "text": "消费者监听了错误的队列名称",
+        "correct": false
+      },
+      {
+        "text": "任务被设置为最高优先级",
+        "correct": true
+      },
+      {
+        "text": "队列的拉取权限配置错误",
+        "correct": false
+      }
+    ],
+    "explanation": "最高优先级只会影响出队顺序，不会导致任务完全不被拉取。消费者宕机、监听错误队列、权限错误都会使任务无人消费，是更可能的原因。",
+    "id": "scheduling-115",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务队列"
+  },
+  {
+    "type": "single",
+    "question": "在 Agent 调度系统中，关于任务队列与调度器的职责，下列哪项最准确？",
+    "options": [
+      {
+        "text": "队列负责决定任务在哪个 Agent 上执行，调度器只负责存储",
+        "correct": false
+      },
+      {
+        "text": "调度器负责选择可执行任务并分配给 Agent，队列负责缓冲和传递任务",
+        "correct": true
+      },
+      {
+        "text": "队列和调度器职责完全相同，可互相替代",
+        "correct": false
+      },
+      {
+        "text": "调度器只负责记录日志，不参与任务分配",
+        "correct": false
+      }
+    ],
+    "explanation": "队列主要承担任务缓冲、持久化和传递，调度器根据策略选择可执行任务并分配给合适的 Agent。将分配职责归给队列或让调度器仅记日志，都混淆了两者的核心分工。",
+    "id": "scheduling-116",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务队列"
+  },
+  {
+    "type": "single",
+    "question": "Agent 任务队列使用 FIFO 策略，任务 A、B、C 依次入队。A 入队后立即被消费者取出执行，B、C 仍在队列中。此时消费者将 A 处理到一半后因异常退出，A 未被确认完成。若队列支持“未确认任务重新入队到队尾”，接下来消费者最可能按什么顺序获取任务？",
+    "options": [
+      {
+        "text": "A、B、C",
+        "correct": false
+      },
+      {
+        "text": "B、C、A",
+        "correct": true
+      },
+      {
+        "text": "C、B、A",
+        "correct": false
+      },
+      {
+        "text": "B、A、C",
+        "correct": false
+      }
+    ],
+    "explanation": "A 未被确认而重新入队到队尾，此时 B、C 已在队列前部，所以先取 B、再取 C，最后才取重新入队的 A。其他选项错误地假设 A 仍保持原队首位置或插入到中间。",
+    "id": "scheduling-117",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务队列"
+  },
+  {
+    "type": "single",
+    "question": "某 Agent 任务队列同时支持优先级和 FIFO，数值越小优先级越高。任务 P（优先级 3）、Q（优先级 1）、R（优先级 3）、S（优先级 1）在调度前按 P、Q、R、S 的顺序入队。若队列按优先级出队、同优先级保持 FIFO，出队顺序是？",
+    "options": [
+      {
+        "text": "P、R、Q、S",
+        "correct": false
+      },
+      {
+        "text": "Q、S、P、R",
+        "correct": true
+      },
+      {
+        "text": "Q、P、S、R",
+        "correct": false
+      },
+      {
+        "text": "P、Q、R、S",
+        "correct": false
+      }
+    ],
+    "explanation": "优先级 1 的 Q、S 先于优先级 3 的 P、R 出队；同为优先级 1 时按入队顺序 Q 先于 S，同为优先级 3 时 P 先于 R，所以顺序为 Q、S、P、R。不能把不同优先级混排，也不能忽略同优先级 FIFO。",
+    "id": "scheduling-118",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务队列"
+  },
+  {
+    "type": "single",
+    "question": "Agent 任务队列中，任务 T 的重试策略为“固定间隔重试，最大重试 2 次”。T 第一次执行失败后，调度器将其重新入队并延迟 5 秒；第二次执行仍失败。此时调度器应如何处理最符合该策略？",
+    "options": [
+      {
+        "text": "立即再次入队并执行",
+        "correct": false
+      },
+      {
+        "text": "再延迟 5 秒后入队重试",
+        "correct": true
+      },
+      {
+        "text": "不再重试，直接标记成功",
+        "correct": false
+      },
+      {
+        "text": "将重试间隔改为 10 秒",
+        "correct": false
+      }
+    ],
+    "explanation": "最大重试 2 次表示前两次失败后还可重试两次，且固定间隔为 5 秒，因此第二次失败后应再延迟 5 秒入队进行第三次执行。其他选项违反固定间隔或重试次数上限。",
+    "id": "scheduling-119",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务队列"
+  },
+  {
+    "type": "single",
+    "question": "在 Agent 任务队列中，多个消费者通过“拉取并确认”模式消费任务。若某任务被消费者 C1 拉取后，C1 长时间未确认完成，但 C1 进程仍存活。为避免任务永久卡住，队列侧最合理的通用机制是？",
+    "options": [
+      {
+        "text": "为任务设置可见性超时，超时后重新入队",
+        "correct": true
+      },
+      {
+        "text": "禁止其他消费者拉取任何任务",
+        "correct": false
+      },
+      {
+        "text": "将未确认任务永久标记为完成",
+        "correct": false
+      },
+      {
+        "text": "要求消费者在拉取前先确认完成",
+        "correct": false
+      }
+    ],
+    "explanation": "可见性超时机制使未确认任务在超时后重新可见，避免消费者异常或卡住导致任务永久丢失。永久标记完成会丢失任务，禁止其他消费者会降低吞吐，拉取前确认逻辑颠倒。",
+    "id": "scheduling-120",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "任务队列"
+  },
+  {
+    "type": "single",
+    "question": "Agent 调度系统中，某工具调用因网络超时失败后触发自动重试。若不引入幂等机制，最可能出现的直接后果是？",
+    "options": [
+      {
+        "text": "重复执行产生重复副作用，如重复下单或重复扣款",
+        "correct": true
+      },
+      {
+        "text": "重试一定会被调度器拒绝，任务直接失败",
+        "correct": false
+      },
+      {
+        "text": "超时错误会自动转成业务成功结果",
+        "correct": false
+      },
+      {
+        "text": "重试后原请求会被操作系统自动回滚",
+        "correct": false
+      }
+    ],
+    "explanation": "重试会再次发送同一请求，若服务端未做幂等控制，就可能重复产生副作用。B、C、D均不符合实际机制；超时并不等于成功，操作系统也不会自动回滚业务请求。",
+    "id": "scheduling-121",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "重试与幂等"
+  },
+  {
+    "type": "single",
+    "question": "关于幂等键（Idempotency Key）的设计，下列做法最合理的是？",
+    "options": [
+      {
+        "text": "由客户端为同一业务操作生成稳定唯一键，并在重试时复用该键",
+        "correct": true
+      },
+      {
+        "text": "每次重试都生成新的随机键，以便区分请求",
+        "correct": false
+      },
+      {
+        "text": "用当前时间戳作为唯一键，保证全局不重复",
+        "correct": false
+      },
+      {
+        "text": "由服务端在每次收到请求后重新生成键",
+        "correct": false
+      }
+    ],
+    "explanation": "幂等键的核心是同一业务操作在重试中保持不变，服务端才能识别重复。每次重试换新键等于新操作；时间戳可能冲突且不绑定业务；服务端重新生成也无法关联原请求。",
+    "id": "scheduling-122",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "重试与幂等"
+  },
+  {
+    "type": "single",
+    "question": "某 Agent 调度器对失败任务采用指数退避重试。下列哪项最符合该策略？",
+    "options": [
+      {
+        "text": "重试间隔按固定倍数递增，并常加入随机抖动避免集中重试",
+        "correct": true
+      },
+      {
+        "text": "所有失败任务立即无间隔地连续重试",
+        "correct": false
+      },
+      {
+        "text": "重试间隔随失败次数线性递减直至为零",
+        "correct": false
+      },
+      {
+        "text": "只在每天固定时刻统一重试一次",
+        "correct": false
+      }
+    ],
+    "explanation": "指数退避指间隔随重试次数按倍数增长，抖动用于打散重试峰值。立即重试是固定零间隔，递减为零不符合退避，固定时刻重试也不是指数退避。",
+    "id": "scheduling-123",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "重试与幂等"
+  },
+  {
+    "type": "single",
+    "question": "在 Agent 调用外部支付接口的场景中，超时后最稳妥的处理方式是？",
+    "options": [
+      {
+        "text": "用同一幂等键重试，并查询该键对应操作状态后再决定后续动作",
+        "correct": true
+      },
+      {
+        "text": "直接再次发起全新支付请求，确保支付成功",
+        "correct": false
+      },
+      {
+        "text": "忽略超时，默认支付已成功并继续后续流程",
+        "correct": false
+      },
+      {
+        "text": "将任务标记为永久失败，禁止任何查询",
+        "correct": false
+      }
+    ],
+    "explanation": "超时结果不确定，应复用幂等键重试并通过状态查询确认最终结果，避免重复扣款。直接新请求会重复支付；默认成功可能漏支付；禁止查询则无法收敛状态。",
+    "id": "scheduling-124",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "重试与幂等"
+  },
+  {
+    "type": "single",
+    "question": "某任务执行记录表以 task_id 为唯一键，重试时执行 INSERT 导致主键冲突。下列哪种处理最能实现幂等写入？",
+    "options": [
+      {
+        "text": "捕获唯一键冲突后查询已有记录并返回相同结果",
+        "correct": true
+      },
+      {
+        "text": "删除旧记录后重新插入新记录",
+        "correct": false
+      },
+      {
+        "text": "忽略冲突并继续执行后续副作用",
+        "correct": false
+      },
+      {
+        "text": "改为每次插入随机主键以避开冲突",
+        "correct": false
+      }
+    ],
+    "explanation": "唯一键冲突说明该操作已执行过，捕获后读取已有结果可实现幂等。删除重插会破坏已有数据并可能重复副作用；忽略冲突后继续执行会重复；随机主键则失去防重能力。",
+    "id": "scheduling-125",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "重试与幂等"
+  },
+  {
+    "type": "single",
+    "question": "调度器在重试前需要判断上次失败是否可重试。下列哪类错误通常不应盲目重试？",
+    "options": [
+      {
+        "text": "请求参数校验失败返回 400",
+        "correct": true
+      },
+      {
+        "text": "连接被重置导致的网络错误",
+        "correct": false
+      },
+      {
+        "text": "服务端返回 503 暂时不可用",
+        "correct": false
+      },
+      {
+        "text": "DNS 解析临时失败",
+        "correct": false
+      }
+    ],
+    "explanation": "参数校验失败属于确定性错误，重试不会改变结果，应先修正请求。网络重置、503 和临时 DNS 失败多属瞬态错误，通常适合按策略重试。",
+    "id": "scheduling-126",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "重试与幂等"
+  },
+  {
+    "type": "single",
+    "question": "关于“至少一次”投递语义与幂等的关系，下列说法正确的是？",
+    "options": [
+      {
+        "text": "至少一次可能重复投递，业务侧需幂等处理才能获得正确结果",
+        "correct": true
+      },
+      {
+        "text": "至少一次保证不会重复，因此无需幂等",
+        "correct": false
+      },
+      {
+        "text": "幂等只能由消息队列实现，业务代码无法参与",
+        "correct": false
+      },
+      {
+        "text": "只要采用至少一次，就必须放弃重试机制",
+        "correct": false
+      }
+    ],
+    "explanation": "至少一次意味着消息可能重复到达，需要消费端或业务侧用幂等键、去重表等手段保证效果一次。它并不保证不重复；幂等也可在业务层实现；重试与至少一次并不冲突。",
+    "id": "scheduling-127",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "重试与幂等"
+  },
+  {
+    "type": "single",
+    "question": "Agent 调度中，任务重试次数已达到上限且结果仍未知。最合理的收尾方式是？",
+    "options": [
+      {
+        "text": "进入人工或异步核查队列，并保留幂等键与上下文用于后续对账",
+        "correct": true
+      },
+      {
+        "text": "无限重试直到成功，不设上限",
+        "correct": false
+      },
+      {
+        "text": "直接删除任务记录，避免影响统计",
+        "correct": false
+      },
+      {
+        "text": "随机选择一个结果作为最终结果",
+        "correct": false
+      }
+    ],
+    "explanation": "达到上限且结果未知时，应保留现场信息并转入核查或对账，避免重复或丢失。无限重试会放大故障；删除记录破坏可追溯性；随机结果不可接受。",
+    "id": "scheduling-128",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "重试与幂等"
+  },
+  {
+    "type": "single",
+    "question": "在调度系统中为重试任务分配幂等键时，下列哪项最适合作为键的构成依据？",
+    "options": [
+      {
+        "text": "业务操作标识加用户或租户维度等稳定业务要素",
+        "correct": true
+      },
+      {
+        "text": "每次调度产生的随机 UUID",
+        "correct": false
+      },
+      {
+        "text": "任务所在机器的 IP 地址",
+        "correct": false
+      },
+      {
+        "text": "当前重试次数序号",
+        "correct": false
+      }
+    ],
+    "explanation": "幂等键应绑定稳定业务操作，例如业务单号加租户，重试时保持不变。随机 UUID 每次不同；IP 会随环境变化；重试次数序号会因次数不同而失效。",
+    "id": "scheduling-129",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "重试与幂等"
+  },
+  {
+    "type": "single",
+    "question": "某服务端用“先查幂等键是否存在，不存在则执行”的方式实现幂等。并发重试时仍可能重复执行，主要原因是？",
+    "options": [
+      {
+        "text": "查询与执行之间存在竞态窗口，两个请求可能同时查到不存在",
+        "correct": true
+      },
+      {
+        "text": "幂等键太长导致哈希失效",
+        "correct": false
+      },
+      {
+        "text": "查询接口一定返回旧数据",
+        "correct": false
+      },
+      {
+        "text": "重试次数过多会自动清空幂等表",
+        "correct": false
+      }
+    ],
+    "explanation": "先查后写不是原子操作，并发请求可同时通过存在性检查。应以唯一约束、原子插入或分布式锁等方式保证互斥。其余选项与竞态原因无关。",
+    "id": "scheduling-130",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "重试与幂等"
+  },
+  {
+    "type": "multiple",
+    "question": "下列哪些措施有助于在重试场景中实现业务幂等？",
+    "options": [
+      {
+        "text": "使用唯一约束的幂等键记录表",
+        "correct": true
+      },
+      {
+        "text": "对外部副作用接口使用客户端生成的稳定幂等键",
+        "correct": true
+      },
+      {
+        "text": "对已处理请求缓存并返回相同结果",
+        "correct": true
+      },
+      {
+        "text": "每次重试前清空所有历史执行记录",
+        "correct": false
+      }
+    ],
+    "explanation": "唯一幂等记录、稳定幂等键和结果缓存都能识别并复用已处理结果。清空历史记录会丢失去重依据，反而容易导致重复执行，不属于幂等措施。",
+    "id": "scheduling-131",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "重试与幂等"
+  },
+  {
+    "type": "multiple",
+    "question": "设计 Agent 任务重试策略时，通常应考虑哪些因素？",
+    "options": [
+      {
+        "text": "错误类型是否属于瞬态可恢复错误",
+        "correct": true
+      },
+      {
+        "text": "重试上限与总超时预算",
+        "correct": true
+      },
+      {
+        "text": "退避间隔与抖动，避免重试风暴",
+        "correct": true
+      },
+      {
+        "text": "是否保证每次重试都产生新业务单号",
+        "correct": false
+      }
+    ],
+    "explanation": "重试应基于错误类型、次数上限和退避抖动来控制风险与成本。每次换新业务单号会破坏幂等关联，使重复请求无法被识别，不应作为策略目标。",
+    "id": "scheduling-132",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "重试与幂等"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些场景说明“重试成功但业务实际重复”风险较高？",
+    "options": [
+      {
+        "text": "调用方超时，但服务端实际已执行成功",
+        "correct": true
+      },
+      {
+        "text": "消息队列至少一次投递且消费端无去重",
+        "correct": true
+      },
+      {
+        "text": "重试时复用了同一幂等键且服务端正确去重",
+        "correct": false
+      },
+      {
+        "text": "网络抖动导致请求被多次送达且无唯一约束",
+        "correct": true
+      }
+    ],
+    "explanation": "超时后实际成功、至少一次且消费端不去重、多次送达且无唯一约束，都会让重试产生重复副作用。复用幂等键且服务端正确去重正是防止重复的情形。",
+    "id": "scheduling-133",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "重试与幂等"
+  },
+  {
+    "type": "multiple",
+    "question": "关于幂等键在重试生命周期中的管理，下列做法正确的有哪些？",
+    "options": [
+      {
+        "text": "同一业务操作的所有重试复用同一幂等键",
+        "correct": true
+      },
+      {
+        "text": "幂等记录需设置合理保留期以覆盖可能的延迟重试",
+        "correct": true
+      },
+      {
+        "text": "服务端可存储幂等键与首次执行结果，重复请求直接返回该结果",
+        "correct": true
+      },
+      {
+        "text": "幂等键应在每次收到请求时由服务端重新生成并覆盖",
+        "correct": false
+      }
+    ],
+    "explanation": "稳定复用键、合理保留记录、缓存首次结果，都是幂等生命周期管理要点。服务端每次重新生成会切断与原始操作的关联，使去重失效。",
+    "id": "scheduling-134",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "重试与幂等"
+  },
+  {
+    "type": "multiple",
+    "question": "某 Agent 调度任务需要调用两个外部服务并保证整体幂等，下列设计合理的有？",
+    "options": [
+      {
+        "text": "为整体任务和每个子操作分别设计稳定幂等键",
+        "correct": true
+      },
+      {
+        "text": "记录每个子步骤的执行状态，重试时跳过已成功步骤",
+        "correct": true
+      },
+      {
+        "text": "对无法幂等的外部操作先查询状态再决定是否重试",
+        "correct": true
+      },
+      {
+        "text": "只要整体流程加锁，就不需要任何子步骤状态记录",
+        "correct": false
+      }
+    ],
+    "explanation": "整体与子操作分层幂等、记录子步骤状态、先查状态再重试，能避免重复副作用。仅靠整体流程加锁无法覆盖锁释放后的重试与部分成功场景，也不利于断点恢复。",
+    "id": "scheduling-135",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "重试与幂等"
+  },
+  {
+    "type": "single",
+    "question": "某 Agent 调度任务在首次调用工具时因网络抖动失败，随后触发重试并成功。若该工具内部未实现幂等，最直接的风险是什么？",
+    "options": [
+      {
+        "text": "重试耗时增加，但业务结果不受影响",
+        "correct": false
+      },
+      {
+        "text": "首次调用可能已部分生效，重试导致业务动作重复执行",
+        "correct": true
+      },
+      {
+        "text": "调度器无法记录重试次数",
+        "correct": false
+      },
+      {
+        "text": "重试成功后幂等键会自动失效",
+        "correct": false
+      }
+    ],
+    "explanation": "网络抖动失败不代表首次调用未生效，可能已部分或全部执行。若无幂等保护，重试会再次执行业务动作，造成重复扣款、重复下单等后果。A 错在忽略副作用；C、D 与幂等机制无关。",
+    "id": "scheduling-136",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "重试与幂等"
+  },
+  {
+    "type": "single",
+    "question": "在 Agent 调度系统中，为一次用户发起的任务分配幂等键。下列哪个字段组合最适合作为幂等键的构成依据？",
+    "options": [
+      {
+        "text": "当前时间戳与随机数",
+        "correct": false
+      },
+      {
+        "text": "任务类型与重试次数",
+        "correct": false
+      },
+      {
+        "text": "业务主体标识与本次业务请求的唯一标识",
+        "correct": true
+      },
+      {
+        "text": "调度节点 IP 与线程 ID",
+        "correct": false
+      }
+    ],
+    "explanation": "幂等键应基于业务语义稳定标识一次业务请求，通常由业务主体标识与本次请求唯一标识组成，重试时保持不变。时间戳、随机数、重试次数、节点 IP 等会随重试变化，无法识别同一业务请求。",
+    "id": "scheduling-137",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "重试与幂等"
+  },
+  {
+    "type": "single",
+    "question": "调度器对失败任务采用固定间隔重试策略：每次失败后等待 30 秒再重试，最多 3 次。下列描述最符合该策略的是？",
+    "options": [
+      {
+        "text": "每次重试等待时间依次为 30、60、120 秒",
+        "correct": false
+      },
+      {
+        "text": "每次重试前都等待固定 30 秒",
+        "correct": true
+      },
+      {
+        "text": "首次失败后立即重试，之后等待 30 秒",
+        "correct": false
+      },
+      {
+        "text": "重试间隔随失败次数指数增长",
+        "correct": false
+      }
+    ],
+    "explanation": "固定间隔重试指每次失败后等待相同的时间再重试，本题为每次 30 秒。A、D 描述的是指数退避；C 描述的是立即重试加固定等待，均不符合题意。",
+    "id": "scheduling-138",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "重试与幂等"
+  },
+  {
+    "type": "single",
+    "question": "某 Agent 调用外部查询接口超时，该接口只读且无副作用。调度器决定重试。下列判断最合理的是？",
+    "options": [
+      {
+        "text": "只读接口无需考虑幂等，可直接重试",
+        "correct": false
+      },
+      {
+        "text": "查询无副作用，重试通常安全，但仍需设置重试上限与超时",
+        "correct": true
+      },
+      {
+        "text": "任何超时都不可重试",
+        "correct": false
+      },
+      {
+        "text": "必须为查询接口生成幂等键才能重试",
+        "correct": false
+      }
+    ],
+    "explanation": "只读查询无业务副作用，重试一般安全，但无限重试仍会放大负载，故需上限与超时。A 错在忽略资源风险；B 更完整；C 过于绝对；D 对无副作用查询并非必需。",
+    "id": "scheduling-139",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "重试与幂等"
+  },
+  {
+    "type": "single",
+    "question": "Agent 调度器在决定是否重试时，需要区分错误类型。下列哪类错误通常不应盲目重试？",
+    "options": [
+      {
+        "text": "网络连接超时",
+        "correct": false
+      },
+      {
+        "text": "服务端返回 503 临时不可用",
+        "correct": false
+      },
+      {
+        "text": "请求参数校验失败返回 400",
+        "correct": true
+      },
+      {
+        "text": "数据库连接池短暂耗尽",
+        "correct": false
+      }
+    ],
+    "explanation": "参数校验失败属于确定性业务错误，重试不会改变结果，反而浪费资源。网络超时、503、连接池短暂耗尽通常具有临时性，可结合退避策略重试。关键误区是把所有失败都视为可重试。",
+    "id": "scheduling-140",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "重试与幂等"
+  },
+  {
+    "type": "single",
+    "question": "某调度系统采用“至少一次”投递语义。关于该语义与幂等的关系，下列说法正确的是？",
+    "options": [
+      {
+        "text": "至少一次投递保证消息不重复，因此无需幂等",
+        "correct": false
+      },
+      {
+        "text": "至少一次投递可能重复，业务处理需幂等以容忍重复",
+        "correct": true
+      },
+      {
+        "text": "幂等可以替代至少一次投递的确认机制",
+        "correct": false
+      },
+      {
+        "text": "至少一次投递只适用于只读任务",
+        "correct": false
+      }
+    ],
+    "explanation": "至少一次投递在故障或确认丢失时可能重复投递，因此消费端需要幂等处理来消除重复副作用。保证消息不重复与至少一次语义相反；幂等是业务处理属性，不能替代投递确认机制；该语义也不限于只读任务。",
+    "id": "scheduling-141",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "重试与幂等"
+  },
+  {
+    "type": "single",
+    "question": "调度器对某任务重试已达上限，但最后一次执行结果仍未知。下列收尾方式最合理的是？",
+    "options": [
+      {
+        "text": "继续无限重试直到得到明确结果",
+        "correct": false
+      },
+      {
+        "text": "直接标记成功以避免告警",
+        "correct": false
+      },
+      {
+        "text": "标记为未知/待人工确认，并保留幂等键与执行记录供核查",
+        "correct": true
+      },
+      {
+        "text": "删除该任务的所有执行记录后重新创建任务",
+        "correct": false
+      }
+    ],
+    "explanation": "执行结果未知时不能假定成功或失败，应进入待确认状态并保留幂等键与执行记录，供人工或对账程序核查。无限重试会放大风险，直接标记成功会掩盖问题，删除执行记录会丢失审计线索。",
+    "id": "scheduling-142",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "重试与幂等"
+  },
+  {
+    "type": "single",
+    "question": "服务端实现幂等时采用“先查幂等键是否存在，不存在则执行业务”的流程。并发重试下仍可能重复执行，主要原因是？",
+    "options": [
+      {
+        "text": "幂等键长度不足",
+        "correct": false
+      },
+      {
+        "text": "查询与执行之间存在竞态窗口，多个请求同时通过存在性检查",
+        "correct": true
+      },
+      {
+        "text": "重试次数过多导致键被覆盖",
+        "correct": false
+      },
+      {
+        "text": "幂等键未使用哈希算法",
+        "correct": false
+      }
+    ],
+    "explanation": "先查后执行不是原子操作，并发请求可能同时查到不存在并都进入执行。需要借助唯一约束、原子插入或锁机制保证原子性。幂等键长度、哈希算法与竞态无关；重试次数过多不是键被覆盖的直接原因。",
+    "id": "scheduling-143",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "重试与幂等"
+  },
+  {
+    "type": "single",
+    "question": "某 Agent 任务写入结果表时使用 task_id 作为唯一键。重试写入同一 task_id 时，下列哪种做法最能实现幂等写入？",
+    "options": [
+      {
+        "text": "每次重试先 DELETE 再 INSERT",
+        "correct": false
+      },
+      {
+        "text": "使用 INSERT ... ON DUPLICATE KEY UPDATE 或等价 upsert 语义",
+        "correct": true
+      },
+      {
+        "text": "每次重试生成新的 task_id",
+        "correct": false
+      },
+      {
+        "text": "捕获主键冲突后直接忽略所有错误",
+        "correct": false
+      }
+    ],
+    "explanation": "以业务唯一键做 upsert 可将重复写入收敛为同一记录，实现幂等。删除再插入存在中间态且并发危险；每次生成新 task_id 会破坏唯一性；捕获主键冲突后忽略所有错误可能掩盖其他故障。",
+    "id": "scheduling-144",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "重试与幂等"
+  },
+  {
+    "type": "single",
+    "question": "在 Agent 调度系统中，以下哪种情况最需要引入幂等机制？",
+    "options": [
+      {
+        "text": "只读日志查询任务",
+        "correct": false
+      },
+      {
+        "text": "创建订单并扣减库存的写操作任务",
+        "correct": true
+      },
+      {
+        "text": "本地内存中的字符串拼接",
+        "correct": false
+      },
+      {
+        "text": "读取配置文件的启动任务",
+        "correct": false
+      }
+    ],
+    "explanation": "创建订单并扣减库存具有外部副作用，重试可能导致重复下单或重复扣减，最需要幂等。只读查询、本地内存操作、读取配置通常无重复副作用，不是首要场景。",
+    "id": "scheduling-145",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "重试与幂等"
+  },
+  {
+    "type": "single",
+    "question": "Agent 调度中，任务因下游服务返回 HTTP 503 被重试。若下游服务对同一幂等键已成功处理但响应丢失，重试时下游服务正确的行为应是？",
+    "options": [
+      {
+        "text": "再次执行业务逻辑并返回新结果",
+        "correct": false
+      },
+      {
+        "text": "拒绝请求并返回错误码",
+        "correct": false
+      },
+      {
+        "text": "根据幂等键返回首次成功处理的结果",
+        "correct": true
+      },
+      {
+        "text": "忽略幂等键直接覆盖旧结果",
+        "correct": false
+      }
+    ],
+    "explanation": "幂等键的核心作用是让服务端识别重复请求，返回首次成功结果而非重复执行。再次执行或覆盖旧结果会破坏幂等，拒绝请求则不符合幂等语义。",
+    "id": "scheduling-146",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "重试与幂等"
+  },
+  {
+    "type": "single",
+    "question": "某 Agent 调度器采用“重试前先查询任务状态表”的方式避免重复执行。若查询与执行之间没有加锁或状态标记，并发重试时最可能引发什么问题？",
+    "options": [
+      {
+        "text": "状态表被自动清空",
+        "correct": false
+      },
+      {
+        "text": "多个重试实例同时通过检查并重复执行",
+        "correct": true
+      },
+      {
+        "text": "幂等键自动失效",
+        "correct": false
+      },
+      {
+        "text": "调度器无法再发起重试",
+        "correct": false
+      }
+    ],
+    "explanation": "先查后执行存在检查与执行之间的竞态窗口，并发重试可能同时通过检查。需借助原子状态更新或分布式锁来消除竞态，而不是依赖简单查询。",
+    "id": "scheduling-147",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "重试与幂等"
+  },
+  {
+    "type": "single",
+    "question": "Agent 调度系统要求对“创建订单”操作实现幂等。下列哪种幂等键生成方式最可靠？",
+    "options": [
+      {
+        "text": "每次重试时随机生成 UUID",
+        "correct": false
+      },
+      {
+        "text": "使用当前时间戳作为键",
+        "correct": false
+      },
+      {
+        "text": "使用订单业务标识与用户标识组合的稳定键",
+        "correct": true
+      },
+      {
+        "text": "使用调度器进程 ID 作为键",
+        "correct": false
+      }
+    ],
+    "explanation": "幂等键必须在重试间保持稳定且能唯一标识业务操作。随机 UUID 和时间戳每次变化，进程 ID 不唯一且不稳定，业务标识组合最可靠。",
+    "id": "scheduling-148",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "重试与幂等"
+  },
+  {
+    "type": "multiple",
+    "question": "在 Agent 调度重试场景中，下列哪些措施有助于实现业务幂等？",
+    "options": [
+      {
+        "text": "为每次业务操作分配稳定且唯一的幂等键",
+        "correct": true
+      },
+      {
+        "text": "服务端记录幂等键的处理状态与结果",
+        "correct": true
+      },
+      {
+        "text": "重试时无条件重新执行全部业务逻辑",
+        "correct": false
+      },
+      {
+        "text": "使用数据库唯一约束防止重复写入",
+        "correct": true
+      }
+    ],
+    "explanation": "稳定幂等键、服务端记录处理状态、唯一约束都是常见幂等手段。无条件重新执行会放大重复副作用，与幂等目标相悖。",
+    "id": "scheduling-149",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "重试与幂等"
+  },
+  {
+    "type": "multiple",
+    "question": "设计 Agent 任务重试策略时，下列哪些因素通常应纳入考虑？",
+    "options": [
+      {
+        "text": "错误类型是否属于可重试的瞬时错误",
+        "correct": true
+      },
+      {
+        "text": "重试间隔与最大重试次数",
+        "correct": true
+      },
+      {
+        "text": "业务操作是否具备幂等性",
+        "correct": true
+      },
+      {
+        "text": "调度器所在机器的 CPU 型号",
+        "correct": false
+      }
+    ],
+    "explanation": "重试策略需关注错误可重试性、退避与上限、业务幂等性，避免重复副作用。CPU 型号与重试决策无直接关系，不应作为主要因素。",
+    "id": "scheduling-150",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "重试与幂等"
+  },
+  {
+    "type": "single",
+    "question": "在 Agent 项目调度系统中，多个 Agent 需要竞争访问共享的任务队列。下列关于互斥锁的描述，正确的是？",
+    "options": [
+      {
+        "text": "互斥锁同一时刻只允许一个持有者进入临界区，其他请求者需等待或失败返回",
+        "correct": true
+      },
+      {
+        "text": "互斥锁允许多个 Agent 同时读取共享数据，写操作才需排队",
+        "correct": false
+      },
+      {
+        "text": "互斥锁一旦被某 Agent 获取，其他 Agent 永远无法再获取",
+        "correct": false
+      },
+      {
+        "text": "互斥锁只能用于跨进程场景，线程内无效",
+        "correct": false
+      }
+    ],
+    "explanation": "互斥锁保证临界区同一时刻仅一个持有者，其他请求者阻塞或非阻塞失败。允许多读者的是读写锁；锁可通过释放被再次获取，并非永久独占；线程间同样可用互斥锁。",
+    "id": "scheduling-151",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "锁与冲突处理"
+  },
+  {
+    "type": "single",
+    "question": "调度器使用 try_lock 非阻塞方式申请任务锁失败后，最合理的处理策略是？",
+    "options": [
+      {
+        "text": "立即无限忙等，反复调用 try_lock 直到成功",
+        "correct": false
+      },
+      {
+        "text": "将该任务放回队列或稍后重试，避免线程空转占用 CPU",
+        "correct": true
+      },
+      {
+        "text": "直接放弃该任务并删除，不再调度",
+        "correct": false
+      },
+      {
+        "text": "强制释放其他 Agent 持有的锁再获取",
+        "correct": false
+      }
+    ],
+    "explanation": "try_lock 失败应退避重试或重新入队，避免忙等浪费 CPU。无限忙等和强制抢夺他人锁都会破坏调度公平与安全性；直接删除任务会导致任务丢失。",
+    "id": "scheduling-152",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "锁与冲突处理"
+  },
+  {
+    "type": "single",
+    "question": "以下哪种情况最可能造成 Agent 调度系统中的死锁？",
+    "options": [
+      {
+        "text": "Agent A 持有锁 L1 并请求 L2，同时 Agent B 持有 L2 并请求 L1",
+        "correct": true
+      },
+      {
+        "text": "Agent A 申请锁失败后释放已持有锁并稍后重试",
+        "correct": false
+      },
+      {
+        "text": "调度器对所有任务锁设置统一超时时间",
+        "correct": false
+      },
+      {
+        "text": "Agent 按全局固定顺序申请所需锁",
+        "correct": false
+      }
+    ],
+    "explanation": "循环等待是死锁四个必要条件之一，A 等 L2、B 等 L1 构成环路。失败释放重试、加超时、按固定顺序加锁都是预防死锁的手段，不会导致死锁。",
+    "id": "scheduling-153",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "锁与冲突处理"
+  },
+  {
+    "type": "single",
+    "question": "关于乐观锁在 Agent 任务状态更新中的应用，下列说法正确的是？",
+    "options": [
+      {
+        "text": "乐观锁在读取时不加锁，提交更新时校验版本号，冲突则重试或失败",
+        "correct": true
+      },
+      {
+        "text": "乐观锁通过数据库行锁阻止任何并发读取",
+        "correct": false
+      },
+      {
+        "text": "乐观锁要求所有写操作串行执行，因此不会产生冲突",
+        "correct": false
+      },
+      {
+        "text": "乐观锁无需版本号或时间戳即可检测冲突",
+        "correct": false
+      }
+    ],
+    "explanation": "乐观锁读不加锁，写时用版本号或时间戳做比较交换，冲突则重试。它不阻塞读取，但并发写仍可能冲突；缺少版本信息无法检测冲突。",
+    "id": "scheduling-154",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "锁与冲突处理"
+  },
+  {
+    "type": "single",
+    "question": "调度系统中使用读写锁保护任务元数据。若大量 Agent 频繁读取而极少写入，读写锁相比普通互斥锁的主要优势是？",
+    "options": [
+      {
+        "text": "允许并发读，提高读多写少场景的吞吐量",
+        "correct": true
+      },
+      {
+        "text": "写操作比互斥锁更快",
+        "correct": false
+      },
+      {
+        "text": "完全消除写者饥饿问题",
+        "correct": false
+      },
+      {
+        "text": "读操作也需串行执行以保证一致性",
+        "correct": false
+      }
+    ],
+    "explanation": "读写锁允许多个读者并行，适合读多写少。写操作通常并不更快；若不公平调度，读者持续进入可能造成写者饥饿，故读写锁不能消除饥饿。",
+    "id": "scheduling-155",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "锁与冲突处理"
+  },
+  {
+    "type": "single",
+    "question": "Agent A 在持有任务锁期间执行远程调用并长时间阻塞，最可能引发的直接问题是？",
+    "options": [
+      {
+        "text": "其他等待该锁的 Agent 被长时间阻塞，调度吞吐下降",
+        "correct": true
+      },
+      {
+        "text": "该锁自动升级为读写锁",
+        "correct": false
+      },
+      {
+        "text": "远程调用会自动释放 A 持有的锁",
+        "correct": false
+      },
+      {
+        "text": "系统自动将该任务分配给其他 Agent 并发执行",
+        "correct": false
+      }
+    ],
+    "explanation": "持锁期间做慢速远程调用会扩大临界区，使等待者长时间阻塞。锁不会自动转换为读写锁或被远程调用释放，任务也不会被自动并发分配。",
+    "id": "scheduling-156",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "锁与冲突处理"
+  },
+  {
+    "type": "single",
+    "question": "为避免 Agent 之间因加锁顺序不同产生死锁，最常用的预防措施是？",
+    "options": [
+      {
+        "text": "为所有锁定义全局唯一顺序，Agent 按相同顺序申请",
+        "correct": true
+      },
+      {
+        "text": "让每个 Agent 随机选择加锁顺序以打散冲突",
+        "correct": false
+      },
+      {
+        "text": "加锁后永不释放，减少申请次数",
+        "correct": false
+      },
+      {
+        "text": "取消所有锁，依赖任务天然无冲突",
+        "correct": false
+      }
+    ],
+    "explanation": "按全局固定顺序加锁可破坏循环等待条件。随机顺序可能加剧死锁；加锁不释放会耗尽资源；取消锁无法保证共享数据一致性。",
+    "id": "scheduling-157",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "锁与冲突处理"
+  },
+  {
+    "type": "single",
+    "question": "某任务锁采用带超时的 acquire(timeout)。当 Agent 获取锁超时后，代码直接操作共享任务队列而未检查返回值。这属于什么问题？",
+    "options": [
+      {
+        "text": "未校验加锁结果，可能在未持锁情况下进入临界区导致数据竞争",
+        "correct": true
+      },
+      {
+        "text": "超时机制本身会导致死锁",
+        "correct": false
+      },
+      {
+        "text": "带超时获取锁会永久阻塞调用线程",
+        "correct": false
+      },
+      {
+        "text": "只要设置了超时，就无需再释放锁",
+        "correct": false
+      }
+    ],
+    "explanation": "acquire 超时返回失败，若不检查返回值就进入临界区，等于无锁访问共享数据，产生数据竞争。超时用于避免无限等待，仍需正确判断返回值并按需释放。",
+    "id": "scheduling-158",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "锁与冲突处理"
+  },
+  {
+    "type": "single",
+    "question": "在 Agent 调度队列中，多个工作线程从同一队列取任务。下列做法中并发安全性最好的是？",
+    "options": [
+      {
+        "text": "使用线程安全队列，并在出队这一步内部完成同步",
+        "correct": true
+      },
+      {
+        "text": "先判空再出队，两步之间不加锁",
+        "correct": false
+      },
+      {
+        "text": "每个线程各维护一份队列副本直接读取",
+        "correct": false
+      },
+      {
+        "text": "用普通列表出队后立即删除首元素，不加锁",
+        "correct": false
+      }
+    ],
+    "explanation": "线程安全队列把判空与出队在内部原子完成，避免检查后使用竞态。先判空再出队存在 TOCTOU 窗口；副本会读到陈旧数据；无锁操作普通列表会引发竞争。",
+    "id": "scheduling-159",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "锁与冲突处理"
+  },
+  {
+    "type": "single",
+    "question": "关于自旋锁在 Agent 调度中的适用场景，下列说法正确的是？",
+    "options": [
+      {
+        "text": "适合临界区极短且线程数不多的场景，否则空转浪费 CPU",
+        "correct": true
+      },
+      {
+        "text": "适合临界区包含长时间 IO 等待的场景",
+        "correct": false
+      },
+      {
+        "text": "自旋锁在单核系统上性能一定优于阻塞锁",
+        "correct": false
+      },
+      {
+        "text": "自旋锁不会产生任何原子操作开销",
+        "correct": false
+      }
+    ],
+    "explanation": "自旋锁以忙等代替休眠，适合临界区极短、竞争不激烈的场景。临界区长或含 IO 时空转浪费 CPU；单核上自旋可能阻碍持锁者运行；自旋需原子指令开销。",
+    "id": "scheduling-160",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "锁与冲突处理"
+  },
+  {
+    "type": "single",
+    "question": "调度系统检测到某锁长期被占用，决定采用“锁租约（lease）”机制。其核心思想是？",
+    "options": [
+      {
+        "text": "锁只在租约期内有效，持有者需续租，过期后其他 Agent 可接管，防止永久占用",
+        "correct": true
+      },
+      {
+        "text": "租约机制要求持有者永不释放锁",
+        "correct": false
+      },
+      {
+        "text": "租约期满后自动把任务数据复制给所有 Agent",
+        "correct": false
+      },
+      {
+        "text": "租约机制取消所有并发控制",
+        "correct": false
+      }
+    ],
+    "explanation": "租约给锁设有效期，持有者需续租，过期后可被接管，用于处理持有者崩溃或失联导致的长期占用。它不取消并发控制，也不复制数据。",
+    "id": "scheduling-161",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "锁与冲突处理"
+  },
+  {
+    "type": "single",
+    "question": "在分布式 Agent 调度中，两个 Agent 分别向不同协调者申请同一资源锁，出现冲突。最需要保证的锁服务特性是？",
+    "options": [
+      {
+        "text": "同一资源锁的互斥性在不同协调者之间仍全局成立",
+        "correct": true
+      },
+      {
+        "text": "每个协调者独立发放锁，无需全局一致",
+        "correct": false
+      },
+      {
+        "text": "锁的发放只依赖本地时钟即可",
+        "correct": false
+      },
+      {
+        "text": "只要网络延迟低就不会产生双持有",
+        "correct": false
+      }
+    ],
+    "explanation": "分布式多协调者场景必须保证全局互斥，否则可能双持有。本地独立发放和仅依赖本地时钟都会破坏一致性；网络延迟低也不能消除并发竞争。",
+    "id": "scheduling-162",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "锁与冲突处理"
+  },
+  {
+    "type": "multiple",
+    "question": "下列哪些是破坏死锁必要条件、可用于 Agent 调度锁管理的策略？",
+    "options": [
+      {
+        "text": "按全局统一顺序申请多个锁，破坏循环等待",
+        "correct": true
+      },
+      {
+        "text": "申请锁设置超时，超时后释放已持有锁并回退重试，破坏请求保持",
+        "correct": true
+      },
+      {
+        "text": "一次性原子申请任务所需全部锁，避免请求与保持",
+        "correct": true
+      },
+      {
+        "text": "允许每个 Agent 任意顺序抢占其他 Agent 已持有的锁",
+        "correct": false
+      }
+    ],
+    "explanation": "固定顺序、超时回退、一次性申请分别破坏循环等待、请求与保持等条件。任意抢占会破坏互斥与公平，可能引发更多冲突甚至活锁。",
+    "id": "scheduling-163",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "锁与冲突处理"
+  },
+  {
+    "type": "multiple",
+    "question": "Agent 任务状态表采用乐观锁更新。下列哪些措施能正确处理并发更新冲突？",
+    "options": [
+      {
+        "text": "更新语句带上版本号条件，影响行数为 0 时判定冲突",
+        "correct": true
+      },
+      {
+        "text": "冲突后读取最新版本并重新计算，限制有限次重试",
+        "correct": true
+      },
+      {
+        "text": "使用比较交换 CAS 原子更新版本与状态",
+        "correct": true
+      },
+      {
+        "text": "忽略版本号直接覆盖写入，冲突时丢弃一条更新",
+        "correct": false
+      }
+    ],
+    "explanation": "版本号条件更新、有限重试、CAS 都是乐观锁正确实现方式。忽略版本号直接覆盖会丢失更新，属于错误做法。",
+    "id": "scheduling-164",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "锁与冲突处理"
+  },
+  {
+    "type": "multiple",
+    "question": "关于锁超时与持锁顺序的实践，下列哪些说法正确？",
+    "options": [
+      {
+        "text": "锁超时能防止无限等待，但业务需处理超时后的回滚与一致性",
+        "correct": true
+      },
+      {
+        "text": "持锁期间应尽量缩小临界区，避免远程调用等慢操作",
+        "correct": true
+      },
+      {
+        "text": "加锁失败后立即无退避地高频重试会加剧锁竞争和 CPU 消耗",
+        "correct": true
+      },
+      {
+        "text": "只要设置了锁超时，就可以在持锁期间安全地执行任意长任务",
+        "correct": false
+      }
+    ],
+    "explanation": "超时需配套回滚以保证一致性；缩小临界区、避免慢操作可降低冲突；无退避高频重试会加剧竞争。超时不能使长任务在持锁期间变得安全。",
+    "id": "scheduling-165",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "锁与冲突处理"
+  },
+  {
+    "type": "single",
+    "question": "在 Agent 调度系统中，多个 Agent 并发更新同一任务的状态字段。采用数据库行级锁时，下列哪种操作最可能导致锁等待时间显著增加？",
+    "options": [
+      {
+        "text": "在事务中先更新任务状态，再执行耗时较长的远程日志上报",
+        "correct": true
+      },
+      {
+        "text": "使用短事务仅更新状态字段后立即提交",
+        "correct": false
+      },
+      {
+        "text": "更新前先通过索引定位到具体任务行",
+        "correct": false
+      },
+      {
+        "text": "多个 Agent 更新不同任务行",
+        "correct": false
+      }
+    ],
+    "explanation": "行级锁在事务提交后才释放。若事务内包含远程调用等耗时操作，锁持有时间被拉长，其他等待同一行的 Agent 会长时间阻塞。正确做法是缩短持锁时间，将远程操作移到事务外。",
+    "id": "scheduling-166",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "锁与冲突处理"
+  },
+  {
+    "type": "single",
+    "question": "某调度器使用基于版本号的乐观锁更新任务记录，更新语句为 UPDATE tasks SET status=?, version=version+1 WHERE id=? AND version=?。若影响行数为 0，最合理的下一步是？",
+    "options": [
+      {
+        "text": "重新读取最新记录，重新执行业务决策后再尝试更新",
+        "correct": true
+      },
+      {
+        "text": "忽略该更新，直接认为任务已成功",
+        "correct": false
+      },
+      {
+        "text": "立即对同一记录无限重试相同版本号",
+        "correct": false
+      },
+      {
+        "text": "将数据库隔离级别改为读未提交后重试",
+        "correct": false
+      }
+    ],
+    "explanation": "影响行数为 0 表示版本冲突，说明记录已被其他 Agent 修改。应重新读取最新状态并重做冲突判断，而不是盲目重试或忽略。无限重试相同版本号永远不会成功。",
+    "id": "scheduling-167",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "锁与冲突处理"
+  },
+  {
+    "type": "single",
+    "question": "Agent 调度器为每个任务维护一个内存锁表，锁对象在任务完成后被移除。若某任务异常退出而未释放锁，最直接的后果是？",
+    "options": [
+      {
+        "text": "后续 Agent 永久无法获取该任务的锁，任务可能被卡住",
+        "correct": true
+      },
+      {
+        "text": "数据库自动回滚所有未提交事务",
+        "correct": false
+      },
+      {
+        "text": "其他任务的锁也立即全部失效",
+        "correct": false
+      },
+      {
+        "text": "系统自动将该任务重新分配给其他 Agent",
+        "correct": false
+      }
+    ],
+    "explanation": "内存锁对象不会因任务线程异常退出而自动释放，除非使用租约或 finally 释放。锁未释放会导致后续申请者一直等待，任务停滞。其他选项描述的行为不会自动发生。",
+    "id": "scheduling-168",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "锁与冲突处理"
+  },
+  {
+    "type": "single",
+    "question": "两个 Agent 各自持有一把锁，并分别等待对方持有的锁，从而形成相互等待的环。这个环形等待关系直接对应死锁四个必要条件中的哪一个？",
+    "options": [
+      {
+        "text": "循环等待：存在一组进程，每个进程都在等待下一个进程所持有的资源",
+        "correct": true
+      },
+      {
+        "text": "互斥：资源同一时间只能被一个进程使用",
+        "correct": false
+      },
+      {
+        "text": "不可剥夺：资源只能由持有者主动释放",
+        "correct": false
+      },
+      {
+        "text": "请求并保持：进程持有至少一个资源并等待获取其他资源",
+        "correct": false
+      }
+    ],
+    "explanation": "两个 Agent 分别持有锁并等待对方释放锁，形成资源等待环，这是循环等待条件。该场景也可能同时满足互斥、请求并保持和不可剥夺，但题干所指的相互等待环形关系直接对应循环等待。",
+    "id": "scheduling-169",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "锁与冲突处理"
+  },
+  {
+    "type": "single",
+    "question": "在 Agent 调度器中，使用 synchronized 或 Lock 保护共享任务队列时，下列哪种做法最容易降低并发吞吐量？",
+    "options": [
+      {
+        "text": "将整个任务队列的入队、出队和统计操作放在同一把大锁内",
+        "correct": true
+      },
+      {
+        "text": "使用并发队列的原子入队和出队方法",
+        "correct": false
+      },
+      {
+        "text": "按任务分片，每片使用独立锁",
+        "correct": false
+      },
+      {
+        "text": "读多写少时使用读写锁分离读写",
+        "correct": false
+      }
+    ],
+    "explanation": "大锁将所有队列操作串行化，即使操作互不冲突也无法并行，显著限制吞吐量。并发队列、分片锁和读写锁都能在不同程度上减少锁竞争，提高并发性。",
+    "id": "scheduling-170",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "锁与冲突处理"
+  },
+  {
+    "type": "single",
+    "question": "某 Agent 框架允许任务在等待锁时被取消。使用 ReentrantLock 的 lockInterruptibly() 相比 lock() 的主要优势是？",
+    "options": [
+      {
+        "text": "等待锁的线程可被中断，避免无限期阻塞",
+        "correct": true
+      },
+      {
+        "text": "保证锁一定不会发生死锁",
+        "correct": false
+      },
+      {
+        "text": "使锁自动升级为读写锁",
+        "correct": false
+      },
+      {
+        "text": "允许同一线程重复获取锁而不释放",
+        "correct": false
+      }
+    ],
+    "explanation": "lockInterruptibly() 在等待锁期间响应中断，使任务可被取消并及时退出等待。lock() 不响应中断，可能无限期阻塞。它不能消除死锁，也不改变锁的类型或重入语义。",
+    "id": "scheduling-171",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "锁与冲突处理"
+  },
+  {
+    "type": "single",
+    "question": "Agent 调度系统采用“按任务 ID 哈希分片加锁”来保护任务状态更新。下列哪项是该方案最需要关注的问题？",
+    "options": [
+      {
+        "text": "哈希冲突导致不同任务共享同一把锁，可能产生不必要的锁竞争",
+        "correct": true
+      },
+      {
+        "text": "分片锁会破坏任务状态的原子性",
+        "correct": false
+      },
+      {
+        "text": "分片锁无法与数据库事务共存",
+        "correct": false
+      },
+      {
+        "text": "哈希分片必然导致死锁",
+        "correct": false
+      }
+    ],
+    "explanation": "哈希分片将任务映射到有限数量的锁，不同任务可能落入同一分片，造成伪竞争。但同分片内仍可保证互斥，不会破坏被保护数据的原子性。分片本身也不必然导致死锁。",
+    "id": "scheduling-172",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "锁与冲突处理"
+  },
+  {
+    "type": "single",
+    "question": "某 Agent 在获取任务锁后先修改共享队列，再将任务写入数据库。若数据库写入失败，代码直接抛出异常而未释放锁。这违背了锁使用的哪项原则？",
+    "options": [
+      {
+        "text": "锁必须在 finally 块中释放，确保异常路径也释放锁",
+        "correct": true
+      },
+      {
+        "text": "锁必须总是使用公平模式",
+        "correct": false
+      },
+      {
+        "text": "锁必须与数据库事务合并为一个锁",
+        "correct": false
+      },
+      {
+        "text": "锁必须在获取后立即释放",
+        "correct": false
+      }
+    ],
+    "explanation": "异常会导致正常释放语句被跳过，锁泄漏。应在 try-finally 中获取和释放锁，保证无论是否抛出异常都释放。公平模式、与事务合并等与异常安全无关。",
+    "id": "scheduling-173",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "锁与冲突处理"
+  },
+  {
+    "type": "single",
+    "question": "Agent 调度系统使用 Redis 分布式锁协调多个调度节点。关于锁的过期时间设置，下列做法最合理的是？",
+    "options": [
+      {
+        "text": "设置足够覆盖正常业务耗时的过期时间，并配合唯一值校验释放",
+        "correct": true
+      },
+      {
+        "text": "不设置过期时间，避免锁提前释放",
+        "correct": false
+      },
+      {
+        "text": "固定设置为 1 秒，无论业务耗时多长",
+        "correct": false
+      },
+      {
+        "text": "释放锁时不校验持有者，直接删除键",
+        "correct": false
+      }
+    ],
+    "explanation": "过期时间应覆盖正常业务耗时以防止死锁；释放时用唯一值校验可避免误删他人锁。不设过期时间会使节点崩溃后锁永不释放，固定过短会误释放，直接删除会误删他人锁。",
+    "id": "scheduling-174",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "锁与冲突处理"
+  },
+  {
+    "type": "single",
+    "question": "Agent 调度器使用读写锁保护任务配置。以下哪种访问模式最适合使用读写锁而非普通互斥锁？",
+    "options": [
+      {
+        "text": "大量 Agent 频繁读取配置，配置更新很少发生",
+        "correct": true
+      },
+      {
+        "text": "读写频率相当且每次操作都很短",
+        "correct": false
+      },
+      {
+        "text": "所有 Agent 都频繁写入配置",
+        "correct": false
+      },
+      {
+        "text": "临界区包含耗时远程调用",
+        "correct": false
+      }
+    ],
+    "explanation": "读多写少时，读写锁允许多个读者并发，相比互斥锁可显著提升吞吐量。读写相当或写频繁时优势不明显；临界区含远程调用则应缩短持锁时间而非依赖锁类型。",
+    "id": "scheduling-175",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "锁与冲突处理"
+  },
+  {
+    "type": "single",
+    "question": "在 Agent 调度中，若采用“全局唯一锁服务”为任务分配锁，为避免单点故障导致所有调度阻塞，最应增加的机制是？",
+    "options": [
+      {
+        "text": "锁服务集群化并配合租约与故障转移",
+        "correct": true
+      },
+      {
+        "text": "让每个 Agent 本地缓存锁状态并永久信任",
+        "correct": false
+      },
+      {
+        "text": "取消所有锁，完全依赖任务 ID 排序",
+        "correct": false
+      },
+      {
+        "text": "将锁超时设置为无限大",
+        "correct": false
+      }
+    ],
+    "explanation": "锁服务是协调关键点，单点故障会阻塞全局。集群化、故障转移和租约可提升可用性并避免死锁。本地永久缓存会失去一致性，取消锁无法保证互斥，无限超时则加剧故障影响。",
+    "id": "scheduling-176",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "锁与冲突处理"
+  },
+  {
+    "type": "multiple",
+    "question": "下列哪些做法有助于在 Agent 调度系统中预防死锁？",
+    "options": [
+      {
+        "text": "所有 Agent 按统一的全局顺序获取多把锁",
+        "correct": true
+      },
+      {
+        "text": "使用带超时的锁申请，超时后释放已持有锁并重试",
+        "correct": true
+      },
+      {
+        "text": "允许 Agent 在持有一把锁时无限期等待另一把锁",
+        "correct": false
+      },
+      {
+        "text": "对锁申请采用资源一次性分配策略",
+        "correct": true
+      }
+    ],
+    "explanation": "统一加锁顺序破坏循环等待；超时释放可打破不可剥夺与循环等待；一次性分配避免请求并保持。无限期等待会维持死锁条件，不能预防死锁。",
+    "id": "scheduling-177",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "锁与冲突处理"
+  },
+  {
+    "type": "multiple",
+    "question": "Agent 任务表使用乐观锁并发更新时，下列哪些措施能正确处理冲突？",
+    "options": [
+      {
+        "text": "更新影响行数为 0 时重新读取最新数据并重新判断",
+        "correct": true
+      },
+      {
+        "text": "设置最大重试次数，超过后记录冲突并交由人工或异步处理",
+        "correct": true
+      },
+      {
+        "text": "无论影响行数是否为 0 都直接返回成功",
+        "correct": false
+      },
+      {
+        "text": "在重试前加入随机退避以减少持续碰撞",
+        "correct": true
+      }
+    ],
+    "explanation": "乐观锁冲突后应重新读取并重做决策，设置重试上限防止活锁，随机退避可降低碰撞概率。忽略影响行数会丢失更新，不是正确处理方式。",
+    "id": "scheduling-178",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "锁与冲突处理"
+  },
+  {
+    "type": "multiple",
+    "question": "关于 Agent 调度系统中的锁超时与持锁顺序，下列哪些说法正确？",
+    "options": [
+      {
+        "text": "锁超时后应视为未获得锁，不能直接操作受保护资源",
+        "correct": true
+      },
+      {
+        "text": "持锁期间应尽量缩短临界区，避免耗时远程调用",
+        "correct": true
+      },
+      {
+        "text": "只要设置了锁超时，就完全不会发生死锁",
+        "correct": false
+      },
+      {
+        "text": "多锁场景应统一加锁顺序以降低死锁风险",
+        "correct": true
+      }
+    ],
+    "explanation": "超时返回失败后必须检查结果，不能进入临界区；缩短持锁时间可减少竞争；统一顺序可破坏循环等待。锁超时只是缓解手段，不能完全消除死锁。",
+    "id": "scheduling-179",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "锁与冲突处理"
+  },
+  {
+    "type": "multiple",
+    "question": "在分布式 Agent 调度中，使用租约锁（lease）时，下列哪些实践是合理的？",
+    "options": [
+      {
+        "text": "租约到期前若任务未完成，持有者应尝试续约",
+        "correct": true
+      },
+      {
+        "text": "其他节点只有在确认租约过期后才能尝试获取锁",
+        "correct": true
+      },
+      {
+        "text": "持有者崩溃后租约到期，锁可被其他节点获取，避免永久阻塞",
+        "correct": true
+      },
+      {
+        "text": "租约时间应设置为无限长以避免续约开销",
+        "correct": false
+      }
+    ],
+    "explanation": "租约通过到期自动释放避免崩溃后永久持锁；持有者需续约维持所有权；其他节点须等待过期再获取。无限长租约失去租约意义，崩溃后仍会永久阻塞。",
+    "id": "scheduling-180",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "锁与冲突处理"
+  },
+  {
+    "type": "single",
+    "question": "在Agent项目调度中，检查点（Checkpoint）的主要作用是？",
+    "options": [
+      {
+        "text": "记录Agent的当前状态，以便在故障时恢复",
+        "correct": true
+      },
+      {
+        "text": "提高Agent的推理速度",
+        "correct": false
+      },
+      {
+        "text": "减少Agent的内存占用",
+        "correct": false
+      },
+      {
+        "text": "增加Agent的并发数量",
+        "correct": false
+      }
+    ],
+    "explanation": "检查点用于持久化Agent的运行时状态（如任务进度、上下文），在故障后可从检查点恢复，避免从头执行。其他选项与检查点核心功能无关。",
+    "id": "scheduling-181",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "检查点与恢复"
+  },
+  {
+    "type": "single",
+    "question": "以下哪种情形最适合使用检查点机制？",
+    "options": [
+      {
+        "text": "Agent执行长时间运行的任务，中途可能失败",
+        "correct": true
+      },
+      {
+        "text": "Agent需要频繁与用户交互",
+        "correct": false
+      },
+      {
+        "text": "Agent的任务执行时间极短",
+        "correct": false
+      },
+      {
+        "text": "Agent仅执行只读操作",
+        "correct": false
+      }
+    ],
+    "explanation": "检查点适用于长任务且可能失败的情况，可避免重复计算。短任务或只读操作无需检查点，频繁交互不是主要考量。",
+    "id": "scheduling-182",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "检查点与恢复"
+  },
+  {
+    "type": "single",
+    "question": "在检查点与恢复机制中，检查点通常不包含以下哪项信息？",
+    "options": [
+      {
+        "text": "Agent的内部变量状态",
+        "correct": false
+      },
+      {
+        "text": "任务执行进度",
+        "correct": false
+      },
+      {
+        "text": "未处理消息及其顺序",
+        "correct": false
+      },
+      {
+        "text": "外部系统的实时状态",
+        "correct": true
+      }
+    ],
+    "explanation": "检查点保存Agent自身可恢复的运行时状态，如内部变量、任务进度和待处理消息；外部系统状态在故障后可能已变化，通常需在恢复时重新查询或同步，不直接作为检查点内容。",
+    "id": "scheduling-183",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "检查点与恢复"
+  },
+  {
+    "type": "single",
+    "question": "关于检查点的存储，以下说法正确的是？",
+    "options": [
+      {
+        "text": "检查点必须存储在本地磁盘",
+        "correct": false
+      },
+      {
+        "text": "检查点应存储在持久化存储中，如数据库或对象存储",
+        "correct": true
+      },
+      {
+        "text": "检查点只能存储在内存中",
+        "correct": false
+      },
+      {
+        "text": "检查点无需持久化，丢失后可重新生成",
+        "correct": false
+      }
+    ],
+    "explanation": "检查点需持久化存储以确保故障后仍可访问，本地磁盘、数据库或对象存储均可，但内存存储易失，不可靠。",
+    "id": "scheduling-184",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "检查点与恢复"
+  },
+  {
+    "type": "single",
+    "question": "在Agent调度中，设置检查点频率时，以下哪项是需要主要权衡的因素？",
+    "options": [
+      {
+        "text": "检查点开销与恢复时重计算量的平衡",
+        "correct": true
+      },
+      {
+        "text": "Agent的并发数与检查点数量成正比",
+        "correct": false
+      },
+      {
+        "text": "检查点频率越高，存储成本越低",
+        "correct": false
+      },
+      {
+        "text": "检查点频率与任务执行时间无关",
+        "correct": false
+      }
+    ],
+    "explanation": "检查点频率高则故障恢复快但开销大，频率低则开销小但恢复时重计算多，需权衡。存储成本随频率增加而增加，与并发数无直接比例关系。",
+    "id": "scheduling-185",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "检查点与恢复"
+  },
+  {
+    "type": "single",
+    "question": "以下哪种恢复策略属于“完全恢复”？",
+    "options": [
+      {
+        "text": "从最近的检查点恢复所有状态",
+        "correct": true
+      },
+      {
+        "text": "仅恢复部分关键状态，忽略非关键状态",
+        "correct": false
+      },
+      {
+        "text": "重新启动Agent，不使用检查点",
+        "correct": false
+      },
+      {
+        "text": "从检查点恢复后，重新执行所有任务",
+        "correct": false
+      }
+    ],
+    "explanation": "完全恢复指从检查点恢复全部状态，继续执行。部分恢复是仅恢复关键状态，重新启动和重新执行所有任务不是恢复策略。",
+    "id": "scheduling-186",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "检查点与恢复"
+  },
+  {
+    "type": "single",
+    "question": "在Agent持续运行且状态可能被并发修改时，为避免恢复时读到半更新状态，保存检查点应采用哪种机制？",
+    "options": [
+      {
+        "text": "使用原子操作或事务保存一致性视图",
+        "correct": true
+      },
+      {
+        "text": "直接覆盖旧检查点文件，无需同步",
+        "correct": false
+      },
+      {
+        "text": "只保存到内存，等故障后再写盘",
+        "correct": false
+      },
+      {
+        "text": "仅提高检查点频率，不处理并发写",
+        "correct": false
+      }
+    ],
+    "explanation": "原子操作、事务或一致性视图可保证检查点要么完整生效，要么不生效；直接覆盖、仅内存保存或单纯提高频率都不能防止并发修改造成半更新状态。",
+    "id": "scheduling-187",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "检查点与恢复"
+  },
+  {
+    "type": "single",
+    "question": "在Agent项目调度的语境下，检查点与快照的典型用途差异是什么？",
+    "options": [
+      {
+        "text": "检查点主要用于故障后继续运行的恢复点，快照主要用于备份或版本留存",
+        "correct": true
+      },
+      {
+        "text": "检查点只保存元数据，快照只保存数据",
+        "correct": false
+      },
+      {
+        "text": "检查点一定允许不一致，快照一定要求一致",
+        "correct": false
+      },
+      {
+        "text": "检查点只能存内存，快照只能存磁盘",
+        "correct": false
+      }
+    ],
+    "explanation": "检查点强调保存可恢复的运行时状态，用于故障后继续执行；快照更常作为某一时刻的备份或版本保存。元数据与数据之分、一致性要求以及存储介质并不是二者的本质区别。",
+    "id": "scheduling-188",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "检查点与恢复"
+  },
+  {
+    "type": "single",
+    "question": "在分布式Agent调度中，检查点协调通常需要解决什么问题？",
+    "options": [
+      {
+        "text": "所有Agent同时保存检查点",
+        "correct": false
+      },
+      {
+        "text": "确保所有Agent的检查点对应一致的全局状态",
+        "correct": true
+      },
+      {
+        "text": "每个Agent独立保存检查点，无需协调",
+        "correct": false
+      },
+      {
+        "text": "仅保存主Agent的检查点",
+        "correct": false
+      }
+    ],
+    "explanation": "分布式环境下需协调各Agent的检查点，保证全局状态一致，避免恢复后状态不一致。独立保存可能导致状态不一致。",
+    "id": "scheduling-189",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "检查点与恢复"
+  },
+  {
+    "type": "single",
+    "question": "以下哪项不是检查点恢复的常见挑战？",
+    "options": [
+      {
+        "text": "检查点数据过大导致恢复慢",
+        "correct": false
+      },
+      {
+        "text": "检查点与当前代码版本不兼容",
+        "correct": false
+      },
+      {
+        "text": "恢复后外部资源状态已变化",
+        "correct": false
+      },
+      {
+        "text": "检查点保存频率过高导致存储无限增长",
+        "correct": true
+      }
+    ],
+    "explanation": "存储无限增长可通过清理旧检查点解决，不是恢复本身的挑战。恢复挑战包括数据量大、版本兼容、外部状态变化等。",
+    "id": "scheduling-190",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "检查点与恢复"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些是检查点在Agent项目调度中的常见应用场景？",
+    "options": [
+      {
+        "text": "长时间运行的数据处理任务",
+        "correct": true
+      },
+      {
+        "text": "需要高可靠性的关键任务",
+        "correct": true
+      },
+      {
+        "text": "短时无状态的查询任务",
+        "correct": false
+      },
+      {
+        "text": "频繁交互的对话任务",
+        "correct": false
+      }
+    ],
+    "explanation": "检查点适用于长任务和高可靠任务，短时无状态任务无需检查点，频繁交互任务可能更关注响应速度而非检查点。",
+    "id": "scheduling-191",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "检查点与恢复"
+  },
+  {
+    "type": "multiple",
+    "question": "设计检查点机制时，需要考虑哪些因素？",
+    "options": [
+      {
+        "text": "检查点频率与性能开销的平衡",
+        "correct": true
+      },
+      {
+        "text": "检查点数据的存储位置和持久性",
+        "correct": true
+      },
+      {
+        "text": "检查点数据的一致性保证",
+        "correct": true
+      },
+      {
+        "text": "检查点必须每次全量保存",
+        "correct": false
+      }
+    ],
+    "explanation": "检查点设计需权衡频率、存储、一致性。全量保存并非必须，增量检查点可减少开销。",
+    "id": "scheduling-192",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "检查点与恢复"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些技术可用于实现高效的检查点？",
+    "options": [
+      {
+        "text": "增量检查点",
+        "correct": true
+      },
+      {
+        "text": "写时复制（Copy-on-Write）",
+        "correct": true
+      },
+      {
+        "text": "定期全量备份",
+        "correct": false
+      },
+      {
+        "text": "内存缓存所有状态",
+        "correct": false
+      }
+    ],
+    "explanation": "增量检查点和写时复制能减少检查点开销，全量备份效率较低，内存缓存不持久。",
+    "id": "scheduling-193",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "检查点与恢复"
+  },
+  {
+    "type": "multiple",
+    "question": "在Agent恢复时，以下哪些步骤是必要的？",
+    "options": [
+      {
+        "text": "加载检查点数据",
+        "correct": true
+      },
+      {
+        "text": "验证检查点与当前环境兼容性",
+        "correct": true
+      },
+      {
+        "text": "从检查点继续执行",
+        "correct": true
+      },
+      {
+        "text": "重新执行所有历史任务",
+        "correct": false
+      }
+    ],
+    "explanation": "恢复需加载检查点、验证兼容性并继续执行，重新执行所有任务会失去检查点意义。",
+    "id": "scheduling-194",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "检查点与恢复"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些措施可以提高检查点恢复的可靠性？",
+    "options": [
+      {
+        "text": "对检查点数据进行校验",
+        "correct": true
+      },
+      {
+        "text": "使用多个存储副本",
+        "correct": true
+      },
+      {
+        "text": "定期测试恢复流程",
+        "correct": true
+      },
+      {
+        "text": "仅使用本地磁盘存储检查点",
+        "correct": false
+      }
+    ],
+    "explanation": "校验、多副本和定期测试可提高可靠性。仅本地磁盘存储存在单点故障风险。",
+    "id": "scheduling-195",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "检查点与恢复"
+  },
+  {
+    "type": "single",
+    "question": "在Agent调度系统中，采用检查点机制后，若发生故障，恢复过程通常首先执行哪一步？",
+    "options": [
+      {
+        "text": "重新启动所有Agent进程",
+        "correct": false
+      },
+      {
+        "text": "加载最近有效的检查点数据",
+        "correct": true
+      },
+      {
+        "text": "清空消息队列",
+        "correct": false
+      },
+      {
+        "text": "回滚数据库事务",
+        "correct": false
+      }
+    ],
+    "explanation": "恢复的第一步是加载最近有效的检查点数据，以重建Agent状态。重新启动进程、清空队列或回滚事务可能是后续步骤，但不是首要操作。",
+    "id": "scheduling-196",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "检查点与恢复"
+  },
+  {
+    "type": "single",
+    "question": "某Agent调度系统要求故障后最多丢失1分钟的计算进度，且写出一个完整检查点本身需要耗时。检查点间隔应如何设置最合理？",
+    "options": [
+      {
+        "text": "等于1分钟即可",
+        "correct": false
+      },
+      {
+        "text": "小于1分钟，并预留检查点执行耗时",
+        "correct": true
+      },
+      {
+        "text": "大于1分钟以降低开销",
+        "correct": false
+      },
+      {
+        "text": "无需设置固定间隔",
+        "correct": false
+      }
+    ],
+    "explanation": "故障可能发生在检查点执行期间，最近完整检查点会比间隔更旧；要让最坏情况丢失不超过1分钟，检查点间隔应小于允许丢失上限，并考虑检查点自身耗时。等于或大于1分钟可能超限。",
+    "id": "scheduling-197",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "检查点与恢复"
+  },
+  {
+    "type": "single",
+    "question": "Agent调度中，检查点数据写入磁盘时使用临时文件再重命名的方式，主要目的是什么？",
+    "options": [
+      {
+        "text": "提高写入速度",
+        "correct": false
+      },
+      {
+        "text": "保证检查点文件的原子性",
+        "correct": true
+      },
+      {
+        "text": "减少磁盘空间占用",
+        "correct": false
+      },
+      {
+        "text": "方便多进程并发写",
+        "correct": false
+      }
+    ],
+    "explanation": "临时文件加重命名可确保检查点文件要么完整生成，要么不存在，避免恢复时读取到不完整数据。这不是为了提高速度、节省空间或支持并发写。",
+    "id": "scheduling-198",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "检查点与恢复"
+  },
+  {
+    "type": "single",
+    "question": "在基于消息传递的Agent调度中，检查点需要保存消息队列状态，以下哪项做法最合适？",
+    "options": [
+      {
+        "text": "只保存已处理消息的ID",
+        "correct": false
+      },
+      {
+        "text": "保存未处理消息及其顺序",
+        "correct": true
+      },
+      {
+        "text": "丢弃所有未处理消息",
+        "correct": false
+      },
+      {
+        "text": "仅保存消息总数",
+        "correct": false
+      }
+    ],
+    "explanation": "恢复后Agent需要继续处理未完成的消息，因此必须保存未处理消息的内容和顺序。只保存ID、总数或丢弃消息都会导致状态不一致或消息丢失。",
+    "id": "scheduling-199",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "检查点与恢复"
+  },
+  {
+    "type": "single",
+    "question": "Agent调度系统采用周期检查点，但某次检查点执行时间过长，可能引发什么问题？",
+    "options": [
+      {
+        "text": "检查点频率自动提高",
+        "correct": false
+      },
+      {
+        "text": "故障恢复点滞后，丢失更多进度",
+        "correct": true
+      },
+      {
+        "text": "Agent计算速度永久下降",
+        "correct": false
+      },
+      {
+        "text": "消息队列自动扩容",
+        "correct": false
+      }
+    ],
+    "explanation": "检查点执行时间过长会推迟下一个检查点的完成，导致最近有效检查点更旧，故障时丢失更多进度。它不会自动提高频率、永久降低计算速度或扩容队列。",
+    "id": "scheduling-200",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "检查点与恢复"
+  },
+  {
+    "type": "single",
+    "question": "以下哪种情况说明检查点恢复后出现了“重复处理”问题？",
+    "options": [
+      {
+        "text": "恢复后丢失了部分未保存的消息",
+        "correct": false
+      },
+      {
+        "text": "恢复后重新执行了故障前已确认完成的任务",
+        "correct": true
+      },
+      {
+        "text": "恢复后Agent无法启动",
+        "correct": false
+      },
+      {
+        "text": "恢复后检查点文件损坏",
+        "correct": false
+      }
+    ],
+    "explanation": "重复处理指故障前已确认完成的任务在恢复后被再次执行，通常因检查点未记录完成确认或恢复逻辑不当导致。丢失消息、无法启动和文件损坏不属于重复处理。",
+    "id": "scheduling-201",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "检查点与恢复"
+  },
+  {
+    "type": "single",
+    "question": "Agent调度中，检查点与日志（Log）结合使用时，日志通常用于什么目的？",
+    "options": [
+      {
+        "text": "替代检查点保存全量状态",
+        "correct": false
+      },
+      {
+        "text": "记录检查点之间的增量操作",
+        "correct": true
+      },
+      {
+        "text": "加密检查点文件",
+        "correct": false
+      },
+      {
+        "text": "压缩检查点数据",
+        "correct": false
+      }
+    ],
+    "explanation": "日志记录检查点之间的增量操作，恢复时先加载检查点再重放日志，可减少检查点频率。它不替代全量状态、不负责加密或压缩。",
+    "id": "scheduling-202",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "检查点与恢复"
+  },
+  {
+    "type": "single",
+    "question": "在分布式Agent调度中，采用全局一致性检查点时，下列哪项是必须满足的条件？",
+    "options": [
+      {
+        "text": "所有Agent必须在同一物理时刻暂停",
+        "correct": false
+      },
+      {
+        "text": "若某条消息的接收事件已包含在检查点中，则其发送事件也必须在某个检查点中被记录",
+        "correct": true
+      },
+      {
+        "text": "每个Agent只需独立保存自己的检查点",
+        "correct": false
+      },
+      {
+        "text": "检查点必须写入同一块磁盘",
+        "correct": false
+      }
+    ],
+    "explanation": "全局一致性要求不能出现已记录接收但找不到对应发送的消息，否则恢复后会出现无源消息或状态矛盾。已发送但尚未接收的消息可以作为在途消息存在，恢复流程需要对其重放、补发或丢弃等处理；因此并不要求所有Agent同时暂停，也不要求独立保存或同一磁盘。",
+    "id": "scheduling-203",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "检查点与恢复"
+  },
+  {
+    "type": "single",
+    "question": "某Agent调度系统在恢复时发现检查点版本与当前程序版本不兼容，最合理的处理策略是什么？",
+    "options": [
+      {
+        "text": "强制加载并忽略兼容性错误",
+        "correct": false
+      },
+      {
+        "text": "回退到兼容的旧版本或使用迁移工具转换",
+        "correct": true
+      },
+      {
+        "text": "删除所有检查点重新开始",
+        "correct": false
+      },
+      {
+        "text": "修改程序版本号以匹配检查点",
+        "correct": false
+      }
+    ],
+    "explanation": "版本不兼容时应回退到兼容版本或使用迁移工具转换检查点数据。强制加载可能出错，删除所有检查点会丢失进度，修改版本号是掩盖问题。",
+    "id": "scheduling-204",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "检查点与恢复"
+  },
+  {
+    "type": "single",
+    "question": "Agent调度中，检查点数据加密存储的主要目的是什么？",
+    "options": [
+      {
+        "text": "减少存储空间",
+        "correct": false
+      },
+      {
+        "text": "防止敏感状态信息泄露",
+        "correct": true
+      },
+      {
+        "text": "加快恢复速度",
+        "correct": false
+      },
+      {
+        "text": "避免检查点文件被误删",
+        "correct": false
+      }
+    ],
+    "explanation": "加密存储可防止检查点中的敏感状态信息被未授权访问。它不减少空间、不加快恢复，也不能防止文件被误删。",
+    "id": "scheduling-205",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "检查点与恢复"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些因素会影响Agent调度中检查点开销的大小？",
+    "options": [
+      {
+        "text": "状态数据量大小",
+        "correct": true
+      },
+      {
+        "text": "检查点存储介质的写入速度",
+        "correct": true
+      },
+      {
+        "text": "Agent数量",
+        "correct": true
+      },
+      {
+        "text": "检查点文件的命名长度",
+        "correct": false
+      }
+    ],
+    "explanation": "状态数据量、存储写入速度和Agent数量都会直接影响检查点开销。文件命名长度对开销影响极小，通常不是考虑因素。",
+    "id": "scheduling-206",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "检查点与恢复"
+  },
+  {
+    "type": "multiple",
+    "question": "在设计Agent调度系统的检查点恢复流程时，以下哪些做法有助于减少恢复时间？",
+    "options": [
+      {
+        "text": "并行加载多个Agent的检查点",
+        "correct": true
+      },
+      {
+        "text": "只恢复活跃Agent的状态",
+        "correct": true
+      },
+      {
+        "text": "使用增量检查点",
+        "correct": true
+      },
+      {
+        "text": "每次恢复前全量扫描所有历史检查点",
+        "correct": false
+      }
+    ],
+    "explanation": "并行加载、只恢复活跃Agent和使用增量检查点都能减少恢复时间。全量扫描历史检查点会增加恢复延迟，不利于快速恢复。",
+    "id": "scheduling-207",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "检查点与恢复"
+  },
+  {
+    "type": "multiple",
+    "question": "在Agent项目调度中，检查点机制可能引入哪些额外开销？",
+    "options": [
+      {
+        "text": "状态保存的I/O开销",
+        "correct": true
+      },
+      {
+        "text": "暂停Agent计算的时间开销",
+        "correct": true
+      },
+      {
+        "text": "存储空间占用",
+        "correct": true
+      },
+      {
+        "text": "网络带宽的永久增加",
+        "correct": false
+      }
+    ],
+    "explanation": "检查点会带来I/O、暂停计算和存储空间开销。网络带宽可能暂时增加，但不会是永久增加，因此不是必然的额外开销。",
+    "id": "scheduling-208",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "检查点与恢复"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些属于检查点恢复后需要验证的内容？",
+    "options": [
+      {
+        "text": "Agent状态是否与检查点一致",
+        "correct": true
+      },
+      {
+        "text": "未处理消息是否完整",
+        "correct": true
+      },
+      {
+        "text": "检查点文件是否可读",
+        "correct": true
+      },
+      {
+        "text": "检查点文件名是否符合命名规范",
+        "correct": false
+      }
+    ],
+    "explanation": "恢复后应验证状态一致性、消息完整性和文件可读性。文件名规范是管理层面的要求，不是恢复正确性的必要验证内容。",
+    "id": "scheduling-209",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "检查点与恢复"
+  },
+  {
+    "type": "multiple",
+    "question": "在Agent调度中，为了提高检查点恢复的可靠性，可以采取哪些措施？",
+    "options": [
+      {
+        "text": "对检查点数据进行校验和验证",
+        "correct": true
+      },
+      {
+        "text": "将检查点保存到多个副本",
+        "correct": true
+      },
+      {
+        "text": "定期测试恢复流程",
+        "correct": true
+      },
+      {
+        "text": "仅保留最新一个检查点",
+        "correct": false
+      }
+    ],
+    "explanation": "校验和、多副本和定期测试恢复都能提高可靠性。仅保留最新一个检查点会降低容错能力，一旦该检查点损坏则无法恢复。",
+    "id": "scheduling-210",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "检查点与恢复"
+  },
+  {
+    "type": "single",
+    "question": "在支持协作式取消的调度器中，一个正在运行的任务收到取消请求后，调度器最合理的后续行为是？",
+    "options": [
+      {
+        "text": "立即强制回收资源并假定任务已停止",
+        "correct": false
+      },
+      {
+        "text": "通知任务协作退出，待其结束后回收资源并标记为已取消",
+        "correct": true
+      },
+      {
+        "text": "忽略取消请求，等待任务自然完成",
+        "correct": false
+      },
+      {
+        "text": "把任务重新放回就绪队列等待再次调度",
+        "correct": false
+      }
+    ],
+    "explanation": "协作式取消依赖任务主动检查取消标志并退出，调度器不能安全地假定资源可立即回收。正确流程是发出取消通知、等待或确认任务结束，再清理并更新状态；忽略请求会违背取消语义，重新入队会导致重复执行。",
+    "id": "scheduling-211",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "取消与超时"
+  },
+  {
+    "type": "single",
+    "question": "以下关于超时设置的说法，正确的是？",
+    "options": [
+      {
+        "text": "超时时间应短于任务平均执行时间，以尽快释放资源",
+        "correct": false
+      },
+      {
+        "text": "超时时间应基于任务正常执行时间的分布合理设定",
+        "correct": true
+      },
+      {
+        "text": "所有任务的超时时间必须相同以确保公平",
+        "correct": false
+      },
+      {
+        "text": "超时后必须立即杀死任务线程，无需清理",
+        "correct": false
+      }
+    ],
+    "explanation": "超时阈值应结合任务历史执行时间分布设定，避免过短导致误杀、过长导致资源占用。统一超时或强制杀线程不清理可能引发资源泄漏。",
+    "id": "scheduling-212",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "取消与超时"
+  },
+  {
+    "type": "single",
+    "question": "在协作式取消模型中，任务函数需要定期检查取消标志。以下哪种做法最合适？",
+    "options": [
+      {
+        "text": "在循环的每次迭代开始检查取消标志",
+        "correct": true
+      },
+      {
+        "text": "只在任务开始时检查一次取消标志",
+        "correct": false
+      },
+      {
+        "text": "在任务抛出异常时检查取消标志",
+        "correct": false
+      },
+      {
+        "text": "完全不检查，依赖外部强制终止",
+        "correct": false
+      }
+    ],
+    "explanation": "协作式取消要求任务在可能长时间运行的路径上主动检查取消标志。循环内每次迭代检查能保证及时响应；仅开始时检查无法处理运行中的取消请求。",
+    "id": "scheduling-213",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "取消与超时"
+  },
+  {
+    "type": "single",
+    "question": "调度器使用线程池执行任务，当任务超时后，以下处理方式最安全的是？",
+    "options": [
+      {
+        "text": "直接调用线程的stop方法强制终止",
+        "correct": false
+      },
+      {
+        "text": "中断线程并设置标志，由任务协作退出",
+        "correct": true
+      },
+      {
+        "text": "忽略超时，让任务继续运行",
+        "correct": false
+      },
+      {
+        "text": "立即回收线程池中所有线程",
+        "correct": false
+      }
+    ],
+    "explanation": "Java等语言中Thread.stop已废弃且不安全，可能破坏状态。中断协作式退出是推荐做法。忽略超时或回收所有线程会影响其他任务。",
+    "id": "scheduling-214",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "取消与超时"
+  },
+  {
+    "type": "single",
+    "question": "在分布式任务调度中，任务在节点上执行超时，调度中心决定取消任务。以下哪种机制最可靠？",
+    "options": [
+      {
+        "text": "调度中心直接修改数据库中的任务状态为取消",
+        "correct": false
+      },
+      {
+        "text": "通过心跳机制通知工作节点，由节点终止任务",
+        "correct": true
+      },
+      {
+        "text": "等待任务执行完毕后再更新状态",
+        "correct": false
+      },
+      {
+        "text": "关闭工作节点以强制停止任务",
+        "correct": false
+      }
+    ],
+    "explanation": "分布式环境下，调度中心无法直接控制远程进程，需通过心跳或消息通知节点，由节点本地终止任务。仅改数据库状态不会终止执行；关闭节点代价过大。",
+    "id": "scheduling-215",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "取消与超时"
+  },
+  {
+    "type": "single",
+    "question": "使用Python的concurrent.futures时，Future.cancel()的返回值在任务已开始执行时是什么？",
+    "options": [
+      {
+        "text": "True",
+        "correct": false
+      },
+      {
+        "text": "False",
+        "correct": true
+      },
+      {
+        "text": "None",
+        "correct": false
+      },
+      {
+        "text": "抛出CancelledError",
+        "correct": false
+      }
+    ],
+    "explanation": "Future.cancel()在任务已开始执行时无法取消，返回False。仅当任务尚未开始执行时返回True。Python 3中该行为稳定。",
+    "id": "scheduling-216",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "取消与超时"
+  },
+  {
+    "type": "single",
+    "question": "在Go语言中，使用context实现任务超时取消，以下哪种模式是正确的？",
+    "options": [
+      {
+        "text": "使用context.WithTimeout创建上下文，并传递给任务函数",
+        "correct": true
+      },
+      {
+        "text": "直接调用time.Sleep等待超时后关闭channel",
+        "correct": false
+      },
+      {
+        "text": "使用context.Background()并忽略Done通道",
+        "correct": false
+      },
+      {
+        "text": "使用全局变量记录超时时间，任务轮询该变量",
+        "correct": false
+      }
+    ],
+    "explanation": "Go中标准做法是用context.WithTimeout创建可取消上下文，任务通过监听ctx.Done()感知取消。time.Sleep不能通知任务；忽略Done通道无法取消；全局变量非并发安全且非标准。",
+    "id": "scheduling-217",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "取消与超时"
+  },
+  {
+    "type": "single",
+    "question": "调度器为任务设置超时，但任务在超时后仍继续运行并最终完成。这最可能导致什么问题？",
+    "options": [
+      {
+        "text": "资源被长时间占用，影响其他任务调度",
+        "correct": true
+      },
+      {
+        "text": "任务结果自动被丢弃，无任何影响",
+        "correct": false
+      },
+      {
+        "text": "调度器立即崩溃",
+        "correct": false
+      },
+      {
+        "text": "超时设置自动延长",
+        "correct": false
+      }
+    ],
+    "explanation": "超时后任务未终止会继续占用CPU、内存等资源，降低调度效率，甚至引发资源泄漏。结果是否丢弃取决于实现，但资源占用是主要问题。",
+    "id": "scheduling-218",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "取消与超时"
+  },
+  {
+    "type": "single",
+    "question": "在JavaScript中，若既要为异步任务设置超时，又要能真正取消底层任务（例如fetch），以下哪种做法最合适？",
+    "options": [
+      {
+        "text": "只使用Promise.race与一个定时拒绝的Promise，无需其他机制",
+        "correct": false
+      },
+      {
+        "text": "使用AbortController，在定时器触发时调用abort，并把signal传给支持取消的API",
+        "correct": true
+      },
+      {
+        "text": "使用setTimeout直接修改Promise的内部状态",
+        "correct": false
+      },
+      {
+        "text": "使用Promise.all等待所有任务完成",
+        "correct": false
+      }
+    ],
+    "explanation": "Promise.race只能让调用方先看到超时结果，并不会停止底层操作。AbortController提供取消信号，fetch等支持取消的API可据此中止请求；触发取消后还应清理定时器并处理中止异常。",
+    "id": "scheduling-219",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "取消与超时"
+  },
+  {
+    "type": "single",
+    "question": "关于取消标志的原子性，以下说法正确的是？",
+    "options": [
+      {
+        "text": "取消标志必须使用原子变量或加锁以保证可见性",
+        "correct": true
+      },
+      {
+        "text": "普通布尔变量在多线程下足够安全",
+        "correct": false
+      },
+      {
+        "text": "取消标志只能由调度线程修改",
+        "correct": false
+      },
+      {
+        "text": "取消标志不需要考虑内存可见性",
+        "correct": false
+      }
+    ],
+    "explanation": "多线程环境下，普通布尔变量可能因缓存导致可见性问题。应使用atomic或volatile/锁来保证一个线程的修改对另一个线程可见。",
+    "id": "scheduling-220",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "取消与超时"
+  },
+  {
+    "type": "single",
+    "question": "在任务调度中，硬超时与软超时的主要区别是什么？",
+    "options": [
+      {
+        "text": "硬超时强制终止任务，软超时仅发出警告或请求取消",
+        "correct": true
+      },
+      {
+        "text": "硬超时用于实时系统，软超时用于普通系统",
+        "correct": false
+      },
+      {
+        "text": "硬超时时间短，软超时时间长",
+        "correct": false
+      },
+      {
+        "text": "硬超时不需要清理资源，软超时需要",
+        "correct": false
+      }
+    ],
+    "explanation": "硬超时通常采取强制手段（如杀进程）确保任务停止，软超时则通知任务自行退出。区别在于强制性与协作性。",
+    "id": "scheduling-221",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "取消与超时"
+  },
+  {
+    "type": "single",
+    "question": "使用Java的ExecutorService时，Future.get(timeout, unit)超时后，任务会怎样？",
+    "options": [
+      {
+        "text": "任务被自动取消并中断",
+        "correct": false
+      },
+      {
+        "text": "任务继续执行，除非显式调用cancel",
+        "correct": true
+      },
+      {
+        "text": "任务立即停止",
+        "correct": false
+      },
+      {
+        "text": "线程池被关闭",
+        "correct": false
+      }
+    ],
+    "explanation": "Future.get超时仅抛出TimeoutException，不会自动取消任务。需要显式调用future.cancel(true)来尝试中断任务。",
+    "id": "scheduling-222",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "取消与超时"
+  },
+  {
+    "type": "single",
+    "question": "在 Kubernetes 中，Pod 的 activeDeadlineSeconds 字段的主要作用是什么？",
+    "options": [
+      {
+        "text": "设置 Pod 整体的最长活动时间，达到期限后 Pod 被终止并标记为失败",
+        "correct": true
+      },
+      {
+        "text": "设置容器启动探针的超时时间",
+        "correct": false
+      },
+      {
+        "text": "设置 Pod 调度的超时时间",
+        "correct": false
+      },
+      {
+        "text": "设置 Pod 就绪探针的超时时间",
+        "correct": false
+      }
+    ],
+    "explanation": "activeDeadlineSeconds 作用于 Pod 整体，从 Pod 启动开始计时；达到期限后 kubelet 会终止 Pod，并将状态置为失败。它不用于容器启动探针、调度或就绪探针的超时。",
+    "id": "scheduling-223",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "取消与超时"
+  },
+  {
+    "type": "single",
+    "question": "以下哪种场景最适合使用取消机制而不是超时机制？",
+    "options": [
+      {
+        "text": "用户主动取消一个长时间运行的查询",
+        "correct": true
+      },
+      {
+        "text": "任务执行时间可能超过预期上限",
+        "correct": false
+      },
+      {
+        "text": "防止任务无限期挂起",
+        "correct": false
+      },
+      {
+        "text": "限制任务占用的最大CPU时间",
+        "correct": false
+      }
+    ],
+    "explanation": "外部主动请求终止，例如用户取消长时间查询，适合用取消机制表达意图；执行时间上限、防止无限挂起和限制 CPU 时间都是时间边界控制，更适合用超时机制。",
+    "id": "scheduling-224",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "取消与超时"
+  },
+  {
+    "type": "single",
+    "question": "在任务超时监控中，以下哪种策略最不区分任务类型和执行时间差异，容易导致误判？",
+    "options": [
+      {
+        "text": "基于每个任务历史执行时间的分布设置动态阈值",
+        "correct": false
+      },
+      {
+        "text": "使用任务执行时间的百分位数（如P99）设定阈值",
+        "correct": false
+      },
+      {
+        "text": "对所有任务使用相同的固定超时时间",
+        "correct": true
+      },
+      {
+        "text": "根据任务类型分别设定超时时间",
+        "correct": false
+      }
+    ],
+    "explanation": "不同任务的执行时间分布差异很大；统一固定超时会让长任务被过早判超时，也会让短任务等待过久。按任务历史分布、百分位数或任务类型分别设阈值更能降低误判。",
+    "id": "scheduling-225",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "取消与超时"
+  },
+  {
+    "type": "single",
+    "question": "在任务调度器中，任务取消后，其已占用的资源（如内存、文件句柄）最应该何时释放？",
+    "options": [
+      {
+        "text": "取消标记后立即释放",
+        "correct": false
+      },
+      {
+        "text": "任务函数实际退出后释放",
+        "correct": true
+      },
+      {
+        "text": "由调度器定期统一释放",
+        "correct": false
+      },
+      {
+        "text": "等待超时计时器触发后再释放",
+        "correct": false
+      }
+    ],
+    "explanation": "取消标记仅表示意图，任务可能仍在运行并持有资源，必须等任务函数真正结束才能安全释放。立即释放会导致资源被使用中，定期或超时释放可能过早或过晚。",
+    "id": "scheduling-226",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "取消与超时"
+  },
+  {
+    "type": "single",
+    "question": "关于软超时与硬超时的区别，以下描述正确的是？",
+    "options": [
+      {
+        "text": "软超时只记录日志，不通知任务",
+        "correct": false
+      },
+      {
+        "text": "硬超时由任务自身决定是否停止",
+        "correct": false
+      },
+      {
+        "text": "软超时触发后任务应尽快清理并退出，硬超时由调度器强制终止",
+        "correct": true
+      },
+      {
+        "text": "软超时和硬超时都由操作系统发送SIGKILL",
+        "correct": false
+      }
+    ],
+    "explanation": "软超时给任务机会自行清理，通常通过取消信号通知；硬超时由调度器强制终止，可能使用杀进程。任务自身决定停止是软超时特征，硬超时不由任务决定，SIGKILL仅是强制手段之一。",
+    "id": "scheduling-227",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "取消与超时"
+  },
+  {
+    "type": "single",
+    "question": "在 Python asyncio 中，要使用标准库提供的超时控制，在等待协程超过指定时间后自动取消它，应使用哪个方式？",
+    "options": [
+      {
+        "text": "asyncio.wait_for(coro, timeout=5)",
+        "correct": true
+      },
+      {
+        "text": "创建任务后调用 task.set_timeout(5)",
+        "correct": false
+      },
+      {
+        "text": "使用 threading.Timer 在 5 秒后调用 task.cancel()，并将其视为 asyncio 标准超时 API",
+        "correct": false
+      },
+      {
+        "text": "在协程中调用 time.sleep(5) 来触发超时取消",
+        "correct": false
+      }
+    ],
+    "explanation": "asyncio.wait_for 会等待可等待对象，超时后取消内部任务并抛出 TimeoutError。Task 没有 set_timeout 方法；threading.Timer 不是 asyncio 标准超时机制；time.sleep 会阻塞事件循环，不能实现异步超时取消。",
+    "id": "scheduling-228",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "取消与超时"
+  },
+  {
+    "type": "single",
+    "question": "在 Python asyncio 中，父任务通过 asyncio.create_task 创建子任务，且未使用 TaskGroup 等结构化并发机制；父任务被取消后，子任务的默认行为是什么？",
+    "options": [
+      {
+        "text": "子任务不会自动取消，通常继续运行直至完成",
+        "correct": true
+      },
+      {
+        "text": "子任务自动收到取消并立即停止",
+        "correct": false
+      },
+      {
+        "text": "子任务被挂起，等待父任务恢复",
+        "correct": false
+      },
+      {
+        "text": "子任务立即被销毁且资源自动回收",
+        "correct": false
+      }
+    ],
+    "explanation": "asyncio 的取消是协作式的；父任务被取消不会自动取消它用 create_task 创建的子任务。子任务若需随父取消，必须显式传递取消信号，或使用 TaskGroup 等结构化并发机制。",
+    "id": "scheduling-229",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "取消与超时"
+  },
+  {
+    "type": "single",
+    "question": "在基于系统墙上时钟计算剩余时间的任务超时控制中，以下哪种情况最可能导致任务被错误地提前判定为超时？",
+    "options": [
+      {
+        "text": "任务实际执行时间略小于超时阈值",
+        "correct": false
+      },
+      {
+        "text": "系统时钟被向前跳变",
+        "correct": true
+      },
+      {
+        "text": "任务主动报告进度",
+        "correct": false
+      },
+      {
+        "text": "超时阈值设置得较长",
+        "correct": false
+      }
+    ],
+    "explanation": "如果超时判断使用墙上时钟，向前跳变会让当前时间突然增大，计算出的耗时或剩余时间出现偏差，可能提前触发超时。使用单调时钟可避免这种问题；实际耗时略小、报告进度和较长阈值都不会导致提前误判。",
+    "id": "scheduling-230",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "取消与超时"
+  },
+  {
+    "type": "single",
+    "question": "在 Java 中，希望 CompletableFuture 在超过指定时间仍未完成时自动以超时异常完成，应使用哪个方法？",
+    "options": [
+      {
+        "text": "future.get(5, TimeUnit.SECONDS)",
+        "correct": false
+      },
+      {
+        "text": "future.orTimeout(5, TimeUnit.SECONDS)",
+        "correct": true
+      },
+      {
+        "text": "future.cancelAfter(5)",
+        "correct": false
+      },
+      {
+        "text": "future.setTimeout(5)",
+        "correct": false
+      }
+    ],
+    "explanation": "CompletableFuture.orTimeout 在超时后使该 future 以 TimeoutException 异常完成。get(timeout) 只是阻塞等待并可能抛出 TimeoutException，不会自动让 future 超时完成；cancelAfter 和 setTimeout 不是该类提供的方法。注意 orTimeout 不会强制中断底层正在执行的计算。",
+    "id": "scheduling-231",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "取消与超时"
+  },
+  {
+    "type": "single",
+    "question": "关于协作式取消，以下说法错误的是？",
+    "options": [
+      {
+        "text": "任务需要定期检查取消标志",
+        "correct": false
+      },
+      {
+        "text": "取消标志应使用原子变量或线程安全方式",
+        "correct": false
+      },
+      {
+        "text": "协作式取消可以立即强制终止任务",
+        "correct": true
+      },
+      {
+        "text": "任务应在取消后清理资源",
+        "correct": false
+      }
+    ],
+    "explanation": "协作式取消依赖任务主动检查并退出，不能立即强制终止，强制终止是抢占式取消的特点。其他选项均为协作式取消的正确实践。",
+    "id": "scheduling-232",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "取消与超时"
+  },
+  {
+    "type": "single",
+    "question": "在调度器中，任务超时后调度器决定取消，但任务实现可能忽略取消信号。以下哪种措施最合理？",
+    "options": [
+      {
+        "text": "无限等待任务自行退出",
+        "correct": false
+      },
+      {
+        "text": "设置硬超时，强制终止任务",
+        "correct": true
+      },
+      {
+        "text": "直接释放任务占用的资源",
+        "correct": false
+      },
+      {
+        "text": "将任务状态改为成功",
+        "correct": false
+      }
+    ],
+    "explanation": "硬超时作为安全网可强制终止不响应取消的任务。无限等待可能导致资源泄漏，直接释放资源会引发竞态，改状态为成功会掩盖错误。",
+    "id": "scheduling-233",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "取消与超时"
+  },
+  {
+    "type": "single",
+    "question": "在Go语言中，使用context.WithTimeout创建上下文，超时后context.Done()通道会如何？",
+    "options": [
+      {
+        "text": "保持打开",
+        "correct": false
+      },
+      {
+        "text": "被关闭",
+        "correct": true
+      },
+      {
+        "text": "被重置",
+        "correct": false
+      },
+      {
+        "text": "被丢弃",
+        "correct": false
+      }
+    ],
+    "explanation": "context超时或取消后，Done()返回的通道会被关闭，这是通知机制。通道不会保持打开、重置或丢弃。",
+    "id": "scheduling-234",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "取消与超时"
+  },
+  {
+    "type": "single",
+    "question": "在任务调度中，任务被取消后，其返回结果应如何处理？",
+    "options": [
+      {
+        "text": "作为正常结果提交",
+        "correct": false
+      },
+      {
+        "text": "忽略并标记为已取消",
+        "correct": true
+      },
+      {
+        "text": "触发重试",
+        "correct": false
+      },
+      {
+        "text": "记录为成功",
+        "correct": false
+      }
+    ],
+    "explanation": "取消的任务结果不应作为正常结果提交，应忽略并标记取消状态。触发重试违背取消意图，记录成功会掩盖状态。",
+    "id": "scheduling-235",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "取消与超时"
+  },
+  {
+    "type": "single",
+    "question": "在实现任务超时监控时，以下哪种做法可能导致超时判断不准确？",
+    "options": [
+      {
+        "text": "使用单调时钟测量耗时",
+        "correct": false
+      },
+      {
+        "text": "在任务开始和结束时记录时间戳",
+        "correct": false
+      },
+      {
+        "text": "仅依赖任务自己上报的开始时间",
+        "correct": true
+      },
+      {
+        "text": "定期检查任务心跳",
+        "correct": false
+      }
+    ],
+    "explanation": "仅依赖任务自报开始时间可能被篡改或误差影响。单调时钟、记录时间戳和心跳检查都是更可靠的超时监控手段。",
+    "id": "scheduling-236",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "取消与超时"
+  },
+  {
+    "type": "single",
+    "question": "若某个基于时间轮的定时器实现使用系统墙上时钟而不是单调时钟来推进时间轮，系统时间被回拨后最可能发生什么？",
+    "options": [
+      {
+        "text": "超时可能被延迟触发甚至漏判",
+        "correct": true
+      },
+      {
+        "text": "超时一定不受影响，因为时间轮只使用相对时间差",
+        "correct": false
+      },
+      {
+        "text": "超时检测会立即触发，因为时间回拨导致时间轮跳跃",
+        "correct": false
+      },
+      {
+        "text": "所有已注册定时器会被重置为初始槽位",
+        "correct": false
+      }
+    ],
+    "explanation": "使用墙上时钟推进时间轮时，时间回拨会使计算出的流逝时间变短或为负，时间轮推进变慢，从而延迟超时甚至漏判。使用单调时钟可避免；时间轮不会因此立即触发或自动重置所有定时器。",
+    "id": "scheduling-237",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "取消与超时"
+  },
+  {
+    "type": "single",
+    "question": "在Python的concurrent.futures中，使用ThreadPoolExecutor提交任务后，调用Future.cancel()返回True。以下说法正确的是？",
+    "options": [
+      {
+        "text": "任务已经开始执行，但会被立即中断",
+        "correct": false
+      },
+      {
+        "text": "任务尚未开始执行，已被成功取消，不会再运行",
+        "correct": true
+      },
+      {
+        "text": "任务正在执行，cancel()会等待其完成后返回True",
+        "correct": false
+      },
+      {
+        "text": "cancel()总是返回True，但任务仍可能继续执行",
+        "correct": false
+      }
+    ],
+    "explanation": "Future.cancel()仅在任务尚未开始执行时返回True并阻止其运行；若任务已开始执行，cancel()返回False且无法中断线程。因此返回True说明任务尚未开始。选项A、C、D均错误理解取消语义。",
+    "id": "scheduling-238",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "取消与超时"
+  },
+  {
+    "type": "single",
+    "question": "在基于 asyncio 的任务调度器中，任务被取消后，其协程内部正在执行的同步阻塞调用（如 time.sleep）通常会怎样？",
+    "options": [
+      {
+        "text": "立即抛出 CancelledError 并终止",
+        "correct": false
+      },
+      {
+        "text": "继续执行直到阻塞调用结束，之后才可能响应取消",
+        "correct": true
+      },
+      {
+        "text": "调度器强制终止整个线程",
+        "correct": false
+      },
+      {
+        "text": "阻塞调用被自动转换为异步操作",
+        "correct": false
+      }
+    ],
+    "explanation": "asyncio 采用协作式取消，取消信号在协程让出控制权时生效。同步阻塞调用不会主动检查取消标志，因此会继续执行直至完成，之后协程才能响应取消。误区是认为取消能立即中断任何代码。",
+    "id": "scheduling-239",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "取消与超时"
+  },
+  {
+    "type": "single",
+    "question": "在 Agent 项目调度器中，一个任务因超时被调度器发出取消信号，但任务实现内部捕获并忽略了该信号继续执行至完成。以下哪种描述最符合该场景的潜在风险？",
+    "options": [
+      {
+        "text": "调度器会立即强制终止任务进程，因此没有风险",
+        "correct": false
+      },
+      {
+        "text": "任务仍会占用调度器分配的资源，可能导致资源泄漏并影响后续调度决策",
+        "correct": true
+      },
+      {
+        "text": "调度器会自动将任务状态回滚为“未开始”，因此不会影响资源统计",
+        "correct": false
+      },
+      {
+        "text": "忽略取消信号只会导致任务结果丢失，不会影响调度器资源视图",
+        "correct": false
+      }
+    ],
+    "explanation": "调度器发出取消信号后通常依赖任务协作退出。若任务忽略信号继续运行，其占用的 CPU、内存等资源不会及时释放，调度器可能误判资源可用性，导致泄漏和调度偏差。强制终止并非所有调度器都具备，状态回滚和结果丢失也不是主要风险。",
+    "id": "scheduling-240",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "取消与超时"
+  },
+  {
+    "type": "single",
+    "question": "在Agent项目调度中，为跟踪项目进度，最直接有效的方法是使用以下哪种工具？",
+    "options": [
+      {
+        "text": "甘特图",
+        "correct": true
+      },
+      {
+        "text": "鱼骨图",
+        "correct": false
+      },
+      {
+        "text": "流程图",
+        "correct": false
+      },
+      {
+        "text": "组织架构图",
+        "correct": false
+      }
+    ],
+    "explanation": "甘特图能直观展示任务时间安排和进度，是跟踪项目进度的常用工具。鱼骨图用于原因分析，流程图用于流程描述，组织架构图用于展示人员结构。",
+    "id": "scheduling-241",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "进度与交付验收"
+  },
+  {
+    "type": "single",
+    "question": "在敏捷开发中，衡量团队在一个迭代内完成工作量的常用指标是？",
+    "options": [
+      {
+        "text": "故事点",
+        "correct": false
+      },
+      {
+        "text": "速率",
+        "correct": true
+      },
+      {
+        "text": "缺陷率",
+        "correct": false
+      },
+      {
+        "text": "代码覆盖率",
+        "correct": false
+      }
+    ],
+    "explanation": "速率（Velocity）是团队在一个迭代中完成的故事点总和，用于预测未来迭代容量。故事点是工作量单位，缺陷率和代码覆盖率是质量指标。",
+    "id": "scheduling-242",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "进度与交付验收"
+  },
+  {
+    "type": "single",
+    "question": "在项目交付验收阶段，客户提出一项不在原需求范围内的新功能，项目经理首先应该？",
+    "options": [
+      {
+        "text": "立即拒绝并说明合同规定",
+        "correct": false
+      },
+      {
+        "text": "评估变更影响并走变更流程",
+        "correct": true
+      },
+      {
+        "text": "直接安排团队开发",
+        "correct": false
+      },
+      {
+        "text": "忽略该请求继续验收",
+        "correct": false
+      }
+    ],
+    "explanation": "对于范围外的变更，应评估其对进度、成本、质量的影响，并通过变更控制流程处理。直接拒绝可能损害客户关系，直接开发会导致范围蔓延，忽略则不负责任。",
+    "id": "scheduling-243",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "进度与交付验收"
+  },
+  {
+    "type": "single",
+    "question": "以下哪项是项目进度计划中“关键路径”的正确描述？",
+    "options": [
+      {
+        "text": "项目中最长的任务序列，决定项目最短工期",
+        "correct": true
+      },
+      {
+        "text": "项目中耗时最长的单个任务",
+        "correct": false
+      },
+      {
+        "text": "项目中风险最高的任务序列",
+        "correct": false
+      },
+      {
+        "text": "项目中成本最高的任务序列",
+        "correct": false
+      }
+    ],
+    "explanation": "关键路径是项目网络图中最长的路径，其长度决定了项目的最短完成时间。关键路径上的任务延迟会直接导致项目延迟。",
+    "id": "scheduling-244",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "进度与交付验收"
+  },
+  {
+    "type": "single",
+    "question": "在验收测试中，以下哪项属于非功能性验收标准？",
+    "options": [
+      {
+        "text": "用户登录功能正常",
+        "correct": false
+      },
+      {
+        "text": "系统响应时间小于2秒",
+        "correct": true
+      },
+      {
+        "text": "订单金额计算正确",
+        "correct": false
+      },
+      {
+        "text": "报表导出功能可用",
+        "correct": false
+      }
+    ],
+    "explanation": "非功能性验收标准关注性能、安全性、可用性等，如响应时间。功能性标准关注具体功能行为，如登录、计算、导出。",
+    "id": "scheduling-245",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "进度与交付验收"
+  },
+  {
+    "type": "single",
+    "question": "在项目范围管理中，将项目范围和可交付成果逐层分解为更小、更易管理组成部分的层级结构称为？",
+    "options": [
+      {
+        "text": "范围核实",
+        "correct": false
+      },
+      {
+        "text": "工作分解结构（WBS）",
+        "correct": true
+      },
+      {
+        "text": "资源平衡",
+        "correct": false
+      },
+      {
+        "text": "进度压缩",
+        "correct": false
+      }
+    ],
+    "explanation": "工作分解结构通过逐层分解项目范围和可交付成果形成层级结构，为估算、进度安排和成本控制提供基础。范围核实是正式验收可交付成果，资源平衡用于处理资源冲突，进度压缩用于缩短工期。",
+    "id": "scheduling-246",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "进度与交付验收"
+  },
+  {
+    "type": "single",
+    "question": "在一次迭代评审会议上，产品负责人宣布本次迭代目标达成，但有一个用户故事未完全符合验收标准。团队应该？",
+    "options": [
+      {
+        "text": "将该故事标记为完成，下个迭代修复问题",
+        "correct": false
+      },
+      {
+        "text": "将该故事移回产品待办列表，下个迭代重新完成",
+        "correct": true
+      },
+      {
+        "text": "忽略验收标准，因为迭代目标已达成",
+        "correct": false
+      },
+      {
+        "text": "立即延长迭代时间完成该故事",
+        "correct": false
+      }
+    ],
+    "explanation": "敏捷原则中，只有符合验收标准的故事才算完成。未完全达标的故事应放回待办列表，重新规划。延长迭代时间违背时间盒原则。",
+    "id": "scheduling-247",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "进度与交付验收"
+  },
+  {
+    "type": "single",
+    "question": "在项目进度控制中，发现实际进度落后于计划时，以下哪种措施属于进度压缩？",
+    "options": [
+      {
+        "text": "增加资源以加快关键路径任务",
+        "correct": true
+      },
+      {
+        "text": "减少项目范围",
+        "correct": false
+      },
+      {
+        "text": "调整任务顺序以错开资源冲突",
+        "correct": false
+      },
+      {
+        "text": "延长项目工期",
+        "correct": false
+      }
+    ],
+    "explanation": "进度压缩包括赶工（增加资源）和快速跟进（并行任务）。减少范围是范围变更，调整顺序是资源平衡，延长工期是接受延迟。",
+    "id": "scheduling-248",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "进度与交付验收"
+  },
+  {
+    "type": "single",
+    "question": "在交付验收时，以下哪项文档通常用于记录客户对产品的正式接受？",
+    "options": [
+      {
+        "text": "项目章程",
+        "correct": false
+      },
+      {
+        "text": "验收报告",
+        "correct": true
+      },
+      {
+        "text": "需求规格说明书",
+        "correct": false
+      },
+      {
+        "text": "测试计划",
+        "correct": false
+      }
+    ],
+    "explanation": "验收报告由客户签署，正式确认可交付成果符合要求。项目章程授权项目，需求规格说明定义需求，测试计划指导测试。",
+    "id": "scheduling-249",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "进度与交付验收"
+  },
+  {
+    "type": "single",
+    "question": "在敏捷项目中，以下哪个会议主要用于检查增量并调整待办列表？",
+    "options": [
+      {
+        "text": "迭代计划会议",
+        "correct": false
+      },
+      {
+        "text": "迭代评审会议",
+        "correct": true
+      },
+      {
+        "text": "每日站会",
+        "correct": false
+      },
+      {
+        "text": "回顾会议",
+        "correct": false
+      }
+    ],
+    "explanation": "迭代评审会议在迭代结束时展示增量，收集反馈并调整待办列表。迭代计划会议规划迭代工作，站会同步进展，回顾会议改进过程。",
+    "id": "scheduling-250",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "进度与交付验收"
+  },
+  {
+    "type": "single",
+    "question": "在项目调度中，为应对不确定性而设置的缓冲时间通常应放在？",
+    "options": [
+      {
+        "text": "每个任务之后",
+        "correct": false
+      },
+      {
+        "text": "关键路径末尾",
+        "correct": true
+      },
+      {
+        "text": "非关键路径任务上",
+        "correct": false
+      },
+      {
+        "text": "项目开始之前",
+        "correct": false
+      }
+    ],
+    "explanation": "关键链方法中，项目缓冲放置在关键链末尾，以保护项目完成日期。每个任务后设置缓冲会浪费，非关键路径缓冲是汇入缓冲。",
+    "id": "scheduling-251",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "进度与交付验收"
+  },
+  {
+    "type": "single",
+    "question": "关于项目验收标准，以下说法正确的是？",
+    "options": [
+      {
+        "text": "验收标准应在项目开始时与客户共同确定",
+        "correct": true
+      },
+      {
+        "text": "验收标准只能在项目结束时确定",
+        "correct": false
+      },
+      {
+        "text": "验收标准应由开发团队单方面制定",
+        "correct": false
+      },
+      {
+        "text": "验收标准一旦确定不可变更",
+        "correct": false
+      }
+    ],
+    "explanation": "验收标准应尽早明确并达成一致，通常与客户一起在项目初期定义。后期确定可能导致返工。标准可以经变更流程调整。",
+    "id": "scheduling-252",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "进度与交付验收"
+  },
+  {
+    "type": "single",
+    "question": "在管理项目进度时，以下哪项是“里程碑”的典型特征？",
+    "options": [
+      {
+        "text": "持续时间较长",
+        "correct": false
+      },
+      {
+        "text": "标志着重要可交付成果的完成",
+        "correct": true
+      },
+      {
+        "text": "需要大量资源投入",
+        "correct": false
+      },
+      {
+        "text": "通常位于非关键路径上",
+        "correct": false
+      }
+    ],
+    "explanation": "里程碑是项目中的重大事件或重要可交付成果的完成点，通常持续时间为零，用于进度监控。它可能位于关键路径上。",
+    "id": "scheduling-253",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "进度与交付验收"
+  },
+  {
+    "type": "single",
+    "question": "在项目交付验收阶段，进行用户验收测试（UAT）的主要目的是？",
+    "options": [
+      {
+        "text": "验证系统是否满足技术规格",
+        "correct": false
+      },
+      {
+        "text": "确认系统是否满足业务需求",
+        "correct": true
+      },
+      {
+        "text": "检查代码质量",
+        "correct": false
+      },
+      {
+        "text": "评估开发团队绩效",
+        "correct": false
+      }
+    ],
+    "explanation": "UAT由用户执行，确保系统满足业务需求和用户期望。技术规格验证由系统测试完成，代码质量由代码审查和静态分析检查。",
+    "id": "scheduling-254",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "进度与交付验收"
+  },
+  {
+    "type": "single",
+    "question": "在项目调度中，资源平衡的主要目的是？",
+    "options": [
+      {
+        "text": "缩短项目工期",
+        "correct": false
+      },
+      {
+        "text": "解决资源过度分配问题",
+        "correct": true
+      },
+      {
+        "text": "降低项目成本",
+        "correct": false
+      },
+      {
+        "text": "提高资源使用率至100%",
+        "correct": false
+      }
+    ],
+    "explanation": "资源平衡通过调整任务开始时间，解决资源冲突，避免过度分配。它通常不会缩短工期，反而可能延长工期，但能提高资源使用的合理性。",
+    "id": "scheduling-255",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "进度与交付验收"
+  },
+  {
+    "type": "single",
+    "question": "团队在Agent项目中使用燃尽图跟踪迭代进度，以下哪项最可能导致燃尽图在迭代中途突然上升？",
+    "options": [
+      {
+        "text": "团队完成了一个高优先级用户故事",
+        "correct": false
+      },
+      {
+        "text": "产品负责人向当前迭代待办列表新增了未完成的故事",
+        "correct": true
+      },
+      {
+        "text": "每日站会时间缩短为10分钟",
+        "correct": false
+      },
+      {
+        "text": "开发人员修复了一个缺陷但未改变剩余工作量",
+        "correct": false
+      }
+    ],
+    "explanation": "燃尽图反映剩余工作量，迭代中途新增待办项会使剩余工作量上升，曲线随之上扬。完成故事应使曲线下降；站会时长不影响工作量；修复缺陷若消耗工时且未更新剩余量，也不会造成上升。",
+    "id": "scheduling-256",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "进度与交付验收"
+  },
+  {
+    "type": "single",
+    "question": "某项目的关键路径为A→C→E，总工期20天，关键路径上各活动均无浮动时间。活动A因故延迟2天，其他活动工期不变。仅依据关键路径特性，项目最短完成工期变为？",
+    "options": [
+      {
+        "text": "18天",
+        "correct": false
+      },
+      {
+        "text": "20天",
+        "correct": false
+      },
+      {
+        "text": "22天",
+        "correct": true
+      },
+      {
+        "text": "无法判断",
+        "correct": false
+      }
+    ],
+    "explanation": "关键路径长度决定项目最短完成工期，且关键路径上的活动没有浮动时间。活动A延迟2天会使后续关键活动等量顺延，因此项目完成工期从20天变为22天；其他活动工期不变时不能抵消该延迟。",
+    "id": "scheduling-257",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "进度与交付验收"
+  },
+  {
+    "type": "single",
+    "question": "在交付验收前，团队发现一个已通过内部测试的Agent功能在客户预生产环境因权限配置失败。项目经理首先应？",
+    "options": [
+      {
+        "text": "将该功能从验收范围中删除",
+        "correct": false
+      },
+      {
+        "text": "记录缺陷并评估环境差异对验收的影响",
+        "correct": true
+      },
+      {
+        "text": "立即宣布验收通过并后续修复",
+        "correct": false
+      },
+      {
+        "text": "要求客户修改其权限策略",
+        "correct": false
+      }
+    ],
+    "explanation": "应先记录问题并分析环境差异，判断是否影响验收结论和交付范围，再与客户协商处理。直接删除功能或强行通过会掩盖风险；把责任单方推给客户也不利于协作。",
+    "id": "scheduling-258",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "进度与交付验收"
+  },
+  {
+    "type": "single",
+    "question": "以下哪项最符合“验收标准”与“完成定义（DoD）”的区别？",
+    "options": [
+      {
+        "text": "验收标准针对单个用户故事，DoD是团队对所有增量共同遵循的质量门槛",
+        "correct": true
+      },
+      {
+        "text": "验收标准由客户制定，DoD由开发人员私下约定",
+        "correct": false
+      },
+      {
+        "text": "验收标准只用于测试阶段，DoD只用于开发阶段",
+        "correct": false
+      },
+      {
+        "text": "两者完全等价，只是叫法不同",
+        "correct": false
+      }
+    ],
+    "explanation": "验收标准描述特定需求被接受的条件，DoD是团队对“完成”的统一质量约定，适用于所有增量。两者层次不同，并非阶段划分或完全等价；DoD也应团队共同明确而非私下约定。",
+    "id": "scheduling-259",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "进度与交付验收"
+  },
+  {
+    "type": "single",
+    "question": "Agent项目采用滚动式 wave 规划，在首个交付批次验收时发现接口响应时间超出约定阈值。最合适的纠正措施是？",
+    "options": [
+      {
+        "text": "降低阈值以匹配当前性能",
+        "correct": false
+      },
+      {
+        "text": "分析瓶颈并评估修复成本，与客户协商调整后续批次计划",
+        "correct": true
+      },
+      {
+        "text": "忽略该指标，仅验收功能项",
+        "correct": false
+      },
+      {
+        "text": "直接终止项目",
+        "correct": false
+      }
+    ],
+    "explanation": "性能不达标应定位瓶颈、评估修复代价，并据结果调整后续批次范围或进度。擅自降低阈值会改变验收基线；忽略非功能指标违反约定；终止项目反应过度。",
+    "id": "scheduling-260",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "进度与交付验收"
+  },
+  {
+    "type": "single",
+    "question": "某项目计划第10天完成50个故事点，实际完成38个。若剩余迭代容量不变，以下哪项是对进度偏差最合理的处理？",
+    "options": [
+      {
+        "text": "按原计划继续，不调整任何范围",
+        "correct": false
+      },
+      {
+        "text": "分析偏差原因并重新预测完成日期，必要时调整范围",
+        "correct": true
+      },
+      {
+        "text": "把未完成故事点直接标记为完成",
+        "correct": false
+      },
+      {
+        "text": "立即增加一倍人力且不做评估",
+        "correct": false
+      }
+    ],
+    "explanation": "进度偏差出现后应分析原因、重新预测并调整计划或范围。无视偏差会持续累积风险；虚报完成破坏度量真实性；盲目加人可能增加沟通成本且需先评估。",
+    "id": "scheduling-261",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "进度与交付验收"
+  },
+  {
+    "type": "single",
+    "question": "在合同型Agent交付项目中，客户在UAT阶段提出一项变更。以下流程最恰当的是？",
+    "options": [
+      {
+        "text": "直接实施，验收时再补文档",
+        "correct": false
+      },
+      {
+        "text": "提交变更请求，评估影响并经变更控制流程审批",
+        "correct": true
+      },
+      {
+        "text": "拒绝所有变更，不进行讨论",
+        "correct": false
+      },
+      {
+        "text": "由开发人员口头同意即可",
+        "correct": false
+      }
+    ],
+    "explanation": "范围变更应通过变更请求评估对进度、成本和质量的影响，再按约定审批。先实施后补文档会失控；一概拒绝不专业；口头同意缺乏可追溯性。",
+    "id": "scheduling-262",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "进度与交付验收"
+  },
+  {
+    "type": "single",
+    "question": "项目使用里程碑管理交付，以下哪项最能说明某里程碑已真正达成？",
+    "options": [
+      {
+        "text": "计划日期已到",
+        "correct": false
+      },
+      {
+        "text": "预定交付物通过验收标准并被相关方确认",
+        "correct": true
+      },
+      {
+        "text": "团队完成了大量任务",
+        "correct": false
+      },
+      {
+        "text": "项目经理发布了状态报告",
+        "correct": false
+      }
+    ],
+    "explanation": "里程碑是重要检查点，达成的核心是预定交付物满足验收标准并获得确认，而非日期到达或任务数量。状态报告只是沟通手段，不能替代交付物验证。",
+    "id": "scheduling-263",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "进度与交付验收"
+  },
+  {
+    "type": "single",
+    "question": "某Agent项目在迭代评审中展示增量，客户代表指出一个场景未覆盖。团队应优先？",
+    "options": [
+      {
+        "text": "在评审会上立即写代码修复",
+        "correct": false
+      },
+      {
+        "text": "记录反馈并纳入产品待办列表排序",
+        "correct": true
+      },
+      {
+        "text": "声称该场景不在验收标准内并结束讨论",
+        "correct": false
+      },
+      {
+        "text": "取消本次迭代评审结论",
+        "correct": false
+      }
+    ],
+    "explanation": "评审会用于检视增量并收集反馈，新发现应记录到产品待办列表并由产品负责人排序。会上临时编码不现实；简单拒绝会遗漏真实需求；取消评审无助于解决问题。",
+    "id": "scheduling-264",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "进度与交付验收"
+  },
+  {
+    "type": "single",
+    "question": "在资源受限的Agent项目中，项目经理为平衡资源需求与可用供给，调整了若干活动的开始时间，并接受由此可能改变项目浮动时间甚至关键路径。这属于哪种技术？",
+    "options": [
+      {
+        "text": "资源平衡",
+        "correct": true
+      },
+      {
+        "text": "资源平滑",
+        "correct": false
+      },
+      {
+        "text": "赶工",
+        "correct": false
+      },
+      {
+        "text": "快速跟进",
+        "correct": false
+      }
+    ],
+    "explanation": "资源平衡是在资源供给约束下调整活动开始和完成时间，以平衡资源需求与可用量；它可能改变浮动时间和关键路径。资源平滑只在不改变关键路径的浮动范围内调整活动；赶工通过增加资源或加班压缩工期；快速跟进通过并行活动压缩工期。",
+    "id": "scheduling-265",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "进度与交付验收"
+  },
+  {
+    "type": "single",
+    "question": "关于交付验收中的“缺陷泄漏率”，以下解释最准确的是？",
+    "options": [
+      {
+        "text": "验收前发现缺陷数与总缺陷数之比",
+        "correct": false
+      },
+      {
+        "text": "验收后由客户发现的缺陷数占交付总缺陷数的比例",
+        "correct": true
+      },
+      {
+        "text": "开发人员修复缺陷的速度",
+        "correct": false
+      },
+      {
+        "text": "缺陷总数与代码行数之比",
+        "correct": false
+      }
+    ],
+    "explanation": "缺陷泄漏率衡量内部测试未拦截、在验收或交付后被客户发现的缺陷占比，反映质量保证有效性。验收前发现比例属于缺陷拦截率；修复速度是修复周期；缺陷密度才与代码规模相关。",
+    "id": "scheduling-266",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "进度与交付验收"
+  },
+  {
+    "type": "single",
+    "question": "某团队在验收前发现需求文档与实现存在歧义，客户口头解释与书面验收标准不一致。最稳妥的做法是？",
+    "options": [
+      {
+        "text": "按口头解释直接验收",
+        "correct": false
+      },
+      {
+        "text": "以书面验收标准为准并推动澄清和确认",
+        "correct": true
+      },
+      {
+        "text": "忽略歧义，先上线",
+        "correct": false
+      },
+      {
+        "text": "由开发人员自行选择一种解释",
+        "correct": false
+      }
+    ],
+    "explanation": "书面验收标准是正式基线，出现歧义时应推动相关方澄清并确认，避免验收争议。口头解释缺乏可追溯性；忽略歧义或单方决定都会增加交付风险。",
+    "id": "scheduling-267",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "进度与交付验收"
+  },
+  {
+    "type": "single",
+    "question": "项目收尾阶段，以下哪项活动最有助于确认交付物已满足全部约定验收条件？",
+    "options": [
+      {
+        "text": "更新风险登记册",
+        "correct": false
+      },
+      {
+        "text": "对照验收标准逐项核查并取得正式签署",
+        "correct": true
+      },
+      {
+        "text": "召开每日站会",
+        "correct": false
+      },
+      {
+        "text": "重新估算剩余故事点",
+        "correct": false
+      }
+    ],
+    "explanation": "收尾验收应逐项对照验收标准核查交付物，并由客户或授权方正式签署确认。风险登记册和站会属于过程管理活动；剩余故事点估算在收尾阶段已不适用。",
+    "id": "scheduling-268",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "进度与交付验收"
+  },
+  {
+    "type": "single",
+    "question": "在Agent项目调度中，若某任务的最早开始为第8天、持续4天，其紧后任务最早开始为第15天，该任务的自由浮动时间为？",
+    "options": [
+      {
+        "text": "0天",
+        "correct": false
+      },
+      {
+        "text": "1天",
+        "correct": false
+      },
+      {
+        "text": "3天",
+        "correct": true
+      },
+      {
+        "text": "4天",
+        "correct": false
+      }
+    ],
+    "explanation": "自由浮动时间等于紧后任务最早开始减去本任务最早完成。本任务最早完成=8+4=12天，15-12=3天。0天或1天计算有误；4天混淆了持续时间与浮动时间。",
+    "id": "scheduling-269",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "进度与交付验收"
+  },
+  {
+    "type": "single",
+    "question": "客户在验收会上要求将某功能从“必须交付”降为“后续版本”，并签署了变更单。对项目基准最直接的影响是？",
+    "options": [
+      {
+        "text": "范围基准被正式变更",
+        "correct": true
+      },
+      {
+        "text": "质量基准自动提高",
+        "correct": false
+      },
+      {
+        "text": "进度基准不再需要",
+        "correct": false
+      },
+      {
+        "text": "成本基准必然下降",
+        "correct": false
+      }
+    ],
+    "explanation": "经批准的变更单会正式修改范围基准，并可能联动进度和成本基准。质量基准不会自动提高；进度基准仍需维护；成本是否下降取决于具体影响，不能必然推出。",
+    "id": "scheduling-270",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "进度与交付验收"
+  },
+  {
+    "type": "single",
+    "question": "多个Agent共同完成同一任务时，为避免重复劳动，最直接有效的机制是？",
+    "options": [
+      {
+        "text": "任务认领与占用标记",
+        "correct": true
+      },
+      {
+        "text": "每个Agent都执行全部任务",
+        "correct": false
+      },
+      {
+        "text": "随机分配且不记录状态",
+        "correct": false
+      },
+      {
+        "text": "统一延长所有任务超时时间",
+        "correct": false
+      }
+    ],
+    "explanation": "正确项是任务认领与占用标记，让Agent在执行前先声明任务所有权，其他Agent可见后跳过，从而避免重复。B会造成浪费，C缺乏状态记录导致冲突，D与重复劳动无关。",
+    "id": "scheduling-271",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "多Agent协调"
+  },
+  {
+    "type": "single",
+    "question": "主从式多Agent协调中，主Agent的核心职责是？",
+    "options": [
+      {
+        "text": "拆分任务并分派、汇总结果",
+        "correct": true
+      },
+      {
+        "text": "亲自执行所有子任务",
+        "correct": false
+      },
+      {
+        "text": "只负责记录日志不参与调度",
+        "correct": false
+      },
+      {
+        "text": "随机挑选一个从Agent完成全部工作",
+        "correct": false
+      }
+    ],
+    "explanation": "主Agent负责分解任务、分派给从Agent并汇总结果，这是主从模式的关键。B违背分工，C未履行调度职责，D放弃协调能力，均不符合主从协调的设计目标。",
+    "id": "scheduling-272",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "多Agent协调"
+  },
+  {
+    "type": "single",
+    "question": "某Agent执行任务后网络中断，调度器迟迟未收到完成消息，合理做法是？",
+    "options": [
+      {
+        "text": "设置租约与心跳，超时后回收任务",
+        "correct": true
+      },
+      {
+        "text": "立即认定任务已完成",
+        "correct": false
+      },
+      {
+        "text": "永远等待该Agent返回",
+        "correct": false
+      },
+      {
+        "text": "把任务同时再派给所有Agent且不取消原任务",
+        "correct": false
+      }
+    ],
+    "explanation": "租约加心跳可在Agent失联时判定任务过期并回收重派，兼顾容错与避免重复。B导致任务丢失，C会永久阻塞，D造成同一任务多个执行者并发，仍属重复劳动。",
+    "id": "scheduling-273",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "多Agent协调"
+  },
+  {
+    "type": "single",
+    "question": "以下哪种共享状态存储最适合多个Agent并发读写任务状态？",
+    "options": [
+      {
+        "text": "带原子操作和版本号的集中式状态存储",
+        "correct": true
+      },
+      {
+        "text": "每个Agent本地的普通字典",
+        "correct": false
+      },
+      {
+        "text": "写在Agent日志文件末尾",
+        "correct": false
+      },
+      {
+        "text": "通过广播让每个Agent各自猜测状态",
+        "correct": false
+      }
+    ],
+    "explanation": "集中式存储配合原子操作和版本号可保证并发下状态一致，避免覆盖冲突。B各存各的无法共享，C不可可靠读写，D靠猜测不具备一致性保证。",
+    "id": "scheduling-274",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "多Agent协调"
+  },
+  {
+    "type": "single",
+    "question": "多Agent系统中，两个Agent互相等待对方释放资源而死锁，最有效的预防手段是？",
+    "options": [
+      {
+        "text": "统一资源申请顺序或加超时回退",
+        "correct": true
+      },
+      {
+        "text": "提高两个Agent的优先级",
+        "correct": false
+      },
+      {
+        "text": "增加更多Agent分担工作",
+        "correct": false
+      },
+      {
+        "text": "关闭日志以提升速度",
+        "correct": false
+      }
+    ],
+    "explanation": "统一加锁顺序可破坏循环等待条件，超时回退可打破僵局，是死锁预防常用手段。提高优先级、增加Agent、关闭日志都不能消除循环等待，无法预防死锁。",
+    "id": "scheduling-275",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "多Agent协调"
+  },
+  {
+    "type": "single",
+    "question": "协商式多Agent协调中，合同网协议的核心流程是？",
+    "options": [
+      {
+        "text": "招标、投标、评标与授予合同",
+        "correct": true
+      },
+      {
+        "text": "随机广播任务后不再跟踪",
+        "correct": false
+      },
+      {
+        "text": "所有Agent投票决定谁休息",
+        "correct": false
+      },
+      {
+        "text": "主Agent替所有Agent执行任务",
+        "correct": false
+      }
+    ],
+    "explanation": "合同网协议通过管理者招标、Agent投标、评标选择并授予合同，实现任务分配。B缺乏选择与跟踪，C与任务分配无关，D失去分布协作意义。",
+    "id": "scheduling-276",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "多Agent协调"
+  },
+  {
+    "type": "single",
+    "question": "为避免Agent在共享工作队列上取到同一任务，出队操作应具备什么性质？",
+    "options": [
+      {
+        "text": "原子性，取任务与标记占用不可分割",
+        "correct": true
+      },
+      {
+        "text": "可重复执行且结果随意",
+        "correct": false
+      },
+      {
+        "text": "先取后判断，允许短暂重复",
+        "correct": false
+      },
+      {
+        "text": "仅在单Agent时保证顺序即可",
+        "correct": false
+      }
+    ],
+    "explanation": "出队与占用标记必须原子完成，否则两个Agent可能同时读到同一任务。可重复且随意会引入不一致，先取后判断仍产生竞争，单Agent保证在多Agent场景下无效。",
+    "id": "scheduling-277",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "多Agent协调"
+  },
+  {
+    "type": "single",
+    "question": "关于多Agent协调中的意图通信，以下说法正确的是？",
+    "options": [
+      {
+        "text": "Agent应发布可被订阅的意图而非仅内部标记",
+        "correct": true
+      },
+      {
+        "text": "意图只写在自己内存中即可实现协调",
+        "correct": false
+      },
+      {
+        "text": "意图通信越多越好无需过滤",
+        "correct": false
+      },
+      {
+        "text": "意图一旦发布不可撤销",
+        "correct": false
+      }
+    ],
+    "explanation": "发布可订阅的意图能让其他Agent感知并避让，实现协调。仅存内存他人不可见；通信无限扩张会带来噪声；意图应支持撤销或过期，故D也不正确。",
+    "id": "scheduling-278",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "多Agent协调"
+  },
+  {
+    "type": "single",
+    "question": "调度多个Agent并行处理有依赖关系的任务时，正确的执行约束是？",
+    "options": [
+      {
+        "text": "前置任务完成后才调度后继任务",
+        "correct": true
+      },
+      {
+        "text": "全部任务同时启动",
+        "correct": false
+      },
+      {
+        "text": "按Agent编号顺序执行",
+        "correct": false
+      },
+      {
+        "text": "依赖关系可忽略以提升并发",
+        "correct": false
+      }
+    ],
+    "explanation": "依赖任务必须等待前置完成，否则后继会读取不完整结果。全部同时启动破坏依赖，按编号顺序与依赖无关，忽略依赖会导致错误结果而非真正并行。",
+    "id": "scheduling-279",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "多Agent协调"
+  },
+  {
+    "type": "single",
+    "question": "多Agent系统需要限制某个Agent故障的影响范围，以下最合适的措施是？",
+    "options": [
+      {
+        "text": "隔离其资源配额并设置熔断",
+        "correct": true
+      },
+      {
+        "text": "让所有Agent共享同一无限配额",
+        "correct": false
+      },
+      {
+        "text": "故障后继续无限重试同一请求",
+        "correct": false
+      },
+      {
+        "text": "取消所有监控以降低开销",
+        "correct": false
+      }
+    ],
+    "explanation": "资源配额隔离与熔断可把故障限制在局部并快速止损。共享无限配额会放大故障，无限重试加剧拥塞，取消监控则失去发现问题的能力。",
+    "id": "scheduling-280",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "多Agent协调"
+  },
+  {
+    "type": "multiple",
+    "question": "多Agent协调中，以下哪些机制有助于减少重复执行？",
+    "options": [
+      {
+        "text": "任务认领占用标记",
+        "correct": true
+      },
+      {
+        "text": "租约与心跳回收过期任务",
+        "correct": true
+      },
+      {
+        "text": "每轮把全部任务广播给所有Agent且不比对",
+        "correct": false
+      },
+      {
+        "text": "共享状态中的幂等键去重",
+        "correct": true
+      }
+    ],
+    "explanation": "认领标记、租约心跳回收、幂等键去重都能在不同阶段抑制重复执行，均为正确项。无比对的全量广播反而会让多个Agent同时执行同一任务，属于误区。",
+    "id": "scheduling-281",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "多Agent协调"
+  },
+  {
+    "type": "multiple",
+    "question": "关于主从式与对等式多Agent协调，以下说法正确的有？",
+    "options": [
+      {
+        "text": "主从式存在单点调度瓶颈风险",
+        "correct": true
+      },
+      {
+        "text": "对等式在需要统一决策或选主时可采用共识或选举机制",
+        "correct": true
+      },
+      {
+        "text": "对等式一定比主从式延迟更低",
+        "correct": false
+      },
+      {
+        "text": "主从式的主Agent故障时需有接管方案",
+        "correct": true
+      }
+    ],
+    "explanation": "主从式调度器集中掌握状态，存在单点瓶颈，且主节点故障必须有接管方案；对等式并非一律需要共识，只有在统一决策、选主或复制状态等场景才可能使用共识或选举；对等式因协商和通信开销不一定延迟更低。",
+    "id": "scheduling-282",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "多Agent协调"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些属于Agent间协调的通信方式？",
+    "options": [
+      {
+        "text": "共享黑板/状态存储",
+        "correct": true
+      },
+      {
+        "text": "点对点消息传递",
+        "correct": true
+      },
+      {
+        "text": "发布订阅事件",
+        "correct": true
+      },
+      {
+        "text": "仅靠各自本地随机数决定行为",
+        "correct": false
+      }
+    ],
+    "explanation": "共享黑板、点对点消息、发布订阅都是常见的协调通信方式，能传递状态或意图。仅靠本地随机数不产生信息交换，无法实现可预期协调，故不选。",
+    "id": "scheduling-283",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "多Agent协调"
+  },
+  {
+    "type": "multiple",
+    "question": "设计多Agent任务调度时，为提升容错应关注哪些方面？",
+    "options": [
+      {
+        "text": "任务超时与重试上限",
+        "correct": true
+      },
+      {
+        "text": "幂等处理避免重试产生重复副作用",
+        "correct": true
+      },
+      {
+        "text": "故障Agent的任务重新入队",
+        "correct": true
+      },
+      {
+        "text": "取消所有超时设置以避免误判",
+        "correct": false
+      }
+    ],
+    "explanation": "超时与重试上限防止无限等待，幂等避免重复副作用，重新入队保证任务最终被处理，三项正确。取消超时会使故障无法被发现，任务可能永久悬挂。",
+    "id": "scheduling-284",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "多Agent协调"
+  },
+  {
+    "type": "multiple",
+    "question": "多Agent共享同一资源池时，以下哪些做法能降低冲突与死锁风险？",
+    "options": [
+      {
+        "text": "统一资源申请顺序",
+        "correct": true
+      },
+      {
+        "text": "设置获取资源超时并回退释放",
+        "correct": true
+      },
+      {
+        "text": "同时持有并无限等待更多资源",
+        "correct": false
+      },
+      {
+        "text": "限制单个Agent可占用的资源配额",
+        "correct": true
+      }
+    ],
+    "explanation": "统一申请顺序可消除循环等待，超时回退能打破僵局，配额限制可防单个Agent垄断资源，三项正确。无限等待更多资源正会加剧死锁，是典型误区。",
+    "id": "scheduling-285",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "多Agent协调"
+  },
+  {
+    "type": "single",
+    "question": "在多Agent系统中，任务调度器为保证多个Agent能安全地并发更新任务状态，通常采用哪种机制？",
+    "options": [
+      {
+        "text": "基于消息队列的异步通知",
+        "correct": false
+      },
+      {
+        "text": "乐观锁或悲观锁机制",
+        "correct": true
+      },
+      {
+        "text": "任务优先级静态分配",
+        "correct": false
+      },
+      {
+        "text": "定期全量广播任务状态",
+        "correct": false
+      }
+    ],
+    "explanation": "并发更新共享状态需保证一致性，乐观锁或悲观锁可防止写冲突。消息队列用于解耦通信，静态优先级影响调度顺序，全量广播开销大且不保证原子性。",
+    "id": "scheduling-286",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "多Agent协调"
+  },
+  {
+    "type": "single",
+    "question": "某多Agent系统采用对等式协调，Agent之间通过消息传递协商任务分配。当两个Agent同时提议自己执行同一任务并等待对方确认时，可能产生什么问题？",
+    "options": [
+      {
+        "text": "任务被重复执行",
+        "correct": false
+      },
+      {
+        "text": "协商陷入活锁或死锁",
+        "correct": true
+      },
+      {
+        "text": "消息队列溢出",
+        "correct": false
+      },
+      {
+        "text": "任务优先级失效",
+        "correct": false
+      }
+    ],
+    "explanation": "双方同时提议并等待确认，可能互相等待对方让步，形成活锁或死锁。重复执行需要两方都实际执行才发生，消息队列溢出和优先级失效并非该场景直接结果。",
+    "id": "scheduling-287",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "多Agent协调"
+  },
+  {
+    "type": "single",
+    "question": "在基于合同的网协议（Contract Net Protocol）中，任务发起者（Manager）在收到多个Agent的投标后，应如何选择中标者？",
+    "options": [
+      {
+        "text": "随机选择一个投标者",
+        "correct": false
+      },
+      {
+        "text": "选择第一个提交投标的Agent",
+        "correct": false
+      },
+      {
+        "text": "根据预设的评价函数选择最合适的投标",
+        "correct": true
+      },
+      {
+        "text": "将所有投标者都设为中标者",
+        "correct": false
+      }
+    ],
+    "explanation": "合同网协议中Manager依据评价函数（如成本、时间、能力）评估投标并选择最合适者。随机或先到先得不符合协议目标，全部中标会导致重复执行。",
+    "id": "scheduling-288",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "多Agent协调"
+  },
+  {
+    "type": "single",
+    "question": "调度器需要将一组有依赖关系的任务分配给多个Agent并行执行。以下哪种做法能正确保证依赖约束？",
+    "options": [
+      {
+        "text": "将所有任务同时分发给所有Agent",
+        "correct": false
+      },
+      {
+        "text": "仅当任务的所有前驱任务完成后才调度该任务",
+        "correct": true
+      },
+      {
+        "text": "按任务编号顺序依次调度",
+        "correct": false
+      },
+      {
+        "text": "让Agent自行决定执行顺序",
+        "correct": false
+      }
+    ],
+    "explanation": "依赖约束要求前驱完成后才能开始后继任务。同时分发或仅按编号顺序可能违反依赖，让Agent自行决定则失去调度控制。",
+    "id": "scheduling-289",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "多Agent协调"
+  },
+  {
+    "type": "single",
+    "question": "多Agent系统中，一个Agent在任务执行过程中崩溃，调度器需要将任务重新分配给其他Agent。为避免同一任务被多个Agent同时执行，调度器应确保什么？",
+    "options": [
+      {
+        "text": "重新分配前先确认原Agent已停止执行",
+        "correct": true
+      },
+      {
+        "text": "立即将任务广播给所有空闲Agent",
+        "correct": false
+      },
+      {
+        "text": "等待原Agent恢复后再决定",
+        "correct": false
+      },
+      {
+        "text": "直接丢弃该任务",
+        "correct": false
+      }
+    ],
+    "explanation": "重新分配前需确认原执行者已停止，防止重复执行。广播给所有空闲Agent会加剧重复，无限等待可能阻塞流程，丢弃任务则损失工作。",
+    "id": "scheduling-290",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "多Agent协调"
+  },
+  {
+    "type": "single",
+    "question": "在多个Agent共享有限资源池的场景中，以下哪种策略最有助于避免死锁？",
+    "options": [
+      {
+        "text": "允许Agent任意顺序申请资源",
+        "correct": false
+      },
+      {
+        "text": "为资源定义全局获取顺序，Agent按序申请",
+        "correct": true
+      },
+      {
+        "text": "每个Agent持有资源后无限等待",
+        "correct": false
+      },
+      {
+        "text": "增加资源申请的超时时间",
+        "correct": false
+      }
+    ],
+    "explanation": "按全局顺序申请资源可破坏循环等待条件，从而预防死锁。任意顺序和无限等待会加剧死锁，仅增加超时只是缓解而非根本避免。",
+    "id": "scheduling-291",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "多Agent协调"
+  },
+  {
+    "type": "single",
+    "question": "某调度器采用“至少一次”消息投递语义向Agent发送任务。为应对可能的消息重复，Agent端应如何设计？",
+    "options": [
+      {
+        "text": "每次收到消息都直接执行任务",
+        "correct": false
+      },
+      {
+        "text": "为任务分配唯一ID并做幂等处理",
+        "correct": true
+      },
+      {
+        "text": "不记录已处理消息ID，收到即当作新任务",
+        "correct": false
+      },
+      {
+        "text": "将消息转发给其他Agent",
+        "correct": false
+      }
+    ],
+    "explanation": "至少一次语义允许同一条任务消息被投递多次。Agent应利用任务唯一ID记录处理状态，并对重复消息做幂等处理，避免重复副作用；不记录已处理ID会把重投当作新任务，直接执行和简单转发都不能消除重复。",
+    "id": "scheduling-292",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "多Agent协调"
+  },
+  {
+    "type": "single",
+    "question": "在对等式多Agent协调中，Agent之间通过共享黑板（Blackboard）交换信息。以下关于黑板的描述哪项正确？",
+    "options": [
+      {
+        "text": "黑板只能由主Agent写入",
+        "correct": false
+      },
+      {
+        "text": "黑板提供一种间接通信方式，Agent可读写共享信息",
+        "correct": true
+      },
+      {
+        "text": "黑板要求所有Agent同时在线",
+        "correct": false
+      },
+      {
+        "text": "黑板只能存储任务结果，不能存储状态",
+        "correct": false
+      }
+    ],
+    "explanation": "黑板是一种共享数据结构，Agent通过读写黑板间接通信，解耦了发送者和接收者。它不限定写入者，不要求同时在线，也可存储状态信息。",
+    "id": "scheduling-293",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "多Agent协调"
+  },
+  {
+    "type": "single",
+    "question": "调度器需要将任务分配给能力各异的多个Agent。以下哪种信息最有助于调度器做出合理分配？",
+    "options": [
+      {
+        "text": "Agent的注册时间",
+        "correct": false
+      },
+      {
+        "text": "Agent的能力描述与当前负载",
+        "correct": true
+      },
+      {
+        "text": "Agent的IP地址",
+        "correct": false
+      },
+      {
+        "text": "Agent的操作系统版本",
+        "correct": false
+      }
+    ],
+    "explanation": "能力描述决定Agent能否胜任任务，当前负载影响执行效率，两者是分配的关键依据。注册时间、IP地址和OS版本与任务匹配度无直接关系。",
+    "id": "scheduling-294",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "多Agent协调"
+  },
+  {
+    "type": "single",
+    "question": "在多Agent任务调度中，采用集中式调度器与分布式调度相比，主要优势是什么？",
+    "options": [
+      {
+        "text": "不存在单点故障",
+        "correct": false
+      },
+      {
+        "text": "全局视图便于做出全局最优分配",
+        "correct": true
+      },
+      {
+        "text": "扩展性更好",
+        "correct": false
+      },
+      {
+        "text": "通信开销更低",
+        "correct": false
+      }
+    ],
+    "explanation": "集中式调度器拥有全局任务和Agent状态，便于全局优化。但其存在单点故障，扩展性和通信开销通常不如分布式。",
+    "id": "scheduling-295",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "多Agent协调"
+  },
+  {
+    "type": "multiple",
+    "question": "多Agent系统为提高协调可靠性，以下哪些做法是合理的？",
+    "options": [
+      {
+        "text": "为关键协调消息设置确认与重传机制",
+        "correct": true
+      },
+      {
+        "text": "所有Agent共享一个没有同步保护的全局变量",
+        "correct": false
+      },
+      {
+        "text": "引入心跳检测发现失联Agent",
+        "correct": true
+      },
+      {
+        "text": "协调消息不设超时，无限等待",
+        "correct": false
+      }
+    ],
+    "explanation": "确认与重传能提高关键协调消息的可靠到达，心跳检测可及时发现失联Agent并触发接管或回收；没有同步保护的共享全局变量会引入竞态，协调消息不设超时则可能使流程永久阻塞。",
+    "id": "scheduling-296",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "多Agent协调"
+  },
+  {
+    "type": "multiple",
+    "question": "关于多Agent系统中的任务分配，以下哪些说法正确？",
+    "options": [
+      {
+        "text": "基于市场机制的分配通过价格反映任务与Agent的匹配度",
+        "correct": true
+      },
+      {
+        "text": "合同网协议中Manager必须亲自执行所有任务",
+        "correct": false
+      },
+      {
+        "text": "能力匹配是任务分配时的重要考虑因素",
+        "correct": true
+      },
+      {
+        "text": "轮询分配总能保证负载均衡最优",
+        "correct": false
+      }
+    ],
+    "explanation": "市场机制用价格信号引导分配，能力匹配确保任务可执行。合同网中Manager可委托任务，轮询分配在异构任务下不一定最优。",
+    "id": "scheduling-297",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "多Agent协调"
+  },
+  {
+    "type": "multiple",
+    "question": "多Agent协调中，以下哪些技术可用于解决Agent之间的冲突？",
+    "options": [
+      {
+        "text": "优先级仲裁",
+        "correct": true
+      },
+      {
+        "text": "投票机制",
+        "correct": true
+      },
+      {
+        "text": "随机丢弃所有冲突请求",
+        "correct": false
+      },
+      {
+        "text": "忽略冲突继续执行",
+        "correct": false
+      }
+    ],
+    "explanation": "优先级仲裁和投票是常见的冲突解决机制。随机丢弃和忽略冲突会破坏系统一致性，不是解决冲突的合理技术。",
+    "id": "scheduling-298",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "多Agent协调"
+  },
+  {
+    "type": "multiple",
+    "question": "设计多Agent调度系统时，为支持Agent动态加入和退出，以下哪些设计是必要的？",
+    "options": [
+      {
+        "text": "Agent注册与发现机制",
+        "correct": true
+      },
+      {
+        "text": "静态硬编码所有Agent地址",
+        "correct": false
+      },
+      {
+        "text": "心跳与故障检测",
+        "correct": true
+      },
+      {
+        "text": "假设Agent永远在线",
+        "correct": false
+      }
+    ],
+    "explanation": "动态环境需要注册发现机制让新Agent被感知，心跳检测处理退出和故障。硬编码地址和假设永远在线无法适应动态变化。",
+    "id": "scheduling-299",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "多Agent协调"
+  },
+  {
+    "type": "multiple",
+    "question": "在多Agent系统中，以下哪些措施有助于提高任务执行的容错性？",
+    "options": [
+      {
+        "text": "任务执行状态定期持久化",
+        "correct": true
+      },
+      {
+        "text": "对失败任务进行有限次重试",
+        "correct": true
+      },
+      {
+        "text": "所有任务只由一个Agent执行",
+        "correct": false
+      },
+      {
+        "text": "不记录任何执行日志",
+        "correct": false
+      }
+    ],
+    "explanation": "状态持久化支持故障恢复，有限重试可处理瞬时故障。单点执行和缺少日志都会降低容错能力。",
+    "id": "scheduling-300",
+    "tags": [
+      "Agent 项目调度"
+    ],
+    "section": "多Agent协调"
+  }
+]

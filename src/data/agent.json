@@ -1,0 +1,8402 @@
+[
+  {
+    "type": "single",
+    "question": "Agent 进行工具调用时，最核心的作用是？",
+    "options": [
+      {
+        "text": "让模型参数在本地更新",
+        "correct": false
+      },
+      {
+        "text": "扩展模型能力边界，获取外部信息或执行外部动作",
+        "correct": true
+      },
+      {
+        "text": "减少模型上下文长度",
+        "correct": false
+      },
+      {
+        "text": "替代模型的语言理解能力",
+        "correct": false
+      }
+    ],
+    "explanation": "工具调用让 Agent 借助外部函数获取实时信息或执行动作，突破模型参数内知识与能力的限制。模型参数不会因调用而更新，上下文长度也不会因此减少，语言理解仍是模型本身能力。",
+    "id": "agent-001",
+    "tags": [
+      "Agent"
+    ],
+    "section": "工具调用"
+  },
+  {
+    "type": "single",
+    "question": "在工具调用的典型流程中，模型返回 tool_call 后，下一步通常应由谁执行实际函数？",
+    "options": [
+      {
+        "text": "模型本身在推理中直接执行",
+        "correct": false
+      },
+      {
+        "text": "由 Agent 运行时/编排层解析并调用对应工具",
+        "correct": true
+      },
+      {
+        "text": "由用户手动复制参数运行",
+        "correct": false
+      },
+      {
+        "text": "由 tokenizer 执行",
+        "correct": false
+      }
+    ],
+    "explanation": "模型只输出工具名与参数的结构化调用意图，实际函数执行由运行时或编排层完成，再把结果回填给模型。模型推理过程不直接执行代码，tokenizer 只负责分词，与函数执行无关。",
+    "id": "agent-002",
+    "tags": [
+      "Agent"
+    ],
+    "section": "工具调用"
+  },
+  {
+    "type": "single",
+    "question": "工具调用中给每个工具编写清晰的描述（description），主要目的是什么？",
+    "options": [
+      {
+        "text": "压缩工具返回结果",
+        "correct": false
+      },
+      {
+        "text": "让模型能正确判断何时调用以及如何填参数",
+        "correct": true
+      },
+      {
+        "text": "加快网络传输速度",
+        "correct": false
+      },
+      {
+        "text": "自动生成工具代码",
+        "correct": false
+      }
+    ],
+    "explanation": "工具描述是模型选择工具和构造参数的主要依据，清晰描述能降低误调用和参数错误。它不负责压缩结果、提升传输速度，也不会自动生成工具实现代码。",
+    "id": "agent-003",
+    "tags": [
+      "Agent"
+    ],
+    "section": "工具调用"
+  },
+  {
+    "type": "single",
+    "question": "Agent 调用工具得到的结果，通常应以什么形式回传给模型继续推理？",
+    "options": [
+      {
+        "text": "直接拼接进系统提示且不再变化",
+        "correct": false
+      },
+      {
+        "text": "作为一条工具结果消息加入对话上下文",
+        "correct": true
+      },
+      {
+        "text": "覆盖掉原始用户问题",
+        "correct": false
+      },
+      {
+        "text": "只保存在日志中不返回模型",
+        "correct": false
+      }
+    ],
+    "explanation": "工具结果一般以 tool 角色消息回填到对话中，模型据此继续推理。直接写入系统提示会污染固定指令，覆盖用户问题会丢失原始意图，只记日志则模型无法利用结果。",
+    "id": "agent-004",
+    "tags": [
+      "Agent"
+    ],
+    "section": "工具调用"
+  },
+  {
+    "type": "single",
+    "question": "下列哪种情况最适合让 Agent 调用工具而不是直接回答？",
+    "options": [
+      {
+        "text": "解释一个通用编程概念",
+        "correct": false
+      },
+      {
+        "text": "查询当前时刻的天气或汇率",
+        "correct": true
+      },
+      {
+        "text": "复述已给出的文本内容",
+        "correct": false
+      },
+      {
+        "text": "进行简单算术心算",
+        "correct": false
+      }
+    ],
+    "explanation": "实时性数据超出模型参数知识范围，需借助工具获取。通用概念解释和文本复述依靠模型自身能力即可，简单算术也可直接计算，无需工具。",
+    "id": "agent-005",
+    "tags": [
+      "Agent"
+    ],
+    "section": "工具调用"
+  },
+  {
+    "type": "single",
+    "question": "工具调用出现参数校验失败时，较合理的处理方式是？",
+    "options": [
+      {
+        "text": "忽略错误直接编造结果",
+        "correct": false
+      },
+      {
+        "text": "把校验错误信息回传模型，让其修正参数后重试",
+        "correct": true
+      },
+      {
+        "text": "永久禁用该工具",
+        "correct": false
+      },
+      {
+        "text": "把错误抛给用户且不做任何提示",
+        "correct": false
+      }
+    ],
+    "explanation": "将结构化错误信息回传给模型，模型可据此修正参数重试，是常见自纠错机制。编造结果会造成幻觉，永久禁用过于激进，不提示用户则体验差。",
+    "id": "agent-006",
+    "tags": [
+      "Agent"
+    ],
+    "section": "工具调用"
+  },
+  {
+    "type": "single",
+    "question": "多个工具都能完成同一任务时，Agent 选择工具应优先参考什么？",
+    "options": [
+      {
+        "text": "工具名的字母顺序",
+        "correct": false
+      },
+      {
+        "text": "工具描述与当前任务意图的匹配度及参数可行性",
+        "correct": true
+      },
+      {
+        "text": "工具的注册先后顺序",
+        "correct": false
+      },
+      {
+        "text": "随机选择一个",
+        "correct": false
+      }
+    ],
+    "explanation": "模型依据工具描述语义与任务匹配度、参数是否可满足来选择，名称顺序、注册顺序并非合理依据，随机选择会降低可靠性。",
+    "id": "agent-007",
+    "tags": [
+      "Agent"
+    ],
+    "section": "工具调用"
+  },
+  {
+    "type": "single",
+    "question": "为降低工具调用被恶意注入指令的风险，较有效的做法是？",
+    "options": [
+      {
+        "text": "把工具返回内容当作可信指令直接执行",
+        "correct": false
+      },
+      {
+        "text": "将工具返回内容视为数据，与指令分离并做必要过滤",
+        "correct": true
+      },
+      {
+        "text": "关闭所有工具调用",
+        "correct": false
+      },
+      {
+        "text": "让工具返回内容覆盖系统提示",
+        "correct": false
+      }
+    ],
+    "explanation": "工具返回可能含提示注入内容，应作为数据处理而非指令执行，并做过滤与隔离。关闭所有工具损失能力，允许覆盖系统提示会带来严重越权风险。",
+    "id": "agent-008",
+    "tags": [
+      "Agent"
+    ],
+    "section": "工具调用"
+  },
+  {
+    "type": "single",
+    "question": "关于工具调用的并行执行，下列说法正确的是？",
+    "options": [
+      {
+        "text": "并行调用一定比串行更安全",
+        "correct": false
+      },
+      {
+        "text": "当多个工具调用互不依赖时，可并行执行以降低时延",
+        "correct": true
+      },
+      {
+        "text": "并行调用无需考虑结果归属",
+        "correct": false
+      },
+      {
+        "text": "模型无法一次输出多个工具调用",
+        "correct": false
+      }
+    ],
+    "explanation": "互不依赖的调用可并行以降低总时延，但需按调用标识正确对应结果。并行并不天然更安全，仍需处理顺序与依赖，模型可一次输出多个调用。",
+    "id": "agent-009",
+    "tags": [
+      "Agent"
+    ],
+    "section": "工具调用"
+  },
+  {
+    "type": "single",
+    "question": "Agent 在循环中反复调用同一工具且结果无进展，最应优先检查什么？",
+    "options": [
+      {
+        "text": "模型的温度参数是否为零",
+        "correct": false
+      },
+      {
+        "text": "是否设置了最大调用轮数及终止条件",
+        "correct": true
+      },
+      {
+        "text": "工具名称是否全为英文",
+        "correct": false
+      },
+      {
+        "text": "用户问题是否过长",
+        "correct": false
+      }
+    ],
+    "explanation": "无限循环多因缺少轮数上限或终止条件，应设最大轮次、超时与进展判断。温度、工具命名语言、问题长度都不是该现象的主要成因。",
+    "id": "agent-010",
+    "tags": [
+      "Agent"
+    ],
+    "section": "工具调用"
+  },
+  {
+    "type": "single",
+    "question": "工具返回结果过大时，较合理的工程处理是？",
+    "options": [
+      {
+        "text": "原样全部塞入上下文",
+        "correct": false
+      },
+      {
+        "text": "截断、摘要或分页后再回填模型",
+        "correct": true
+      },
+      {
+        "text": "直接丢弃结果不告知模型",
+        "correct": false
+      },
+      {
+        "text": "让模型自行下载原始数据",
+        "correct": false
+      }
+    ],
+    "explanation": "过大结果会挤占上下文并增加成本，应截断、摘要或分页。原样塞入浪费上下文，直接丢弃会让模型缺少信息，模型也无法自行下载数据。",
+    "id": "agent-011",
+    "tags": [
+      "Agent"
+    ],
+    "section": "工具调用"
+  },
+  {
+    "type": "multiple",
+    "question": "下列哪些属于 Agent 工具调用中常见的安全措施？",
+    "options": [
+      {
+        "text": "对工具参数做校验与白名单限制",
+        "correct": true
+      },
+      {
+        "text": "对高风险操作加入人工确认",
+        "correct": true
+      },
+      {
+        "text": "将工具凭据直接写入模型提示词",
+        "correct": false
+      },
+      {
+        "text": "记录调用日志以便审计",
+        "correct": true
+      }
+    ],
+    "explanation": "参数校验白名单、高风险人工确认、调用审计都是常见安全措施。把凭据写入提示词会泄露密钥，属于错误做法。",
+    "id": "agent-012",
+    "tags": [
+      "Agent"
+    ],
+    "section": "工具调用"
+  },
+  {
+    "type": "multiple",
+    "question": "设计工具调用接口时，良好的实践包括？",
+    "options": [
+      {
+        "text": "工具名称与参数命名语义清晰",
+        "correct": true
+      },
+      {
+        "text": "对参数类型和取值范围给出明确约束",
+        "correct": true
+      },
+      {
+        "text": "一个工具承担大量无关功能以减小数量",
+        "correct": false
+      },
+      {
+        "text": "返回结构稳定且包含可判断成败的字段",
+        "correct": true
+      }
+    ],
+    "explanation": "清晰命名、明确参数约束、稳定且可判成败的返回结构有助于模型正确调用。把大量无关功能塞进一个工具会降低描述可读性和选择准确性。",
+    "id": "agent-013",
+    "tags": [
+      "Agent"
+    ],
+    "section": "工具调用"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些场景适合为 Agent 引入工具调用？",
+    "options": [
+      {
+        "text": "需要访问内部数据库查询订单",
+        "correct": true
+      },
+      {
+        "text": "需要发送邮件或创建日程",
+        "correct": true
+      },
+      {
+        "text": "复述用户刚输入的短句",
+        "correct": false
+      },
+      {
+        "text": "需要调用计算服务完成高精度运算",
+        "correct": true
+      }
+    ],
+    "explanation": "访问数据库、发送邮件、调用计算服务都超出模型自身能力，适合工具化。复述用户刚输入的短句依靠模型语言能力即可完成，无需工具。",
+    "id": "agent-014",
+    "tags": [
+      "Agent"
+    ],
+    "section": "工具调用"
+  },
+  {
+    "type": "single",
+    "question": "Agent 调用一个需要访问实时数据库的工具前，模型自身无法直接读取该库。这主要说明工具调用弥补了模型的什么局限？",
+    "options": [
+      {
+        "text": "模型上下文窗口大小有限",
+        "correct": false
+      },
+      {
+        "text": "模型训练数据静态且无法主动感知外部状态",
+        "correct": true
+      },
+      {
+        "text": "模型无法生成结构化文本",
+        "correct": false
+      },
+      {
+        "text": "模型不能理解自然语言指令",
+        "correct": false
+      }
+    ],
+    "explanation": "模型知识来源于训练数据，本身不能实时访问外部数据库，工具调用让其获得外部实时状态。上下文窗口、结构化输出、自然语言理解均不是此处核心局限，故正确项是第二项。",
+    "id": "agent-015",
+    "tags": [
+      "Agent"
+    ],
+    "section": "工具调用"
+  },
+  {
+    "type": "single",
+    "question": "工具定义中参数类型被写为字符串，但实际传入的是嵌套对象，运行时最可能首先出现什么后果？",
+    "options": [
+      {
+        "text": "模型会自动把对象序列化后继续执行",
+        "correct": false
+      },
+      {
+        "text": "工具执行端参数校验失败并拒绝调用",
+        "correct": true
+      },
+      {
+        "text": "工具会忽略类型声明直接运行成功",
+        "correct": false
+      },
+      {
+        "text": "模型会因此丢失全部对话历史",
+        "correct": false
+      }
+    ],
+    "explanation": "参数与声明类型不符时，执行端通常按 schema 校验并拒绝，返回错误供模型修正。模型不会擅自改变工具端校验逻辑，也不会因参数错误丢失历史。",
+    "id": "agent-016",
+    "tags": [
+      "Agent"
+    ],
+    "section": "工具调用"
+  },
+  {
+    "type": "single",
+    "question": "某客服 Agent 需要根据用户订单号查询物流，但用户只说“帮我查一下我上周买的东西到哪了”。Agent 下一步最合理的动作是？",
+    "options": [
+      {
+        "text": "直接编造一个物流状态回答用户",
+        "correct": false
+      },
+      {
+        "text": "先向用户追问订单号等必要标识再调用工具",
+        "correct": true
+      },
+      {
+        "text": "调用所有物流工具并合并结果",
+        "correct": false
+      },
+      {
+        "text": "放弃回答并结束会话",
+        "correct": false
+      }
+    ],
+    "explanation": "工具调用需要必要参数，缺少订单号时应先澄清补全，而非编造或盲目调用。追问必要信息是保证参数完整、结果准确的合理做法。",
+    "id": "agent-017",
+    "tags": [
+      "Agent"
+    ],
+    "section": "工具调用"
+  },
+  {
+    "type": "single",
+    "question": "工具返回的错误信息只写了“error”，模型多次重试仍失败。从工程角度最应改进的是？",
+    "options": [
+      {
+        "text": "增加模型温度参数",
+        "correct": false
+      },
+      {
+        "text": "让工具返回可操作的错误码与修正提示",
+        "correct": true
+      },
+      {
+        "text": "缩短系统提示词长度",
+        "correct": false
+      },
+      {
+        "text": "减少可用工具数量到零",
+        "correct": false
+      }
+    ],
+    "explanation": "模型依赖错误信息判断如何修正参数或更换工具，含糊错误会导致无效重试。提供结构化错误码和修正建议能显著提升恢复能力，其余选项与问题根因无关。",
+    "id": "agent-018",
+    "tags": [
+      "Agent"
+    ],
+    "section": "工具调用"
+  },
+  {
+    "type": "single",
+    "question": "关于工具调用中的“函数名”与“参数名”命名，下列说法最准确的是？",
+    "options": [
+      {
+        "text": "可以随意使用空格和特殊字符",
+        "correct": false
+      },
+      {
+        "text": "应稳定、语义明确且符合接口约定",
+        "correct": true
+      },
+      {
+        "text": "名字越长模型越容易正确调用",
+        "correct": false
+      },
+      {
+        "text": "每次调用必须随机变化以防缓存",
+        "correct": false
+      }
+    ],
+    "explanation": "工具名和参数名是模型与执行端共同的契约，应稳定清晰并符合命名规则。随机变化或随意字符会破坏匹配与解析，长度本身不决定正确率。",
+    "id": "agent-019",
+    "tags": [
+      "Agent"
+    ],
+    "section": "工具调用"
+  },
+  {
+    "type": "single",
+    "question": "Agent 在一次任务中先调用搜索工具获得候选链接，再调用网页抓取工具读取内容。这种串联主要体现了什么？",
+    "options": [
+      {
+        "text": "工具结果可作为后续工具调用的输入",
+        "correct": true
+      },
+      {
+        "text": "工具调用必须并行才能生效",
+        "correct": false
+      },
+      {
+        "text": "模型可以绕过工具直接访问网络",
+        "correct": false
+      },
+      {
+        "text": "每个工具只能被调用一次",
+        "correct": false
+      }
+    ],
+    "explanation": "前序工具的输出可作为后序工具的参数，形成链式调用。并行并非必需，模型也不能绕过工具直接联网，工具可多次调用。",
+    "id": "agent-020",
+    "tags": [
+      "Agent"
+    ],
+    "section": "工具调用"
+  },
+  {
+    "type": "single",
+    "question": "为防止工具被误触发造成删除数据，较合理的接口设计是？",
+    "options": [
+      {
+        "text": "把删除函数命名为 del 并默认公开",
+        "correct": false
+      },
+      {
+        "text": "对高危操作要求显式确认参数或二次审批",
+        "correct": true
+      },
+      {
+        "text": "在描述中省略删除风险以简化提示",
+        "correct": false
+      },
+      {
+        "text": "允许模型自行决定是否跳过权限检查",
+        "correct": false
+      }
+    ],
+    "explanation": "高危工具应通过显式确认、审批或权限控制降低误操作风险。省略风险描述、默认公开或让模型跳过权限都会放大危险。",
+    "id": "agent-021",
+    "tags": [
+      "Agent"
+    ],
+    "section": "工具调用"
+  },
+  {
+    "type": "single",
+    "question": "模型在工具调用时把用户问题中的“忽略之前指令”当作工具参数写入。较有效的防御措施是？",
+    "options": [
+      {
+        "text": "把工具参数直接拼进系统提示词执行",
+        "correct": false
+      },
+      {
+        "text": "对工具参数做白名单校验并隔离指令与数据",
+        "correct": true
+      },
+      {
+        "text": "让模型在参数中保留所有特殊字符",
+        "correct": false
+      },
+      {
+        "text": "关闭所有参数校验以提升灵活性",
+        "correct": false
+      }
+    ],
+    "explanation": "注入风险来自数据被当指令执行，白名单校验与数据/指令隔离能限制越权参数。关闭校验或直接拼接会加剧风险。",
+    "id": "agent-022",
+    "tags": [
+      "Agent"
+    ],
+    "section": "工具调用"
+  },
+  {
+    "type": "single",
+    "question": "工具调用返回的 JSON 字段比模型预期多出大量无关内容，最稳妥的处理是？",
+    "options": [
+      {
+        "text": "原样全部塞回模型上下文",
+        "correct": false
+      },
+      {
+        "text": "按约定 schema 提取所需字段后再回传",
+        "correct": true
+      },
+      {
+        "text": "让模型自行猜测哪些字段有用",
+        "correct": false
+      },
+      {
+        "text": "直接丢弃整个结果不处理",
+        "correct": false
+      }
+    ],
+    "explanation": "按 schema 裁剪可降低噪声和上下文占用，提升模型聚焦。原样塞入浪费上下文，完全丢弃则损失有效信息。",
+    "id": "agent-023",
+    "tags": [
+      "Agent"
+    ],
+    "section": "工具调用"
+  },
+  {
+    "type": "single",
+    "question": "某工具调用偶尔超时，Agent 立即无限重试导致资源耗尽。较合理的策略是？",
+    "options": [
+      {
+        "text": "设置最大重试次数与退避间隔，并允许降级",
+        "correct": true
+      },
+      {
+        "text": "每次超时都增加并发数量",
+        "correct": false
+      },
+      {
+        "text": "取消所有超时限制以等待结果",
+        "correct": false
+      },
+      {
+        "text": "把超时错误伪装成成功结果",
+        "correct": false
+      }
+    ],
+    "explanation": "有限重试加退避可避免资源耗尽，降级保证任务可继续。无限并发、取消超时或伪装成功都会引入更大问题。",
+    "id": "agent-024",
+    "tags": [
+      "Agent"
+    ],
+    "section": "工具调用"
+  },
+  {
+    "type": "multiple",
+    "question": "工具调用过程中，为提升可靠性，下列哪些做法是合理的？",
+    "options": [
+      {
+        "text": "对工具输入按 schema 做校验",
+        "correct": true
+      },
+      {
+        "text": "为工具调用设置超时和错误处理",
+        "correct": true
+      },
+      {
+        "text": "把工具返回的所有原始内容不加处理直接拼接",
+        "correct": false
+      },
+      {
+        "text": "对关键操作记录调用日志便于排查",
+        "correct": true
+      }
+    ],
+    "explanation": "输入校验、超时错误处理和日志都是可靠性的基础。不加处理拼接原始内容会引入噪声和注入风险，不是合理做法。",
+    "id": "agent-025",
+    "tags": [
+      "Agent"
+    ],
+    "section": "工具调用"
+  },
+  {
+    "type": "multiple",
+    "question": "下列哪些属于工具调用接口设计中应避免的问题？",
+    "options": [
+      {
+        "text": "工具描述含糊导致模型难以判断用途",
+        "correct": true
+      },
+      {
+        "text": "参数含义重叠且缺少必填标记",
+        "correct": true
+      },
+      {
+        "text": "为每个工具提供唯一稳定的名称",
+        "correct": false
+      },
+      {
+        "text": "高危操作无任何权限或确认机制",
+        "correct": true
+      }
+    ],
+    "explanation": "描述含糊、参数重叠、高危无防护都会导致误调用或安全问题。唯一稳定名称是良好实践，不属于应避免的问题。",
+    "id": "agent-026",
+    "tags": [
+      "Agent"
+    ],
+    "section": "工具调用"
+  },
+  {
+    "type": "multiple",
+    "question": "Agent 决定是否调用工具时，下列哪些信号应被考虑？",
+    "options": [
+      {
+        "text": "问题是否需要实时或私有数据",
+        "correct": true
+      },
+      {
+        "text": "工具描述与当前任务是否匹配",
+        "correct": true
+      },
+      {
+        "text": "模型是否能凭已有知识可靠回答",
+        "correct": true
+      },
+      {
+        "text": "工具名称字母顺序是否靠前",
+        "correct": false
+      }
+    ],
+    "explanation": "是否需要外部数据、工具与任务匹配度、模型自身可靠性都是决策依据。字母顺序与工具适用性无关。",
+    "id": "agent-027",
+    "tags": [
+      "Agent"
+    ],
+    "section": "工具调用"
+  },
+  {
+    "type": "multiple",
+    "question": "在工具调用链路中，下列说法正确的有？",
+    "options": [
+      {
+        "text": "模型负责提出调用意图与参数",
+        "correct": true
+      },
+      {
+        "text": "执行端负责实际运行函数并返回结果",
+        "correct": true
+      },
+      {
+        "text": "工具结果可被模型用于下一轮推理",
+        "correct": true
+      },
+      {
+        "text": "模型可以直接修改执行端代码来改变结果",
+        "correct": false
+      }
+    ],
+    "explanation": "模型生成调用意图和参数，执行端运行并回传结果，结果再供推理。模型不能直接改写执行端代码，这超出其职责边界。",
+    "id": "agent-028",
+    "tags": [
+      "Agent"
+    ],
+    "section": "工具调用"
+  },
+  {
+    "type": "multiple",
+    "question": "下列哪些场景适合让 Agent 通过工具调用来完成？",
+    "options": [
+      {
+        "text": "查询当前账户余额并据此回答",
+        "correct": true
+      },
+      {
+        "text": "向外部系统提交工单并获取编号",
+        "correct": true
+      },
+      {
+        "text": "计算两个小整数相加但模型可直接可靠完成",
+        "correct": false
+      },
+      {
+        "text": "读取企业内部知识库中的私有文档",
+        "correct": true
+      }
+    ],
+    "explanation": "需要实时私有数据或副作用操作时适合工具调用。简单加法模型可直接可靠完成，引入工具并非必要。",
+    "id": "agent-029",
+    "tags": [
+      "Agent"
+    ],
+    "section": "工具调用"
+  },
+  {
+    "type": "single",
+    "question": "Agent 在工具调用时收到模型返回的 tool_call 参数中缺少必填字段，最符合工程规范的处理方式是？",
+    "options": [
+      {
+        "text": "将缺少字段的记录直接写入数据库，并标记为待补全",
+        "correct": false
+      },
+      {
+        "text": "把错误信息作为工具结果返回给模型，要求其补充参数后重新调用",
+        "correct": true
+      },
+      {
+        "text": "静默忽略该字段，使用默认空字符串继续执行",
+        "correct": false
+      },
+      {
+        "text": "终止整个会话并清空上下文，要求用户重新提问",
+        "correct": false
+      }
+    ],
+    "explanation": "参数校验失败应反馈给模型以修正调用，而不是放宽校验或写入不完整数据。将错误作为工具结果回传，模型可据此补齐必填字段；静默忽略会掩盖问题，直接终止会话则过度反应。",
+    "id": "agent-030",
+    "tags": [
+      "Agent"
+    ],
+    "section": "工具调用"
+  },
+  {
+    "type": "single",
+    "question": "在基于LLM的Agent中，规划与执行循环的主要作用是？",
+    "options": [
+      {
+        "text": "将复杂任务分解为可执行的子任务，并根据执行结果动态调整计划",
+        "correct": true
+      },
+      {
+        "text": "一次性生成完整行动计划，然后严格按顺序执行，不进行任何调整",
+        "correct": false
+      },
+      {
+        "text": "仅用于生成自然语言响应，不涉及任务分解或状态跟踪",
+        "correct": false
+      },
+      {
+        "text": "替代所有外部工具调用，由LLM直接完成所有操作",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项体现了规划与执行循环的核心：分解任务并动态调整。B选项错误在于忽略了动态调整；C选项错误在于规划循环的核心不是生成响应；D选项错误，因为外部工具调用通常是执行的一部分。",
+    "id": "agent-031",
+    "tags": [
+      "Agent"
+    ],
+    "section": "规划与执行循环"
+  },
+  {
+    "type": "single",
+    "question": "以下哪个组件通常不属于Agent的规划与执行循环？",
+    "options": [
+      {
+        "text": "规划器（Planner）",
+        "correct": false
+      },
+      {
+        "text": "执行器（Executor）",
+        "correct": false
+      },
+      {
+        "text": "状态跟踪器（State Tracker）",
+        "correct": false
+      },
+      {
+        "text": "模型训练器（Model Trainer）",
+        "correct": true
+      }
+    ],
+    "explanation": "规划与执行循环通常包括规划器、执行器和状态跟踪器等组件，用于生成、执行和监控计划。模型训练器用于训练模型参数，不属于运行时循环的组件。",
+    "id": "agent-032",
+    "tags": [
+      "Agent"
+    ],
+    "section": "规划与执行循环"
+  },
+  {
+    "type": "single",
+    "question": "在ReAct框架中，Agent通过交替进行哪种类型的步骤来完成任务？",
+    "options": [
+      {
+        "text": "思考（Thought）和行动（Action）",
+        "correct": true
+      },
+      {
+        "text": "训练（Train）和测试（Test）",
+        "correct": false
+      },
+      {
+        "text": "编码（Encode）和解码（Decode）",
+        "correct": false
+      },
+      {
+        "text": "采样（Sample）和评估（Evaluate）",
+        "correct": false
+      }
+    ],
+    "explanation": "ReAct框架的核心是让LLM交替生成思考（推理）和行动（如调用工具），并根据观察结果继续循环。其他选项不是ReAct的标准步骤。",
+    "id": "agent-033",
+    "tags": [
+      "Agent"
+    ],
+    "section": "规划与执行循环"
+  },
+  {
+    "type": "single",
+    "question": "在Agent执行任务时，如果某个动作执行失败，合理的处理方式是什么？",
+    "options": [
+      {
+        "text": "立即终止整个任务，不进行任何重试或调整",
+        "correct": false
+      },
+      {
+        "text": "忽略失败，继续执行后续动作",
+        "correct": false
+      },
+      {
+        "text": "根据失败信息调整计划或重试该动作，并可能通知规划器重新规划",
+        "correct": true
+      },
+      {
+        "text": "直接由LLM编造一个成功的结果继续执行",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项体现了规划与执行循环的反馈机制：根据执行结果调整计划或重试。A和B忽略了鲁棒性，D违背了真实性原则。",
+    "id": "agent-034",
+    "tags": [
+      "Agent"
+    ],
+    "section": "规划与执行循环"
+  },
+  {
+    "type": "single",
+    "question": "以下关于Agent规划中“任务分解”的描述，正确的是？",
+    "options": [
+      {
+        "text": "任务分解只能进行一次，后续不能修改",
+        "correct": false
+      },
+      {
+        "text": "任务分解通常将复杂任务拆分为更简单、可执行的子任务",
+        "correct": true
+      },
+      {
+        "text": "任务分解是为了增加任务复杂度",
+        "correct": false
+      },
+      {
+        "text": "任务分解不需要考虑子任务之间的依赖关系",
+        "correct": false
+      }
+    ],
+    "explanation": "任务分解的目的是将复杂任务拆解为可管理的子任务，以便逐步执行。A错误，因为规划可能动态调整；C错误，分解是降低复杂度；D错误，依赖关系需考虑。",
+    "id": "agent-035",
+    "tags": [
+      "Agent"
+    ],
+    "section": "规划与执行循环"
+  },
+  {
+    "type": "single",
+    "question": "在LLM Agent的规划循环中，以下哪项最适合作为“观察（Observation）”的来源？",
+    "options": [
+      {
+        "text": "工具调用的返回结果",
+        "correct": true
+      },
+      {
+        "text": "LLM的内部参数",
+        "correct": false
+      },
+      {
+        "text": "用户的历史对话记录",
+        "correct": false
+      },
+      {
+        "text": "模型的训练数据",
+        "correct": false
+      }
+    ],
+    "explanation": "观察通常来自环境反馈，如工具调用结果、API响应等。B、C、D不是执行循环中实时观察的主要来源。",
+    "id": "agent-036",
+    "tags": [
+      "Agent"
+    ],
+    "section": "规划与执行循环"
+  },
+  {
+    "type": "single",
+    "question": "在Agent规划中，使用“思维链（Chain of Thought）”的主要目的是什么？",
+    "options": [
+      {
+        "text": "增加模型参数量",
+        "correct": false
+      },
+      {
+        "text": "让模型展示推理过程，从而改善复杂任务的规划质量",
+        "correct": true
+      },
+      {
+        "text": "减少计算开销",
+        "correct": false
+      },
+      {
+        "text": "替代所有外部工具调用",
+        "correct": false
+      }
+    ],
+    "explanation": "思维链通过引导模型逐步推理，提升复杂任务（如规划）的准确性和可解释性。它不改变参数量或减少计算，也不能替代工具。",
+    "id": "agent-037",
+    "tags": [
+      "Agent"
+    ],
+    "section": "规划与执行循环"
+  },
+  {
+    "type": "single",
+    "question": "以下哪种情况最可能导致Agent陷入无限规划循环？",
+    "options": [
+      {
+        "text": "规划器不断生成新计划但从未执行",
+        "correct": true
+      },
+      {
+        "text": "执行器成功执行每个动作",
+        "correct": false
+      },
+      {
+        "text": "状态跟踪器准确记录状态",
+        "correct": false
+      },
+      {
+        "text": "观察结果及时反馈给规划器",
+        "correct": false
+      }
+    ],
+    "explanation": "如果规划器只生成计划而不执行或无法达成终止条件，会导致循环无法推进。其他选项是正常或有益的行为。",
+    "id": "agent-038",
+    "tags": [
+      "Agent"
+    ],
+    "section": "规划与执行循环"
+  },
+  {
+    "type": "single",
+    "question": "在Agent执行循环中，状态跟踪器的主要职责是什么？",
+    "options": [
+      {
+        "text": "记录当前任务状态、历史动作和观察结果，供规划器参考",
+        "correct": true
+      },
+      {
+        "text": "训练LLM模型",
+        "correct": false
+      },
+      {
+        "text": "直接调用外部API执行动作",
+        "correct": false
+      },
+      {
+        "text": "生成最终用户响应",
+        "correct": false
+      }
+    ],
+    "explanation": "状态跟踪器维护执行上下文，包括任务进度、历史动作和观察，帮助规划器做出决策。A正确，其他选项不是其主要职责。",
+    "id": "agent-039",
+    "tags": [
+      "Agent"
+    ],
+    "section": "规划与执行循环"
+  },
+  {
+    "type": "single",
+    "question": "以下关于“反思（Reflection）”在Agent规划与执行循环中的说法，正确的是？",
+    "options": [
+      {
+        "text": "反思指Agent评估自身过去行动的效果，并据此调整后续计划",
+        "correct": true
+      },
+      {
+        "text": "反思是指重新执行整个任务",
+        "correct": false
+      },
+      {
+        "text": "反思会降低Agent的适应性",
+        "correct": false
+      },
+      {
+        "text": "反思只能由人类完成",
+        "correct": false
+      }
+    ],
+    "explanation": "反思是Agent对自身行为进行评价和总结，以优化未来决策。它不同于简单重试，能提高适应性，且可由Agent自动进行。",
+    "id": "agent-040",
+    "tags": [
+      "Agent"
+    ],
+    "section": "规划与执行循环"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些是常见的Agent规划与执行循环模式？",
+    "options": [
+      {
+        "text": "ReAct（推理与行动交替）",
+        "correct": true
+      },
+      {
+        "text": "Plan-and-Execute（先规划后执行）",
+        "correct": true
+      },
+      {
+        "text": "一次性生成完整计划并严格按顺序执行，不进行任何调整",
+        "correct": false
+      },
+      {
+        "text": "Reflexion（反思与重试）",
+        "correct": true
+      }
+    ],
+    "explanation": "ReAct、Plan-and-Execute和Reflexion都是常见的循环模式。一次性生成完整计划并严格按顺序执行、缺乏反馈调整的做法属于静态执行，不是典型的循环模式。",
+    "id": "agent-041",
+    "tags": [
+      "Agent"
+    ],
+    "section": "规划与执行循环"
+  },
+  {
+    "type": "multiple",
+    "question": "在Agent执行动作后，哪些信息通常应作为观察（Observation）反馈给规划器？",
+    "options": [
+      {
+        "text": "动作执行的成功或失败状态",
+        "correct": true
+      },
+      {
+        "text": "动作返回的具体结果数据",
+        "correct": true
+      },
+      {
+        "text": "执行过程中的错误信息",
+        "correct": true
+      },
+      {
+        "text": "模型的训练损失值",
+        "correct": false
+      }
+    ],
+    "explanation": "观察应包括动作执行的结果、状态和错误信息，以便规划器调整。训练损失值与运行时执行循环无关。",
+    "id": "agent-042",
+    "tags": [
+      "Agent"
+    ],
+    "section": "规划与执行循环"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些技术可用于提升Agent规划与执行循环的可靠性？",
+    "options": [
+      {
+        "text": "在规划前要求模型输出推理步骤（思维链）",
+        "correct": true
+      },
+      {
+        "text": "设置最大循环次数以防止无限循环",
+        "correct": true
+      },
+      {
+        "text": "忽略执行错误，继续执行",
+        "correct": false
+      },
+      {
+        "text": "在执行后加入反思步骤，评估结果并调整计划",
+        "correct": true
+      }
+    ],
+    "explanation": "思维链、最大循环限制和反思都能提高可靠性。忽略错误会降低可靠性。",
+    "id": "agent-043",
+    "tags": [
+      "Agent"
+    ],
+    "section": "规划与执行循环"
+  },
+  {
+    "type": "multiple",
+    "question": "在Plan-and-Execute模式中，以下哪些说法是正确的？",
+    "options": [
+      {
+        "text": "规划阶段生成一个步骤列表",
+        "correct": true
+      },
+      {
+        "text": "执行阶段可能根据中间结果重新规划",
+        "correct": true
+      },
+      {
+        "text": "执行阶段严格按初始计划执行，不允许调整",
+        "correct": false
+      },
+      {
+        "text": "规划阶段和执行阶段可以分离，由不同组件负责",
+        "correct": true
+      }
+    ],
+    "explanation": "Plan-and-Execute先规划后执行，执行中可根据中间结果重新规划；规划与执行阶段可以分离，由不同组件负责。执行阶段严格按初始计划且不允许调整的说法不符合现代实现。",
+    "id": "agent-044",
+    "tags": [
+      "Agent"
+    ],
+    "section": "规划与执行循环"
+  },
+  {
+    "type": "multiple",
+    "question": "以下关于Agent执行循环中“终止条件”的说法，哪些是正确的？",
+    "options": [
+      {
+        "text": "终止条件可以是达到最大迭代次数",
+        "correct": true
+      },
+      {
+        "text": "终止条件可以是任务目标已达成",
+        "correct": true
+      },
+      {
+        "text": "终止条件可以是检测到无法恢复的错误",
+        "correct": true
+      },
+      {
+        "text": "终止条件必须是用户手动中断",
+        "correct": false
+      }
+    ],
+    "explanation": "终止条件可以是最大迭代次数、任务完成或不可恢复错误等。用户手动中断只是其中一种可能，并非必须。",
+    "id": "agent-045",
+    "tags": [
+      "Agent"
+    ],
+    "section": "规划与执行循环"
+  },
+  {
+    "type": "single",
+    "question": "在Agent的规划与执行循环中，若环境反馈包含部分失败信息，规划器最合理的下一步操作是什么？",
+    "options": [
+      {
+        "text": "忽略失败信息，继续执行原计划",
+        "correct": false
+      },
+      {
+        "text": "根据失败信息调整后续步骤或重新规划",
+        "correct": true
+      },
+      {
+        "text": "立即终止整个任务",
+        "correct": false
+      },
+      {
+        "text": "随机选择一个新动作执行",
+        "correct": false
+      }
+    ],
+    "explanation": "失败反馈是调整计划的重要依据。正确做法是分析失败原因并修订计划，而非忽略或盲目终止。随机动作缺乏依据。",
+    "id": "agent-046",
+    "tags": [
+      "Agent"
+    ],
+    "section": "规划与执行循环"
+  },
+  {
+    "type": "single",
+    "question": "某Agent在每一步都重新生成完整计划而不参考已有执行结果，这最可能导致什么问题？",
+    "options": [
+      {
+        "text": "计划执行速度过快",
+        "correct": false
+      },
+      {
+        "text": "观察信息不足",
+        "correct": false
+      },
+      {
+        "text": "规划与执行脱节，重复或矛盾动作增多",
+        "correct": true
+      },
+      {
+        "text": "状态跟踪更准确",
+        "correct": false
+      }
+    ],
+    "explanation": "规划应基于执行结果迭代。每步重生成且不参考历史，会使计划与当前状态脱节，产生重复或矛盾动作。",
+    "id": "agent-047",
+    "tags": [
+      "Agent"
+    ],
+    "section": "规划与执行循环"
+  },
+  {
+    "type": "single",
+    "question": "在ReAct风格的循环中，Agent输出“思考：需要查询天气；动作：调用天气API”，下一步最应该做什么？",
+    "options": [
+      {
+        "text": "直接输出最终答案",
+        "correct": false
+      },
+      {
+        "text": "等待环境返回API调用结果作为观察",
+        "correct": true
+      },
+      {
+        "text": "重新生成思考，不执行动作",
+        "correct": false
+      },
+      {
+        "text": "跳过观察，继续下一个思考",
+        "correct": false
+      }
+    ],
+    "explanation": "ReAct循环为思考-动作-观察。发出动作后应等待环境返回观察，再基于观察继续推理。跳过观察会失去反馈。",
+    "id": "agent-048",
+    "tags": [
+      "Agent"
+    ],
+    "section": "规划与执行循环"
+  },
+  {
+    "type": "single",
+    "question": "关于Agent循环中的“状态跟踪”，以下哪项最准确？",
+    "options": [
+      {
+        "text": "只记录最终答案",
+        "correct": false
+      },
+      {
+        "text": "记录任务进展、已执行动作和环境反馈，供规划参考",
+        "correct": true
+      },
+      {
+        "text": "仅用于调试，不影响规划",
+        "correct": false
+      },
+      {
+        "text": "只保存用户初始输入",
+        "correct": false
+      }
+    ],
+    "explanation": "状态跟踪维护任务上下文，包括进展、动作历史与观察，是规划器决策的重要依据，并非仅用于调试。",
+    "id": "agent-049",
+    "tags": [
+      "Agent"
+    ],
+    "section": "规划与执行循环"
+  },
+  {
+    "type": "single",
+    "question": "当Agent面临一个复杂任务时，先将其分解为子任务再逐个执行，这种策略的主要优势是什么？",
+    "options": [
+      {
+        "text": "减少环境交互次数",
+        "correct": false
+      },
+      {
+        "text": "降低单步决策复杂度，便于分配与验证",
+        "correct": true
+      },
+      {
+        "text": "完全避免规划错误",
+        "correct": false
+      },
+      {
+        "text": "无需状态跟踪",
+        "correct": false
+      }
+    ],
+    "explanation": "任务分解将复杂问题拆为可管理的子任务，降低单步决策难度，便于分配执行与验证，但不能完全避免错误。",
+    "id": "agent-050",
+    "tags": [
+      "Agent"
+    ],
+    "section": "规划与执行循环"
+  },
+  {
+    "type": "single",
+    "question": "在Agent执行循环中，若观察结果与预期严重不符，以下哪种处理最合理？",
+    "options": [
+      {
+        "text": "坚持原计划直到结束",
+        "correct": false
+      },
+      {
+        "text": "触发重新规划，结合新观察修正假设",
+        "correct": true
+      },
+      {
+        "text": "丢弃该观察",
+        "correct": false
+      },
+      {
+        "text": "立即输出错误报告",
+        "correct": false
+      }
+    ],
+    "explanation": "观察与预期不符说明假设可能错误，应重新规划并修正假设。坚持原计划或丢弃观察都会导致后续错误。",
+    "id": "agent-051",
+    "tags": [
+      "Agent"
+    ],
+    "section": "规划与执行循环"
+  },
+  {
+    "type": "single",
+    "question": "以下哪项最不适合作为Agent执行循环的终止条件？",
+    "options": [
+      {
+        "text": "达到最大迭代次数",
+        "correct": false
+      },
+      {
+        "text": "规划器输出最终答案",
+        "correct": false
+      },
+      {
+        "text": "环境返回不可恢复错误",
+        "correct": false
+      },
+      {
+        "text": "每执行一步就终止",
+        "correct": true
+      }
+    ],
+    "explanation": "每步终止会使多步任务无法完成。最大迭代、最终答案和不可恢复错误都是合理的终止条件。",
+    "id": "agent-052",
+    "tags": [
+      "Agent"
+    ],
+    "section": "规划与执行循环"
+  },
+  {
+    "type": "single",
+    "question": "在Plan-and-Execute模式中，规划器与执行器的关系最准确的是？",
+    "options": [
+      {
+        "text": "规划器直接执行所有动作",
+        "correct": false
+      },
+      {
+        "text": "执行器制定计划，规划器执行",
+        "correct": false
+      },
+      {
+        "text": "规划器生成计划，执行器按计划行动并反馈",
+        "correct": true
+      },
+      {
+        "text": "两者完全独立，无信息交互",
+        "correct": false
+      }
+    ],
+    "explanation": "Plan-and-Execute将规划与执行分离：规划器生成计划，执行器执行并反馈结果，必要时触发重规划。",
+    "id": "agent-053",
+    "tags": [
+      "Agent"
+    ],
+    "section": "规划与执行循环"
+  },
+  {
+    "type": "single",
+    "question": "Agent在循环中持续产生大量无效思考而不调用任何工具，最可能的原因是？",
+    "options": [
+      {
+        "text": "动作空间约束过强",
+        "correct": false
+      },
+      {
+        "text": "缺少明确的终止条件或行动触发机制",
+        "correct": true
+      },
+      {
+        "text": "观察信息过于详细",
+        "correct": false
+      },
+      {
+        "text": "状态跟踪器记录过少",
+        "correct": false
+      }
+    ],
+    "explanation": "只思考不行动常因缺乏终止条件或行动触发，导致循环无法收敛。明确终止与行动约束可缓解。",
+    "id": "agent-054",
+    "tags": [
+      "Agent"
+    ],
+    "section": "规划与执行循环"
+  },
+  {
+    "type": "single",
+    "question": "关于Reflection（反思）机制，以下说法最准确的是？",
+    "options": [
+      {
+        "text": "反思仅在任务结束后进行，不影响后续步骤",
+        "correct": false
+      },
+      {
+        "text": "反思可基于执行轨迹评估策略并调整后续规划",
+        "correct": true
+      },
+      {
+        "text": "反思会替代环境观察",
+        "correct": false
+      },
+      {
+        "text": "反思必须由人工完成",
+        "correct": false
+      }
+    ],
+    "explanation": "反思可基于历史轨迹评估策略，调整后续规划，也可在任务后总结。它不能替代环境观察，且可由Agent自动完成。",
+    "id": "agent-055",
+    "tags": [
+      "Agent"
+    ],
+    "section": "规划与执行循环"
+  },
+  {
+    "type": "single",
+    "question": "在Agent循环中，将工具调用结果结构化地反馈给规划器，主要有助于什么？",
+    "options": [
+      {
+        "text": "增加token消耗",
+        "correct": false
+      },
+      {
+        "text": "提升规划器对当前状态的理解与决策准确性",
+        "correct": true
+      },
+      {
+        "text": "替代状态跟踪",
+        "correct": false
+      },
+      {
+        "text": "避免所有错误",
+        "correct": false
+      }
+    ],
+    "explanation": "结构化观察帮助规划器准确理解当前状态，做出更合理决策。它不能替代状态跟踪，也不能避免所有错误。",
+    "id": "agent-056",
+    "tags": [
+      "Agent"
+    ],
+    "section": "规划与执行循环"
+  },
+  {
+    "type": "single",
+    "question": "在Agent的规划与执行循环中，若规划器基于当前观察重新规划后，执行器执行动作并返回失败结果，最合理的后续步骤是什么？",
+    "options": [
+      {
+        "text": "将失败结果作为新观察，更新状态后重新进入规划阶段",
+        "correct": true
+      },
+      {
+        "text": "忽略失败结果，继续执行原计划中的下一个动作",
+        "correct": false
+      },
+      {
+        "text": "立即终止整个循环并返回失败",
+        "correct": false
+      },
+      {
+        "text": "回滚所有已执行动作，并从初始状态重新开始",
+        "correct": false
+      }
+    ],
+    "explanation": "执行失败后，失败信息应作为观察反馈给规划器，驱动状态更新与重新规划。忽略失败会累积错误；立即终止过于武断；回滚全部动作成本高且非必要。",
+    "id": "agent-057",
+    "tags": [
+      "Agent"
+    ],
+    "section": "规划与执行循环"
+  },
+  {
+    "type": "single",
+    "question": "某Agent在规划与执行循环中，每次规划都只调用大模型生成自然语言计划，从不记录已执行动作和观察结果。这最可能导致什么问题？",
+    "options": [
+      {
+        "text": "规划结果无法与执行历史对齐，容易重复或偏离目标",
+        "correct": true
+      },
+      {
+        "text": "工具调用API的响应速度变慢",
+        "correct": false
+      },
+      {
+        "text": "大模型的推理能力下降",
+        "correct": false
+      },
+      {
+        "text": "环境状态自动重置",
+        "correct": false
+      }
+    ],
+    "explanation": "规划与执行循环依赖状态和观察来指导后续决策。不记录执行历史会使规划器缺乏上下文，导致重复动作或偏离目标。其他选项与规划器是否记录历史无直接因果关系。",
+    "id": "agent-058",
+    "tags": [
+      "Agent"
+    ],
+    "section": "规划与执行循环"
+  },
+  {
+    "type": "multiple",
+    "question": "在Agent的规划与执行循环中，以下哪些做法有助于避免陷入无限规划循环？",
+    "options": [
+      {
+        "text": "设置最大循环次数或最大规划步数",
+        "correct": true
+      },
+      {
+        "text": "检测连续多次规划结果是否高度相似并触发退出",
+        "correct": true
+      },
+      {
+        "text": "在每次规划前强制清空所有历史观察",
+        "correct": false
+      },
+      {
+        "text": "定义明确的成功终止条件并持续评估",
+        "correct": true
+      }
+    ],
+    "explanation": "限制步数、相似性检测和明确终止条件都能有效防止无限循环。清空历史观察会破坏状态连续性，反而可能导致重复规划，不是合理做法。",
+    "id": "agent-059",
+    "tags": [
+      "Agent"
+    ],
+    "section": "规划与执行循环"
+  },
+  {
+    "type": "multiple",
+    "question": "关于Agent执行循环中的观察（Observation），以下哪些说法是正确的？",
+    "options": [
+      {
+        "text": "观察可以来自工具调用的返回结果",
+        "correct": true
+      },
+      {
+        "text": "观察可以来自环境状态的变化",
+        "correct": true
+      },
+      {
+        "text": "观察必须由大模型直接生成",
+        "correct": false
+      },
+      {
+        "text": "观察应被用于更新后续规划所依赖的状态",
+        "correct": true
+      }
+    ],
+    "explanation": "观察是执行后从工具或环境获得的反馈，用于更新状态并指导后续规划。大模型可以生成思考，但观察应来自实际执行结果，而非模型直接编造。",
+    "id": "agent-060",
+    "tags": [
+      "Agent"
+    ],
+    "section": "规划与执行循环"
+  },
+  {
+    "type": "single",
+    "question": "在基于LLM的Agent中，上下文窗口限制常导致历史信息丢失。以下哪项是缓解该问题最直接的策略？",
+    "options": [
+      {
+        "text": "增大模型参数量",
+        "correct": false
+      },
+      {
+        "text": "对历史对话进行摘要压缩",
+        "correct": true
+      },
+      {
+        "text": "提高学习率",
+        "correct": false
+      },
+      {
+        "text": "增加训练数据量",
+        "correct": false
+      }
+    ],
+    "explanation": "摘要压缩直接减少上下文长度，保留关键信息，是缓解窗口限制的常用方法。增大参数量、调学习率、增数据量不直接解决上下文长度问题。",
+    "id": "agent-061",
+    "tags": [
+      "Agent"
+    ],
+    "section": "上下文管理"
+  },
+  {
+    "type": "single",
+    "question": "Agent在长对话中需要记住用户之前提到的偏好。以下哪种上下文管理机制最适合实现这一需求？",
+    "options": [
+      {
+        "text": "滑动窗口丢弃早期对话",
+        "correct": false
+      },
+      {
+        "text": "将偏好提取为结构化记忆存储",
+        "correct": true
+      },
+      {
+        "text": "每次重新读取全部历史",
+        "correct": false
+      },
+      {
+        "text": "仅保留最近一轮对话",
+        "correct": false
+      }
+    ],
+    "explanation": "将偏好提取为结构化记忆可长期保留关键信息，避免窗口限制。滑动窗口和仅保留最近一轮会丢失早期偏好；每次读全部历史可能超窗口且低效。",
+    "id": "agent-062",
+    "tags": [
+      "Agent"
+    ],
+    "section": "上下文管理"
+  },
+  {
+    "type": "single",
+    "question": "关于Agent上下文中的“系统提示词”，以下说法正确的是？",
+    "options": [
+      {
+        "text": "应随对话轮次不断追加新内容",
+        "correct": false
+      },
+      {
+        "text": "通常置于上下文开头以设定Agent行为",
+        "correct": true
+      },
+      {
+        "text": "必须与用户输入完全相同",
+        "correct": false
+      },
+      {
+        "text": "在每次工具调用后必须删除",
+        "correct": false
+      }
+    ],
+    "explanation": "系统提示词用于设定Agent角色和规则，通常放在上下文开头。不断追加会膨胀上下文；与用户输入相同无意义；工具调用后删除会丢失行为约束。",
+    "id": "agent-063",
+    "tags": [
+      "Agent"
+    ],
+    "section": "上下文管理"
+  },
+  {
+    "type": "single",
+    "question": "在ReAct模式的Agent中，上下文通常包含思考、行动和观察。以下哪项是管理这些内容以避免上下文过长的合理做法？",
+    "options": [
+      {
+        "text": "保留所有中间步骤以维持可追溯性",
+        "correct": false
+      },
+      {
+        "text": "对已完成子任务的步骤进行摘要后丢弃细节",
+        "correct": true
+      },
+      {
+        "text": "只保留最终答案",
+        "correct": false
+      },
+      {
+        "text": "每步后清空上下文重新开始",
+        "correct": false
+      }
+    ],
+    "explanation": "对已完成子任务的步骤摘要后丢弃细节，可在保留关键信息的同时控制长度。保留全部会膨胀；只保留最终答案可能丢失推理依据；清空会失去连续性。",
+    "id": "agent-064",
+    "tags": [
+      "Agent"
+    ],
+    "section": "上下文管理"
+  },
+  {
+    "type": "single",
+    "question": "当Agent需要处理超出上下文窗口的超长文档时，以下哪种方法最合适？",
+    "options": [
+      {
+        "text": "直接截断文档前部分",
+        "correct": false
+      },
+      {
+        "text": "将文档分块，按需检索相关块加入上下文",
+        "correct": true
+      },
+      {
+        "text": "随机采样部分段落",
+        "correct": false
+      },
+      {
+        "text": "要求用户缩短文档",
+        "correct": false
+      }
+    ],
+    "explanation": "分块检索能根据当前问题动态选取相关片段，避免无关内容占用窗口。截断和随机采样可能丢失关键信息；要求用户缩短文档不总是可行。",
+    "id": "agent-065",
+    "tags": [
+      "Agent"
+    ],
+    "section": "上下文管理"
+  },
+  {
+    "type": "single",
+    "question": "在Agent的上下文管理中，以下哪项最能体现“外部记忆”的作用？",
+    "options": [
+      {
+        "text": "将历史对话存储在向量数据库中，需要时检索",
+        "correct": true
+      },
+      {
+        "text": "增加模型的最大输出长度",
+        "correct": false
+      },
+      {
+        "text": "使用更大的批次进行训练",
+        "correct": false
+      },
+      {
+        "text": "提高温度参数以增加多样性",
+        "correct": false
+      }
+    ],
+    "explanation": "外部记忆如向量数据库可存储大量历史信息，需要时检索相关部分加入上下文，突破窗口限制。其他选项与上下文记忆管理无直接关系。",
+    "id": "agent-066",
+    "tags": [
+      "Agent"
+    ],
+    "section": "上下文管理"
+  },
+  {
+    "type": "single",
+    "question": "以下哪项是上下文压缩可能带来的风险？",
+    "options": [
+      {
+        "text": "增加上下文长度",
+        "correct": false
+      },
+      {
+        "text": "丢失关键细节或引入不准确摘要",
+        "correct": true
+      },
+      {
+        "text": "降低模型推理速度",
+        "correct": false
+      },
+      {
+        "text": "增加存储成本",
+        "correct": false
+      }
+    ],
+    "explanation": "压缩可能丢失细节或引入摘要错误，影响Agent决策准确性。压缩通常减少长度和成本，不一定降低推理速度。",
+    "id": "agent-067",
+    "tags": [
+      "Agent"
+    ],
+    "section": "上下文管理"
+  },
+  {
+    "type": "single",
+    "question": "在多轮对话Agent中，用户说“照刚才说的做”。为正确理解指代，上下文管理应优先保证什么？",
+    "options": [
+      {
+        "text": "保留最近一轮的完整对话",
+        "correct": false
+      },
+      {
+        "text": "保留与当前指令相关的历史意图和实体",
+        "correct": true
+      },
+      {
+        "text": "保留所有系统日志",
+        "correct": false
+      },
+      {
+        "text": "仅保留用户最后一句",
+        "correct": false
+      }
+    ],
+    "explanation": "指代理解需要历史中的意图和实体信息。仅保留最近一轮或最后一句可能丢失指代对象；系统日志通常无关。",
+    "id": "agent-068",
+    "tags": [
+      "Agent"
+    ],
+    "section": "上下文管理"
+  },
+  {
+    "type": "single",
+    "question": "关于上下文窗口中的“位置偏差”，以下描述正确的是？",
+    "options": [
+      {
+        "text": "模型对上下文开头和结尾的信息利用更好",
+        "correct": true
+      },
+      {
+        "text": "模型对中间位置的信息利用最好",
+        "correct": false
+      },
+      {
+        "text": "位置偏差只存在于训练阶段",
+        "correct": false
+      },
+      {
+        "text": "位置偏差可通过增加温度消除",
+        "correct": false
+      }
+    ],
+    "explanation": "研究表明模型常对开头和结尾信息利用更好，中间信息易被忽略。位置偏差在推理阶段也存在，温度参数不能消除。",
+    "id": "agent-069",
+    "tags": [
+      "Agent"
+    ],
+    "section": "上下文管理"
+  },
+  {
+    "type": "single",
+    "question": "Agent在调用工具后，工具返回了大量数据。以下哪种做法最有利于后续上下文管理？",
+    "options": [
+      {
+        "text": "将全部原始数据加入上下文",
+        "correct": false
+      },
+      {
+        "text": "提取与当前任务相关的关键信息加入上下文",
+        "correct": true
+      },
+      {
+        "text": "丢弃所有工具返回数据",
+        "correct": false
+      },
+      {
+        "text": "将数据转换为音频",
+        "correct": false
+      }
+    ],
+    "explanation": "提取关键信息可避免上下文被无关数据充斥，同时保留决策所需内容。全部加入易超窗口；全部丢弃会丢失信息。",
+    "id": "agent-070",
+    "tags": [
+      "Agent"
+    ],
+    "section": "上下文管理"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些属于Agent上下文管理的常用技术？",
+    "options": [
+      {
+        "text": "滑动窗口",
+        "correct": true
+      },
+      {
+        "text": "摘要压缩",
+        "correct": true
+      },
+      {
+        "text": "向量检索",
+        "correct": true
+      },
+      {
+        "text": "梯度裁剪",
+        "correct": false
+      }
+    ],
+    "explanation": "滑动窗口、摘要压缩和向量检索都是管理上下文长度和内容的常用技术。梯度裁剪是训练中防止梯度爆炸的方法，不属于上下文管理。",
+    "id": "agent-071",
+    "tags": [
+      "Agent"
+    ],
+    "section": "上下文管理"
+  },
+  {
+    "type": "multiple",
+    "question": "在设计Agent的上下文结构时，以下哪些信息通常应被包含？",
+    "options": [
+      {
+        "text": "系统角色设定",
+        "correct": true
+      },
+      {
+        "text": "用户当前请求",
+        "correct": true
+      },
+      {
+        "text": "相关历史对话摘要",
+        "correct": true
+      },
+      {
+        "text": "模型训练时的损失值",
+        "correct": false
+      }
+    ],
+    "explanation": "系统角色设定、用户当前请求和相关历史摘要都是Agent决策所需上下文。训练损失值是训练阶段信息，与推理上下文无关。",
+    "id": "agent-072",
+    "tags": [
+      "Agent"
+    ],
+    "section": "上下文管理"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些情况可能表明Agent的上下文管理需要优化？",
+    "options": [
+      {
+        "text": "Agent重复询问已提供的信息",
+        "correct": true
+      },
+      {
+        "text": "响应时间随对话轮次显著增加",
+        "correct": true
+      },
+      {
+        "text": "Agent忽略早期设定的约束",
+        "correct": true
+      },
+      {
+        "text": "模型准确率在训练集上很高",
+        "correct": false
+      }
+    ],
+    "explanation": "重复询问、响应变慢和忽略早期约束都可能是上下文管理不当的表现。训练集准确率高与上下文管理无直接关系。",
+    "id": "agent-073",
+    "tags": [
+      "Agent"
+    ],
+    "section": "上下文管理"
+  },
+  {
+    "type": "multiple",
+    "question": "关于外部记忆存储（如向量数据库）在Agent上下文管理中的作用，以下说法正确的有？",
+    "options": [
+      {
+        "text": "可以突破模型上下文窗口的长度限制",
+        "correct": true
+      },
+      {
+        "text": "需要设计检索策略以选取相关记忆",
+        "correct": true
+      },
+      {
+        "text": "存储所有历史对话一定比摘要更好",
+        "correct": false
+      },
+      {
+        "text": "检索到的记忆需要整合到当前上下文中",
+        "correct": true
+      }
+    ],
+    "explanation": "外部记忆能扩展信息容量，但需检索策略选取相关内容并整合到上下文。存储所有历史未必更好，可能引入噪声和检索负担。",
+    "id": "agent-074",
+    "tags": [
+      "Agent"
+    ],
+    "section": "上下文管理"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些做法有助于减少Agent上下文中的冗余信息？",
+    "options": [
+      {
+        "text": "对重复内容进行去重",
+        "correct": true
+      },
+      {
+        "text": "移除与当前任务无关的闲聊",
+        "correct": true
+      },
+      {
+        "text": "保留所有工具调用的完整日志",
+        "correct": false
+      },
+      {
+        "text": "使用摘要代替冗长的历史描述",
+        "correct": true
+      }
+    ],
+    "explanation": "去重、移除无关内容和摘要都是减少冗余的有效方法。保留所有工具调用完整日志可能增加冗余，除非日志与任务密切相关。",
+    "id": "agent-075",
+    "tags": [
+      "Agent"
+    ],
+    "section": "上下文管理"
+  },
+  {
+    "type": "single",
+    "question": "在Agent的上下文管理中，将历史对话按时间顺序完整保留并直接放入每次请求的上下文，最可能导致什么问题？",
+    "options": [
+      {
+        "text": "上下文窗口迅速被占满，影响后续关键信息的注入",
+        "correct": true
+      },
+      {
+        "text": "模型无法理解时间顺序，导致逻辑混乱",
+        "correct": false
+      },
+      {
+        "text": "工具调用次数会显著减少",
+        "correct": false
+      },
+      {
+        "text": "系统提示词会自动失效",
+        "correct": false
+      }
+    ],
+    "explanation": "完整保留历史会线性增长上下文长度，挤占窗口空间，使新信息或关键指令无法放入。模型本身能理解时间顺序；工具调用和系统提示词失效与是否保留历史无直接必然关系。",
+    "id": "agent-076",
+    "tags": [
+      "Agent"
+    ],
+    "section": "上下文管理"
+  },
+  {
+    "type": "single",
+    "question": "Agent在连续任务中反复读取同一份大型配置文件。为减少上下文重复占用，最合适的做法是？",
+    "options": [
+      {
+        "text": "每次都将完整文件内容重新拼接到上下文中",
+        "correct": false
+      },
+      {
+        "text": "将文件内容摘要或关键字段提取后存入外部记忆，按需检索",
+        "correct": true
+      },
+      {
+        "text": "要求用户每次手动粘贴文件内容",
+        "correct": false
+      },
+      {
+        "text": "直接忽略该文件，凭模型记忆回答",
+        "correct": false
+      }
+    ],
+    "explanation": "对大型静态内容做摘要或结构化提取并外置存储，可按需检索，避免重复占用窗口。重复拼接会浪费上下文；让用户重复粘贴体验差；忽略文件则可能丢失关键配置信息。",
+    "id": "agent-077",
+    "tags": [
+      "Agent"
+    ],
+    "section": "上下文管理"
+  },
+  {
+    "type": "single",
+    "question": "Agent在上下文中同时包含系统指令、用户请求和工具返回结果。当工具返回内容与系统指令冲突时，合理的上下文管理策略是？",
+    "options": [
+      {
+        "text": "让工具返回内容覆盖系统指令，因为它是最新数据",
+        "correct": false
+      },
+      {
+        "text": "在上下文中明确区分角色与优先级，并让模型遵循系统指令的约束",
+        "correct": true
+      },
+      {
+        "text": "删除系统指令以节省上下文空间",
+        "correct": false
+      },
+      {
+        "text": "将两者合并成一段无标记文本",
+        "correct": false
+      }
+    ],
+    "explanation": "上下文应保留角色标记和优先级信息，系统指令通常具有更高约束力。工具返回是数据而非指令，不应覆盖系统设定；删除系统指令或合并无标记文本都会削弱模型对优先级的判断。",
+    "id": "agent-078",
+    "tags": [
+      "Agent"
+    ],
+    "section": "上下文管理"
+  },
+  {
+    "type": "single",
+    "question": "以下哪项最准确地描述了“上下文修剪”（context pruning）在Agent中的作用？",
+    "options": [
+      {
+        "text": "永久删除外部数据库中的历史记录",
+        "correct": false
+      },
+      {
+        "text": "在构造请求时移除上下文中低价值或过时的内容，以保留关键信息",
+        "correct": true
+      },
+      {
+        "text": "扩大模型的上下文窗口容量",
+        "correct": false
+      },
+      {
+        "text": "改变模型参数以记住更多信息",
+        "correct": false
+      }
+    ],
+    "explanation": "上下文修剪是在每次构造请求时选择性移除低价值内容，属于输入侧管理。它不改变模型窗口容量，也不修改模型参数，更不等同于删除外部持久化存储。",
+    "id": "agent-079",
+    "tags": [
+      "Agent"
+    ],
+    "section": "上下文管理"
+  },
+  {
+    "type": "single",
+    "question": "在多Agent协作系统中，一个子Agent需要向主Agent汇报中间结果。为便于主Agent后续管理上下文，子Agent的汇报应优先采用哪种形式？",
+    "options": [
+      {
+        "text": "完整转录子Agent的全部思考过程",
+        "correct": false
+      },
+      {
+        "text": "结构化的结论与关键证据摘要",
+        "correct": true
+      },
+      {
+        "text": "仅返回一个表示成功的布尔值",
+        "correct": false
+      },
+      {
+        "text": "将所有原始工具日志逐条粘贴",
+        "correct": false
+      }
+    ],
+    "explanation": "结构化摘要既保留结论和关键依据，又控制长度，便于主Agent整合。完整思考过程和原始日志冗长；仅返回布尔值则丢失必要信息，无法支持后续决策。",
+    "id": "agent-080",
+    "tags": [
+      "Agent"
+    ],
+    "section": "上下文管理"
+  },
+  {
+    "type": "single",
+    "question": "Agent在长任务中需要记住“用户已拒绝方案A”这一约束。以下哪种上下文管理方式最可靠？",
+    "options": [
+      {
+        "text": "依赖模型从完整对话历史中自行回忆",
+        "correct": false
+      },
+      {
+        "text": "将该约束以显式条目写入持久化记忆，并在相关步骤检索注入",
+        "correct": true
+      },
+      {
+        "text": "在每次请求中重复全部对话历史",
+        "correct": false
+      },
+      {
+        "text": "将该约束仅放在某次工具调用的参数中",
+        "correct": false
+      }
+    ],
+    "explanation": "显式写入持久化记忆并在需要时注入，能稳定保留关键约束。依赖模型自行回忆不可靠；重复全部历史浪费窗口；仅放在工具参数中可能后续不可见。",
+    "id": "agent-081",
+    "tags": [
+      "Agent"
+    ],
+    "section": "上下文管理"
+  },
+  {
+    "type": "single",
+    "question": "当Agent上下文接近窗口上限时，以下哪种做法最不利于保持后续推理质量？",
+    "options": [
+      {
+        "text": "对早期对话进行摘要压缩",
+        "correct": false
+      },
+      {
+        "text": "将部分历史转为外部存储并按需检索",
+        "correct": false
+      },
+      {
+        "text": "直接截断上下文末尾的最新工具返回结果",
+        "correct": true
+      },
+      {
+        "text": "优先保留系统指令和当前任务目标",
+        "correct": false
+      }
+    ],
+    "explanation": "最新工具返回结果通常对当前决策最关键，直接截断末尾会丢失即时信息。摘要早期对话、外置历史、保留系统指令和任务目标都是常见且合理的窗口管理手段。",
+    "id": "agent-082",
+    "tags": [
+      "Agent"
+    ],
+    "section": "上下文管理"
+  },
+  {
+    "type": "single",
+    "question": "关于Agent上下文中的“工作记忆”与“长期记忆”，以下说法正确的是？",
+    "options": [
+      {
+        "text": "工作记忆通常指当前上下文窗口内的信息，长期记忆依赖外部存储",
+        "correct": true
+      },
+      {
+        "text": "工作记忆必须永久保存，长期记忆只在单轮内有效",
+        "correct": false
+      },
+      {
+        "text": "两者完全等价，只是命名不同",
+        "correct": false
+      },
+      {
+        "text": "长期记忆只能存储结构化表格数据",
+        "correct": false
+      }
+    ],
+    "explanation": "工作记忆对应当前推理可用的上下文内容，长期记忆通过外部存储跨会话保留。两者生命周期和载体不同，长期记忆也可存储文本、向量等多种形式。",
+    "id": "agent-083",
+    "tags": [
+      "Agent"
+    ],
+    "section": "上下文管理"
+  },
+  {
+    "type": "single",
+    "question": "Agent在调用检索工具后获得多个相关文档片段。为优化后续上下文，最合理的处理方式是？",
+    "options": [
+      {
+        "text": "将所有片段原样加入上下文，确保不遗漏",
+        "correct": false
+      },
+      {
+        "text": "按相关性排序并只保留最相关的片段或摘要",
+        "correct": true
+      },
+      {
+        "text": "随机保留一个片段以节省空间",
+        "correct": false
+      },
+      {
+        "text": "丢弃所有片段，只记录检索成功",
+        "correct": false
+      }
+    ],
+    "explanation": "检索结果通常冗余，应按相关性筛选或摘要，保留高价值内容。全量加入浪费窗口；随机保留可能丢失关键证据；只记录成功则无法支持后续回答。",
+    "id": "agent-084",
+    "tags": [
+      "Agent"
+    ],
+    "section": "上下文管理"
+  },
+  {
+    "type": "single",
+    "question": "以下哪项最能说明Agent的上下文管理策略有效？",
+    "options": [
+      {
+        "text": "上下文长度持续增长但任务完成率稳定",
+        "correct": false
+      },
+      {
+        "text": "在控制上下文长度的同时，关键信息在需要时仍可被正确使用",
+        "correct": true
+      },
+      {
+        "text": "所有历史消息都被永久保留在每次请求中",
+        "correct": false
+      },
+      {
+        "text": "工具调用次数越少越好",
+        "correct": false
+      }
+    ],
+    "explanation": "有效性的核心是在有限窗口内保持关键信息可用。长度持续增长可能不可持续；永久保留全部历史并不等于有效；工具调用次数少与上下文管理效果无直接等价关系。",
+    "id": "agent-085",
+    "tags": [
+      "Agent"
+    ],
+    "section": "上下文管理"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些做法有助于在Agent上下文中保留关键信息的同时控制长度？",
+    "options": [
+      {
+        "text": "对历史对话生成阶段性摘要",
+        "correct": true
+      },
+      {
+        "text": "将稳定知识放入外部记忆并按需检索",
+        "correct": true
+      },
+      {
+        "text": "在每次请求中无条件附加全部历史原文",
+        "correct": false
+      },
+      {
+        "text": "为上下文设置优先级，优先保留系统指令和当前目标",
+        "correct": true
+      }
+    ],
+    "explanation": "摘要、外置检索和优先级保留都能在有限窗口内维持关键信息。无条件附加全部历史原文会迅速占满窗口，不利于长度控制。",
+    "id": "agent-086",
+    "tags": [
+      "Agent"
+    ],
+    "section": "上下文管理"
+  },
+  {
+    "type": "multiple",
+    "question": "在Agent上下文中，以下哪些内容通常应被明确标记或结构化组织？",
+    "options": [
+      {
+        "text": "系统指令与安全约束",
+        "correct": true
+      },
+      {
+        "text": "工具调用的输入与返回结果",
+        "correct": true
+      },
+      {
+        "text": "用户当前任务目标",
+        "correct": true
+      },
+      {
+        "text": "模型内部不可见的随机种子",
+        "correct": false
+      }
+    ],
+    "explanation": "系统指令、工具调用和任务目标都是模型决策依赖的关键上下文，应结构化标记。随机种子通常是模型内部实现细节，不属于需要放入上下文的常规内容。",
+    "id": "agent-087",
+    "tags": [
+      "Agent"
+    ],
+    "section": "上下文管理"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些现象可能提示Agent的上下文管理需要改进？",
+    "options": [
+      {
+        "text": "Agent反复询问用户已经提供过的信息",
+        "correct": true
+      },
+      {
+        "text": "随着对话变长，回答开始忽略早期设定的约束",
+        "correct": true
+      },
+      {
+        "text": "每次请求的上下文长度都已接近窗口上限",
+        "correct": true
+      },
+      {
+        "text": "Agent能够稳定引用三步之前的关键结论",
+        "correct": false
+      }
+    ],
+    "explanation": "重复询问、遗忘早期约束和上下文长期逼近上限都说明信息保留或长度管理存在问题。能稳定引用近期关键结论是上下文管理有效的表现，不需要改进。",
+    "id": "agent-088",
+    "tags": [
+      "Agent"
+    ],
+    "section": "上下文管理"
+  },
+  {
+    "type": "multiple",
+    "question": "关于向量数据库在Agent上下文管理中的作用，以下说法正确的有？",
+    "options": [
+      {
+        "text": "可存储历史交互的嵌入表示，支持按语义相似度检索相关记忆",
+        "correct": true
+      },
+      {
+        "text": "检索到的内容仍需经过筛选或摘要再注入上下文",
+        "correct": true
+      },
+      {
+        "text": "向量检索能保证返回结果一定与当前任务完全相关",
+        "correct": false
+      },
+      {
+        "text": "它可以帮助Agent跨会话保留和复用信息",
+        "correct": true
+      }
+    ],
+    "explanation": "向量数据库通过语义检索支持记忆复用和跨会话保留，但检索结果可能包含噪声，仍需筛选或摘要。相似度检索不能保证完全相关，因此“一定完全相关”的说法错误。",
+    "id": "agent-089",
+    "tags": [
+      "Agent"
+    ],
+    "section": "上下文管理"
+  },
+  {
+    "type": "single",
+    "question": "Agent 在一次任务中已经完成多个子步骤，原始对话很长。为在后续步骤中继续使用，最合理的上下文处理方式是？",
+    "options": [
+      {
+        "text": "将完整历史对话原样保留并在每步请求中重复发送",
+        "correct": false
+      },
+      {
+        "text": "丢弃所有历史，只保留当前用户最后一句输入",
+        "correct": false
+      },
+      {
+        "text": "把已完成步骤压缩为结构化摘要，并保留未完成约束",
+        "correct": true
+      },
+      {
+        "text": "随机删除一半历史消息以降低上下文长度",
+        "correct": false
+      }
+    ],
+    "explanation": "正确项把已完成步骤压缩为摘要，同时保留未完成约束，兼顾长度与信息完整。原样保留会膨胀上下文，全部丢弃会丢失任务状态，随机删除可能删掉关键约束。",
+    "id": "agent-090",
+    "tags": [
+      "Agent"
+    ],
+    "section": "上下文管理"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些属于Agent记忆系统的组成部分？",
+    "options": [
+      {
+        "text": "短期记忆",
+        "correct": true
+      },
+      {
+        "text": "长期记忆",
+        "correct": true
+      },
+      {
+        "text": "工作记忆",
+        "correct": true
+      },
+      {
+        "text": "数据库连接池的配置参数",
+        "correct": false
+      }
+    ],
+    "explanation": "Agent记忆系统通常包括短期记忆、长期记忆和工作记忆等，用于保存会话状态和跨会话信息。数据库连接池配置参数属于基础设施配置，不是记忆系统组件；原题将“模型参数”列为错误项存在参数化记忆的争议，因此改为无歧义的非记忆组件。",
+    "id": "agent-091",
+    "tags": [
+      "Agent"
+    ],
+    "section": "记忆与检索"
+  },
+  {
+    "type": "multiple",
+    "question": "在RAG中，为了提高检索质量，可以采取以下哪些措施？",
+    "options": [
+      {
+        "text": "使用混合检索（关键词+向量）",
+        "correct": true
+      },
+      {
+        "text": "引入重排模型",
+        "correct": true
+      },
+      {
+        "text": "对查询进行扩展或改写",
+        "correct": true
+      },
+      {
+        "text": "增加生成温度",
+        "correct": false
+      }
+    ],
+    "explanation": "混合检索结合关键词和语义，重排提升排序，查询扩展改善召回。增加生成温度影响生成多样性，不直接提高检索质量。",
+    "id": "agent-092",
+    "tags": [
+      "Agent"
+    ],
+    "section": "记忆与检索"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些是常见的向量索引类型？",
+    "options": [
+      {
+        "text": "HNSW",
+        "correct": true
+      },
+      {
+        "text": "IVF",
+        "correct": true
+      },
+      {
+        "text": "LSH",
+        "correct": true
+      },
+      {
+        "text": "B+树",
+        "correct": false
+      }
+    ],
+    "explanation": "HNSW、IVF和LSH都是近似最近邻搜索的索引结构，用于向量检索。B+树是传统数据库索引，不适用于高维向量相似度搜索。",
+    "id": "agent-093",
+    "tags": [
+      "Agent"
+    ],
+    "section": "记忆与检索"
+  },
+  {
+    "type": "single",
+    "question": "Agent在一次长对话中需要记住三天前用户提到的偏好，但当前上下文窗口已满。最合理的处理方式是？",
+    "options": [
+      {
+        "text": "直接丢弃三天前的对话内容",
+        "correct": false
+      },
+      {
+        "text": "把历史对话压缩为摘要存入长期记忆，需要时检索",
+        "correct": true
+      },
+      {
+        "text": "把所有历史原文每轮都重新拼接进上下文",
+        "correct": false
+      },
+      {
+        "text": "让用户每次重新说明所有偏好",
+        "correct": false
+      }
+    ],
+    "explanation": "上下文窗口有限，需将历史信息摘要后写入长期记忆并按需检索。原文全量拼接会溢出；直接丢弃或让用户重复会损失信息。正确答案是摘要加检索。",
+    "id": "agent-094",
+    "tags": [
+      "Agent"
+    ],
+    "section": "记忆与检索"
+  },
+  {
+    "type": "single",
+    "question": "Agent记忆检索中，把查询和记忆都转为向量后计算余弦相似度，主要衡量的是什么？",
+    "options": [
+      {
+        "text": "两个文本在语义空间中的方向接近程度",
+        "correct": true
+      },
+      {
+        "text": "两个文本的字节长度是否相同",
+        "correct": false
+      },
+      {
+        "text": "两个文本的发布时间先后",
+        "correct": false
+      },
+      {
+        "text": "两个文本的标点符号数量",
+        "correct": false
+      }
+    ],
+    "explanation": "余弦相似度衡量向量方向夹角，方向越接近语义越相似，与长度无关。它不比较字节、时间和标点。理解这一点可避免把相似度误解为字面匹配。",
+    "id": "agent-095",
+    "tags": [
+      "Agent"
+    ],
+    "section": "记忆与检索"
+  },
+  {
+    "type": "single",
+    "question": "Agent需要根据用户的模糊问题“上次说的那个方案怎么改”找回相关记忆。仅做关键词精确匹配效果差，最有效的补充手段是？",
+    "options": [
+      {
+        "text": "增加关键词的同义词表并扩展查询",
+        "correct": false
+      },
+      {
+        "text": "用语义向量检索召回候选，再结合重排",
+        "correct": true
+      },
+      {
+        "text": "把所有记忆随机排序返回给模型",
+        "correct": false
+      },
+      {
+        "text": "只检索最近一条记忆",
+        "correct": false
+      }
+    ],
+    "explanation": "模糊指代和缺少关键词时，语义向量检索能按含义召回，再用重排精选。仅同义词表覆盖有限；随机排序和只取最近一条都不保证相关性。",
+    "id": "agent-096",
+    "tags": [
+      "Agent"
+    ],
+    "section": "记忆与检索"
+  },
+  {
+    "type": "single",
+    "question": "关于Agent的短期记忆与长期记忆，下列说法正确的是？",
+    "options": [
+      {
+        "text": "短期记忆通常保存在当前上下文，长期记忆需持久化存储",
+        "correct": true
+      },
+      {
+        "text": "短期记忆必须写入数据库，长期记忆只能放上下文",
+        "correct": false
+      },
+      {
+        "text": "两者没有区别，只是命名不同",
+        "correct": false
+      },
+      {
+        "text": "长期记忆不需要检索即可全部放入上下文",
+        "correct": false
+      }
+    ],
+    "explanation": "短期记忆一般是当前会话上下文中的信息，长期记忆通过外部存储持久化并按需检索。两者存储位置和作用不同，长期记忆往往数量大，不能全部塞进上下文。",
+    "id": "agent-097",
+    "tags": [
+      "Agent"
+    ],
+    "section": "记忆与检索"
+  },
+  {
+    "type": "single",
+    "question": "在Agent记忆系统中写入新记忆前先做“去重与合并”，主要目的是什么？",
+    "options": [
+      {
+        "text": "增加存储冗余以便备份",
+        "correct": false
+      },
+      {
+        "text": "减少重复和冲突，提高后续检索的准确性与效率",
+        "correct": true
+      },
+      {
+        "text": "让记忆条目数量越多越好",
+        "correct": false
+      },
+      {
+        "text": "避免模型生成任何新内容",
+        "correct": false
+      }
+    ],
+    "explanation": "去重合并可防止同一事实反复存储，减少检索噪声和冲突，提升召回准确率并节省空间。它不是为了制造冗余或限制生成，记忆并非越多越好。",
+    "id": "agent-098",
+    "tags": [
+      "Agent"
+    ],
+    "section": "记忆与检索"
+  },
+  {
+    "type": "single",
+    "question": "Agent使用检索到的记忆生成回答时，发现某条记忆与当前用户说法矛盾。较稳妥的做法是？",
+    "options": [
+      {
+        "text": "无条件相信旧记忆并忽略用户",
+        "correct": false
+      },
+      {
+        "text": "以当前用户信息为准，并更新或标记旧记忆",
+        "correct": true
+      },
+      {
+        "text": "把两条都隐藏不处理",
+        "correct": false
+      },
+      {
+        "text": "随机选择其中一条使用",
+        "correct": false
+      }
+    ],
+    "explanation": "用户当前陈述通常更新，应优先采纳并修正旧记忆，避免继续使用过时信息。无条件信旧记忆、隐藏或随机选择都会导致回答不一致或错误。",
+    "id": "agent-099",
+    "tags": [
+      "Agent"
+    ],
+    "section": "记忆与检索"
+  },
+  {
+    "type": "single",
+    "question": "以下哪项最接近“记忆遗忘机制”在Agent中的合理用途？",
+    "options": [
+      {
+        "text": "把过期或低价值的记忆降权或清理",
+        "correct": true
+      },
+      {
+        "text": "永久保存所有对话原文且不设上限",
+        "correct": false
+      },
+      {
+        "text": "删除所有用户偏好以节省空间",
+        "correct": false
+      },
+      {
+        "text": "每次检索都返回全部记忆",
+        "correct": false
+      }
+    ],
+    "explanation": "遗忘机制用于淘汰过期、低价值或冲突的记忆，控制规模并提升检索质量。永久全存会膨胀且引入噪声；删除所有偏好和全量返回都不合理。",
+    "id": "agent-100",
+    "tags": [
+      "Agent"
+    ],
+    "section": "记忆与检索"
+  },
+  {
+    "type": "single",
+    "question": "在记忆检索中引入“时间衰减”权重，意味着什么？",
+    "options": [
+      {
+        "text": "越新的记忆通常获得更高检索权重",
+        "correct": true
+      },
+      {
+        "text": "越旧的记忆权重一定越高",
+        "correct": false
+      },
+      {
+        "text": "所有记忆权重完全相等",
+        "correct": false
+      },
+      {
+        "text": "只检索创建时间最早的记忆",
+        "correct": false
+      }
+    ],
+    "explanation": "时间衰减让近期记忆在相关性相近时更容易被优先召回。它并非让旧记忆权重更高，也不是所有权重相等或只取最早记忆。需与语义相关性结合使用。",
+    "id": "agent-101",
+    "tags": [
+      "Agent"
+    ],
+    "section": "记忆与检索"
+  },
+  {
+    "type": "single",
+    "question": "Agent把用户对话写入向量库时，对每条记忆附加“来源会话ID、时间、主题标签”等元数据，主要好处是？",
+    "options": [
+      {
+        "text": "使向量维度自动减少",
+        "correct": false
+      },
+      {
+        "text": "支持按来源、时间或主题过滤和追溯",
+        "correct": true
+      },
+      {
+        "text": "保证检索结果一定正确",
+        "correct": false
+      },
+      {
+        "text": "替代语义相似度计算",
+        "correct": false
+      }
+    ],
+    "explanation": "元数据可用于过滤、排序和溯源，例如只检索某会话或某时间段的记忆。它不改变向量维度，也不能保证结果必然正确，更不能替代相似度计算。",
+    "id": "agent-102",
+    "tags": [
+      "Agent"
+    ],
+    "section": "记忆与检索"
+  },
+  {
+    "type": "single",
+    "question": "某Agent把整段长文档直接作为一个向量存储，导致检索时经常召回整篇而定位不到具体段落。改进方向是？",
+    "options": [
+      {
+        "text": "把整篇文档复制多份存储",
+        "correct": false
+      },
+      {
+        "text": "将文档切分为适当粒度的块，分别向量化并保留上下文",
+        "correct": true
+      },
+      {
+        "text": "改用随机召回而不做切分",
+        "correct": false
+      },
+      {
+        "text": "删除文档只保留标题",
+        "correct": false
+      }
+    ],
+    "explanation": "切分为合适粒度的块能让检索命中具体段落，并可加相邻块或摘要保留上下文。复制多份不解决粒度问题；随机召回和删正文都会降低效果。",
+    "id": "agent-103",
+    "tags": [
+      "Agent"
+    ],
+    "section": "记忆与检索"
+  },
+  {
+    "type": "multiple",
+    "question": "Agent的长期记忆检索流程中，以下哪些步骤是常见且有意义的？",
+    "options": [
+      {
+        "text": "对查询进行向量化或查询改写",
+        "correct": true
+      },
+      {
+        "text": "按元数据过滤缩小候选范围",
+        "correct": true
+      },
+      {
+        "text": "对候选记忆进行重排以提升相关性",
+        "correct": true
+      },
+      {
+        "text": "检索后不加筛选直接全部注入上下文",
+        "correct": false
+      }
+    ],
+    "explanation": "查询向量化或改写、元数据过滤、重排都是常见检索环节，可提升召回与精度。检索后不加筛选地全部注入会浪费上下文并引入噪声。本题正确项为前三项。",
+    "id": "agent-104",
+    "tags": [
+      "Agent"
+    ],
+    "section": "记忆与检索"
+  },
+  {
+    "type": "multiple",
+    "question": "关于Agent记忆的写入与更新，以下哪些做法合理？",
+    "options": [
+      {
+        "text": "写入前抽取事实并去重合并",
+        "correct": true
+      },
+      {
+        "text": "对冲突信息按时间和可信度决策更新",
+        "correct": true
+      },
+      {
+        "text": "保留每条记忆的来源和时间等元数据",
+        "correct": true
+      },
+      {
+        "text": "任何新信息都无条件覆盖全部旧记忆",
+        "correct": false
+      }
+    ],
+    "explanation": "抽取事实、去重合并、冲突处理和元数据保留都是保证记忆一致性与可追溯性的合理做法。无条件全覆盖会丢失有效信息，造成记忆频繁震荡。",
+    "id": "agent-105",
+    "tags": [
+      "Agent"
+    ],
+    "section": "记忆与检索"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些因素可能降低向量检索在Agent记忆中的效果？",
+    "options": [
+      {
+        "text": "记忆块切分粒度过大，语义混杂",
+        "correct": true
+      },
+      {
+        "text": "查询与记忆的表达差异大且未做查询改写",
+        "correct": true
+      },
+      {
+        "text": "向量库中存在大量重复或过时记忆",
+        "correct": true
+      },
+      {
+        "text": "为每条记忆保留准确的时间元数据",
+        "correct": false
+      }
+    ],
+    "explanation": "粒度过大、查询表达差异和重复过时记忆都会削弱召回精度，是常见问题。保留准确时间元数据有助于过滤和排序，通常不会降低效果。正确项为前三项。",
+    "id": "agent-106",
+    "tags": [
+      "Agent"
+    ],
+    "section": "记忆与检索"
+  },
+  {
+    "type": "multiple",
+    "question": "在设计Agent记忆检索的评估方案时，以下哪些指标或方法合适？",
+    "options": [
+      {
+        "text": "考察相关记忆是否被召回（召回率）",
+        "correct": true
+      },
+      {
+        "text": "考察排名靠前的记忆是否相关（精度）",
+        "correct": true
+      },
+      {
+        "text": "用人工或标注判断回答是否基于正确记忆",
+        "correct": true
+      },
+      {
+        "text": "只看向量库总条数是否增加",
+        "correct": false
+      }
+    ],
+    "explanation": "召回率、精度和基于正确记忆的回答判断能反映检索与使用质量。只看库中条数增长并不能说明检索有效，甚至可能因噪声增多而变差。正确项为前三项。",
+    "id": "agent-107",
+    "tags": [
+      "Agent"
+    ],
+    "section": "记忆与检索"
+  },
+  {
+    "type": "multiple",
+    "question": "为了让Agent在跨会话场景中用好记忆，以下哪些设计是合理的？",
+    "options": [
+      {
+        "text": "按用户或会话维度隔离记忆并控制访问",
+        "correct": true
+      },
+      {
+        "text": "检索时结合当前任务动态选择相关记忆",
+        "correct": true
+      },
+      {
+        "text": "对敏感记忆做权限控制或脱敏处理",
+        "correct": true
+      },
+      {
+        "text": "把所有用户的记忆混在一个无标识池中任意检索",
+        "correct": false
+      }
+    ],
+    "explanation": "按用户隔离、按任务动态检索以及敏感信息权限控制，能兼顾效果与安全。把所有用户记忆无标识混池会导致隐私泄露和检索污染。正确项为前三项。",
+    "id": "agent-108",
+    "tags": [
+      "Agent"
+    ],
+    "section": "记忆与检索"
+  },
+  {
+    "type": "single",
+    "question": "某客服Agent需在会话结束时把用户的关键诉求写入长期记忆，供下次会话检索。下列写入策略最合适的是？",
+    "options": [
+      {
+        "text": "将整段原始对话不加处理直接作为一个向量存储",
+        "correct": false
+      },
+      {
+        "text": "抽取诉求要点并附会话ID、时间、用户标识等元数据后存储",
+        "correct": true
+      },
+      {
+        "text": "只保存最后一句用户发言，避免信息冗余",
+        "correct": false
+      },
+      {
+        "text": "保存全部内容到关系表，检索时全表扫描",
+        "correct": false
+      }
+    ],
+    "explanation": "正确项强调要点化加工加元数据，既压缩噪声又支持按时间、用户过滤。A会产生大量冗余向量、定位困难；C丢弃关键上下文；D放弃语义检索，效率与召回都差。",
+    "id": "agent-109",
+    "tags": [
+      "Agent"
+    ],
+    "section": "记忆与检索"
+  },
+  {
+    "type": "single",
+    "question": "Agent检索记忆时，查询向量与某条记忆向量余弦相似度很高，但该记忆属于另一用户。直接使用会导致什么问题？",
+    "options": [
+      {
+        "text": "相似度计算失效，结果不再可比",
+        "correct": false
+      },
+      {
+        "text": "向量维度不匹配而报错",
+        "correct": false
+      },
+      {
+        "text": "泄露他人隐私并可能生成错误回答",
+        "correct": true
+      },
+      {
+        "text": "检索速度显著下降",
+        "correct": false
+      }
+    ],
+    "explanation": "相似度高只说明语义接近，不代表有权使用。跨用户串用记忆会泄露隐私且引入错误上下文。应在检索前按用户标识做元数据过滤，而不是仅依赖相似度排序。",
+    "id": "agent-110",
+    "tags": [
+      "Agent"
+    ],
+    "section": "记忆与检索"
+  },
+  {
+    "type": "single",
+    "question": "Agent的记忆库随时间不断增长，检索延迟逐渐上升。下列改进最直接有效的是？",
+    "options": [
+      {
+        "text": "提高生成模型的温度参数",
+        "correct": false
+      },
+      {
+        "text": "为记忆向量建立近似最近邻索引并定期清理过期记忆",
+        "correct": true
+      },
+      {
+        "text": "把所有记忆拼进每次提示词",
+        "correct": false
+      },
+      {
+        "text": "降低嵌入模型维度到1",
+        "correct": false
+      }
+    ],
+    "explanation": "近似最近邻索引可把线性扫描降为亚线性检索，配合过期清理控制规模。A与检索无关；C会撑爆上下文；D极端降维会严重损失语义区分能力。",
+    "id": "agent-111",
+    "tags": [
+      "Agent"
+    ],
+    "section": "记忆与检索"
+  },
+  {
+    "type": "single",
+    "question": "用户问“我上次提到的出差安排是几号”，Agent检索到两条相似记忆：一条是本人三天前说的“15号”，一条是同事闲聊提到的“15号”。最合理的处理是？",
+    "options": [
+      {
+        "text": "随机选一条回答",
+        "correct": false
+      },
+      {
+        "text": "优先采用带本人标识且时间较近的记忆，并向用户确认",
+        "correct": true
+      },
+      {
+        "text": "两条都忽略，回答不知道",
+        "correct": false
+      },
+      {
+        "text": "取两条时间的平均值",
+        "correct": false
+      }
+    ],
+    "explanation": "记忆检索应结合元数据（用户标识）与时间权重排序，并因涉及具体日期而向用户确认以防误用。随机、忽略或求平均都缺乏依据，可能给出错误信息。",
+    "id": "agent-112",
+    "tags": [
+      "Agent"
+    ],
+    "section": "记忆与检索"
+  },
+  {
+    "type": "single",
+    "question": "在Agent记忆检索中，将用户当前问题改写为多个不同表述再分别检索，主要目的是什么？",
+    "options": [
+      {
+        "text": "减少嵌入模型调用次数",
+        "correct": false
+      },
+      {
+        "text": "提高召回率，缓解单查询表述偏差",
+        "correct": true
+      },
+      {
+        "text": "保证检索结果唯一",
+        "correct": false
+      },
+      {
+        "text": "降低记忆库存储成本",
+        "correct": false
+      }
+    ],
+    "explanation": "多查询改写从不同角度覆盖语义空间，能召回单次查询漏掉的记忆，提升召回率。它反而增加调用次数，也不保证唯一，对存储成本无直接影响。",
+    "id": "agent-113",
+    "tags": [
+      "Agent"
+    ],
+    "section": "记忆与检索"
+  },
+  {
+    "type": "single",
+    "question": "Agent把短期对话记忆与长期知识库混放在同一向量集合中检索，最可能出现的副作用是？",
+    "options": [
+      {
+        "text": "向量维度自动适配",
+        "correct": false
+      },
+      {
+        "text": "近期琐碎对话挤占召回名额，干扰知识检索",
+        "correct": true
+      },
+      {
+        "text": "嵌入模型无法生成向量",
+        "correct": false
+      },
+      {
+        "text": "余弦相似度不再介于-1与1之间",
+        "correct": false
+      }
+    ],
+    "explanation": "两类数据分布与用途不同，混检会让高频近期的对话片段占据Top-K，稀释知识类结果。应按类型分区存储或检索时按来源过滤，而非依赖相似度自动区分。",
+    "id": "agent-114",
+    "tags": [
+      "Agent"
+    ],
+    "section": "记忆与检索"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些做法有助于提升Agent记忆检索的准确性？",
+    "options": [
+      {
+        "text": "为记忆附加时间、主题、来源等元数据并用于过滤",
+        "correct": true
+      },
+      {
+        "text": "对查询做同义改写后多路检索再融合排序",
+        "correct": true
+      },
+      {
+        "text": "把所有记忆压缩成一条超长向量",
+        "correct": false
+      },
+      {
+        "text": "定期清理低价值或过期记忆",
+        "correct": true
+      }
+    ],
+    "explanation": "元数据过滤、多路召回融合、记忆清理都能提升相关性。把所有记忆压成一条会丢失细节、无法定位具体记忆，反而降低准确性。本题选A、B、D。",
+    "id": "agent-115",
+    "tags": [
+      "Agent"
+    ],
+    "section": "记忆与检索"
+  },
+  {
+    "type": "multiple",
+    "question": "关于Agent记忆的更新，以下哪些做法合理？",
+    "options": [
+      {
+        "text": "新记忆与旧记忆冲突时保留双方并标注冲突",
+        "correct": true
+      },
+      {
+        "text": "对同一事实的新版本，用时间戳标记并优先采用较新者",
+        "correct": true
+      },
+      {
+        "text": "为节省空间，旧记忆一律直接覆盖不保留痕迹",
+        "correct": false
+      },
+      {
+        "text": "合并语义重复的记忆以减少冗余",
+        "correct": true
+      }
+    ],
+    "explanation": "保留冲突、按时间优先、去重合并都是稳健策略。直接覆盖会丢失历史依据，冲突时无法追溯，也不利于审计与纠错。本题选A、B、D。",
+    "id": "agent-116",
+    "tags": [
+      "Agent"
+    ],
+    "section": "记忆与检索"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些情况会导致Agent的向量记忆检索效果变差？",
+    "options": [
+      {
+        "text": "嵌入模型与记忆写入时使用的模型不一致",
+        "correct": true
+      },
+      {
+        "text": "记忆文本过短且缺乏上下文，语义信息不足",
+        "correct": true
+      },
+      {
+        "text": "对记忆按用户和主题建立分区索引",
+        "correct": false
+      },
+      {
+        "text": "长文档未切分，整篇作为一个向量",
+        "correct": true
+      }
+    ],
+    "explanation": "模型不一致会造成向量空间错位；过短文本区分度低；整篇向量难以定位细节，都会损害检索。分区索引是优化手段而非问题来源。本题选A、B、D。",
+    "id": "agent-117",
+    "tags": [
+      "Agent"
+    ],
+    "section": "记忆与检索"
+  },
+  {
+    "type": "multiple",
+    "question": "评估Agent记忆检索方案时，以下哪些指标或方法合适？",
+    "options": [
+      {
+        "text": "构造带标准答案的记忆问答集，计算召回率与准确率",
+        "correct": true
+      },
+      {
+        "text": "测量检索延迟与单次查询成本",
+        "correct": true
+      },
+      {
+        "text": "仅凭开发者主观感觉判断好坏",
+        "correct": false
+      },
+      {
+        "text": "人工评估检索结果与问题的相关性",
+        "correct": true
+      }
+    ],
+    "explanation": "定量指标（召回率、准确率、延迟、成本）与人工相关性评估结合，才能全面衡量效果。主观感觉缺乏可复现性与可比性，不适合作为主要评估依据。本题选A、B、D。",
+    "id": "agent-118",
+    "tags": [
+      "Agent"
+    ],
+    "section": "记忆与检索"
+  },
+  {
+    "type": "single",
+    "question": "Agent需要回答“我们之前讨论的预算上限是多少”，检索到多条不同金额的记忆。为作出稳妥判断，最应优先利用的信息是？",
+    "options": [
+      {
+        "text": "记忆文本的长度",
+        "correct": false
+      },
+      {
+        "text": "记忆的时间戳与来源会话，判断哪条最新且属于当前用户",
+        "correct": true
+      },
+      {
+        "text": "向量维度的数值大小",
+        "correct": false
+      },
+      {
+        "text": "记忆写入时的随机ID",
+        "correct": false
+      }
+    ],
+    "explanation": "金额类事实冲突时，时间戳可确定新旧，来源可确认归属，从而选出有效记忆。文本长度、向量维度、随机ID都与事实有效性无关，不能作为判断依据。",
+    "id": "agent-119",
+    "tags": [
+      "Agent"
+    ],
+    "section": "记忆与检索"
+  },
+  {
+    "type": "single",
+    "question": "某Agent记忆库中大量记忆表述几乎相同，仅措辞略有差异。检索时同一条信息占据多个Top-K名额。最合理的处理是？",
+    "options": [
+      {
+        "text": "调高相似度阈值到1.0",
+        "correct": false
+      },
+      {
+        "text": "检索后做结果去重或聚类，合并语义相同的记忆",
+        "correct": true
+      },
+      {
+        "text": "关闭记忆检索功能",
+        "correct": false
+      },
+      {
+        "text": "把所有相似记忆再复制一份以增强权重",
+        "correct": false
+      }
+    ],
+    "explanation": "语义近重复会挤占召回名额，检索后去重或聚类合并可提升结果多样性。阈值设为1.0几乎筛掉所有结果；关闭检索或复制都会进一步恶化问题。",
+    "id": "agent-120",
+    "tags": [
+      "Agent"
+    ],
+    "section": "记忆与检索"
+  },
+  {
+    "type": "single",
+    "question": "在基于大语言模型（LLM）的Agent中，要求模型输出JSON格式的结构化数据时，以下哪种做法最可能提高输出格式的稳定性？",
+    "options": [
+      {
+        "text": "在提示词中详细说明JSON的字段和示例",
+        "correct": true
+      },
+      {
+        "text": "提高模型的温度参数（temperature）以增加多样性",
+        "correct": false
+      },
+      {
+        "text": "要求模型在JSON前后添加自然语言解释",
+        "correct": false
+      },
+      {
+        "text": "使用更长的max_tokens以允许模型自由发挥",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项A：提示词中明确字段和示例能约束模型输出格式。B提高温度会增加随机性，不利于格式稳定；C添加解释可能破坏JSON结构的纯净性；D增加长度可能引入无关内容。",
+    "id": "agent-121",
+    "tags": [
+      "Agent"
+    ],
+    "section": "结构化输出"
+  },
+  {
+    "type": "single",
+    "question": "Agent 调用一个要求 JSON 请求体的 API；该请求体必须包含字符串字段 query 和整数字段 limit。以下哪个 Python 字典在作为 HTTP 客户端的 json 参数发送时能正确表示该请求体？",
+    "options": [
+      {
+        "text": "{\"query\": \"weather\", \"limit\": 10}",
+        "correct": true
+      },
+      {
+        "text": "{\"query\": \"weather\", \"limit\": \"10\"}",
+        "correct": false
+      },
+      {
+        "text": "{\"query\": \"weather\", \"max\": 10}",
+        "correct": false
+      },
+      {
+        "text": "{\"q\": \"weather\", \"limit\": 10}",
+        "correct": false
+      }
+    ],
+    "explanation": "请求体要求字段名为 query 和 limit，且 limit 为整数。只有同时满足字段名和类型的字典在序列化为 JSON 后符合要求；把 10 写成字符串会改变字段类型，max 或 q 则字段名不匹配。",
+    "id": "agent-122",
+    "tags": [
+      "Agent"
+    ],
+    "section": "结构化输出"
+  },
+  {
+    "type": "single",
+    "question": "在Agent中，使用JSON Schema来校验LLM输出的JSON数据，主要目的是什么？",
+    "options": [
+      {
+        "text": "确保输出数据符合预定义的结构和类型约束",
+        "correct": true
+      },
+      {
+        "text": "提高模型生成JSON的速度",
+        "correct": false
+      },
+      {
+        "text": "减少模型生成JSON时的token消耗",
+        "correct": false
+      },
+      {
+        "text": "自动修正JSON中的语法错误",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项A：JSON Schema用于定义和校验JSON结构，确保数据符合预期。B、C、D均不是主要目的；Schema校验不自动修正错误，而是检测。",
+    "id": "agent-123",
+    "tags": [
+      "Agent"
+    ],
+    "section": "结构化输出"
+  },
+  {
+    "type": "single",
+    "question": "Agent 输出一段应严格符合标准 JSON 的字符串，但对象末尾多了一个逗号，导致标准 JSON 解析失败。以下哪种处理方式最合适？",
+    "options": [
+      {
+        "text": "使用基于 JSON 词法分析的预处理移除成员后的尾随逗号，再交给标准 JSON 解析器",
+        "correct": true
+      },
+      {
+        "text": "改用能接受尾随逗号的非标准 JSON 解析器，并继续把结果当作标准 JSON",
+        "correct": false
+      },
+      {
+        "text": "直接丢弃该输出，重新调用模型直到生成合法 JSON",
+        "correct": false
+      },
+      {
+        "text": "先调用 json.loads 转成 Python 对象，再修复语法错误",
+        "correct": false
+      }
+    ],
+    "explanation": "尾随逗号不符合标准 JSON；在词法层面安全移除后可保留其余合法内容并继续用标准解析器。非标准解析器改变输入语言；标准解析器在语法错误时不会产生可修复对象；直接丢弃并反复重生成成本高且不必要。",
+    "id": "agent-124",
+    "tags": [
+      "Agent"
+    ],
+    "section": "结构化输出"
+  },
+  {
+    "type": "single",
+    "question": "设计Agent的提示词时，要求模型以JSON格式输出，以下哪种提示词写法最明确？",
+    "options": [
+      {
+        "text": "请以JSON格式输出结果。",
+        "correct": false
+      },
+      {
+        "text": "输出格式：{\"name\": string, \"age\": number}",
+        "correct": false
+      },
+      {
+        "text": "请严格按照以下JSON Schema输出：{...}",
+        "correct": true
+      },
+      {
+        "text": "输出一个包含姓名和年龄的JSON。",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项C：提供JSON Schema最为明确和严格。A过于笼统；B只给出示例，未说明类型约束；D描述模糊。",
+    "id": "agent-125",
+    "tags": [
+      "Agent"
+    ],
+    "section": "结构化输出"
+  },
+  {
+    "type": "single",
+    "question": "Agent需要从用户输入中提取实体，并以JSON数组输出每个实体的类型和值。以下哪个JSON数组符合要求？",
+    "options": [
+      {
+        "text": "[{\"type\": \"person\", \"value\": \"Alice\"}, {\"type\": \"location\", \"value\": \"Paris\"}]",
+        "correct": true
+      },
+      {
+        "text": "{\"type\": \"person\", \"value\": \"Alice\"}, {\"type\": \"location\", \"value\": \"Paris\"}",
+        "correct": false
+      },
+      {
+        "text": "[{\"type\": \"person\", \"value\": \"Alice\"}, {\"type\": \"location\", \"value\": \"Paris\"}",
+        "correct": false
+      },
+      {
+        "text": "[\"person: Alice\", \"location: Paris\"]",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项A：这是一个包含对象的JSON数组，每个对象有type和value字段。B缺少数组括号；C缺少右括号；D不是对象数组。",
+    "id": "agent-126",
+    "tags": [
+      "Agent"
+    ],
+    "section": "结构化输出"
+  },
+  {
+    "type": "single",
+    "question": "在Agent中，如果LLM输出的JSON格式不正确，以下哪种恢复策略最健壮？",
+    "options": [
+      {
+        "text": "让模型重新生成，直到输出正确JSON",
+        "correct": false
+      },
+      {
+        "text": "使用JSON修复库尝试修复，若失败则回退到重新生成",
+        "correct": true
+      },
+      {
+        "text": "忽略错误，直接使用部分解析结果",
+        "correct": false
+      },
+      {
+        "text": "将错误信息直接返回给用户",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项B：先尝试修复，失败再重新生成，兼顾效率和可靠性。A可能无限循环；C可能得到错误数据；D用户体验差。",
+    "id": "agent-127",
+    "tags": [
+      "Agent"
+    ],
+    "section": "结构化输出"
+  },
+  {
+    "type": "single",
+    "question": "以下哪种方式可以最有效地引导LLM生成符合特定JSON Schema的输出？",
+    "options": [
+      {
+        "text": "在提示词中提供Schema的示例和说明",
+        "correct": true
+      },
+      {
+        "text": "在提示词中要求模型“尽力而为”",
+        "correct": false
+      },
+      {
+        "text": "降低模型的top_p参数",
+        "correct": false
+      },
+      {
+        "text": "增加提示词的长度",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项A：提供Schema示例和说明能明确约束。B过于模糊；C影响多样性但不保证格式；D长度不直接相关。",
+    "id": "agent-128",
+    "tags": [
+      "Agent"
+    ],
+    "section": "结构化输出"
+  },
+  {
+    "type": "single",
+    "question": "Agent 调用一个无法修改的第三方 API，其响应体是带 // 行注释的 JSON 扩展文本；若直接按标准 JSON 解析会失败。最合适的兼容处理方式是？",
+    "options": [
+      {
+        "text": "使用支持注释语法的 JSON5 解析器解析后再使用",
+        "correct": true
+      },
+      {
+        "text": "用正则表达式随意删除所有 // 及其后内容",
+        "correct": false
+      },
+      {
+        "text": "要求该第三方 API 立即改为标准 JSON，否则不解析",
+        "correct": false
+      },
+      {
+        "text": "先转换为 XML 再解析",
+        "correct": false
+      }
+    ],
+    "explanation": "在无法修改第三方 API 且需要读取带注释扩展文本时，支持注释语法的解析器能区分字符串内外的注释。简单正则可能误删 URL 等字符串中的双斜杠；要求第三方立即修改不满足当前兼容需求；转成 XML 无必要且增加失败环节。",
+    "id": "agent-129",
+    "tags": [
+      "Agent"
+    ],
+    "section": "结构化输出"
+  },
+  {
+    "type": "single",
+    "question": "在Agent中，使用Function Calling（或Tool Calling）获取结构化输出，相比纯文本提示的主要优势是什么？",
+    "options": [
+      {
+        "text": "模型会直接返回符合函数参数Schema的JSON",
+        "correct": true
+      },
+      {
+        "text": "Function Calling不需要定义参数类型",
+        "correct": false
+      },
+      {
+        "text": "Function Calling只能用于获取非结构化文本",
+        "correct": false
+      },
+      {
+        "text": "Function Calling会减少模型的计算量",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项A：Function Calling依赖预定义的参数Schema，模型输出结构化参数。B错误，必须定义类型；C错误；D不直接减少计算量。",
+    "id": "agent-130",
+    "tags": [
+      "Agent"
+    ],
+    "section": "结构化输出"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些措施有助于提高LLM输出JSON格式的稳定性？（选出所有正确项）",
+    "options": [
+      {
+        "text": "在提示词中提供JSON Schema",
+        "correct": true
+      },
+      {
+        "text": "使用低温参数（如temperature=0）",
+        "correct": true
+      },
+      {
+        "text": "要求模型输出JSON后附加解释",
+        "correct": false
+      },
+      {
+        "text": "在提示词中给出输出示例",
+        "correct": true
+      }
+    ],
+    "explanation": "正确选项A、B、D。A提供Schema明确结构；B降低随机性；D示例有助模仿。C附加解释可能破坏JSON结构。",
+    "id": "agent-131",
+    "tags": [
+      "Agent"
+    ],
+    "section": "结构化输出"
+  },
+  {
+    "type": "multiple",
+    "question": "在Python中，以下哪些库可以用于验证JSON数据是否符合Schema？（选出所有正确项）",
+    "options": [
+      {
+        "text": "jsonschema",
+        "correct": true
+      },
+      {
+        "text": "pydantic",
+        "correct": true
+      },
+      {
+        "text": "json",
+        "correct": false
+      },
+      {
+        "text": "marshmallow",
+        "correct": true
+      }
+    ],
+    "explanation": "正确选项A、B、D。jsonschema直接支持JSON Schema；pydantic可通过模型验证；marshmallow也可用于反序列化验证。json库仅解析/生成，不验证Schema。",
+    "id": "agent-132",
+    "tags": [
+      "Agent"
+    ],
+    "section": "结构化输出"
+  },
+  {
+    "type": "multiple",
+    "question": "设计Agent的结构化输出时，以下哪些是良好的实践？（选出所有正确项）",
+    "options": [
+      {
+        "text": "明确定义每个字段的类型和是否必需",
+        "correct": true
+      },
+      {
+        "text": "为字段提供枚举值范围（如果适用）",
+        "correct": true
+      },
+      {
+        "text": "允许字段值为任意嵌套的复杂结构",
+        "correct": false
+      },
+      {
+        "text": "在提示词中包含一个完整的输出示例",
+        "correct": true
+      }
+    ],
+    "explanation": "正确选项A、B、D。A明确类型和必需性；B限制枚举；D示例有助理解。C任意嵌套会降低可控性，不是良好实践。",
+    "id": "agent-133",
+    "tags": [
+      "Agent"
+    ],
+    "section": "结构化输出"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些情况可能导致LLM输出的JSON解析失败？（选出所有正确项）",
+    "options": [
+      {
+        "text": "输出中包含未转义的双引号",
+        "correct": true
+      },
+      {
+        "text": "输出中使用了单引号代替双引号",
+        "correct": true
+      },
+      {
+        "text": "输出中包含了Markdown代码块标记",
+        "correct": true
+      },
+      {
+        "text": "输出中包含了多余的空格",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项A、B、C。A未转义双引号破坏字符串；B单引号不是标准JSON；CMarkdown标记使整体不是纯JSON。D多余空格通常不影响解析。",
+    "id": "agent-134",
+    "tags": [
+      "Agent"
+    ],
+    "section": "结构化输出"
+  },
+  {
+    "type": "multiple",
+    "question": "Agent需要将结构化数据以JSON格式返回给前端，以下哪些做法能保证数据安全？（选出所有正确项）",
+    "options": [
+      {
+        "text": "对输出中的用户输入进行转义处理",
+        "correct": true
+      },
+      {
+        "text": "使用JSON Schema验证数据结构和类型",
+        "correct": true
+      },
+      {
+        "text": "直接拼接字符串生成JSON",
+        "correct": false
+      },
+      {
+        "text": "限制输出字段的枚举值范围",
+        "correct": true
+      }
+    ],
+    "explanation": "正确选项A、B、D。A转义防止注入；B验证结构；D限制枚举可避免意外值。C直接拼接易导致语法错误和安全漏洞。",
+    "id": "agent-135",
+    "tags": [
+      "Agent"
+    ],
+    "section": "结构化输出"
+  },
+  {
+    "type": "single",
+    "question": "Agent 调用一个要求 JSON 请求体的 API；请求体必须包含字符串字段 query 和整数字段 limit。以下哪个是合法 JSON 文本，能正确表示该请求体？",
+    "options": [
+      {
+        "text": "{\"query\": \"天气\", \"limit\": 10}",
+        "correct": true
+      },
+      {
+        "text": "{'query': '天气', 'limit': 10}",
+        "correct": false
+      },
+      {
+        "text": "{\"query\": \"天气\", \"limit\": \"10\"}",
+        "correct": false
+      },
+      {
+        "text": "query: 天气, limit: 10",
+        "correct": false
+      }
+    ],
+    "explanation": "标准 JSON 要求键和字符串值使用双引号，整数值不加引号。该对象同时满足字段名和类型要求；单引号写法不是标准 JSON；把整数 limit 写成字符串会改变类型；裸键值对文本也不是 JSON 对象。",
+    "id": "agent-136",
+    "tags": [
+      "Agent"
+    ],
+    "section": "结构化输出"
+  },
+  {
+    "type": "single",
+    "question": "Agent 收到 LLM 输出的一段文本，疑似 JSON 但前后带有解释性文字，最稳妥的解析第一步是？",
+    "options": [
+      {
+        "text": "直接对整个文本调用 json.loads",
+        "correct": false
+      },
+      {
+        "text": "用正则或字符串查找定位第一个 { 或 [ 与最后一个 } 或 ]，截取中间部分再解析",
+        "correct": true
+      },
+      {
+        "text": "先将所有单引号替换为双引号再解析",
+        "correct": false
+      },
+      {
+        "text": "忽略解析错误并返回空字典",
+        "correct": false
+      }
+    ],
+    "explanation": "LLM 常在 JSON 前后附加说明，直接解析会失败。先截取最外层对象或数组再解析，能容忍前后说明文字。单引号替换可能破坏字符串内容；忽略错误会丢失数据；直接解析不健壮。",
+    "id": "agent-137",
+    "tags": [
+      "Agent"
+    ],
+    "section": "结构化输出"
+  },
+  {
+    "type": "single",
+    "question": "在 Agent 中要求 LLM 输出 JSON 时，以下哪种做法最能减少“模型自行添加注释或尾逗号”的问题？",
+    "options": [
+      {
+        "text": "在提示词中明确要求输出严格符合 RFC 8259 的 JSON，并给出合法示例",
+        "correct": true
+      },
+      {
+        "text": "提高 temperature 以增加多样性",
+        "correct": false
+      },
+      {
+        "text": "要求模型用 Markdown 代码块包裹 JSON",
+        "correct": false
+      },
+      {
+        "text": "让模型输出 YAML 再自动转 JSON",
+        "correct": false
+      }
+    ],
+    "explanation": "明确标准并给出合法示例，能引导模型遵循严格 JSON 语法，减少注释和尾逗号。提高 temperature 会增加不确定性；Markdown 包裹可能引入反引号；YAML 转 JSON 增加额外失败环节。",
+    "id": "agent-138",
+    "tags": [
+      "Agent"
+    ],
+    "section": "结构化输出"
+  },
+  {
+    "type": "single",
+    "question": "Agent 需要从用户输入中提取“城市”和“日期”，并要求输出 JSON 对象。以下哪个输出符合最简 JSON 对象结构？",
+    "options": [
+      {
+        "text": "{\"city\": \"北京\", \"date\": \"2025-01-01\"}",
+        "correct": true
+      },
+      {
+        "text": "[\"北京\", \"2025-01-01\"]",
+        "correct": false
+      },
+      {
+        "text": "city=北京, date=2025-01-01",
+        "correct": false
+      },
+      {
+        "text": "{\"city\": \"北京\"; \"date\": \"2025-01-01\"}",
+        "correct": false
+      }
+    ],
+    "explanation": "要求输出 JSON 对象，应使用花括号和键值对，键值间用冒号，成员间用逗号。A 符合。B 是数组，缺少字段名；C 是键值对文本，不是 JSON；D 用分号分隔成员，不合法。",
+    "id": "agent-139",
+    "tags": [
+      "Agent"
+    ],
+    "section": "结构化输出"
+  },
+  {
+    "type": "single",
+    "question": "使用 JSON Schema 校验 Agent 输出的 JSON 时，若 Schema 要求某字段为整数，但输出为字符串 \"10\"，校验结果如何？",
+    "options": [
+      {
+        "text": "校验通过，因为可自动转换类型",
+        "correct": false
+      },
+      {
+        "text": "校验失败，因为类型不匹配",
+        "correct": true
+      },
+      {
+        "text": "校验通过，但给出警告",
+        "correct": false
+      },
+      {
+        "text": "取决于 Schema 是否设置 strict 模式",
+        "correct": false
+      }
+    ],
+    "explanation": "JSON Schema 的 type 约束严格检查实例类型，字符串 \"10\" 不满足 integer 类型，校验失败。标准校验不会自动类型转换，也不存在 strict 模式改变该行为。",
+    "id": "agent-140",
+    "tags": [
+      "Agent"
+    ],
+    "section": "结构化输出"
+  },
+  {
+    "type": "single",
+    "question": "Agent 要调用一个只接受 JSON 数组（元素为对象）的 API，以下哪个输出最可能被该 API 接受？",
+    "options": [
+      {
+        "text": "[{\"id\": 1}, {\"id\": 2}]",
+        "correct": true
+      },
+      {
+        "text": "{\"data\": [{\"id\": 1}, {\"id\": 2}]}",
+        "correct": false
+      },
+      {
+        "text": "{\"id\": 1}, {\"id\": 2}",
+        "correct": false
+      },
+      {
+        "text": "[id:1, id:2]",
+        "correct": false
+      }
+    ],
+    "explanation": "API 要求顶层为 JSON 数组且元素为对象。方括号包裹对象列表才是合法 JSON 数组；对象包含数组时顶层不是数组；缺少外层方括号的多个对象不能作为单个 JSON 值解析；未加引号的键值写法不是合法 JSON。",
+    "id": "agent-141",
+    "tags": [
+      "Agent"
+    ],
+    "section": "结构化输出"
+  },
+  {
+    "type": "single",
+    "question": "Agent 使用 LLM 生成 JSON 后，发现某个必填字段缺失。以下哪种恢复策略最合理？",
+    "options": [
+      {
+        "text": "将缺失字段自动补为 null 并继续",
+        "correct": false
+      },
+      {
+        "text": "将校验错误信息连同原始输出一起反馈给模型，要求其修正并重新输出",
+        "correct": true
+      },
+      {
+        "text": "丢弃整个结果并结束任务",
+        "correct": false
+      },
+      {
+        "text": "随机猜测缺失字段的值",
+        "correct": false
+      }
+    ],
+    "explanation": "将具体校验错误反馈给模型，让其基于错误修正，是常见且有效的自修复策略。自动补 null 可能违反必填约束；直接丢弃过于保守；随机猜测不可靠。",
+    "id": "agent-142",
+    "tags": [
+      "Agent"
+    ],
+    "section": "结构化输出"
+  },
+  {
+    "type": "single",
+    "question": "在提示词中要求 LLM 输出 JSON 时，以下哪种写法最有助于模型理解字段结构？",
+    "options": [
+      {
+        "text": "“请输出 JSON”",
+        "correct": false
+      },
+      {
+        "text": "“输出格式为：{\\\"name\\\": string, \\\"age\\\": number}”",
+        "correct": true
+      },
+      {
+        "text": "“用 JSON 格式回答，越详细越好”",
+        "correct": false
+      },
+      {
+        "text": "“请使用结构化数据”",
+        "correct": false
+      }
+    ],
+    "explanation": "给出具体字段名和类型，能明确结构约束，减少歧义。仅说输出 JSON 或结构化数据过于模糊；“越详细越好”可能引入多余内容，反而破坏格式。",
+    "id": "agent-143",
+    "tags": [
+      "Agent"
+    ],
+    "section": "结构化输出"
+  },
+  {
+    "type": "single",
+    "question": "在 Python 标准库 json 中解析包含重复键的 JSON 文本时，通常结果是什么？",
+    "options": [
+      {
+        "text": "保留最后一个键值对",
+        "correct": true
+      },
+      {
+        "text": "保留第一个键值对",
+        "correct": false
+      },
+      {
+        "text": "解析失败并报错",
+        "correct": false
+      },
+      {
+        "text": "自动合并为数组",
+        "correct": false
+      }
+    ],
+    "explanation": "Python 标准库 json.loads 按出现顺序解析对象，同名键后出现的值覆盖先前的值，因此通常得到最后一个键值对。JSON 规范不保证重复键的可移植行为，生产数据应保证键唯一。",
+    "id": "agent-144",
+    "tags": [
+      "Agent"
+    ],
+    "section": "结构化输出"
+  },
+  {
+    "type": "single",
+    "question": "使用 Function Calling 获取结构化输出时，以下哪项是其主要优势？",
+    "options": [
+      {
+        "text": "模型会保证业务逻辑正确",
+        "correct": false
+      },
+      {
+        "text": "通过工具参数 Schema 约束输出结构，减少格式错误",
+        "correct": true
+      },
+      {
+        "text": "无需再对输出做任何校验",
+        "correct": false
+      },
+      {
+        "text": "可以完全避免幻觉",
+        "correct": false
+      }
+    ],
+    "explanation": "Function Calling 通过声明参数 Schema 让模型按结构生成参数，降低格式错误。但它不保证业务逻辑正确，也不能免去校验或消除幻觉，仍需对结果做验证。",
+    "id": "agent-145",
+    "tags": [
+      "Agent"
+    ],
+    "section": "结构化输出"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些措施有助于提高 LLM 输出 JSON 的格式稳定性？",
+    "options": [
+      {
+        "text": "在提示词中给出严格的 JSON Schema 或字段类型说明",
+        "correct": true
+      },
+      {
+        "text": "将 temperature 设为 0 或较低值",
+        "correct": true
+      },
+      {
+        "text": "要求模型在 JSON 前后添加解释性文字",
+        "correct": false
+      },
+      {
+        "text": "对模型输出进行 JSON Schema 校验并在失败时重试",
+        "correct": true
+      }
+    ],
+    "explanation": "明确 Schema、降低随机性、校验并重试都能提升格式稳定性。要求添加前后解释文字会破坏纯 JSON 输出，反而增加解析难度，不利于格式稳定。",
+    "id": "agent-146",
+    "tags": [
+      "Agent"
+    ],
+    "section": "结构化输出"
+  },
+  {
+    "type": "multiple",
+    "question": "在 Python 中，以下哪些库可以用于直接校验 JSON 数据是否符合给定的 JSON Schema？",
+    "options": [
+      {
+        "text": "jsonschema",
+        "correct": true
+      },
+      {
+        "text": "fastjsonschema",
+        "correct": true
+      },
+      {
+        "text": "requests",
+        "correct": false
+      },
+      {
+        "text": "pydantic 可直接加载任意 JSON Schema 文档并按其校验数据",
+        "correct": false
+      }
+    ],
+    "explanation": "jsonschema 和 fastjsonschema 是专门执行 JSON Schema 校验的库。requests 是 HTTP 客户端。pydantic 可借助数据模型校验 JSON 数据，但通常不是直接加载任意 JSON Schema 文档来执行校验。",
+    "id": "agent-147",
+    "tags": [
+      "Agent"
+    ],
+    "section": "结构化输出"
+  },
+  {
+    "type": "multiple",
+    "question": "设计 Agent 的结构化输出时，以下哪些是良好的实践？",
+    "options": [
+      {
+        "text": "为输出定义明确的 Schema，并包含必填字段与类型",
+        "correct": true
+      },
+      {
+        "text": "在解析后立即进行业务规则校验",
+        "correct": true
+      },
+      {
+        "text": "允许模型自由添加未定义字段以增强灵活性",
+        "correct": false
+      },
+      {
+        "text": "对失败输出记录原始内容以便调试和重试",
+        "correct": true
+      }
+    ],
+    "explanation": "明确 Schema、解析后业务校验、记录失败原始内容都是良好实践。允许自由添加未定义字段会破坏契约，增加下游处理负担，不属于良好实践。",
+    "id": "agent-148",
+    "tags": [
+      "Agent"
+    ],
+    "section": "结构化输出"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些情况可能导致 LLM 输出的 JSON 解析失败？",
+    "options": [
+      {
+        "text": "字符串值中包含未转义的双引号",
+        "correct": true
+      },
+      {
+        "text": "对象成员之间使用分号分隔",
+        "correct": true
+      },
+      {
+        "text": "所有键都使用双引号包裹",
+        "correct": false
+      },
+      {
+        "text": "数值使用了前导零，如 012",
+        "correct": true
+      }
+    ],
+    "explanation": "未转义双引号破坏字符串；分号不是合法成员分隔符；JSON 数字不允许前导零。键用双引号是合法要求，不会导致解析失败。",
+    "id": "agent-149",
+    "tags": [
+      "Agent"
+    ],
+    "section": "结构化输出"
+  },
+  {
+    "type": "multiple",
+    "question": "Agent 需要将结构化数据以 JSON 返回给前端，以下哪些做法有助于保证数据安全？",
+    "options": [
+      {
+        "text": "对输出中的用户可控字符串进行适当的 HTML/JS 转义",
+        "correct": true
+      },
+      {
+        "text": "设置正确的 Content-Type 为 application/json",
+        "correct": true
+      },
+      {
+        "text": "直接将用户输入拼接进 JSON 字符串而不做编码",
+        "correct": false
+      },
+      {
+        "text": "对敏感字段进行脱敏或权限过滤后再输出",
+        "correct": true
+      }
+    ],
+    "explanation": "转义用户可控字符串、正确设置 Content-Type、脱敏或权限过滤都有助于安全。直接拼接用户输入可能引入注入或格式破坏，应使用 JSON 编码而非字符串拼接。",
+    "id": "agent-150",
+    "tags": [
+      "Agent"
+    ],
+    "section": "结构化输出"
+  },
+  {
+    "type": "single",
+    "question": "在基于 LLM 的 Agent 中，错误恢复机制的主要目的是什么？",
+    "options": [
+      {
+        "text": "确保 Agent 在所有情况下都能成功完成任务",
+        "correct": false
+      },
+      {
+        "text": "使 Agent 能够从异常状态中恢复并继续执行",
+        "correct": true
+      },
+      {
+        "text": "完全避免 Agent 在执行过程中出现任何错误",
+        "correct": false
+      },
+      {
+        "text": "提高 Agent 的响应速度以缩短任务完成时间",
+        "correct": false
+      }
+    ],
+    "explanation": "错误恢复旨在处理异常并继续执行，而不是保证所有任务成功或完全避免错误；它与提升响应速度没有直接关系。",
+    "id": "agent-151",
+    "tags": [
+      "Agent"
+    ],
+    "section": "错误恢复"
+  },
+  {
+    "type": "single",
+    "question": "Agent 在执行工具调用时遇到网络超时错误，最合适的恢复策略是？",
+    "options": [
+      {
+        "text": "立即终止整个任务",
+        "correct": false
+      },
+      {
+        "text": "重试该工具调用，并设置最大重试次数",
+        "correct": true
+      },
+      {
+        "text": "忽略错误，继续执行后续步骤",
+        "correct": false
+      },
+      {
+        "text": "更换为大语言模型重新生成计划",
+        "correct": false
+      }
+    ],
+    "explanation": "网络超时通常具有暂时性，重试是合理策略，但应设置最大重试次数以避免无限循环；直接终止过于激进，忽略错误可能导致后续失败，重新生成计划成本高且不直接解决超时。",
+    "id": "agent-152",
+    "tags": [
+      "Agent"
+    ],
+    "section": "错误恢复"
+  },
+  {
+    "type": "single",
+    "question": "当 Agent 的某个子任务因依赖的外部服务不可用而失败时，以下哪种恢复方式属于“降级”策略？",
+    "options": [
+      {
+        "text": "无限重试直到服务恢复",
+        "correct": false
+      },
+      {
+        "text": "使用本地缓存数据或简化版逻辑替代外部服务",
+        "correct": true
+      },
+      {
+        "text": "直接抛出异常并终止程序",
+        "correct": false
+      },
+      {
+        "text": "将错误上报给用户并等待手动干预",
+        "correct": false
+      }
+    ],
+    "explanation": "降级策略是在部分功能失效时提供有损但可用的替代方案，例如使用本地缓存数据或简化逻辑。无限重试可能造成阻塞，直接终止或仅上报等待人工干预没有尝试自动恢复。",
+    "id": "agent-153",
+    "tags": [
+      "Agent"
+    ],
+    "section": "错误恢复"
+  },
+  {
+    "type": "single",
+    "question": "在 Agent 架构中，实现错误恢复的常见模式不包括以下哪一项？",
+    "options": [
+      {
+        "text": "重试模式",
+        "correct": false
+      },
+      {
+        "text": "断路器模式",
+        "correct": false
+      },
+      {
+        "text": "死锁避免模式",
+        "correct": true
+      },
+      {
+        "text": "补偿事务模式",
+        "correct": false
+      }
+    ],
+    "explanation": "重试、断路器、补偿事务都是常见的错误恢复模式。死锁避免是并发控制机制，不属于直接错误恢复模式。",
+    "id": "agent-154",
+    "tags": [
+      "Agent"
+    ],
+    "section": "错误恢复"
+  },
+  {
+    "type": "single",
+    "question": "Agent 在调用一个可能不稳定的 API 时，采用指数退避重试策略，其主要优点是？",
+    "options": [
+      {
+        "text": "减少对故障服务的压力并提高重试成功率",
+        "correct": true
+      },
+      {
+        "text": "保证每次重试之间间隔固定时间，便于预测",
+        "correct": false
+      },
+      {
+        "text": "避免所有重试尝试，直接失败",
+        "correct": false
+      },
+      {
+        "text": "立即重试以最快恢复",
+        "correct": false
+      }
+    ],
+    "explanation": "指数退避通过逐渐增加重试间隔，避免对故障服务造成冲击，并给服务恢复时间；固定间隔、放弃重试或立即重试都不符合指数退避的特点。",
+    "id": "agent-155",
+    "tags": [
+      "Agent"
+    ],
+    "section": "错误恢复"
+  },
+  {
+    "type": "single",
+    "question": "Agent 在执行长时间任务时，如果某一步骤失败，为了支持恢复，通常需要保存什么？",
+    "options": [
+      {
+        "text": "仅保存最终结果",
+        "correct": false
+      },
+      {
+        "text": "检查点（Checkpoint）信息",
+        "correct": true
+      },
+      {
+        "text": "所有中间日志",
+        "correct": false
+      },
+      {
+        "text": "仅保存错误信息",
+        "correct": false
+      }
+    ],
+    "explanation": "检查点记录任务执行状态，便于失败后从最近状态恢复。仅保存最终结果无法恢复中间状态；仅保存错误信息不足以恢复；保存所有中间日志可能有帮助，但不是结构化恢复点的主要做法，且成本较高。",
+    "id": "agent-156",
+    "tags": [
+      "Agent"
+    ],
+    "section": "错误恢复"
+  },
+  {
+    "type": "single",
+    "question": "当 Agent 多次重试后仍然失败，以下哪种做法符合最佳实践？",
+    "options": [
+      {
+        "text": "继续无限重试",
+        "correct": false
+      },
+      {
+        "text": "记录错误并回滚到安全状态或触发告警",
+        "correct": true
+      },
+      {
+        "text": "忽略错误并继续执行",
+        "correct": false
+      },
+      {
+        "text": "重置整个系统并从头开始",
+        "correct": false
+      }
+    ],
+    "explanation": "多次重试失败后应止损，回滚到安全状态或触发告警，避免资源浪费和错误扩大；无限重试风险大，忽略错误可能扩大影响，重置整个系统代价过高。",
+    "id": "agent-157",
+    "tags": [
+      "Agent"
+    ],
+    "section": "错误恢复"
+  },
+  {
+    "type": "single",
+    "question": "在 Agent 中，断路器（Circuit Breaker）模式的作用是？",
+    "options": [
+      {
+        "text": "在服务故障时快速失败，避免级联故障",
+        "correct": true
+      },
+      {
+        "text": "保证请求一定会被处理",
+        "correct": false
+      },
+      {
+        "text": "增加系统的吞吐量",
+        "correct": false
+      },
+      {
+        "text": "自动修复服务故障",
+        "correct": false
+      }
+    ],
+    "explanation": "断路器在检测到连续失败后打开并快速失败，防止资源耗尽和级联故障。它不保证请求一定被处理，不以增加吞吐量为主要目的，也不能自动修复服务故障。",
+    "id": "agent-158",
+    "tags": [
+      "Agent"
+    ],
+    "section": "错误恢复"
+  },
+  {
+    "type": "single",
+    "question": "Agent 调用大模型生成响应时，如果返回内容格式不符合预期，最直接的恢复措施是？",
+    "options": [
+      {
+        "text": "重新调用大模型并明确要求格式",
+        "correct": true
+      },
+      {
+        "text": "忽略格式问题，继续使用",
+        "correct": false
+      },
+      {
+        "text": "终止任务并报告错误",
+        "correct": false
+      },
+      {
+        "text": "手动修改返回内容",
+        "correct": false
+      }
+    ],
+    "explanation": "格式不符时，重新调用大模型并明确格式要求是直接有效的恢复方式；忽略格式问题可能导致解析错误，直接终止过于消极，手动修改难以自动扩展。",
+    "id": "agent-159",
+    "tags": [
+      "Agent"
+    ],
+    "section": "错误恢复"
+  },
+  {
+    "type": "single",
+    "question": "在错误恢复中，补偿事务（Compensating Transaction）主要用于？",
+    "options": [
+      {
+        "text": "撤销已执行操作的影响，实现最终一致性",
+        "correct": true
+      },
+      {
+        "text": "提高事务执行速度",
+        "correct": false
+      },
+      {
+        "text": "防止所有错误发生",
+        "correct": false
+      },
+      {
+        "text": "替代重试机制",
+        "correct": false
+      }
+    ],
+    "explanation": "补偿事务通过执行反向操作撤销已提交步骤的影响，常用于分布式事务的最终一致性。它不以提高事务执行速度为目的，不能防止所有错误发生，也不替代重试机制。",
+    "id": "agent-160",
+    "tags": [
+      "Agent"
+    ],
+    "section": "错误恢复"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些是 Agent 错误恢复的常见策略？",
+    "options": [
+      {
+        "text": "重试",
+        "correct": true
+      },
+      {
+        "text": "回滚",
+        "correct": true
+      },
+      {
+        "text": "忽略错误",
+        "correct": false
+      },
+      {
+        "text": "降级",
+        "correct": true
+      }
+    ],
+    "explanation": "重试、回滚、降级都是常见错误恢复策略。忽略错误通常不是恢复策略，可能导致问题累积。",
+    "id": "agent-161",
+    "tags": [
+      "Agent"
+    ],
+    "section": "错误恢复"
+  },
+  {
+    "type": "multiple",
+    "question": "在设计 Agent 的错误恢复机制时，应考虑哪些因素？",
+    "options": [
+      {
+        "text": "错误的可恢复性分类",
+        "correct": true
+      },
+      {
+        "text": "恢复操作的成本",
+        "correct": true
+      },
+      {
+        "text": "系统的最大重试次数",
+        "correct": true
+      },
+      {
+        "text": "忽略所有错误以减少开销",
+        "correct": false
+      }
+    ],
+    "explanation": "设计时需区分错误类型、评估恢复成本并设置重试上限。忽略所有错误会降低可靠性，不是应考虑的因素。",
+    "id": "agent-162",
+    "tags": [
+      "Agent"
+    ],
+    "section": "错误恢复"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些属于 Agent 在工具调用失败后可以采取的恢复动作？",
+    "options": [
+      {
+        "text": "使用备用工具",
+        "correct": true
+      },
+      {
+        "text": "重试原工具调用",
+        "correct": true
+      },
+      {
+        "text": "终止整个任务",
+        "correct": false
+      },
+      {
+        "text": "记录失败并请求人工干预",
+        "correct": true
+      }
+    ],
+    "explanation": "备用工具、重试和请求人工干预都是合理的恢复动作。终止整个任务不是恢复，而是放弃。",
+    "id": "agent-163",
+    "tags": [
+      "Agent"
+    ],
+    "section": "错误恢复"
+  },
+  {
+    "type": "multiple",
+    "question": "关于检查点（Checkpoint）在 Agent 错误恢复中的作用，哪些描述正确？",
+    "options": [
+      {
+        "text": "允许从最近成功状态恢复，减少重复工作",
+        "correct": true
+      },
+      {
+        "text": "保存恢复所需的执行状态快照",
+        "correct": true
+      },
+      {
+        "text": "检查点越频繁，恢复开销一定越小",
+        "correct": false
+      },
+      {
+        "text": "检查点可以完全避免错误发生",
+        "correct": false
+      }
+    ],
+    "explanation": "检查点保存恢复所需的执行状态快照，使失败后能从最近成功状态继续，减少重复工作；提高保存频率会带来额外开销，且检查点不能避免错误发生。",
+    "id": "agent-164",
+    "tags": [
+      "Agent"
+    ],
+    "section": "错误恢复"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些情况可能触发 Agent 的错误恢复流程？",
+    "options": [
+      {
+        "text": "工具调用超时",
+        "correct": true
+      },
+      {
+        "text": "大模型返回格式错误",
+        "correct": true
+      },
+      {
+        "text": "任务成功完成",
+        "correct": false
+      },
+      {
+        "text": "依赖服务返回错误码",
+        "correct": true
+      }
+    ],
+    "explanation": "超时、格式错误、服务错误码都属于异常，可能触发恢复。任务成功完成不需要恢复。",
+    "id": "agent-165",
+    "tags": [
+      "Agent"
+    ],
+    "section": "错误恢复"
+  },
+  {
+    "type": "single",
+    "question": "Agent 调用外部服务时返回 HTTP 429，且响应包含 Retry-After 头，最合适的初始恢复动作是？",
+    "options": [
+      {
+        "text": "立即重试相同请求",
+        "correct": false
+      },
+      {
+        "text": "按 Retry-After 头指定的时间等待后重试",
+        "correct": true
+      },
+      {
+        "text": "直接标记任务失败并终止",
+        "correct": false
+      },
+      {
+        "text": "改用完全不同的服务接口",
+        "correct": false
+      }
+    ],
+    "explanation": "HTTP 429 表示请求过多，服务端可通过 Retry-After 头给出建议等待时间。遵循该指示等待后再重试，可避免加剧限流；立即重试可能继续被限流，直接终止或切换服务属于过度反应。",
+    "id": "agent-166",
+    "tags": [
+      "Agent"
+    ],
+    "section": "错误恢复"
+  },
+  {
+    "type": "single",
+    "question": "Agent 执行数据库写入操作后进程崩溃，重启后需要确定哪些操作已完成。以下哪种机制最直接支持这一需求？",
+    "options": [
+      {
+        "text": "在内存中记录操作日志",
+        "correct": false
+      },
+      {
+        "text": "使用持久化的事务日志或检查点",
+        "correct": true
+      },
+      {
+        "text": "增加重试次数",
+        "correct": false
+      },
+      {
+        "text": "调用大模型重新生成计划",
+        "correct": false
+      }
+    ],
+    "explanation": "持久化的事务日志或检查点能在进程崩溃后恢复执行状态，确定已完成和未完成的操作。内存日志随进程丢失；重试和重新生成计划不能直接提供已完成操作的信息。",
+    "id": "agent-167",
+    "tags": [
+      "Agent"
+    ],
+    "section": "错误恢复"
+  },
+  {
+    "type": "single",
+    "question": "Agent 调用一个非幂等的支付接口时发生超时，此时直接重试的主要风险是？",
+    "options": [
+      {
+        "text": "请求被服务端拒绝",
+        "correct": false
+      },
+      {
+        "text": "可能造成重复支付",
+        "correct": true
+      },
+      {
+        "text": "响应时间变长",
+        "correct": false
+      },
+      {
+        "text": "消耗更多 token",
+        "correct": false
+      }
+    ],
+    "explanation": "非幂等接口在超时后无法确定是否已执行，直接重试可能导致同一笔支付被处理多次。应使用幂等键或先查询状态再决定是否重试。其他选项不是主要风险。",
+    "id": "agent-168",
+    "tags": [
+      "Agent"
+    ],
+    "section": "错误恢复"
+  },
+  {
+    "type": "single",
+    "question": "在 Agent 工作流中，某步骤失败后需要回滚之前已执行的操作。以下哪种设计最有助于实现可靠回滚？",
+    "options": [
+      {
+        "text": "为每个可逆操作注册对应的补偿动作",
+        "correct": true
+      },
+      {
+        "text": "将所有操作合并为一个原子操作",
+        "correct": false
+      },
+      {
+        "text": "失败后直接重新开始整个任务",
+        "correct": false
+      },
+      {
+        "text": "忽略失败并继续后续步骤",
+        "correct": false
+      }
+    ],
+    "explanation": "补偿事务模式为每个可逆操作定义补偿动作，失败时按逆序执行以回滚。合并为原子操作在跨服务时往往不可行；重新开始可能重复副作用；忽略失败会累积错误。",
+    "id": "agent-169",
+    "tags": [
+      "Agent"
+    ],
+    "section": "错误恢复"
+  },
+  {
+    "type": "single",
+    "question": "Agent 使用断路器模式调用一个频繁失败的外部服务，当断路器处于打开状态时，调用请求会怎样？",
+    "options": [
+      {
+        "text": "被直接拒绝，快速失败",
+        "correct": true
+      },
+      {
+        "text": "被无限期排队等待",
+        "correct": false
+      },
+      {
+        "text": "自动转发到备用服务",
+        "correct": false
+      },
+      {
+        "text": "降低超时时间后重试",
+        "correct": false
+      }
+    ],
+    "explanation": "断路器打开时直接快速失败，避免对已知故障服务的持续调用，给系统恢复时间。排队等待会积压请求；自动转发和降低超时不是断路器打开状态的默认行为。",
+    "id": "agent-170",
+    "tags": [
+      "Agent"
+    ],
+    "section": "错误恢复"
+  },
+  {
+    "type": "single",
+    "question": "Agent 解析大模型返回的 JSON 时发现缺少必需字段，以下哪种恢复措施最合理？",
+    "options": [
+      {
+        "text": "将缺失字段设为空字符串继续",
+        "correct": false
+      },
+      {
+        "text": "要求模型按给定 schema 重新生成该部分",
+        "correct": true
+      },
+      {
+        "text": "放弃整个任务",
+        "correct": false
+      },
+      {
+        "text": "手动编写缺失字段的值",
+        "correct": false
+      }
+    ],
+    "explanation": "格式不符合预期时，最直接的恢复是带着具体错误信息和 schema 要求模型重新生成。设空值可能引发下游错误；放弃任务过于激进；手动编写不可扩展且可能引入错误。",
+    "id": "agent-171",
+    "tags": [
+      "Agent"
+    ],
+    "section": "错误恢复"
+  },
+  {
+    "type": "single",
+    "question": "Agent 在长时间任务中定期保存检查点，其主要恢复优势是？",
+    "options": [
+      {
+        "text": "减少单次工具调用的延迟",
+        "correct": false
+      },
+      {
+        "text": "失败后可从最近检查点继续而非从头开始",
+        "correct": true
+      },
+      {
+        "text": "提高大模型生成质量",
+        "correct": false
+      },
+      {
+        "text": "自动修复所有业务逻辑错误",
+        "correct": false
+      }
+    ],
+    "explanation": "检查点保存任务执行状态，失败后可从最近成功点恢复，避免重复已完成的工作。它不直接降低调用延迟、不提升生成质量，也不能修复业务逻辑错误。",
+    "id": "agent-172",
+    "tags": [
+      "Agent"
+    ],
+    "section": "错误恢复"
+  },
+  {
+    "type": "single",
+    "question": "Agent 调用工具时收到权限不足错误，以下哪种恢复策略最恰当？",
+    "options": [
+      {
+        "text": "使用指数退避反复重试",
+        "correct": false
+      },
+      {
+        "text": "检查并更新凭证或请求提升权限",
+        "correct": true
+      },
+      {
+        "text": "忽略错误继续执行",
+        "correct": false
+      },
+      {
+        "text": "切换到无关工具",
+        "correct": false
+      }
+    ],
+    "explanation": "权限不足属于不可通过重试解决的错误，应检查凭证有效性或申请所需权限。反复重试不会改变权限状态；忽略错误会导致后续失败；切换无关工具不能完成任务。",
+    "id": "agent-173",
+    "tags": [
+      "Agent"
+    ],
+    "section": "错误恢复"
+  },
+  {
+    "type": "single",
+    "question": "Agent 执行多步骤任务时，某中间步骤产生不确定结果（如外部系统已接收但未确认）。以下哪种做法最稳妥？",
+    "options": [
+      {
+        "text": "假定成功继续执行",
+        "correct": false
+      },
+      {
+        "text": "先查询外部系统状态再决定下一步",
+        "correct": true
+      },
+      {
+        "text": "立即回滚所有步骤",
+        "correct": false
+      },
+      {
+        "text": "重新执行整个任务",
+        "correct": false
+      }
+    ],
+    "explanation": "结果不确定时应先通过查询接口确认外部系统的实际状态，再决定继续、重试或补偿。假定成功可能重复副作用；立即全量回滚和重跑整个任务代价高且可能造成重复操作。",
+    "id": "agent-174",
+    "tags": [
+      "Agent"
+    ],
+    "section": "错误恢复"
+  },
+  {
+    "type": "single",
+    "question": "在 Agent 错误恢复中，设置最大重试次数的主要目的是？",
+    "options": [
+      {
+        "text": "保证请求最终成功",
+        "correct": false
+      },
+      {
+        "text": "防止对持续故障的服务无限重试",
+        "correct": true
+      },
+      {
+        "text": "减少正常请求的延迟",
+        "correct": false
+      },
+      {
+        "text": "替代断路器模式",
+        "correct": false
+      }
+    ],
+    "explanation": "最大重试次数限制可避免对持续故障的服务无限重试，防止资源浪费和故障放大。它不能保证成功，也不直接减少正常请求延迟，且不能完全替代断路器。",
+    "id": "agent-175",
+    "tags": [
+      "Agent"
+    ],
+    "section": "错误恢复"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些做法有助于 Agent 在工具调用失败后安全恢复？",
+    "options": [
+      {
+        "text": "对非幂等操作使用幂等键",
+        "correct": true
+      },
+      {
+        "text": "记录失败上下文供后续决策",
+        "correct": true
+      },
+      {
+        "text": "对所有错误立即无限重试",
+        "correct": false
+      },
+      {
+        "text": "设计补偿动作以回滚副作用",
+        "correct": true
+      }
+    ],
+    "explanation": "幂等键、失败上下文记录和补偿动作都是安全恢复的关键措施。无限重试会加剧故障并浪费资源，不是安全做法。",
+    "id": "agent-176",
+    "tags": [
+      "Agent"
+    ],
+    "section": "错误恢复"
+  },
+  {
+    "type": "multiple",
+    "question": "关于 Agent 中的重试策略，以下哪些说法正确？",
+    "options": [
+      {
+        "text": "指数退避可减少对故障服务的压力",
+        "correct": true
+      },
+      {
+        "text": "应区分可重试错误与不可重试错误",
+        "correct": true
+      },
+      {
+        "text": "所有错误都适合通过重试恢复",
+        "correct": false
+      },
+      {
+        "text": "重试时可加入随机抖动避免同步",
+        "correct": true
+      }
+    ],
+    "explanation": "指数退避和随机抖动能降低服务压力并避免重试风暴；区分错误类型可避免对权限不足等不可重试错误做无效重试。并非所有错误都适合重试。",
+    "id": "agent-177",
+    "tags": [
+      "Agent"
+    ],
+    "section": "错误恢复"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些属于 Agent 错误恢复中的降级策略？",
+    "options": [
+      {
+        "text": "使用缓存结果替代实时调用",
+        "correct": true
+      },
+      {
+        "text": "返回简化但可用的响应",
+        "correct": true
+      },
+      {
+        "text": "将错误直接抛给用户不做处理",
+        "correct": false
+      },
+      {
+        "text": "切换到功能较少的备用工具",
+        "correct": true
+      }
+    ],
+    "explanation": "降级策略在主要功能不可用时提供次优但可用的结果，如缓存、简化响应或备用工具。直接将错误抛给用户而不做处理不属于恢复策略。",
+    "id": "agent-178",
+    "tags": [
+      "Agent"
+    ],
+    "section": "错误恢复"
+  },
+  {
+    "type": "multiple",
+    "question": "在设计 Agent 的检查点机制时，应考虑哪些因素？",
+    "options": [
+      {
+        "text": "检查点的保存频率与开销",
+        "correct": true
+      },
+      {
+        "text": "检查点数据的持久化与一致性",
+        "correct": true
+      },
+      {
+        "text": "恢复时如何跳过已完成步骤",
+        "correct": true
+      },
+      {
+        "text": "检查点必须包含所有历史日志",
+        "correct": false
+      }
+    ],
+    "explanation": "检查点设计需权衡保存频率与开销，保证持久化和一致性，并支持恢复时跳过已完成步骤。检查点不必包含所有历史日志，只需保存恢复所需的最小状态。",
+    "id": "agent-179",
+    "tags": [
+      "Agent"
+    ],
+    "section": "错误恢复"
+  },
+  {
+    "type": "single",
+    "question": "Agent 在顺序执行多个步骤时，某一步骤失败后触发恢复。以下哪种设计最能保证恢复后不会重复已成功步骤的副作用？",
+    "options": [
+      {
+        "text": "为每个步骤分配唯一标识，并在持久化存储中记录步骤完成状态，恢复时跳过已完成步骤",
+        "correct": true
+      },
+      {
+        "text": "在内存中维护一个已完成步骤列表，恢复时依据该列表跳过已完成步骤",
+        "correct": false
+      },
+      {
+        "text": "每次恢复时从第一个步骤重新执行，依靠工具自身的幂等性避免副作用",
+        "correct": false
+      },
+      {
+        "text": "将整个任务作为一个原子操作，失败后全部回滚再从头开始",
+        "correct": false
+      }
+    ],
+    "explanation": "持久化记录步骤完成状态并配合唯一标识，可以跨进程崩溃后准确判断哪些步骤已完成，避免重复副作用；内存列表在崩溃后丢失，依赖工具幂等并不总能保证，整体回滚并不总是可行。",
+    "id": "agent-180",
+    "tags": [
+      "Agent"
+    ],
+    "section": "错误恢复"
+  },
+  {
+    "type": "single",
+    "question": "在智能体系统中设计权限控制时，下列哪种做法最能体现最小权限原则？",
+    "options": [
+      {
+        "text": "为所有智能体授予管理员权限以便统一管理",
+        "correct": false
+      },
+      {
+        "text": "按任务需要动态授予完成该任务所需的最小权限集合",
+        "correct": true
+      },
+      {
+        "text": "所有智能体共享同一套长期有效的凭证",
+        "correct": false
+      },
+      {
+        "text": "仅在审计时临时关闭权限检查",
+        "correct": false
+      }
+    ],
+    "explanation": "最小权限原则要求主体只拥有完成任务所必需的权限，并按需动态授予、用完即收。为所有智能体授予管理员权限、共享长期凭证会增加滥用风险，关闭权限检查则破坏安全边界，均不符合该原则。",
+    "id": "agent-181",
+    "tags": [
+      "Agent"
+    ],
+    "section": "权限与安全"
+  },
+  {
+    "type": "single",
+    "question": "智能体调用外部工具时，针对模型可能被提示注入诱导执行越权操作，最有效的防护措施是？",
+    "options": [
+      {
+        "text": "在系统提示中要求模型不要执行危险操作",
+        "correct": false
+      },
+      {
+        "text": "在工具执行层实施独立的权限校验与参数白名单",
+        "correct": true
+      },
+      {
+        "text": "增大上下文窗口以容纳更多安全说明",
+        "correct": false
+      },
+      {
+        "text": "每次调用前让模型自我声明操作是否安全",
+        "correct": false
+      }
+    ],
+    "explanation": "提示注入可操纵模型输出，仅靠模型自身约束不可靠。应在模型之外的执行层实施权限校验与参数白名单，形成不可绕过的强制控制；扩容上下文或让模型自证安全都无法保证安全。",
+    "id": "agent-182",
+    "tags": [
+      "Agent"
+    ],
+    "section": "权限与安全"
+  },
+  {
+    "type": "single",
+    "question": "智能体访问用户邮箱发送邮件时，采用 OAuth 委托授权相比直接保存用户密码的主要安全优势是？",
+    "options": [
+      {
+        "text": "令牌权限范围可受限且可撤销，无需暴露用户密码",
+        "correct": true
+      },
+      {
+        "text": "OAuth 令牌永远不会过期",
+        "correct": false
+      },
+      {
+        "text": "OAuth 可以防止所有钓鱼攻击",
+        "correct": false
+      },
+      {
+        "text": "OAuth 让智能体获得比用户本人更大的权限",
+        "correct": false
+      }
+    ],
+    "explanation": "OAuth 允许按范围授予有限权限、令牌可撤销且不暴露原始密码，降低凭证泄露影响面。令牌仍会过期，也不能消除所有钓鱼风险，更不应扩大权限，因此其余选项错误。",
+    "id": "agent-183",
+    "tags": [
+      "Agent"
+    ],
+    "section": "权限与安全"
+  },
+  {
+    "type": "single",
+    "question": "在多智能体协作系统中，智能体 A 需要把子任务委托给智能体 B，为防止权限在委托链中被放大，应重点采用哪种机制？",
+    "options": [
+      {
+        "text": "权限随委托逐级衰减，子智能体权限不超过委托方",
+        "correct": true
+      },
+      {
+        "text": "每个智能体都使用相同的超级令牌",
+        "correct": false
+      },
+      {
+        "text": "只校验首个智能体的身份即可",
+        "correct": false
+      },
+      {
+        "text": "委托链越长授予权限越多以补偿开销",
+        "correct": false
+      }
+    ],
+    "explanation": "委托链中的权限应单调不增，即子智能体获得的权限不能超过委托方，防止越权放大。共享超级令牌、只校验首节点或随链增长扩权都会引入严重越权风险。",
+    "id": "agent-184",
+    "tags": [
+      "Agent"
+    ],
+    "section": "权限与安全"
+  },
+  {
+    "type": "single",
+    "question": "智能体生成并执行代码来完成数据分析时，下列哪项隔离措施最有助于限制代码被滥用造成的破坏？",
+    "options": [
+      {
+        "text": "在受限沙箱中执行且默认禁止网络与文件系统写入",
+        "correct": true
+      },
+      {
+        "text": "让代码以宿主机的最高权限运行以便访问资源",
+        "correct": false
+      },
+      {
+        "text": "代码执行前只做一次字符串关键字过滤",
+        "correct": false
+      },
+      {
+        "text": "将代码执行日志默认关闭以减少干扰",
+        "correct": false
+      }
+    ],
+    "explanation": "沙箱配合默认拒绝网络与写入可将代码执行的影响限制在受控范围内，属于纵深防御。最高权限运行、仅关键字过滤（易绕过）和关闭日志都不利于安全审计与控制。",
+    "id": "agent-185",
+    "tags": [
+      "Agent"
+    ],
+    "section": "权限与安全"
+  },
+  {
+    "type": "single",
+    "question": "智能体需要调用数据库删除过期记录，为防止误删或恶意删除，较合理的权限设计是？",
+    "options": [
+      {
+        "text": "授予只读权限并让智能体自行判断是否可删",
+        "correct": false
+      },
+      {
+        "text": "授予仅可删除指定表特定条件记录的受限权限并保留审计",
+        "correct": true
+      },
+      {
+        "text": "授予数据库管理员全量删除权限",
+        "correct": false
+      },
+      {
+        "text": "把删除操作改为让模型生成 SQL 直接执行",
+        "correct": false
+      }
+    ],
+    "explanation": "应把权限收窄到具体对象与条件，并保留审计以便追责。只读无法完成删除任务，管理员全量权限和让模型自由生成 SQL 都扩大了破坏面，不符合最小权限。",
+    "id": "agent-186",
+    "tags": [
+      "Agent"
+    ],
+    "section": "权限与安全"
+  },
+  {
+    "type": "single",
+    "question": "智能体从网页抓取内容并据此决定后续操作时，防范间接提示注入的关键思路是？",
+    "options": [
+      {
+        "text": "把网页内容视为不可信数据，禁止其直接改变控制流或触发高权限工具",
+        "correct": true
+      },
+      {
+        "text": "只要网页内容语气礼貌就可以信任",
+        "correct": false
+      },
+      {
+        "text": "把所有网页内容拼接进系统提示以提升理解",
+        "correct": false
+      },
+      {
+        "text": "让模型在抓取后自行声明未被注入",
+        "correct": false
+      }
+    ],
+    "explanation": "间接提示注入来自被读取的外部内容，应把外部数据与指令分离，禁止数据直接控制高权限动作。凭语气信任、混入系统提示或模型自证都无法形成可靠防护。",
+    "id": "agent-187",
+    "tags": [
+      "Agent"
+    ],
+    "section": "权限与安全"
+  },
+  {
+    "type": "single",
+    "question": "智能体系统记录用户敏感信息用于个性化，符合数据最小化原则的做法是？",
+    "options": [
+      {
+        "text": "永久保存全部交互原始数据以便随时训练",
+        "correct": false
+      },
+      {
+        "text": "只采集与当前目的直接相关且必要的数据并设置保留期限",
+        "correct": true
+      },
+      {
+        "text": "为方便排障把所有日志设为公开可读",
+        "correct": false
+      },
+      {
+        "text": "将敏感数据明文存放在共享缓存中",
+        "correct": false
+      }
+    ],
+    "explanation": "数据最小化要求目的限定、仅采集必要数据并限制保留期限，降低泄露与滥用风险。永久全量保存、公开日志和明文共享缓存都违背隐私保护与最小化原则。",
+    "id": "agent-188",
+    "tags": [
+      "Agent"
+    ],
+    "section": "权限与安全"
+  },
+  {
+    "type": "single",
+    "question": "智能体对外提供文件下载能力时，为防目录穿越攻击，最稳妥的校验方式是？",
+    "options": [
+      {
+        "text": "只检查文件名是否包含两个点",
+        "correct": false
+      },
+      {
+        "text": "将请求路径规范化后确认其仍位于允许的根目录之下",
+        "correct": true
+      },
+      {
+        "text": "依赖客户端传入的路径不做任何处理",
+        "correct": false
+      },
+      {
+        "text": "允许绝对路径以方便用户",
+        "correct": false
+      }
+    ],
+    "explanation": "应先将路径规范化（解析 .. 与符号链接等）再校验其前缀是否落在允许根目录内，才能可靠防止穿越。仅匹配字符串、放任客户端路径或允许绝对路径都可能被绕过。",
+    "id": "agent-189",
+    "tags": [
+      "Agent"
+    ],
+    "section": "权限与安全"
+  },
+  {
+    "type": "single",
+    "question": "智能体使用长期 API 密钥访问第三方服务，降低密钥泄露风险较有效的组合是？",
+    "options": [
+      {
+        "text": "密钥硬编码在代码仓库并公开分享",
+        "correct": false
+      },
+      {
+        "text": "使用密钥管理系统托管、按需注入并在泄露时轮换",
+        "correct": true
+      },
+      {
+        "text": "把密钥写在每次对话的用户提示中",
+        "correct": false
+      },
+      {
+        "text": "多个系统共用同一把永不过期的密钥",
+        "correct": false
+      }
+    ],
+    "explanation": "集中托管、运行时注入与可轮换能显著缩小泄露窗口和影响面。硬编码公开、写入提示词或长期共用都会扩大暴露范围，属于高风险做法。",
+    "id": "agent-190",
+    "tags": [
+      "Agent"
+    ],
+    "section": "权限与安全"
+  },
+  {
+    "type": "multiple",
+    "question": "下列关于智能体权限审计的表述，正确的有？",
+    "options": [
+      {
+        "text": "应记录谁在何时以何种权限执行了哪些操作",
+        "correct": true
+      },
+      {
+        "text": "审计日志应防止被普通执行路径篡改",
+        "correct": true
+      },
+      {
+        "text": "只要智能体运行正常就无需保留审计记录",
+        "correct": false
+      },
+      {
+        "text": "审计记录能帮助事后追责与发现异常行为",
+        "correct": true
+      }
+    ],
+    "explanation": "审计需覆盖主体、时间、权限与操作，并保证日志不可被普通执行路径篡改，从而支持追责和异常检测。运行正常并不能替代审计，异常往往在事后才被发现，因此不能因运行正常而省略审计记录。",
+    "id": "agent-191",
+    "tags": [
+      "Agent"
+    ],
+    "section": "权限与安全"
+  },
+  {
+    "type": "multiple",
+    "question": "为防止智能体在工具调用中越权，下列哪些属于有效的纵深防御措施？",
+    "options": [
+      {
+        "text": "在网关层按身份与角色做细粒度授权",
+        "correct": true
+      },
+      {
+        "text": "对高风险工具增加人工确认环节",
+        "correct": true
+      },
+      {
+        "text": "完全信任模型输出的工具参数不做校验",
+        "correct": false
+      },
+      {
+        "text": "对工具参数做类型与范围校验",
+        "correct": true
+      }
+    ],
+    "explanation": "网关授权、高风险人工确认和参数校验分别在不同层拦截越权，形成纵深防御。完全信任模型参数则放弃了关键校验，一旦被注入或产生幻觉就可能越权，因此错误。",
+    "id": "agent-192",
+    "tags": [
+      "Agent"
+    ],
+    "section": "权限与安全"
+  },
+  {
+    "type": "multiple",
+    "question": "智能体保存用户会话记忆时，下列哪些做法有助于保护隐私？",
+    "options": [
+      {
+        "text": "对敏感字段加密存储并限制访问主体",
+        "correct": true
+      },
+      {
+        "text": "允许用户查看、导出与删除其记忆数据",
+        "correct": true
+      },
+      {
+        "text": "将会话记忆默认对所有租户可见",
+        "correct": false
+      },
+      {
+        "text": "按用途设置保留期限并到期清除",
+        "correct": true
+      }
+    ],
+    "explanation": "加密与访问控制、用户的数据权利以及到期清除都是隐私保护的重要措施。默认对全部租户可见会直接造成跨租户泄露，严重违背最小权限与隔离要求。",
+    "id": "agent-193",
+    "tags": [
+      "Agent"
+    ],
+    "section": "权限与安全"
+  },
+  {
+    "type": "multiple",
+    "question": "智能体作为代理访问企业内网资源时，下列哪些设计能降低横向移动风险？",
+    "options": [
+      {
+        "text": "按服务和环境划分网络分区并限制智能体可达范围",
+        "correct": true
+      },
+      {
+        "text": "为智能体使用长期共享的高权限账户",
+        "correct": false
+      },
+      {
+        "text": "对每次访问实施身份认证与最小授权",
+        "correct": true
+      },
+      {
+        "text": "对异常访问频率和路径进行监测告警",
+        "correct": true
+      }
+    ],
+    "explanation": "网络分区限制可达面，认证与最小授权限制权限，异常监测可及早发现横向探测。长期共享的高权限账户一旦泄露会被用来大范围移动，反而放大风险，故错误。",
+    "id": "agent-194",
+    "tags": [
+      "Agent"
+    ],
+    "section": "权限与安全"
+  },
+  {
+    "type": "multiple",
+    "question": "关于智能体工具调用凭证的传递，下列哪些做法更安全？",
+    "options": [
+      {
+        "text": "使用短期、限定范围的令牌代替长期凭证",
+        "correct": true
+      },
+      {
+        "text": "在提示词中直接嵌入完整访问令牌以提高效率",
+        "correct": false
+      },
+      {
+        "text": "将凭证注入到受控执行环境而非模型上下文",
+        "correct": true
+      },
+      {
+        "text": "对令牌的使用对象和有效期做严格校验",
+        "correct": true
+      }
+    ],
+    "explanation": "短期限定范围的令牌、在受控环境中注入凭证以及严格校验使用对象与时效，能减少凭证进入模型上下文后的泄露滥用。把完整令牌写进提示词会使其进入日志与上下文，风险很高。",
+    "id": "agent-195",
+    "tags": [
+      "Agent"
+    ],
+    "section": "权限与安全"
+  },
+  {
+    "type": "single",
+    "question": "在设计智能体的权限策略时，采用基于角色的访问控制（RBAC）的主要局限是什么？",
+    "options": [
+      {
+        "text": "能够自动消除角色爆炸问题",
+        "correct": false
+      },
+      {
+        "text": "难以实现细粒度的动态权限调整",
+        "correct": true
+      },
+      {
+        "text": "不支持多租户环境",
+        "correct": false
+      },
+      {
+        "text": "不能与审计日志集成",
+        "correct": false
+      }
+    ],
+    "explanation": "基于角色的访问控制依赖预先定义的角色分配，难以依据时间、位置、行为等上下文动态细化权限；角色数量膨胀是角色管理中的挑战，并不意味着能够自动消除。多租户支持与审计集成可通过外部设计实现，并非该模型的固有缺陷。",
+    "id": "agent-196",
+    "tags": [
+      "Agent"
+    ],
+    "section": "权限与安全"
+  },
+  {
+    "type": "single",
+    "question": "智能体需要调用第三方支付接口完成转账，为避免模型被诱导执行未经用户确认的大额转账，最有效的控制点是？",
+    "options": [
+      {
+        "text": "在系统提示中明确禁止大额转账",
+        "correct": false
+      },
+      {
+        "text": "对转账操作实施二次人工确认机制",
+        "correct": true
+      },
+      {
+        "text": "限制智能体每次调用的时间间隔",
+        "correct": false
+      },
+      {
+        "text": "对模型输出进行正则过滤关键词",
+        "correct": false
+      }
+    ],
+    "explanation": "提示词和输出过滤均可被绕过，时间间隔不解决授权问题。二次人工确认在关键操作前引入独立验证环节，能有效防止模型被诱导或误操作导致资金损失。",
+    "id": "agent-197",
+    "tags": [
+      "Agent"
+    ],
+    "section": "权限与安全"
+  },
+  {
+    "type": "single",
+    "question": "智能体系统采用 JWT 令牌进行身份验证时，为防止令牌被窃取后长期滥用，应优先采取哪项措施？",
+    "options": [
+      {
+        "text": "缩短令牌有效期并配合刷新令牌",
+        "correct": true
+      },
+      {
+        "text": "将令牌存储在本地存储中",
+        "correct": false
+      },
+      {
+        "text": "使用对称加密算法签名令牌",
+        "correct": false
+      },
+      {
+        "text": "在令牌中放入用户密码哈希",
+        "correct": false
+      }
+    ],
+    "explanation": "缩短访问令牌有效期可限制泄露后的滥用窗口，配合刷新令牌平衡用户体验。本地存储易受 XSS 攻击，对称签名密钥管理更难，令牌中放入密码哈希会扩大泄露风险。",
+    "id": "agent-198",
+    "tags": [
+      "Agent"
+    ],
+    "section": "权限与安全"
+  },
+  {
+    "type": "single",
+    "question": "智能体在处理用户上传的文档时，需要调用 OCR 服务提取文本。为降低敏感信息泄露给第三方服务的风险，较合理的做法是？",
+    "options": [
+      {
+        "text": "在调用前对文档进行脱敏处理",
+        "correct": true
+      },
+      {
+        "text": "使用明文传输以提升速度",
+        "correct": false
+      },
+      {
+        "text": "将文档永久缓存到本地磁盘",
+        "correct": false
+      },
+      {
+        "text": "要求用户签署免责声明",
+        "correct": false
+      }
+    ],
+    "explanation": "脱敏处理可在保留必要信息的同时去除敏感内容，降低第三方服务的数据暴露风险。明文传输、永久缓存和免责声明均不能实质性减少泄露。",
+    "id": "agent-199",
+    "tags": [
+      "Agent"
+    ],
+    "section": "权限与安全"
+  },
+  {
+    "type": "single",
+    "question": "智能体通过 API 网关访问后端微服务时，为实现细粒度权限控制，网关应基于什么进行授权决策？",
+    "options": [
+      {
+        "text": "仅基于 IP 地址白名单",
+        "correct": false
+      },
+      {
+        "text": "基于用户身份与请求上下文的策略",
+        "correct": true
+      },
+      {
+        "text": "基于请求频率限制",
+        "correct": false
+      },
+      {
+        "text": "基于 HTTP 方法类型",
+        "correct": false
+      }
+    ],
+    "explanation": "细粒度授权需结合用户身份、资源、操作及环境上下文综合决策，如 ABAC 模型。IP 白名单、频率限制和 HTTP 方法均过于粗粒度。",
+    "id": "agent-200",
+    "tags": [
+      "Agent"
+    ],
+    "section": "权限与安全"
+  },
+  {
+    "type": "single",
+    "question": "智能体在使用外部工具返回的数据前，需要校验数据在传输或存储过程中是否被篡改。为保障数据完整性，应使用哪种机制？",
+    "options": [
+      {
+        "text": "对数据计算 HMAC 签名",
+        "correct": true
+      },
+      {
+        "text": "对数据计算 CRC 校验和",
+        "correct": false
+      },
+      {
+        "text": "对数据使用 Base64 编码",
+        "correct": false
+      },
+      {
+        "text": "对数据使用 gzip 压缩",
+        "correct": false
+      }
+    ],
+    "explanation": "HMAC 使用共享密钥生成消息认证码，能验证数据完整性和来源真实性，可发现恶意篡改；CRC 只能检测偶然传输错误，Base64 和 gzip 只是编码或压缩，不提供安全完整性保证。",
+    "id": "agent-201",
+    "tags": [
+      "Agent"
+    ],
+    "section": "权限与安全"
+  },
+  {
+    "type": "single",
+    "question": "智能体需要将用户会话数据存储到云端数据库，为防止数据在静止时被未授权访问，最核心的措施是？",
+    "options": [
+      {
+        "text": "对数据库启用加密存储",
+        "correct": true
+      },
+      {
+        "text": "定期备份数据库到本地",
+        "correct": false
+      },
+      {
+        "text": "在数据库中明文存储以方便查询",
+        "correct": false
+      },
+      {
+        "text": "限制数据库公网访问",
+        "correct": false
+      }
+    ],
+    "explanation": "加密存储确保即使存储介质被窃取，数据也无法被直接读取。备份和限制访问降低部分风险，但不解决静止数据本身的机密性。",
+    "id": "agent-202",
+    "tags": [
+      "Agent"
+    ],
+    "section": "权限与安全"
+  },
+  {
+    "type": "multiple",
+    "question": "智能体系统引入人工审核环节以控制高风险操作，下列哪些设计有助于提升审核的有效性？",
+    "options": [
+      {
+        "text": "向审核人展示操作上下文与潜在影响",
+        "correct": true
+      },
+      {
+        "text": "对审核人进行权限分级与身份认证",
+        "correct": true
+      },
+      {
+        "text": "允许智能体自动跳过审核以提升效率",
+        "correct": false
+      },
+      {
+        "text": "记录审核决策日志以便追溯",
+        "correct": true
+      }
+    ],
+    "explanation": "展示上下文帮助审核人判断风险，身份认证与权限分级确保审核人可信，日志便于追溯。允许自动跳过审核会破坏控制点，不可取。",
+    "id": "agent-203",
+    "tags": [
+      "Agent"
+    ],
+    "section": "权限与安全"
+  },
+  {
+    "type": "multiple",
+    "question": "智能体在调用工具时，为防范工具返回的恶意内容导致二次注入，可采取哪些措施？",
+    "options": [
+      {
+        "text": "对工具返回内容进行安全解析与转义",
+        "correct": true
+      },
+      {
+        "text": "将工具输出视为不可信数据",
+        "correct": true
+      },
+      {
+        "text": "直接执行工具返回的代码片段",
+        "correct": false
+      },
+      {
+        "text": "使用沙箱隔离解析过程",
+        "correct": true
+      }
+    ],
+    "explanation": "安全解析与转义可阻断注入载荷，将输出视为不可信数据是基本原则，沙箱可限制解析时可能触发的恶意行为。直接执行返回代码会引入严重风险。",
+    "id": "agent-204",
+    "tags": [
+      "Agent"
+    ],
+    "section": "权限与安全"
+  },
+  {
+    "type": "single",
+    "question": "智能体根据用户请求生成 SQL 查询语句并执行。为防止 SQL 注入与越权查询，最根本的措施是？",
+    "options": [
+      {
+        "text": "使用参数化查询与最小权限数据库账户",
+        "correct": true
+      },
+      {
+        "text": "对用户输入进行关键词黑名单过滤",
+        "correct": false
+      },
+      {
+        "text": "限制查询返回的行数",
+        "correct": false
+      },
+      {
+        "text": "将数据库错误信息直接返回给用户",
+        "correct": false
+      }
+    ],
+    "explanation": "参数化查询从根本上分离代码与数据，最小权限账户限制越权范围。黑名单易被绕过，行数限制和错误信息返回不解决注入与越权问题。",
+    "id": "agent-205",
+    "tags": [
+      "Agent"
+    ],
+    "section": "权限与安全"
+  },
+  {
+    "type": "single",
+    "question": "智能体系统需要记录用户操作日志用于安全审计。为兼顾审计需求与隐私保护，较合理的做法是？",
+    "options": [
+      {
+        "text": "记录所有原始数据并永久保存",
+        "correct": false
+      },
+      {
+        "text": "对日志中的敏感字段脱敏后存储",
+        "correct": true
+      },
+      {
+        "text": "仅记录操作时间不记录内容",
+        "correct": false
+      },
+      {
+        "text": "将日志明文共享给所有部门",
+        "correct": false
+      }
+    ],
+    "explanation": "脱敏存储可在满足审计追溯的同时减少敏感信息暴露。永久保存原始数据、仅记录时间或明文共享均不符合隐私保护或审计完整性要求。",
+    "id": "agent-206",
+    "tags": [
+      "Agent"
+    ],
+    "section": "权限与安全"
+  },
+  {
+    "type": "single",
+    "question": "智能体在调用外部 API 时，需要向 API 提供回调地址以接收异步结果。为防止恶意的回调地址导致数据泄露，应如何校验回调地址？",
+    "options": [
+      {
+        "text": "允许任意用户提供的回调地址",
+        "correct": false
+      },
+      {
+        "text": "基于白名单校验回调地址的域名与协议",
+        "correct": true
+      },
+      {
+        "text": "仅校验回调地址的路径前缀",
+        "correct": false
+      },
+      {
+        "text": "使用 HTTP 明文回调以简化调试",
+        "correct": false
+      }
+    ],
+    "explanation": "白名单校验域名与协议可防止攻击者将回调指向恶意服务器窃取数据。任意地址、仅校验路径或使用明文均无法有效防护。",
+    "id": "agent-207",
+    "tags": [
+      "Agent"
+    ],
+    "section": "权限与安全"
+  },
+  {
+    "type": "multiple",
+    "question": "智能体在多人协作场景中共享上下文记忆，为避免用户 A 的数据被用户 B 的智能体读取，可采取哪些措施？",
+    "options": [
+      {
+        "text": "按用户隔离记忆存储空间",
+        "correct": true
+      },
+      {
+        "text": "在检索记忆时强制附加用户身份过滤",
+        "correct": true
+      },
+      {
+        "text": "将所有用户记忆合并到全局向量库",
+        "correct": false
+      },
+      {
+        "text": "对记忆数据加密并分租户管理密钥",
+        "correct": true
+      }
+    ],
+    "explanation": "存储隔离、检索时身份过滤和分租户加密可防止跨用户数据泄露。合并到全局向量库会破坏隔离性，增加越权检索风险。",
+    "id": "agent-208",
+    "tags": [
+      "Agent"
+    ],
+    "section": "权限与安全"
+  },
+  {
+    "type": "single",
+    "question": "智能体在调用第三方物流查询接口时，需要携带用户的运单号。为了在保证功能可用的前提下降低运单号被第三方接口供应商超范围留存的风险，下列哪种做法最恰当？",
+    "options": [
+      {
+        "text": "将运单号明文放在 URL 查询参数中，方便供应商日志记录",
+        "correct": false
+      },
+      {
+        "text": "对运单号做可逆加密后传给供应商，供应商自行解密查询",
+        "correct": false
+      },
+      {
+        "text": "仅传递完成本次查询所需的最少字段，并与供应商约定数据留存期限和用途限制",
+        "correct": true
+      },
+      {
+        "text": "把用户所有历史运单号一次性批量传给供应商，减少调用次数",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项体现数据最小化与合同约束相结合，既满足查询功能又限制供应商超范围使用。A 选项明文写 URL 易被日志记录；B 选项供应商能解密，未降低暴露面；D 选项批量传递扩大了数据暴露范围，均不符合最小化原则。",
+    "id": "agent-209",
+    "tags": [
+      "Agent"
+    ],
+    "section": "权限与安全"
+  },
+  {
+    "type": "multiple",
+    "question": "智能体系统允许运维人员通过对话式界面触发重启服务、扩容、回滚等运维操作。为降低误操作和权限滥用风险，下列哪些设计是合理的？",
+    "options": [
+      {
+        "text": "对服务分级，高危操作要求二次确认并限制可操作的服务范围",
+        "correct": true
+      },
+      {
+        "text": "所有运维操作统一使用管理员超级账号执行，简化权限管理",
+        "correct": false
+      },
+      {
+        "text": "高危操作前调用审批服务，审批通过后签发一次性短期执行凭证",
+        "correct": true
+      },
+      {
+        "text": "在智能体输出中隐藏操作结果，避免泄露内部服务信息",
+        "correct": false
+      }
+    ],
+    "explanation": "A 项通过分级和二次确认控制高危操作影响面；C 项用审批加一次性短期凭证实现职责分离与时效控制。B 项超级账号会放大误操作和滥用后果，违背最小权限；D 项隐藏结果会妨碍审计与排障，并非安全必要措施。",
+    "id": "agent-210",
+    "tags": [
+      "Agent"
+    ],
+    "section": "权限与安全"
+  },
+  {
+    "type": "single",
+    "question": "在智能体（Agent）评估中，以下哪一项最直接衡量智能体在特定任务上的最终效果？",
+    "options": [
+      {
+        "text": "任务完成率",
+        "correct": true
+      },
+      {
+        "text": "响应延迟",
+        "correct": false
+      },
+      {
+        "text": "资源消耗",
+        "correct": false
+      },
+      {
+        "text": "代码覆盖率",
+        "correct": false
+      }
+    ],
+    "explanation": "任务完成率直接反映智能体是否成功达成任务目标，是效果评估的核心指标；响应延迟和资源消耗属于效率指标，代码覆盖率是测试覆盖程度，不直接代表任务效果。",
+    "id": "agent-211",
+    "tags": [
+      "Agent"
+    ],
+    "section": "评估与测试"
+  },
+  {
+    "type": "single",
+    "question": "对智能体进行单元测试时，以下哪种做法最有助于隔离外部依赖？",
+    "options": [
+      {
+        "text": "使用真实API调用",
+        "correct": false
+      },
+      {
+        "text": "使用模拟对象（Mock）替换外部服务",
+        "correct": true
+      },
+      {
+        "text": "增加集成测试比例",
+        "correct": false
+      },
+      {
+        "text": "仅进行端到端测试",
+        "correct": false
+      }
+    ],
+    "explanation": "单元测试应聚焦智能体内部逻辑，使用Mock替换外部服务可避免网络、第三方不稳定因素，确保测试可重复和快速；真实API调用属于集成测试范畴。",
+    "id": "agent-212",
+    "tags": [
+      "Agent"
+    ],
+    "section": "评估与测试"
+  },
+  {
+    "type": "single",
+    "question": "在评估智能体的对话质量时，以下哪项指标最适合衡量回复与用户意图的相关性？",
+    "options": [
+      {
+        "text": "BLEU分数",
+        "correct": false
+      },
+      {
+        "text": "意图匹配准确率",
+        "correct": true
+      },
+      {
+        "text": "响应长度",
+        "correct": false
+      },
+      {
+        "text": "语法错误率",
+        "correct": false
+      }
+    ],
+    "explanation": "意图匹配准确率直接评估智能体是否理解用户意图并给出相关回复；BLEU侧重文本相似度，响应长度和语法错误率不能反映相关性。",
+    "id": "agent-213",
+    "tags": [
+      "Agent"
+    ],
+    "section": "评估与测试"
+  },
+  {
+    "type": "single",
+    "question": "智能体在测试环境中指标良好，但上线后面对真实用户时效果明显下降。排除实现缺陷后，最典型且应优先排查的原因是？",
+    "options": [
+      {
+        "text": "真实环境的数据分布和用户交互模式与测试环境不同",
+        "correct": true
+      },
+      {
+        "text": "测试环境的日志格式与生产环境不同",
+        "correct": false
+      },
+      {
+        "text": "生产服务器的 CPU 核数少于测试服务器",
+        "correct": false
+      },
+      {
+        "text": "模型文件在部署时经过无损压缩",
+        "correct": false
+      }
+    ],
+    "explanation": "测试集与真实用户数据在分布、噪声和交互模式上的差异会导致模型在测试环境表现良好但上线后泛化下降，这是应优先排查的典型原因；日志格式、CPU 核数和无损压缩不会直接改变模型输出效果。",
+    "id": "agent-214",
+    "tags": [
+      "Agent"
+    ],
+    "section": "评估与测试"
+  },
+  {
+    "type": "single",
+    "question": "以下哪种测试方法最适合评估智能体在复杂多步任务中的规划能力？",
+    "options": [
+      {
+        "text": "单元测试",
+        "correct": false
+      },
+      {
+        "text": "端到端场景测试",
+        "correct": true
+      },
+      {
+        "text": "性能测试",
+        "correct": false
+      },
+      {
+        "text": "安全测试",
+        "correct": false
+      }
+    ],
+    "explanation": "端到端场景测试模拟真实多步任务，能观察智能体的规划、决策和执行序列；单元测试关注局部，性能和安全测试不直接评估规划能力。",
+    "id": "agent-215",
+    "tags": [
+      "Agent"
+    ],
+    "section": "评估与测试"
+  },
+  {
+    "type": "single",
+    "question": "在智能体评估中，使用人工评估的主要优势是什么？",
+    "options": [
+      {
+        "text": "成本低且速度快",
+        "correct": false
+      },
+      {
+        "text": "能捕捉细微的语义和情感问题",
+        "correct": true
+      },
+      {
+        "text": "完全客观无偏差",
+        "correct": false
+      },
+      {
+        "text": "可大规模自动化",
+        "correct": false
+      }
+    ],
+    "explanation": "人工评估能理解上下文、情感和细微语义，弥补自动指标的不足；但其成本高、速度慢且可能有主观偏差，不适合大规模自动化。",
+    "id": "agent-216",
+    "tags": [
+      "Agent"
+    ],
+    "section": "评估与测试"
+  },
+  {
+    "type": "single",
+    "question": "以下哪项属于智能体测试中的非功能测试？",
+    "options": [
+      {
+        "text": "功能正确性测试",
+        "correct": false
+      },
+      {
+        "text": "安全性与隐私测试",
+        "correct": true
+      },
+      {
+        "text": "业务逻辑测试",
+        "correct": false
+      },
+      {
+        "text": "输入输出验证",
+        "correct": false
+      }
+    ],
+    "explanation": "安全性与隐私测试评估智能体在非功能层面的表现，如数据保护、对抗攻击等；功能正确性、业务逻辑和输入输出验证属于功能测试。",
+    "id": "agent-217",
+    "tags": [
+      "Agent"
+    ],
+    "section": "评估与测试"
+  },
+  {
+    "type": "single",
+    "question": "设计智能体回归测试套件时，最重要的原则是？",
+    "options": [
+      {
+        "text": "包含所有历史测试用例",
+        "correct": false
+      },
+      {
+        "text": "覆盖核心功能且可快速执行",
+        "correct": true
+      },
+      {
+        "text": "只测试新功能",
+        "correct": false
+      },
+      {
+        "text": "完全依赖人工测试",
+        "correct": false
+      }
+    ],
+    "explanation": "回归测试应覆盖核心功能以确保修改不破坏现有行为，同时保持套件精简以快速反馈；包含所有用例可能导致执行过慢，只测新功能会遗漏回归问题。",
+    "id": "agent-218",
+    "tags": [
+      "Agent"
+    ],
+    "section": "评估与测试"
+  },
+  {
+    "type": "single",
+    "question": "在智能体评估中，以下哪项最适合衡量智能体决策过程的可解释性？",
+    "options": [
+      {
+        "text": "决策路径的透明度",
+        "correct": true
+      },
+      {
+        "text": "响应时间",
+        "correct": false
+      },
+      {
+        "text": "任务成功率",
+        "correct": false
+      },
+      {
+        "text": "资源利用率",
+        "correct": false
+      }
+    ],
+    "explanation": "决策路径的透明度反映智能体是否能清晰展示推理步骤和依据，是可解释性的核心；响应时间、任务成功率和资源利用率属于性能或效果指标。",
+    "id": "agent-219",
+    "tags": [
+      "Agent"
+    ],
+    "section": "评估与测试"
+  },
+  {
+    "type": "single",
+    "question": "对智能体进行对抗测试的主要目的是？",
+    "options": [
+      {
+        "text": "提高智能体响应速度",
+        "correct": false
+      },
+      {
+        "text": "发现智能体在恶意输入下的脆弱性",
+        "correct": true
+      },
+      {
+        "text": "减少智能体资源消耗",
+        "correct": false
+      },
+      {
+        "text": "增加智能体功能",
+        "correct": false
+      }
+    ],
+    "explanation": "对抗测试通过构造恶意或边缘输入，检验智能体的鲁棒性和安全性，发现潜在脆弱点；它不直接优化速度、资源或功能。",
+    "id": "agent-220",
+    "tags": [
+      "Agent"
+    ],
+    "section": "评估与测试"
+  },
+  {
+    "type": "multiple",
+    "question": "评估智能体性能时，以下哪些属于常见的效率指标？",
+    "options": [
+      {
+        "text": "响应延迟",
+        "correct": true
+      },
+      {
+        "text": "吞吐量",
+        "correct": true
+      },
+      {
+        "text": "任务完成率",
+        "correct": false
+      },
+      {
+        "text": "资源消耗",
+        "correct": true
+      }
+    ],
+    "explanation": "响应延迟、吞吐量和资源消耗衡量智能体运行的效率；任务完成率衡量效果，属于效果指标。",
+    "id": "agent-221",
+    "tags": [
+      "Agent"
+    ],
+    "section": "评估与测试"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些做法有助于提高智能体测试的可重复性？",
+    "options": [
+      {
+        "text": "固定随机种子",
+        "correct": true
+      },
+      {
+        "text": "使用模拟外部服务",
+        "correct": true
+      },
+      {
+        "text": "每次测试使用不同数据",
+        "correct": false
+      },
+      {
+        "text": "容器化测试环境",
+        "correct": true
+      }
+    ],
+    "explanation": "固定随机种子、模拟外部服务和容器化环境均可减少不确定性，确保测试结果可重复；每次使用不同数据会引入变异，降低可重复性。",
+    "id": "agent-222",
+    "tags": [
+      "Agent"
+    ],
+    "section": "评估与测试"
+  },
+  {
+    "type": "multiple",
+    "question": "在智能体对话系统测试中，以下哪些属于需要覆盖的测试维度？",
+    "options": [
+      {
+        "text": "意图识别准确性",
+        "correct": true
+      },
+      {
+        "text": "多轮上下文保持",
+        "correct": true
+      },
+      {
+        "text": "响应语法正确性",
+        "correct": false
+      },
+      {
+        "text": "异常输入处理",
+        "correct": true
+      }
+    ],
+    "explanation": "意图识别、多轮上下文和异常输入处理是对话系统测试的关键维度；响应语法正确性虽相关，但通常不是核心测试维度，更多关注语义和功能。",
+    "id": "agent-223",
+    "tags": [
+      "Agent"
+    ],
+    "section": "评估与测试"
+  },
+  {
+    "type": "multiple",
+    "question": "智能体在测试中表现出过拟合，可能的原因包括？",
+    "options": [
+      {
+        "text": "测试集与训练集重叠",
+        "correct": true
+      },
+      {
+        "text": "测试用例过于单一",
+        "correct": true
+      },
+      {
+        "text": "模型复杂度不足",
+        "correct": false
+      },
+      {
+        "text": "评估指标过于宽松",
+        "correct": false
+      }
+    ],
+    "explanation": "测试集与训练集重叠或测试用例单一会导致评估结果过于乐观，掩盖泛化不足；模型复杂度不足通常导致欠拟合，评估指标宽松影响评估严格性而非过拟合。",
+    "id": "agent-224",
+    "tags": [
+      "Agent"
+    ],
+    "section": "评估与测试"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些是智能体上线前必须进行的安全测试内容？",
+    "options": [
+      {
+        "text": "注入攻击测试",
+        "correct": true
+      },
+      {
+        "text": "敏感信息泄露测试",
+        "correct": true
+      },
+      {
+        "text": "功能界面美观测试",
+        "correct": false
+      },
+      {
+        "text": "权限越权测试",
+        "correct": true
+      }
+    ],
+    "explanation": "注入攻击、敏感信息泄露和权限越权是常见安全风险，需在上线前测试；界面美观属于UI设计范畴，非安全测试重点。",
+    "id": "agent-225",
+    "tags": [
+      "Agent"
+    ],
+    "section": "评估与测试"
+  },
+  {
+    "type": "single",
+    "question": "在智能体（Agent）评估中，用于衡量智能体在多次重复执行同一任务时结果稳定性的指标是？",
+    "options": [
+      {
+        "text": "准确率",
+        "correct": false
+      },
+      {
+        "text": "方差",
+        "correct": true
+      },
+      {
+        "text": "召回率",
+        "correct": false
+      },
+      {
+        "text": "F1分数",
+        "correct": false
+      }
+    ],
+    "explanation": "方差衡量结果波动程度，直接反映稳定性；准确率、召回率和F1分数衡量效果而非稳定性。",
+    "id": "agent-226",
+    "tags": [
+      "Agent"
+    ],
+    "section": "评估与测试"
+  },
+  {
+    "type": "single",
+    "question": "以下哪种测试方法最适合评估智能体在未见过场景下的泛化能力？",
+    "options": [
+      {
+        "text": "在训练集上测试",
+        "correct": false
+      },
+      {
+        "text": "在保留的测试集上测试",
+        "correct": true
+      },
+      {
+        "text": "在验证集上调参",
+        "correct": false
+      },
+      {
+        "text": "在开发集上评估",
+        "correct": false
+      }
+    ],
+    "explanation": "保留测试集未参与训练和调参，能客观评估泛化；训练集和验证集可能导致过拟合或信息泄露。",
+    "id": "agent-227",
+    "tags": [
+      "Agent"
+    ],
+    "section": "评估与测试"
+  },
+  {
+    "type": "single",
+    "question": "智能体在模拟环境中表现优异，但部署到真实环境后性能骤降，最可能的原因是？",
+    "options": [
+      {
+        "text": "模拟环境与真实环境存在分布差异",
+        "correct": true
+      },
+      {
+        "text": "智能体算法复杂度太高",
+        "correct": false
+      },
+      {
+        "text": "测试数据量不足",
+        "correct": false
+      },
+      {
+        "text": "智能体未使用最新框架",
+        "correct": false
+      }
+    ],
+    "explanation": "模拟环境与真实环境的分布差异导致泛化失败，是性能骤降的常见原因；其他选项不是直接原因。",
+    "id": "agent-228",
+    "tags": [
+      "Agent"
+    ],
+    "section": "评估与测试"
+  },
+  {
+    "type": "single",
+    "question": "在智能体评估中，用于衡量智能体完成单个任务所需平均步骤数的指标是？",
+    "options": [
+      {
+        "text": "成功率",
+        "correct": false
+      },
+      {
+        "text": "平均路径长度",
+        "correct": true
+      },
+      {
+        "text": "响应时间",
+        "correct": false
+      },
+      {
+        "text": "吞吐量",
+        "correct": false
+      }
+    ],
+    "explanation": "平均路径长度直接衡量完成任务的平均步骤数；成功率衡量结果，响应时间和吞吐量衡量效率。",
+    "id": "agent-229",
+    "tags": [
+      "Agent"
+    ],
+    "section": "评估与测试"
+  },
+  {
+    "type": "single",
+    "question": "以下哪项最适合作为智能体在长期运行中避免性能退化的测试策略？",
+    "options": [
+      {
+        "text": "一次性全面测试",
+        "correct": false
+      },
+      {
+        "text": "持续监控与定期回归测试",
+        "correct": true
+      },
+      {
+        "text": "仅在上线前进行压力测试",
+        "correct": false
+      },
+      {
+        "text": "只测试核心功能",
+        "correct": false
+      }
+    ],
+    "explanation": "持续监控能及时发现性能退化，定期回归测试防止旧功能被破坏；一次性测试无法覆盖长期变化。",
+    "id": "agent-230",
+    "tags": [
+      "Agent"
+    ],
+    "section": "评估与测试"
+  },
+  {
+    "type": "single",
+    "question": "在评估智能体多轮对话能力时，以下哪项指标最直接衡量上下文一致性？",
+    "options": [
+      {
+        "text": "回复长度",
+        "correct": false
+      },
+      {
+        "text": "指代消解准确率",
+        "correct": true
+      },
+      {
+        "text": "响应延迟",
+        "correct": false
+      },
+      {
+        "text": "词汇丰富度",
+        "correct": false
+      }
+    ],
+    "explanation": "指代消解准确率直接衡量智能体能否正确理解并保持上下文一致；其他选项与上下文一致性无直接关系。",
+    "id": "agent-231",
+    "tags": [
+      "Agent"
+    ],
+    "section": "评估与测试"
+  },
+  {
+    "type": "single",
+    "question": "以下哪种方法最适合评估智能体在任务执行中的资源消耗效率？",
+    "options": [
+      {
+        "text": "计算任务完成率",
+        "correct": false
+      },
+      {
+        "text": "测量单位任务CPU时间与内存占用",
+        "correct": true
+      },
+      {
+        "text": "统计对话轮次",
+        "correct": false
+      },
+      {
+        "text": "分析回复情感倾向",
+        "correct": false
+      }
+    ],
+    "explanation": "CPU时间和内存占用直接反映资源消耗效率；完成率、对话轮次和情感倾向不衡量资源效率。",
+    "id": "agent-232",
+    "tags": [
+      "Agent"
+    ],
+    "section": "评估与测试"
+  },
+  {
+    "type": "single",
+    "question": "智能体在测试中频繁调用外部API导致测试不稳定，最有效的改进措施是？",
+    "options": [
+      {
+        "text": "增加测试次数",
+        "correct": false
+      },
+      {
+        "text": "使用Mock替代外部API",
+        "correct": true
+      },
+      {
+        "text": "提高API调用频率",
+        "correct": false
+      },
+      {
+        "text": "忽略外部API错误",
+        "correct": false
+      }
+    ],
+    "explanation": "Mock能模拟外部API行为，隔离依赖，提高测试稳定性和可重复性；增加测试次数或忽略错误无助于解决根本问题。",
+    "id": "agent-233",
+    "tags": [
+      "Agent"
+    ],
+    "section": "评估与测试"
+  },
+  {
+    "type": "single",
+    "question": "在智能体评估中，用于衡量智能体在对抗性输入下保持鲁棒性的指标是？",
+    "options": [
+      {
+        "text": "准确率下降幅度",
+        "correct": true
+      },
+      {
+        "text": "训练损失",
+        "correct": false
+      },
+      {
+        "text": "模型参数量",
+        "correct": false
+      },
+      {
+        "text": "推理速度",
+        "correct": false
+      }
+    ],
+    "explanation": "准确率下降幅度直接反映智能体在对抗性输入下的性能变化，衡量鲁棒性；其他选项与鲁棒性无直接关系。",
+    "id": "agent-234",
+    "tags": [
+      "Agent"
+    ],
+    "section": "评估与测试"
+  },
+  {
+    "type": "single",
+    "question": "以下哪项最适合评估智能体在任务中遵循安全约束的能力？",
+    "options": [
+      {
+        "text": "任务成功率",
+        "correct": false
+      },
+      {
+        "text": "违规行为发生率",
+        "correct": true
+      },
+      {
+        "text": "响应时间",
+        "correct": false
+      },
+      {
+        "text": "用户满意度",
+        "correct": false
+      }
+    ],
+    "explanation": "违规行为发生率直接衡量智能体违反安全约束的频率；成功率、响应时间和满意度不直接反映安全约束遵循。",
+    "id": "agent-235",
+    "tags": [
+      "Agent"
+    ],
+    "section": "评估与测试"
+  },
+  {
+    "type": "single",
+    "question": "在智能体评估中，用于衡量智能体在多次重复执行同一任务时结果稳定性的指标是？",
+    "options": [
+      {
+        "text": "准确率",
+        "correct": false
+      },
+      {
+        "text": "方差",
+        "correct": true
+      },
+      {
+        "text": "召回率",
+        "correct": false
+      },
+      {
+        "text": "F1分数",
+        "correct": false
+      }
+    ],
+    "explanation": "方差衡量结果分布的离散程度，方差小说明多次执行结果稳定。准确率、召回率和F1分数衡量单次或平均性能，不直接反映稳定性。",
+    "id": "agent-236",
+    "tags": [
+      "Agent"
+    ],
+    "section": "评估与测试"
+  },
+  {
+    "type": "single",
+    "question": "在智能体评估中，以下哪项最能体现“过程指标”而非“结果指标”的作用？",
+    "options": [
+      {
+        "text": "最终任务完成率",
+        "correct": false
+      },
+      {
+        "text": "完成任务所经过的中间步骤是否符合预期",
+        "correct": true
+      },
+      {
+        "text": "单次请求的平均响应延迟",
+        "correct": false
+      },
+      {
+        "text": "用户对最终答案的满意度评分",
+        "correct": false
+      }
+    ],
+    "explanation": "过程指标关注智能体在执行中的决策路径与中间状态，如步骤序列是否符合预期；完成率、延迟和满意度更偏向结果或效率。正确项是中间步骤是否符合预期，关键误区是把所有可量化指标都当作过程指标。",
+    "id": "agent-237",
+    "tags": [
+      "Agent"
+    ],
+    "section": "评估与测试"
+  },
+  {
+    "type": "single",
+    "question": "某团队在智能体上线前，将同一批任务在多个随机种子下重复运行并统计方差，这一做法主要评估什么？",
+    "options": [
+      {
+        "text": "模型参数量是否足够",
+        "correct": false
+      },
+      {
+        "text": "智能体输出与结果的稳定性",
+        "correct": true
+      },
+      {
+        "text": "外部API的调用成本",
+        "correct": false
+      },
+      {
+        "text": "用户界面的易用性",
+        "correct": false
+      }
+    ],
+    "explanation": "多随机种子重复运行并统计方差，目的是观察结果波动，衡量稳定性与可重复性。参数量、API成本与界面易用性不由此实验直接反映。关键误区是认为重复运行只能测速度，而忽略其对稳定性的评估价值。",
+    "id": "agent-238",
+    "tags": [
+      "Agent"
+    ],
+    "section": "评估与测试"
+  },
+  {
+    "type": "multiple",
+    "question": "为提高智能体测试的可重复性，以下哪些做法是合理的？",
+    "options": [
+      {
+        "text": "固定随机种子并记录运行环境",
+        "correct": true
+      },
+      {
+        "text": "对外部依赖使用可回放的模拟服务",
+        "correct": true
+      },
+      {
+        "text": "每次测试都使用不同的实时网络数据",
+        "correct": false
+      },
+      {
+        "text": "将测试输入与预期输出纳入版本管理",
+        "correct": true
+      }
+    ],
+    "explanation": "固定种子、模拟外部依赖、版本化管理测试用例都能减少不可控因素，提升可重复性。使用不同实时网络数据会引入波动，破坏可重复性。关键误区是认为只要记录日志就能保证可重复。",
+    "id": "agent-239",
+    "tags": [
+      "Agent"
+    ],
+    "section": "评估与测试"
+  },
+  {
+    "type": "multiple",
+    "question": "对智能体进行安全测试时，以下哪些内容应纳入测试范围？",
+    "options": [
+      {
+        "text": "对提示注入与越权指令的抵抗能力",
+        "correct": true
+      },
+      {
+        "text": "输出中是否泄露敏感信息",
+        "correct": true
+      },
+      {
+        "text": "界面按钮的配色是否符合品牌规范",
+        "correct": false
+      },
+      {
+        "text": "在高风险操作前是否触发人工确认",
+        "correct": true
+      }
+    ],
+    "explanation": "安全测试应覆盖提示注入、敏感信息泄露、高风险操作确认等。界面配色属于视觉规范，不是安全测试内容。关键误区是只测功能正确性，而忽略对抗输入与权限边界。",
+    "id": "agent-240",
+    "tags": [
+      "Agent"
+    ],
+    "section": "评估与测试"
+  },
+  {
+    "type": "single",
+    "question": "在多Agent系统中，合同网协议（Contract Net Protocol）的核心交互流程是？",
+    "options": [
+      {
+        "text": "管理者发布任务，参与者投标，管理者选择中标者并授予合同",
+        "correct": true
+      },
+      {
+        "text": "所有Agent同时广播自己的状态，然后投票决定任务执行者",
+        "correct": false
+      },
+      {
+        "text": "管理者直接指定任务执行者，无需协商",
+        "correct": false
+      },
+      {
+        "text": "参与者主动请求任务，管理者按请求顺序分配",
+        "correct": false
+      }
+    ],
+    "explanation": "合同网协议包含任务发布、投标、授予和确认等阶段，核心是招标-投标-中标机制。A正确描述了主要流程。B是投票机制，C是集中分配，D是请求-分配模式，均不符合合同网定义。",
+    "id": "agent-241",
+    "tags": [
+      "Agent"
+    ],
+    "section": "多Agent协作"
+  },
+  {
+    "type": "single",
+    "question": "在多Agent协作中，黑板模型（Blackboard Model）的主要作用是？",
+    "options": [
+      {
+        "text": "提供一个共享数据区域，供Agent读写以协作解决问题",
+        "correct": true
+      },
+      {
+        "text": "强制所有Agent按固定顺序执行",
+        "correct": false
+      },
+      {
+        "text": "用于Agent之间的直接消息传递",
+        "correct": false
+      },
+      {
+        "text": "实现Agent的移动性",
+        "correct": false
+      }
+    ],
+    "explanation": "黑板模型是一种协同解决问题的方法，Agent通过共享的黑板交换信息，黑板作为公共数据结构。A正确。B描述的是集中调度，C是消息传递，D是移动Agent特性，均非黑板模型主要作用。",
+    "id": "agent-242",
+    "tags": [
+      "Agent"
+    ],
+    "section": "多Agent协作"
+  },
+  {
+    "type": "single",
+    "question": "以下哪项最准确地描述了多Agent系统中“联盟”（Coalition）的形成？",
+    "options": [
+      {
+        "text": "多个Agent为了共同目标而临时或长期联合，并协商利益分配",
+        "correct": true
+      },
+      {
+        "text": "一个Agent控制其他所有Agent",
+        "correct": false
+      },
+      {
+        "text": "Agent之间互相竞争以获取资源",
+        "correct": false
+      },
+      {
+        "text": "Agent之间建立永久的主从关系",
+        "correct": false
+      }
+    ],
+    "explanation": "联盟指多个Agent自愿联合以完成单个Agent难以完成的任务，并常涉及利益分配协商。A正确。B是主从控制，C是竞争，D是固定层级，均不是联盟的典型特征。",
+    "id": "agent-243",
+    "tags": [
+      "Agent"
+    ],
+    "section": "多Agent协作"
+  },
+  {
+    "type": "single",
+    "question": "在多Agent协作中，实现“联合意图”（Joint Intention）的关键要素不包括？",
+    "options": [
+      {
+        "text": "各Agent对共同目标的承诺",
+        "correct": false
+      },
+      {
+        "text": "对彼此行为的相互信念",
+        "correct": false
+      },
+      {
+        "text": "一个中央控制器强制协调",
+        "correct": true
+      },
+      {
+        "text": "在目标达成前持续监控和协作",
+        "correct": false
+      }
+    ],
+    "explanation": "联合意图强调Agent之间的承诺、相互信念和持续协作，而不依赖中央控制器。C不属于联合意图要素。A、B、D是联合意图理论（如Cohen-Levesque）的核心成分。",
+    "id": "agent-244",
+    "tags": [
+      "Agent"
+    ],
+    "section": "多Agent协作"
+  },
+  {
+    "type": "single",
+    "question": "在基于市场机制的多Agent任务分配中，拍卖（Auction）方法通常用于？",
+    "options": [
+      {
+        "text": "将任务分配给出价最符合要求的Agent",
+        "correct": true
+      },
+      {
+        "text": "让所有Agent平均分摊任务",
+        "correct": false
+      },
+      {
+        "text": "由管理者随机选择执行者",
+        "correct": false
+      },
+      {
+        "text": "Agent之间自由组队",
+        "correct": false
+      }
+    ],
+    "explanation": "拍卖方法通过投标和出价机制，根据价格或效用选择最合适的Agent执行任务。A正确。B是平均分配，C是随机分配，D是自由组队，均不是拍卖的典型用途。",
+    "id": "agent-245",
+    "tags": [
+      "Agent"
+    ],
+    "section": "多Agent协作"
+  },
+  {
+    "type": "single",
+    "question": "多Agent协作中，通信语言KQML的主要目的是？",
+    "options": [
+      {
+        "text": "定义Agent之间交换消息的格式和语义",
+        "correct": true
+      },
+      {
+        "text": "规定Agent的硬件接口",
+        "correct": false
+      },
+      {
+        "text": "提供Agent的编程框架",
+        "correct": false
+      },
+      {
+        "text": "控制Agent的移动路径",
+        "correct": false
+      }
+    ],
+    "explanation": "KQML是一种Agent通信语言，定义了消息的格式和语义（如询问、告知、能力等），用于知识交换。A正确。B、C、D分别涉及硬件、编程框架和移动路径，与KQML无关。",
+    "id": "agent-246",
+    "tags": [
+      "Agent"
+    ],
+    "section": "多Agent协作"
+  },
+  {
+    "type": "single",
+    "question": "考虑一个多Agent协作场景：三个Agent需要共同搬运一个重物，每个Agent只能承担部分重量，且必须同时用力。这最需要哪种协作机制？",
+    "options": [
+      {
+        "text": "同步与协调机制",
+        "correct": true
+      },
+      {
+        "text": "竞争机制",
+        "correct": false
+      },
+      {
+        "text": "拍卖机制",
+        "correct": false
+      },
+      {
+        "text": "投票机制",
+        "correct": false
+      }
+    ],
+    "explanation": "同时用力要求Agent之间动作同步，因此需要同步与协调机制。A正确。竞争、拍卖、投票主要用于资源分配或决策，不直接解决动作同步问题。",
+    "id": "agent-247",
+    "tags": [
+      "Agent"
+    ],
+    "section": "多Agent协作"
+  },
+  {
+    "type": "single",
+    "question": "在多Agent系统中，社会规范（Social Norms）的主要作用是？",
+    "options": [
+      {
+        "text": "约束Agent行为以促进协作和减少冲突",
+        "correct": true
+      },
+      {
+        "text": "强制Agent执行特定算法",
+        "correct": false
+      },
+      {
+        "text": "提高单个Agent的计算速度",
+        "correct": false
+      },
+      {
+        "text": "替代所有通信",
+        "correct": false
+      }
+    ],
+    "explanation": "社会规范是Agent群体中共享的行为准则，用于协调行为、减少冲突、促进合作。A正确。B涉及算法强制，C是性能优化，D是通信替代，均非社会规范的主要作用。",
+    "id": "agent-248",
+    "tags": [
+      "Agent"
+    ],
+    "section": "多Agent协作"
+  },
+  {
+    "type": "single",
+    "question": "在多Agent协作中，以下哪种情况最适合采用“订阅-发布”（Publish-Subscribe）通信模式？",
+    "options": [
+      {
+        "text": "一个Agent产生信息，多个Agent需要根据兴趣接收",
+        "correct": true
+      },
+      {
+        "text": "两个Agent之间需要可靠的点对点传输",
+        "correct": false
+      },
+      {
+        "text": "所有Agent必须严格按顺序执行",
+        "correct": false
+      },
+      {
+        "text": "一个Agent需要控制另一个Agent",
+        "correct": false
+      }
+    ],
+    "explanation": "发布-订阅模式适合一对多、基于兴趣的信息分发，发布者无需知道订阅者。A正确。B适合点对点，C适合集中调度，D适合主从控制，均不是发布-订阅的典型场景。",
+    "id": "agent-249",
+    "tags": [
+      "Agent"
+    ],
+    "section": "多Agent协作"
+  },
+  {
+    "type": "single",
+    "question": "在多Agent协作中，基于效用的Dec-MDP（分散马尔可夫决策过程）模型主要用于解决？",
+    "options": [
+      {
+        "text": "在部分可观察环境下多个Agent的序列决策问题",
+        "correct": true
+      },
+      {
+        "text": "完全可观察环境下的单Agent规划",
+        "correct": false
+      },
+      {
+        "text": "静态任务分配问题",
+        "correct": false
+      },
+      {
+        "text": "Agent之间的通信加密",
+        "correct": false
+      }
+    ],
+    "explanation": "Dec-MDP是分散部分可观察马尔可夫决策过程的扩展，用于多Agent在部分可观察环境下的协同决策。A正确。B是单Agent，C是静态分配，D是安全通信，均不准确。",
+    "id": "agent-250",
+    "tags": [
+      "Agent"
+    ],
+    "section": "多Agent协作"
+  },
+  {
+    "type": "single",
+    "question": "在多Agent系统中，以下哪项是“涌现”（Emergence）现象的典型例子？",
+    "options": [
+      {
+        "text": "简单个体规则导致复杂的群体行为",
+        "correct": true
+      },
+      {
+        "text": "一个Agent独立完成所有任务",
+        "correct": false
+      },
+      {
+        "text": "中央控制器精确指挥每个Agent",
+        "correct": false
+      },
+      {
+        "text": "Agent之间禁止通信",
+        "correct": false
+      }
+    ],
+    "explanation": "涌现指个体遵循简单规则，通过局部交互产生复杂的全局模式，如鸟群、蚁群。A正确。B是独立工作，C是集中控制，D是通信禁止，均不体现涌现。",
+    "id": "agent-251",
+    "tags": [
+      "Agent"
+    ],
+    "section": "多Agent协作"
+  },
+  {
+    "type": "single",
+    "question": "在多Agent协作中，以下哪种方法常用于解决Agent之间的冲突？",
+    "options": [
+      {
+        "text": "协商（Negotiation）",
+        "correct": true
+      },
+      {
+        "text": "忽略冲突",
+        "correct": false
+      },
+      {
+        "text": "强制终止所有Agent",
+        "correct": false
+      },
+      {
+        "text": "增加更多Agent",
+        "correct": false
+      }
+    ],
+    "explanation": "协商是Agent通过交换提议和让步来解决冲突的常用方法。A正确。B、C、D不仅不能解决冲突，还可能导致系统失效或冲突加剧。",
+    "id": "agent-252",
+    "tags": [
+      "Agent"
+    ],
+    "section": "多Agent协作"
+  },
+  {
+    "type": "single",
+    "question": "关于多Agent系统中的“联合承诺”（Joint Commitment），以下说法正确的是？",
+    "options": [
+      {
+        "text": "联合承诺要求Agent在对方未履行时也坚持合作",
+        "correct": false
+      },
+      {
+        "text": "联合承诺一旦建立就不可撤销",
+        "correct": false
+      },
+      {
+        "text": "联合承诺包含对共同目标及相互支持的承诺",
+        "correct": true
+      },
+      {
+        "text": "联合承诺仅适用于两个Agent",
+        "correct": false
+      }
+    ],
+    "explanation": "联合承诺不仅承诺目标，还承诺支持他人达成目标，并可能在条件变化时重新协商。C正确。A错误，联合承诺通常允许在合理情况下退出；B错误，可撤销；D错误，可多Agent。",
+    "id": "agent-253",
+    "tags": [
+      "Agent"
+    ],
+    "section": "多Agent协作"
+  },
+  {
+    "type": "single",
+    "question": "在多Agent协作中，使用“投票”机制进行决策时，以下哪项是关键考虑因素？",
+    "options": [
+      {
+        "text": "投票规则的设计对结果有重要影响",
+        "correct": true
+      },
+      {
+        "text": "投票总是能产生唯一最优结果",
+        "correct": false
+      },
+      {
+        "text": "投票不需要Agent表达偏好",
+        "correct": false
+      },
+      {
+        "text": "投票只能用于两个Agent",
+        "correct": false
+      }
+    ],
+    "explanation": "投票规则（如多数制、排序制）会影响决策结果，可能产生不同赢家。A正确。B错误，投票不一定最优；C错误，投票需偏好；D错误，可多Agent。",
+    "id": "agent-254",
+    "tags": [
+      "Agent"
+    ],
+    "section": "多Agent协作"
+  },
+  {
+    "type": "single",
+    "question": "在多Agent协作中，以下哪项最可能降低协作效率？",
+    "options": [
+      {
+        "text": "通信开销过大",
+        "correct": true
+      },
+      {
+        "text": "清晰的协议",
+        "correct": false
+      },
+      {
+        "text": "高效的协调机制",
+        "correct": false
+      },
+      {
+        "text": "适当的信任模型",
+        "correct": false
+      }
+    ],
+    "explanation": "通信开销过大会消耗资源、增加延迟，从而降低协作效率。A正确。B、C、D通常有助于提高协作效率。",
+    "id": "agent-255",
+    "tags": [
+      "Agent"
+    ],
+    "section": "多Agent协作"
+  },
+  {
+    "type": "single",
+    "question": "在基于BDI模型的多Agent协作中，某个Agent承诺帮助另一个Agent完成目标，但随后其自身意图发生改变。为维持协作稳定性，该Agent最应优先进行哪项操作？",
+    "options": [
+      {
+        "text": "立即撤回承诺，无需通知对方",
+        "correct": false
+      },
+      {
+        "text": "与受诺方通信，协商解除或调整联合承诺",
+        "correct": true
+      },
+      {
+        "text": "继续执行原承诺，忽略自身意图变化",
+        "correct": false
+      },
+      {
+        "text": "将承诺转交给另一个Agent后不再关注",
+        "correct": false
+      }
+    ],
+    "explanation": "联合承诺要求Agent在意图变化时与伙伴协商，以维持社会承诺的规范。直接撤回或忽视对方会破坏信任；继续执行可能违背自身新意图且不可持续；转交需经协商，不能单方面处理。",
+    "id": "agent-256",
+    "tags": [
+      "Agent"
+    ],
+    "section": "多Agent协作"
+  },
+  {
+    "type": "single",
+    "question": "多Agent协作中，使用“能力模型”进行任务分配时，若Agent的能力描述存在不确定（如仅给出概率），最适合采用下列哪类方法？",
+    "options": [
+      {
+        "text": "基于确定阈值的硬匹配",
+        "correct": false
+      },
+      {
+        "text": "基于期望效用的概率分配",
+        "correct": true
+      },
+      {
+        "text": "先到先得的静态分配",
+        "correct": false
+      },
+      {
+        "text": "轮询方式的平均分配",
+        "correct": false
+      }
+    ],
+    "explanation": "能力不确定时，应使用概率或期望效用评估成功可能性。硬阈值忽略不确定性；先到先得和轮询未考虑能力匹配，可能导致任务失败或效率低下。",
+    "id": "agent-257",
+    "tags": [
+      "Agent"
+    ],
+    "section": "多Agent协作"
+  },
+  {
+    "type": "single",
+    "question": "在需要多个Agent实时协同完成装配任务时，若通信延迟高且消息可能丢失，下列哪种协调策略最稳健？",
+    "options": [
+      {
+        "text": "完全集中式协调，由单一控制Agent下发所有动作",
+        "correct": false
+      },
+      {
+        "text": "基于共享时钟的严格同步协议",
+        "correct": false
+      },
+      {
+        "text": "基于局部感知与预先约定的去中心化协调策略",
+        "correct": true
+      },
+      {
+        "text": "仅依赖可靠广播的全局状态同步",
+        "correct": false
+      }
+    ],
+    "explanation": "高延迟和丢包下，全局同步和集中式协调易失效；去中心化策略利用局部信息和预先约定减少对实时通信的依赖，更具鲁棒性。",
+    "id": "agent-258",
+    "tags": [
+      "Agent"
+    ],
+    "section": "多Agent协作"
+  },
+  {
+    "type": "single",
+    "question": "在多Agent协作中采用“仲裁者”模式解决冲突时，仲裁者设计的关键原则是？",
+    "options": [
+      {
+        "text": "仲裁者必须拥有最高计算能力",
+        "correct": false
+      },
+      {
+        "text": "仲裁规则应预先公开且对所有Agent一致适用",
+        "correct": true
+      },
+      {
+        "text": "仲裁者应偏袒最先提出请求的Agent",
+        "correct": false
+      },
+      {
+        "text": "仲裁过程无需记录，以节省通信",
+        "correct": false
+      }
+    ],
+    "explanation": "仲裁者的公平性和可预测性依赖公开一致的规则，而非计算能力或先到先得。不记录仲裁过程会降低可追溯性和信任。",
+    "id": "agent-259",
+    "tags": [
+      "Agent"
+    ],
+    "section": "多Agent协作"
+  },
+  {
+    "type": "single",
+    "question": "在基于“团队意图”的多Agent协作中，团队成员对某个子目标产生分歧。下列哪项最符合团队意图的维护要求？",
+    "options": [
+      {
+        "text": "每个成员可独立放弃子目标",
+        "correct": false
+      },
+      {
+        "text": "通过团队通信达成子目标共识或重新规划",
+        "correct": true
+      },
+      {
+        "text": "由队长单方面修改子目标",
+        "correct": false
+      },
+      {
+        "text": "暂停所有行动直到分歧自然消失",
+        "correct": false
+      }
+    ],
+    "explanation": "团队意图要求成员对子目标保持共同承诺，分歧应通过协商或重新规划解决。单方面放弃或修改会破坏团队意图；暂停不解决分歧。",
+    "id": "agent-260",
+    "tags": [
+      "Agent"
+    ],
+    "section": "多Agent协作"
+  },
+  {
+    "type": "single",
+    "question": "在多Agent协作中，使用“依赖关系图”进行任务调度时，若检测到循环依赖，最合理的处理方式是？",
+    "options": [
+      {
+        "text": "随机选择一个依赖边删除",
+        "correct": false
+      },
+      {
+        "text": "重新设计任务或协商调整依赖以打破循环",
+        "correct": true
+      },
+      {
+        "text": "让所有Agent同时等待",
+        "correct": false
+      },
+      {
+        "text": "忽略循环并继续调度",
+        "correct": false
+      }
+    ],
+    "explanation": "循环依赖导致死锁，必须通过重新设计或协商改变依赖结构来打破。随机删除可能破坏语义；等待和忽略会导致停滞或错误。",
+    "id": "agent-261",
+    "tags": [
+      "Agent"
+    ],
+    "section": "多Agent协作"
+  },
+  {
+    "type": "single",
+    "question": "多Agent协作中，为减少通信开销而采用“推测执行”策略时，最主要的权衡是？",
+    "options": [
+      {
+        "text": "提高通信可靠性但降低计算速度",
+        "correct": false
+      },
+      {
+        "text": "减少通信但可能因推测错误而回滚",
+        "correct": true
+      },
+      {
+        "text": "增加全局一致性但降低局部自主性",
+        "correct": false
+      },
+      {
+        "text": "消除所有冲突但增加内存占用",
+        "correct": false
+      }
+    ],
+    "explanation": "推测执行让Agent基于局部预测先行行动，减少等待通信，但预测错误时需回滚，带来额外计算和协调成本。其他选项不是该策略的主要权衡。",
+    "id": "agent-262",
+    "tags": [
+      "Agent"
+    ],
+    "section": "多Agent协作"
+  },
+  {
+    "type": "single",
+    "question": "在多Agent协作中，若Agent之间需要形成“互惠”关系，下列哪项机制最能促进长期合作？",
+    "options": [
+      {
+        "text": "一次性匿名交易",
+        "correct": false
+      },
+      {
+        "text": "基于声誉和直接互惠的策略",
+        "correct": true
+      },
+      {
+        "text": "强制所有Agent无条件帮助",
+        "correct": false
+      },
+      {
+        "text": "随机选择合作对象",
+        "correct": false
+      }
+    ],
+    "explanation": "声誉和直接互惠使Agent能识别并回报合作行为，促进长期稳定合作。匿名一次性交易缺乏未来交互约束；无条件帮助不可持续；随机选择效率低。",
+    "id": "agent-263",
+    "tags": [
+      "Agent"
+    ],
+    "section": "多Agent协作"
+  },
+  {
+    "type": "single",
+    "question": "多Agent协作规划中，集中式规划与分布式规划相比，其主要优势通常在于？",
+    "options": [
+      {
+        "text": "对通信故障的鲁棒性更强",
+        "correct": false
+      },
+      {
+        "text": "更容易获得全局最优或一致的联合计划",
+        "correct": true
+      },
+      {
+        "text": "单个Agent的隐私保护更好",
+        "correct": false
+      },
+      {
+        "text": "计算负载更分散",
+        "correct": false
+      }
+    ],
+    "explanation": "集中式规划拥有全局信息，便于优化整体目标并保证计划一致性，但对通信故障更敏感、隐私性较差且计算集中。",
+    "id": "agent-264",
+    "tags": [
+      "Agent"
+    ],
+    "section": "多Agent协作"
+  },
+  {
+    "type": "single",
+    "question": "在开放多Agent系统中，新Agent动态加入协作团队。为保障协作安全，最应优先建立的机制是？",
+    "options": [
+      {
+        "text": "要求新Agent完全复制老Agent的行为",
+        "correct": false
+      },
+      {
+        "text": "基于信任评估和准入验证的机制",
+        "correct": true
+      },
+      {
+        "text": "禁止新Agent参与任何决策",
+        "correct": false
+      },
+      {
+        "text": "仅根据新Agent的声明授予全部权限",
+        "correct": false
+      }
+    ],
+    "explanation": "开放系统中新成员可能不可信，信任评估和准入验证可降低风险。强制复制限制适应性；完全禁止阻碍协作；仅凭声明授权不安全。",
+    "id": "agent-265",
+    "tags": [
+      "Agent"
+    ],
+    "section": "多Agent协作"
+  },
+  {
+    "type": "multiple",
+    "question": "在多Agent协作中，下列哪些属于实现有效任务分配时需要考虑的关键因素？",
+    "options": [
+      {
+        "text": "Agent的能力与任务需求的匹配程度",
+        "correct": true
+      },
+      {
+        "text": "任务之间的依赖与时序约束",
+        "correct": true
+      },
+      {
+        "text": "Agent之间的通信开销与延迟",
+        "correct": true
+      },
+      {
+        "text": "Agent的界面颜色主题",
+        "correct": false
+      }
+    ],
+    "explanation": "任务分配需综合能力匹配、依赖约束和通信成本；界面颜色主题与任务分配的正确性和效率无关，属于干扰项。",
+    "id": "agent-266",
+    "tags": [
+      "Agent"
+    ],
+    "section": "多Agent协作"
+  },
+  {
+    "type": "multiple",
+    "question": "关于多Agent协作中的“承诺协议”，下列哪些做法有助于提高协作可靠性？",
+    "options": [
+      {
+        "text": "明确承诺的条件、时限和违约责任",
+        "correct": true
+      },
+      {
+        "text": "允许Agent在无法履约时及时通知并协商",
+        "correct": true
+      },
+      {
+        "text": "承诺一旦做出就绝对不可更改",
+        "correct": false
+      },
+      {
+        "text": "对承诺的执行情况进行监控和记录",
+        "correct": true
+      }
+    ],
+    "explanation": "明确条件时限、允许及时协商、记录执行可提升可靠性。绝对不可更改会导致僵化，无法应对环境变化，反而降低协作成功率。",
+    "id": "agent-267",
+    "tags": [
+      "Agent"
+    ],
+    "section": "多Agent协作"
+  },
+  {
+    "type": "multiple",
+    "question": "在多Agent协作中，采用“分布式约束优化”（DCOP）进行协调时，下列哪些描述是正确的？",
+    "options": [
+      {
+        "text": "Agent通过局部通信逐步优化全局目标",
+        "correct": true
+      },
+      {
+        "text": "需要中心节点收集所有约束信息",
+        "correct": false
+      },
+      {
+        "text": "各Agent维护局部变量和约束",
+        "correct": true
+      },
+      {
+        "text": "算法可能因通信结构而收敛到局部最优",
+        "correct": true
+      }
+    ],
+    "explanation": "DCOP 是分布式方法，Agent维护局部变量和约束，通过消息传递优化全局目标，不依赖中心节点；受通信拓扑等影响可能收敛到局部最优。",
+    "id": "agent-268",
+    "tags": [
+      "Agent"
+    ],
+    "section": "多Agent协作"
+  },
+  {
+    "type": "multiple",
+    "question": "在基于“语义网”技术的多Agent协作中，下列哪些有助于Agent之间实现语义互操作？",
+    "options": [
+      {
+        "text": "使用共享本体（Ontology）对齐概念",
+        "correct": true
+      },
+      {
+        "text": "采用标准化的 Agent 通信语言（如 FIPA-ACL）并约定共享内容语言",
+        "correct": true
+      },
+      {
+        "text": "所有Agent使用完全相同的硬件配置",
+        "correct": false
+      },
+      {
+        "text": "通过本体映射解决不同本体间的差异",
+        "correct": true
+      }
+    ],
+    "explanation": "共享本体、标准通信语言及共享内容语言、本体映射能促进语义理解与互操作；硬件配置相同不是语义互操作的必要条件。",
+    "id": "agent-269",
+    "tags": [
+      "Agent"
+    ],
+    "section": "多Agent协作"
+  },
+  {
+    "type": "multiple",
+    "question": "在多Agent协作中，出现“社会惰化”（Social Loafing）现象时，下列哪些措施可能有助于缓解？",
+    "options": [
+      {
+        "text": "使个体贡献可被观察和评估",
+        "correct": true
+      },
+      {
+        "text": "建立与个体贡献挂钩的激励机制",
+        "correct": true
+      },
+      {
+        "text": "增加团队规模且不区分个体职责",
+        "correct": false
+      },
+      {
+        "text": "明确每个Agent的角色和责任",
+        "correct": true
+      }
+    ],
+    "explanation": "社会惰化指个体在团队中减少努力。可观察贡献、贡献挂钩激励、明确角色责任能缓解；单纯扩大规模且不区分职责会加剧惰化。",
+    "id": "agent-270",
+    "tags": [
+      "Agent"
+    ],
+    "section": "多Agent协作"
+  },
+  {
+    "type": "single",
+    "question": "在多步 LLM Agent 中记录每次工具调用的 token 与耗时，最直接的可观测性收益是什么？",
+    "options": [
+      {
+        "text": "可定位高成本步骤并按步骤优化提示或工具",
+        "correct": true
+      },
+      {
+        "text": "可自动提高模型温度以增加探索多样性",
+        "correct": false
+      },
+      {
+        "text": "可让 Agent 绕过所有外部工具调用",
+        "correct": false
+      },
+      {
+        "text": "可保证每次任务结果完全确定",
+        "correct": false
+      }
+    ],
+    "explanation": "逐步骤记录 token 与耗时能暴露成本瓶颈，便于针对性优化；温度、确定性、工具存废都与成本观测无直接因果，属典型误区。",
+    "id": "agent-271",
+    "tags": [
+      "Agent"
+    ],
+    "section": "成本与可观测性"
+  },
+  {
+    "type": "single",
+    "question": "关于 Agent 链路追踪(trace)中的 span，下列说法正确的是：",
+    "options": [
+      {
+        "text": "span 表示一次有起止时间的操作，可嵌套形成调用树",
+        "correct": true
+      },
+      {
+        "text": "span 只能记录文本日志，不能携带属性标签",
+        "correct": false
+      },
+      {
+        "text": "一个 trace 中必须且只能有一个 span",
+        "correct": false
+      },
+      {
+        "text": "span 一旦创建就不能结束或记录耗时",
+        "correct": false
+      }
+    ],
+    "explanation": "span 是追踪的基本单元，具有起止时间，并可通过父子关系嵌套成调用树；span 可携带属性标签和事件，一个 trace 通常包含多个 span，且 span 可记录结束时间和耗时。",
+    "id": "agent-272",
+    "tags": [
+      "Agent"
+    ],
+    "section": "成本与可观测性"
+  },
+  {
+    "type": "single",
+    "question": "某 Agent 每轮把全部历史对话重新发送给模型。随着轮次增加，成本快速上升的主要原因是什么？",
+    "options": [
+      {
+        "text": "输入 token 随历史累积近似线性或更快增长",
+        "correct": true
+      },
+      {
+        "text": "输出 token 一定随轮次指数增长",
+        "correct": false
+      },
+      {
+        "text": "工具调用次数与历史长度无关所以成本恒定",
+        "correct": false
+      },
+      {
+        "text": "模型会自动压缩上下文且不产生费用",
+        "correct": false
+      }
+    ],
+    "explanation": "全量重发历史使每轮输入 token 持续累积，总成本随轮次迅速上升；输出 token 不必然指数增长，模型默认也不会自动免费压缩上下文。",
+    "id": "agent-273",
+    "tags": [
+      "Agent"
+    ],
+    "section": "成本与可观测性"
+  },
+  {
+    "type": "single",
+    "question": "在 Agent 可观测性中，以下哪项最适合作为判断“任务是否陷入死循环”的指标信号？",
+    "options": [
+      {
+        "text": "相同工具调用参数在短时间内重复出现的次数",
+        "correct": true
+      },
+      {
+        "text": "模型名称字符串的长度",
+        "correct": false
+      },
+      {
+        "text": "提示词中英文标点所占比例",
+        "correct": false
+      },
+      {
+        "text": "向量数据库索引文件的创建时间",
+        "correct": false
+      }
+    ],
+    "explanation": "相同工具与参数高频重复是循环的典型特征，可作为告警信号；模型名长度、标点比例、索引创建时间与死循环判断无直接关联。",
+    "id": "agent-274",
+    "tags": [
+      "Agent"
+    ],
+    "section": "成本与可观测性"
+  },
+  {
+    "type": "single",
+    "question": "对 Agent 的 token 成本进行归因分析时，把“系统提示”“用户输入”“模型输出”“工具返回”分别计数的主要目的是什么？",
+    "options": [
+      {
+        "text": "区分成本来源以确定优化投入方向",
+        "correct": true
+      },
+      {
+        "text": "提高模型推理准确率",
+        "correct": false
+      },
+      {
+        "text": "减少网络传输延迟",
+        "correct": false
+      },
+      {
+        "text": "确保日志不可被篡改",
+        "correct": false
+      }
+    ],
+    "explanation": "分类计数用于成本归因，明确哪类内容占用最多 token，从而决定裁剪提示还是压缩工具结果；它与推理准确率、网络延迟、日志防篡改无关。",
+    "id": "agent-275",
+    "tags": [
+      "Agent"
+    ],
+    "section": "成本与可观测性"
+  },
+  {
+    "type": "single",
+    "question": "Agent 调用外部工具时，记录工具返回内容长度而不记录完整内容，主要权衡是什么？",
+    "options": [
+      {
+        "text": "降低日志存储与敏感数据暴露，但损失部分调试细节",
+        "correct": true
+      },
+      {
+        "text": "提升工具调用成功率但增加 token 成本",
+        "correct": false
+      },
+      {
+        "text": "完全消除工具调用延迟",
+        "correct": false
+      },
+      {
+        "text": "使工具返回结果不再需要解析",
+        "correct": false
+      }
+    ],
+    "explanation": "只记长度可控制日志体积并减少敏感信息落地，代价是排障时缺少完整内容；它不影响调用成功率或延迟，也不能替代结果解析。",
+    "id": "agent-276",
+    "tags": [
+      "Agent"
+    ],
+    "section": "成本与可观测性"
+  },
+  {
+    "type": "single",
+    "question": "以下哪种做法最能降低 Agent 可观测性系统的写入开销，同时保留关键信息？",
+    "options": [
+      {
+        "text": "对日志采样并只对异常 trace 全量留存",
+        "correct": true
+      },
+      {
+        "text": "对所有 span 记录完整输入输出且不压缩",
+        "correct": false
+      },
+      {
+        "text": "关闭所有追踪以避免开销",
+        "correct": false
+      },
+      {
+        "text": "把 token 计数改为每秒轮询一次",
+        "correct": false
+      }
+    ],
+    "explanation": "采样加异常全留是兼顾成本与排障的常见策略；全量不压缩开销大，关闭追踪丧失可观测性，轮询计数也无助于降低写入量。",
+    "id": "agent-277",
+    "tags": [
+      "Agent"
+    ],
+    "section": "成本与可观测性"
+  },
+  {
+    "type": "single",
+    "question": "Agent 运行中通过 OpenTelemetry 上报指标，以下哪个最符合“成本可观测性”的指标设计？",
+    "options": [
+      {
+        "text": "按模型与工具名打标签的 token 计数器",
+        "correct": true
+      },
+      {
+        "text": "用布尔值记录服务是否启动",
+        "correct": false
+      },
+      {
+        "text": "只记录进程 PID 列表",
+        "correct": false
+      },
+      {
+        "text": "记录操作系统内核版本号",
+        "correct": false
+      }
+    ],
+    "explanation": "带模型和工具标签的 token 计数器可按维度聚合成本，是典型成本指标；布尔启动状态、PID、内核版本无法反映调用成本结构。",
+    "id": "agent-278",
+    "tags": [
+      "Agent"
+    ],
+    "section": "成本与可观测性"
+  },
+  {
+    "type": "single",
+    "question": "某 Agent 对同一请求重试 3 次才成功，成本统计时最应关注什么？",
+    "options": [
+      {
+        "text": "失败尝试产生的 token 与工具调用成本也应计入",
+        "correct": true
+      },
+      {
+        "text": "只统计最终成功那一次的成本",
+        "correct": false
+      },
+      {
+        "text": "重试不产生任何额外费用",
+        "correct": false
+      },
+      {
+        "text": "重试次数与成本无关",
+        "correct": false
+      }
+    ],
+    "explanation": "失败重试同样消耗 token 和工具资源，忽略会低估真实成本；认为重试免费或只计成功一次都会造成成本归因失真。",
+    "id": "agent-279",
+    "tags": [
+      "Agent"
+    ],
+    "section": "成本与可观测性"
+  },
+  {
+    "type": "single",
+    "question": "在 Agent 可观测性中，设置成本预算告警阈值的合理依据通常是：",
+    "options": [
+      {
+        "text": "历史单任务成本的分布及业务可接受上限",
+        "correct": true
+      },
+      {
+        "text": "随机选取一个固定数字",
+        "correct": false
+      },
+      {
+        "text": "模型的发布日期",
+        "correct": false
+      },
+      {
+        "text": "服务器机房的物理面积",
+        "correct": false
+      }
+    ],
+    "explanation": "阈值应基于历史成本分布并结合业务可承受上限来定，才具可操作性；随机值、发布日期、机房面积均与成本预算无合理关系。",
+    "id": "agent-280",
+    "tags": [
+      "Agent"
+    ],
+    "section": "成本与可观测性"
+  },
+  {
+    "type": "single",
+    "question": "某Agent每轮调用模型时都重新发送完整历史对话，导致token成本随轮次线性增长。为在不影响任务正确性的前提下直接降低这部分成本，最有效的做法是？",
+    "options": [
+      {
+        "text": "对历史对话进行摘要或压缩，仅保留关键信息",
+        "correct": true
+      },
+      {
+        "text": "增加每轮调用的温度参数",
+        "correct": false
+      },
+      {
+        "text": "将模型调用改为异步执行",
+        "correct": false
+      },
+      {
+        "text": "在每轮调用前清空历史对话",
+        "correct": false
+      }
+    ],
+    "explanation": "摘要或压缩历史对话能直接减少每轮输入的token量，从而降低线性增长的成本；增加温度参数不影响token数；异步执行不减少token；清空历史会丢失上下文，影响正确性。",
+    "id": "agent-281",
+    "tags": [
+      "Agent"
+    ],
+    "section": "成本与可观测性"
+  },
+  {
+    "type": "single",
+    "question": "在Agent可观测性中，为定位“某次任务成本异常偏高”的原因，最应优先关联分析以下哪组数据？",
+    "options": [
+      {
+        "text": "每次模型调用的输入/输出token数、工具调用次数与耗时",
+        "correct": true
+      },
+      {
+        "text": "Agent所在主机的CPU与内存使用率",
+        "correct": false
+      },
+      {
+        "text": "用户请求的IP地址与User-Agent",
+        "correct": false
+      },
+      {
+        "text": "模型服务的版本号与部署区域",
+        "correct": false
+      }
+    ],
+    "explanation": "成本异常直接与token消耗和工具调用相关，因此应优先关联token明细与工具调用记录；主机资源、用户网络信息及版本区域对成本归因帮助有限。",
+    "id": "agent-282",
+    "tags": [
+      "Agent"
+    ],
+    "section": "成本与可观测性"
+  },
+  {
+    "type": "single",
+    "question": "设计Agent成本可观测性指标时，以下哪项指标最能反映“单次任务的平均经济成本”？",
+    "options": [
+      {
+        "text": "任务总token消耗除以成功任务数",
+        "correct": true
+      },
+      {
+        "text": "模型调用的平均响应延迟",
+        "correct": false
+      },
+      {
+        "text": "工具调用的失败率",
+        "correct": false
+      },
+      {
+        "text": "Agent进程的常驻内存大小",
+        "correct": false
+      }
+    ],
+    "explanation": "总token消耗除以成功任务数直接量化了每个成功任务的平均token成本，最贴近经济成本；延迟、失败率和内存不直接反映token成本。",
+    "id": "agent-283",
+    "tags": [
+      "Agent"
+    ],
+    "section": "成本与可观测性"
+  },
+  {
+    "type": "single",
+    "question": "某Agent在调用工具时频繁重试，导致成本上升。为在可观测性面板中快速识别此类问题，最应监控的指标是？",
+    "options": [
+      {
+        "text": "工具调用的重试次数与重试产生的额外token消耗",
+        "correct": true
+      },
+      {
+        "text": "工具调用的平均响应时间",
+        "correct": false
+      },
+      {
+        "text": "Agent的启动时间",
+        "correct": false
+      },
+      {
+        "text": "用户请求的并发数",
+        "correct": false
+      }
+    ],
+    "explanation": "重试次数和重试带来的额外token消耗直接对应成本上升的原因；平均响应时间、启动时间和并发数不能直接揭示重试导致的成本问题。",
+    "id": "agent-284",
+    "tags": [
+      "Agent"
+    ],
+    "section": "成本与可观测性"
+  },
+  {
+    "type": "single",
+    "question": "在Agent链路追踪中，以下哪种做法有助于将成本精确归因到具体子任务？",
+    "options": [
+      {
+        "text": "为每个子任务创建独立的span并记录其token消耗",
+        "correct": true
+      },
+      {
+        "text": "仅记录整个任务的开始和结束时间",
+        "correct": false
+      },
+      {
+        "text": "将所有子任务的日志合并为一条",
+        "correct": false
+      },
+      {
+        "text": "只记录模型调用的总次数",
+        "correct": false
+      }
+    ],
+    "explanation": "为子任务创建独立span并记录token消耗，可以实现细粒度成本归因；仅记录整体时间、合并日志或只记总次数都无法定位到子任务。",
+    "id": "agent-285",
+    "tags": [
+      "Agent"
+    ],
+    "section": "成本与可观测性"
+  },
+  {
+    "type": "single",
+    "question": "某Agent需要调用大模型生成报告，为在保证输出质量的同时控制成本，以下哪种策略最合理？",
+    "options": [
+      {
+        "text": "根据任务复杂度动态选择不同规模的模型",
+        "correct": true
+      },
+      {
+        "text": "对所有任务统一使用最大模型",
+        "correct": false
+      },
+      {
+        "text": "对所有任务统一使用最小模型",
+        "correct": false
+      },
+      {
+        "text": "固定使用同一模型并忽略输入长度",
+        "correct": false
+      }
+    ],
+    "explanation": "按任务复杂度动态选择模型，可以在简单任务上使用小模型节省成本，复杂任务使用大模型保证质量；统一最大或最小模型无法兼顾成本与质量。",
+    "id": "agent-286",
+    "tags": [
+      "Agent"
+    ],
+    "section": "成本与可观测性"
+  },
+  {
+    "type": "single",
+    "question": "关于Agent可观测性中的成本预算告警，以下做法最合理的是？",
+    "options": [
+      {
+        "text": "基于历史平均成本和任务量设定动态阈值",
+        "correct": true
+      },
+      {
+        "text": "设定固定阈值且从不调整",
+        "correct": false
+      },
+      {
+        "text": "仅告警总成本超支，不区分任务类型",
+        "correct": false
+      },
+      {
+        "text": "关闭告警以降低运维负担",
+        "correct": false
+      }
+    ],
+    "explanation": "基于历史平均成本和任务量设定动态阈值，能适应业务变化并减少误报；固定阈值容易过时，不区分任务类型会掩盖异常，关闭告警则失去监控意义。",
+    "id": "agent-287",
+    "tags": [
+      "Agent"
+    ],
+    "section": "成本与可观测性"
+  },
+  {
+    "type": "single",
+    "question": "在Agent运行过程中，以下哪项数据最适合用于实时成本监控？",
+    "options": [
+      {
+        "text": "每秒token消耗速率",
+        "correct": true
+      },
+      {
+        "text": "模型服务的月度账单",
+        "correct": false
+      },
+      {
+        "text": "Agent代码的静态分析结果",
+        "correct": false
+      },
+      {
+        "text": "用户满意度评分",
+        "correct": false
+      }
+    ],
+    "explanation": "每秒token消耗速率能实时反映成本变化趋势，适合实时监控；月度账单滞后，静态分析结果和满意度评分不直接反映实时成本。",
+    "id": "agent-288",
+    "tags": [
+      "Agent"
+    ],
+    "section": "成本与可观测性"
+  },
+  {
+    "type": "single",
+    "question": "某Agent需要记录每次工具调用的详细上下文以便审计，但完整记录会带来存储成本。以下哪种折中方案最合理？",
+    "options": [
+      {
+        "text": "记录工具调用的元数据（如名称、参数摘要、返回大小）而非完整内容",
+        "correct": true
+      },
+      {
+        "text": "完全不记录任何工具调用信息",
+        "correct": false
+      },
+      {
+        "text": "只记录工具调用的时间戳",
+        "correct": false
+      },
+      {
+        "text": "将所有调用内容压缩后永久存储",
+        "correct": false
+      }
+    ],
+    "explanation": "记录元数据和摘要可在满足审计基本需求的同时控制存储成本；完全不记录或只记时间戳信息不足，永久存储完整内容成本过高。",
+    "id": "agent-289",
+    "tags": [
+      "Agent"
+    ],
+    "section": "成本与可观测性"
+  },
+  {
+    "type": "single",
+    "question": "在Agent可观测性中，以下哪项最适合作为“成本效率”的度量指标？",
+    "options": [
+      {
+        "text": "每成功任务的平均token消耗",
+        "correct": true
+      },
+      {
+        "text": "模型调用的总次数",
+        "correct": false
+      },
+      {
+        "text": "Agent进程的线程数",
+        "correct": false
+      },
+      {
+        "text": "工具返回内容的平均长度",
+        "correct": false
+      }
+    ],
+    "explanation": "每成功任务的平均token消耗直接衡量单位任务的经济效率；总调用次数、线程数和返回长度不能直接反映成本效率。",
+    "id": "agent-290",
+    "tags": [
+      "Agent"
+    ],
+    "section": "成本与可观测性"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些做法有助于提升Agent成本可观测性？",
+    "options": [
+      {
+        "text": "为每次模型调用记录输入和输出token数",
+        "correct": true
+      },
+      {
+        "text": "按任务类型对成本进行分组统计",
+        "correct": true
+      },
+      {
+        "text": "只记录模型调用的总次数",
+        "correct": false
+      },
+      {
+        "text": "将成本数据与链路追踪关联",
+        "correct": true
+      }
+    ],
+    "explanation": "记录token明细、按任务类型分组统计以及与链路追踪关联，都能提升成本可观测性；只记录总次数无法提供足够的成本归因信息。",
+    "id": "agent-291",
+    "tags": [
+      "Agent"
+    ],
+    "section": "成本与可观测性"
+  },
+  {
+    "type": "multiple",
+    "question": "在设计Agent可观测性系统时，为平衡信息量与存储开销，以下哪些策略是合理的？",
+    "options": [
+      {
+        "text": "对高频工具调用的返回内容进行采样记录",
+        "correct": true
+      },
+      {
+        "text": "对日志设置保留期限并定期归档",
+        "correct": true
+      },
+      {
+        "text": "将所有原始数据永久保存",
+        "correct": false
+      },
+      {
+        "text": "仅记录错误日志而忽略正常调用",
+        "correct": false
+      }
+    ],
+    "explanation": "采样记录和设置保留期限能有效控制存储开销；永久保存所有原始数据成本过高，仅记录错误会丢失正常调用的可观测性。",
+    "id": "agent-292",
+    "tags": [
+      "Agent"
+    ],
+    "section": "成本与可观测性"
+  },
+  {
+    "type": "multiple",
+    "question": "在Agent链路追踪中，以下哪些span属性有助于成本分析？",
+    "options": [
+      {
+        "text": "模型名称与版本",
+        "correct": true
+      },
+      {
+        "text": "输入token数和输出token数",
+        "correct": true
+      },
+      {
+        "text": "工具调用的参数摘要",
+        "correct": true
+      },
+      {
+        "text": "Agent所在主机的MAC地址",
+        "correct": false
+      }
+    ],
+    "explanation": "模型名称、token数和工具参数摘要都与成本直接相关，有助于成本分析；主机MAC地址与成本分析无关。",
+    "id": "agent-293",
+    "tags": [
+      "Agent"
+    ],
+    "section": "成本与可观测性"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些情况可能导致Agent的token成本意外升高？",
+    "options": [
+      {
+        "text": "工具返回了超长文本并直接拼入下一轮提示",
+        "correct": true
+      },
+      {
+        "text": "Agent陷入循环并重复调用模型",
+        "correct": true
+      },
+      {
+        "text": "模型温度参数被设置为0",
+        "correct": false
+      },
+      {
+        "text": "对失败的工具调用进行了多次重试",
+        "correct": true
+      }
+    ],
+    "explanation": "超长工具返回、循环重复调用和重试都会增加token消耗；温度参数设置为0主要影响输出的随机性，不直接导致token成本升高。",
+    "id": "agent-294",
+    "tags": [
+      "Agent"
+    ],
+    "section": "成本与可观测性"
+  },
+  {
+    "type": "multiple",
+    "question": "关于Agent成本预算告警的设置，以下说法正确的是？",
+    "options": [
+      {
+        "text": "告警阈值应结合历史成本分布和业务波动设定",
+        "correct": true
+      },
+      {
+        "text": "应对不同任务类型设置差异化的阈值",
+        "correct": true
+      },
+      {
+        "text": "告警应包含成本异常的具体上下文信息",
+        "correct": true
+      },
+      {
+        "text": "告警阈值一旦设定就应永久固定",
+        "correct": false
+      }
+    ],
+    "explanation": "结合历史分布和业务波动设阈值、差异化任务类型以及包含上下文信息，都能提升告警有效性；阈值应随业务变化调整而非永久固定。",
+    "id": "agent-295",
+    "tags": [
+      "Agent"
+    ],
+    "section": "成本与可观测性"
+  },
+  {
+    "type": "single",
+    "question": "某Agent每轮将完整对话历史发送给模型，导致token成本随轮次增长。为在保证任务正确性的前提下直接降低这部分成本，最有效的做法是？",
+    "options": [
+      {
+        "text": "对历史对话进行摘要或截断，仅保留关键信息",
+        "correct": true
+      },
+      {
+        "text": "减少模型调用的最大输出token数",
+        "correct": false
+      },
+      {
+        "text": "将模型温度参数调低",
+        "correct": false
+      },
+      {
+        "text": "增加每轮工具调用的次数",
+        "correct": false
+      }
+    ],
+    "explanation": "完整历史重发是成本线性增长的主因。摘要或截断历史可直接减少输入token，且保留关键信息以维持正确性。降低输出token、调温度、增加工具调用均不能直接解决历史冗余问题。",
+    "id": "agent-296",
+    "tags": [
+      "Agent"
+    ],
+    "section": "成本与可观测性"
+  },
+  {
+    "type": "single",
+    "question": "某Agent调用工具时频繁重试，导致成本上升。为在可观测性面板中快速识别此类问题，最应监控的指标是？",
+    "options": [
+      {
+        "text": "工具调用重试率与每次重试的额外token消耗",
+        "correct": true
+      },
+      {
+        "text": "工具调用的平均响应时间",
+        "correct": false
+      },
+      {
+        "text": "模型输出的平均长度",
+        "correct": false
+      },
+      {
+        "text": "Agent进程的线程数",
+        "correct": false
+      }
+    ],
+    "explanation": "重试率直接反映重试频率，额外token消耗量化成本影响。响应时间、输出长度、线程数不能直接关联重试导致的成本上升，监控重试相关指标才能快速定位问题。",
+    "id": "agent-297",
+    "tags": [
+      "Agent"
+    ],
+    "section": "成本与可观测性"
+  },
+  {
+    "type": "single",
+    "question": "某Agent的单步调用在过去一周的P95延迟和token消耗均正常，但每日总成本突然上升约40%。为定位原因，最应优先查看以下哪类可观测性数据？",
+    "options": [
+      {
+        "text": "单步调用的token与延迟分位数",
+        "correct": false
+      },
+      {
+        "text": "任务级调用次数与重试次数的变化趋势",
+        "correct": true
+      },
+      {
+        "text": "模型提供商的版本号更新公告",
+        "correct": false
+      },
+      {
+        "text": "单次工具调用的平均返回长度",
+        "correct": false
+      }
+    ],
+    "explanation": "单步指标正常而总成本上升，通常源于调用规模变化，如任务数增加或重试增多。任务级调用次数与重试趋势能直接揭示规模放大来源。单步分位数已正常，版本号非成本指标，工具返回长度不足以解释整体成本。 ",
+    "id": "agent-298",
+    "tags": [
+      "Agent"
+    ],
+    "section": "成本与可观测性"
+  },
+  {
+    "type": "single",
+    "question": "为在Agent可观测性系统中低成本地保留成本归因能力，对工具返回内容最合理的记录方式是？",
+    "options": [
+      {
+        "text": "完整记录原始返回内容以便随时回放",
+        "correct": false
+      },
+      {
+        "text": "只记录调用是否成功，不记录任何长度信息",
+        "correct": false
+      },
+      {
+        "text": "记录内容哈希、字节长度与截断摘要",
+        "correct": true
+      },
+      {
+        "text": "记录工具返回的完整base64编码",
+        "correct": false
+      }
+    ],
+    "explanation": "哈希便于去重与比对，长度可估算token成本，截断摘要保留关键语义，三者结合在低存储开销下支持归因。完整记录或base64成本高，仅记录成功状态则丢失归因所需的信息量。 ",
+    "id": "agent-299",
+    "tags": [
+      "Agent"
+    ],
+    "section": "成本与可观测性"
+  },
+  {
+    "type": "single",
+    "question": "某团队为Agent设置成本预算告警，要求既不能频繁误报，又要在成本异常时及时通知。以下设置方式最合理的是？",
+    "options": [
+      {
+        "text": "对每次模型调用都触发告警",
+        "correct": false
+      },
+      {
+        "text": "按分钟统计总token并设置极低固定阈值",
+        "correct": false
+      },
+      {
+        "text": "按任务维度统计成本，结合基线分位数与滑动窗口设置动态阈值",
+        "correct": true
+      },
+      {
+        "text": "仅在月末汇总后人工核对是否超支",
+        "correct": false
+      }
+    ],
+    "explanation": "按任务粒度聚合并用基线分位数与滑动窗口设置动态阈值，可适应正常波动，异常时及时触发。逐次调用或极低阈值会误报，月末汇总则失去及时性。 ",
+    "id": "agent-300",
+    "tags": [
+      "Agent"
+    ],
+    "section": "成本与可观测性"
+  }
+]

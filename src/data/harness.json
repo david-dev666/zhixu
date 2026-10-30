@@ -1,0 +1,8402 @@
+[
+  {
+    "type": "single",
+    "question": "Harness 框架的运行循环中，决定是否继续执行下一轮迭代的核心判据通常是什么？",
+    "options": [
+      {
+        "text": "当前任务是否已执行完全部预设的固定次数",
+        "correct": false
+      },
+      {
+        "text": "模型输出中是否不再包含需要执行的动作或已达到终止条件",
+        "correct": true
+      },
+      {
+        "text": "事件队列中是否还有未处理的日志记录",
+        "correct": false
+      },
+      {
+        "text": "上一次动作是否产生了标准输出",
+        "correct": false
+      }
+    ],
+    "explanation": "运行循环以“是否还有待执行动作或是否满足终止条件”为继续依据，而非固定轮数或日志、标准输出。固定次数会忽略任务完成信号；日志与输出只是副作用，不能作为循环是否继续的判据。",
+    "id": "harness-001",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "运行循环设计"
+  },
+  {
+    "type": "single",
+    "question": "运行循环把模型返回的工具调用请求交给工具执行器后，下一步最合理的处理是？",
+    "options": [
+      {
+        "text": "丢弃工具结果，直接让模型重新生成计划",
+        "correct": false
+      },
+      {
+        "text": "把工具执行结果作为新的消息追加到上下文中，再进入下一轮推理",
+        "correct": true
+      },
+      {
+        "text": "立即终止循环并返回工具原始输出",
+        "correct": false
+      },
+      {
+        "text": "将工具结果写入磁盘后清空上下文",
+        "correct": false
+      }
+    ],
+    "explanation": "工具结果需要回填到对话上下文，模型才能基于结果继续推理或决定终止。丢弃结果会丢失信息；直接终止忽略了模型可能还需综合结果；清空上下文会破坏后续推理所需的历史信息。",
+    "id": "harness-002",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "运行循环设计"
+  },
+  {
+    "type": "single",
+    "question": "在运行循环中设置最大迭代次数的主要目的是什么？",
+    "options": [
+      {
+        "text": "保证每次任务都能得到正确答案",
+        "correct": false
+      },
+      {
+        "text": "防止模型陷入无限循环或异常长时间运行，提供安全边界",
+        "correct": true
+      },
+      {
+        "text": "替代终止条件，作为唯一的循环结束方式",
+        "correct": false
+      },
+      {
+        "text": "减少模型上下文长度以节省显存",
+        "correct": false
+      }
+    ],
+    "explanation": "最大迭代次数是兜底安全边界，用于防止模型反复调用工具无法收敛。它不能保证答案正确，也不应替代正常的终止判断；它与上下文长度无直接关系。",
+    "id": "harness-003",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "运行循环设计"
+  },
+  {
+    "type": "single",
+    "question": "运行循环在每轮开始时通常需要检查的一个关键状态是？",
+    "options": [
+      {
+        "text": "磁盘剩余空间是否超过阈值",
+        "correct": false
+      },
+      {
+        "text": "当前对话是否已包含终止标记或任务完成信号",
+        "correct": true
+      },
+      {
+        "text": "工具可执行文件的编译时间",
+        "correct": false
+      },
+      {
+        "text": "网络端口是否被占用",
+        "correct": false
+      }
+    ],
+    "explanation": "每轮开始应先检查是否已有终止标记或完成信号，避免多余推理和工具调用。磁盘空间、编译时间、端口占用不是运行循环通用的状态判据，属于特定环境的偶发因素。",
+    "id": "harness-004",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "运行循环设计"
+  },
+  {
+    "type": "single",
+    "question": "当模型返回的消息中既包含文本说明又包含工具调用时，运行循环通常应如何处理？",
+    "options": [
+      {
+        "text": "只保留文本，忽略工具调用",
+        "correct": false
+      },
+      {
+        "text": "只执行工具调用，丢弃文本",
+        "correct": false
+      },
+      {
+        "text": "保留文本并执行工具调用，将结果回填后继续循环",
+        "correct": true
+      },
+      {
+        "text": "把文本和工具调用都当作终止信号",
+        "correct": false
+      }
+    ],
+    "explanation": "文本说明和工具调用可以共存，循环应保留文本用于上下文，同时执行工具调用并回填结果。只取其一都会丢失信息；把两者当作终止信号会错误结束任务。",
+    "id": "harness-005",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "运行循环设计"
+  },
+  {
+    "type": "single",
+    "question": "运行循环中“观察—思考—行动”的“观察”阶段主要对应什么？",
+    "options": [
+      {
+        "text": "收集上一轮动作的执行结果与环境反馈",
+        "correct": true
+      },
+      {
+        "text": "随机生成下一步动作",
+        "correct": false
+      },
+      {
+        "text": "压缩历史消息以减少长度",
+        "correct": false
+      },
+      {
+        "text": "重新加载框架配置文件",
+        "correct": false
+      }
+    ],
+    "explanation": "观察阶段用于获取上一轮工具调用或环境返回的结果，作为下一轮思考的输入。随机生成动作、压缩历史和重载配置都不是观察阶段的定义职责。",
+    "id": "harness-006",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "运行循环设计"
+  },
+  {
+    "type": "single",
+    "question": "若工具执行器返回错误信息，运行循环的合理做法是？",
+    "options": [
+      {
+        "text": "忽略错误并假装成功",
+        "correct": false
+      },
+      {
+        "text": "将错误信息作为工具结果回填，让模型决定重试或调整策略",
+        "correct": true
+      },
+      {
+        "text": "立即崩溃退出整个进程",
+        "correct": false
+      },
+      {
+        "text": "自动删除该工具并永不调用",
+        "correct": false
+      }
+    ],
+    "explanation": "错误信息是重要反馈，回填后模型可据此重试、换参数或换工具。忽略错误会掩盖问题；直接崩溃过于粗暴；永久禁用工具则可能误伤偶发错误。",
+    "id": "harness-007",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "运行循环设计"
+  },
+  {
+    "type": "single",
+    "question": "关于运行循环的终止条件，以下哪项描述最准确？",
+    "options": [
+      {
+        "text": "只能由外部用户手动触发终止",
+        "correct": false
+      },
+      {
+        "text": "模型不再请求工具调用且给出了最终回答时，可作为正常终止条件",
+        "correct": true
+      },
+      {
+        "text": "只要执行过一次工具就必须终止",
+        "correct": false
+      },
+      {
+        "text": "终止条件必须与最大迭代次数完全相同",
+        "correct": false
+      }
+    ],
+    "explanation": "正常终止通常发生在模型不再请求工具调用并给出最终回答时。外部手动终止是补充手段；执行一次工具就终止会阻止多步任务；终止条件与最大迭代次数是不同概念。",
+    "id": "harness-008",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "运行循环设计"
+  },
+  {
+    "type": "single",
+    "question": "在多步任务中，运行循环保留完整工具调用历史的主要好处是？",
+    "options": [
+      {
+        "text": "让模型能够基于之前的动作和结果进行连贯推理",
+        "correct": true
+      },
+      {
+        "text": "使每轮推理速度必然更快",
+        "correct": false
+      },
+      {
+        "text": "自动修复所有工具参数错误",
+        "correct": false
+      },
+      {
+        "text": "减少模型需要生成的 token 数量",
+        "correct": false
+      }
+    ],
+    "explanation": "保留历史能让模型看到已尝试的动作和结果，从而连贯推理、避免重复。它通常会增加上下文而非提速，也不能自动修复参数错误或减少 token。",
+    "id": "harness-009",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "运行循环设计"
+  },
+  {
+    "type": "single",
+    "question": "运行循环设计中，将“规划”与“执行”分离的主要价值是？",
+    "options": [
+      {
+        "text": "使框架不再需要任何工具",
+        "correct": false
+      },
+      {
+        "text": "让模型在行动前明确步骤，并在执行后根据反馈调整计划",
+        "correct": true
+      },
+      {
+        "text": "保证规划永远不会出错",
+        "correct": false
+      },
+      {
+        "text": "消除对最大迭代次数的需求",
+        "correct": false
+      }
+    ],
+    "explanation": "规划与执行分离使模型先明确步骤，再根据执行反馈调整，提升可控性。它不意味着不需要工具，也不能保证规划无误，更不能消除迭代上限这一安全边界。",
+    "id": "harness-010",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "运行循环设计"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些属于运行循环中常见的终止或暂停条件？",
+    "options": [
+      {
+        "text": "模型输出最终答案且不再请求工具调用",
+        "correct": true
+      },
+      {
+        "text": "达到预设的最大迭代次数",
+        "correct": true
+      },
+      {
+        "text": "工具执行器返回了任意标准输出",
+        "correct": false
+      },
+      {
+        "text": "外部触发取消或超时",
+        "correct": true
+      }
+    ],
+    "explanation": "正常完成、迭代上限、外部取消或超时都是常见终止或暂停条件。工具返回标准输出只是普通执行结果，不能作为终止依据，否则几乎每轮都会误终止。",
+    "id": "harness-011",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "运行循环设计"
+  },
+  {
+    "type": "multiple",
+    "question": "运行循环把工具结果回填上下文时，通常需要注意哪些信息？",
+    "options": [
+      {
+        "text": "工具名称或调用标识，便于模型对应请求",
+        "correct": true
+      },
+      {
+        "text": "执行结果是成功还是失败",
+        "correct": true
+      },
+      {
+        "text": "工具源码的完整编译日志",
+        "correct": false
+      },
+      {
+        "text": "结果内容本身，如返回值或错误详情",
+        "correct": true
+      }
+    ],
+    "explanation": "回填应包含调用标识、成功/失败状态和结果内容，模型才能正确关联并决策。完整编译日志通常不是运行循环所需信息，会造成上下文冗余。",
+    "id": "harness-012",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "运行循环设计"
+  },
+  {
+    "type": "multiple",
+    "question": "设计运行循环时，为提升鲁棒性可以采取哪些措施？",
+    "options": [
+      {
+        "text": "对工具调用设置超时并处理超时结果",
+        "correct": true
+      },
+      {
+        "text": "对同一错误无限重试且不设上限",
+        "correct": false
+      },
+      {
+        "text": "限制最大迭代次数并提供兜底返回",
+        "correct": true
+      },
+      {
+        "text": "对模型输出进行解析校验，处理格式异常",
+        "correct": true
+      }
+    ],
+    "explanation": "超时处理、迭代上限与兜底、输出解析校验都能提升鲁棒性。无限重试且不设上限会放大故障，导致循环无法收敛，是应避免的反模式。",
+    "id": "harness-013",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "运行循环设计"
+  },
+  {
+    "type": "multiple",
+    "question": "关于运行循环的上下文管理，以下哪些说法合理？",
+    "options": [
+      {
+        "text": "上下文需要包含用户目标与关键历史动作结果",
+        "correct": true
+      },
+      {
+        "text": "可以在上下文过长时裁剪较旧的无关消息",
+        "correct": true
+      },
+      {
+        "text": "上下文越长越能保证答案正确，因此不应裁剪",
+        "correct": false
+      },
+      {
+        "text": "应保留工具调用与结果之间的对应关系",
+        "correct": true
+      }
+    ],
+    "explanation": "上下文应保留目标、关键动作结果及调用与结果的对应关系；过长时可裁剪无关旧消息。上下文并非越长越正确，超长还会引入噪声和超出限制的风险。",
+    "id": "harness-014",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "运行循环设计"
+  },
+  {
+    "type": "multiple",
+    "question": "运行循环中，模型请求调用一个不存在的工具时，合理的处理包括哪些？",
+    "options": [
+      {
+        "text": "将“工具不存在”的错误信息回填，让模型重新选择",
+        "correct": true
+      },
+      {
+        "text": "直接伪造一个成功结果回填",
+        "correct": false
+      },
+      {
+        "text": "在框架层记录该异常用于诊断",
+        "correct": true
+      },
+      {
+        "text": "终止整个循环且不给出任何说明",
+        "correct": false
+      }
+    ],
+    "explanation": "应回填工具不存在的错误让模型调整，并记录异常用于诊断。伪造成功会误导模型；无说明直接终止会让任务不可恢复，也不利于排查问题。",
+    "id": "harness-015",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "运行循环设计"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些做法有助于提升运行循环的可观测性？",
+    "options": [
+      {
+        "text": "为每轮记录模型输入摘要与工具调用参数",
+        "correct": true
+      },
+      {
+        "text": "记录工具返回状态码与错误类别",
+        "correct": true
+      },
+      {
+        "text": "仅记录最终回答而省略中间轮次",
+        "correct": false
+      },
+      {
+        "text": "为循环轮次分配可追踪的标识",
+        "correct": true
+      }
+    ],
+    "explanation": "记录输入摘要、工具状态与轮次标识，能还原循环轨迹并定位问题。仅记录最终回答会丢失中间决策依据，不利于诊断多步任务中的失败环节。",
+    "id": "harness-016",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "运行循环设计"
+  },
+  {
+    "type": "multiple",
+    "question": "运行循环回填工具结果时，以下哪些信息值得保留？",
+    "options": [
+      {
+        "text": "对应的工具调用标识",
+        "correct": true
+      },
+      {
+        "text": "结果的成功或失败状态",
+        "correct": true
+      },
+      {
+        "text": "执行耗时等辅助元数据",
+        "correct": true
+      },
+      {
+        "text": "与结果无关的完整系统提示副本",
+        "correct": false
+      }
+    ],
+    "explanation": "调用标识用于关联请求，状态决定后续策略，耗时辅助诊断。系统提示已有独立位置，在每条工具结果中重复完整副本会浪费上下文并造成冗余。",
+    "id": "harness-017",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "运行循环设计"
+  },
+  {
+    "type": "multiple",
+    "question": "关于运行循环的上下文长度管理，以下哪些说法合理？",
+    "options": [
+      {
+        "text": "可对较早的工具结果做摘要压缩但保留关键结论",
+        "correct": true
+      },
+      {
+        "text": "应优先保留与当前子目标相关的最近观察",
+        "correct": true
+      },
+      {
+        "text": "为保证完整性，任何历史消息都不能压缩",
+        "correct": false
+      },
+      {
+        "text": "压缩后需确保工具调用与结果的配对关系不被破坏",
+        "correct": true
+      }
+    ],
+    "explanation": "摘要压缩和保留最近相关观察可控制长度；压缩时必须维持调用与结果的配对，否则模型无法正确关联。完全拒绝压缩在长任务中会导致上下文溢出。",
+    "id": "harness-018",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "运行循环设计"
+  },
+  {
+    "type": "multiple",
+    "question": "运行循环检测到模型反复调用同一工具且参数几乎不变时，可采取哪些合理措施？",
+    "options": [
+      {
+        "text": "在回填结果中附加重复提示并建议模型换策略",
+        "correct": true
+      },
+      {
+        "text": "设置同工具连续调用次数上限并触发暂停",
+        "correct": true
+      },
+      {
+        "text": "无条件继续执行直到最大迭代次数",
+        "correct": false
+      },
+      {
+        "text": "向模型回填已有结果并提示避免重复调用",
+        "correct": true
+      }
+    ],
+    "explanation": "附加重复提示、设置连续调用上限、回填已有结果都能打断无效重复。无条件继续会浪费资源并可能触发上限，属于消极处理而非合理干预。",
+    "id": "harness-019",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "运行循环设计"
+  },
+  {
+    "type": "multiple",
+    "question": "设计运行循环的终止逻辑时，以下哪些状态应被区分对待？",
+    "options": [
+      {
+        "text": "正常完成并给出最终答复",
+        "correct": true
+      },
+      {
+        "text": "达到最大迭代次数仍未完成",
+        "correct": true
+      },
+      {
+        "text": "工具或环境发生不可恢复错误",
+        "correct": true
+      },
+      {
+        "text": "模型输出中包含任意标点符号",
+        "correct": false
+      }
+    ],
+    "explanation": "正常完成、迭代上限、不可恢复错误对应不同结束语义，应分别报告和处理。输出含标点符号与任务是否终止无关，不能作为终止依据。",
+    "id": "harness-020",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "运行循环设计"
+  },
+  {
+    "type": "single",
+    "question": "Harness 运行循环中，若模型本轮既未产生工具调用也未给出最终答复，仅输出了一段空白内容，最合理的默认处理是？",
+    "options": [
+      {
+        "text": "视为异常结束并立即终止循环",
+        "correct": false
+      },
+      {
+        "text": "将空白作为有效答案返回给用户",
+        "correct": false
+      },
+      {
+        "text": "记录一次无效轮次并按策略重试或达上限后报错",
+        "correct": true
+      },
+      {
+        "text": "跳过本轮且不计数，无限重新请求",
+        "correct": false
+      }
+    ],
+    "explanation": "空白输出不是有效终态，应计为无效轮次并受迭代上限约束，避免死循环；直接终止会丢失恢复机会，当有效答案返回会误导用户，不计数重试可能无限循环。",
+    "id": "harness-021",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "运行循环设计"
+  },
+  {
+    "type": "single",
+    "question": "运行循环中，模型一次返回多个并行工具调用，执行器最合理的默认策略是？",
+    "options": [
+      {
+        "text": "只执行第一个，其余丢弃",
+        "correct": false
+      },
+      {
+        "text": "串行执行并忽略依赖关系",
+        "correct": false
+      },
+      {
+        "text": "并行执行并分别回填各自结果",
+        "correct": true
+      },
+      {
+        "text": "拒绝执行并要求模型逐个重发",
+        "correct": false
+      }
+    ],
+    "explanation": "并行调用应分别执行并按调用标识回填结果，才能让模型获得完整观察；丢弃会丢信息，忽略依赖可能出错，强制重发降低效率且非必要。",
+    "id": "harness-022",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "运行循环设计"
+  },
+  {
+    "type": "single",
+    "question": "运行循环在把工具结果回填前，发现结果体积远超上下文预算，最合理的处理是？",
+    "options": [
+      {
+        "text": "原样回填，依赖模型自行忽略",
+        "correct": false
+      },
+      {
+        "text": "截断或摘要后回填，并保留关键元信息",
+        "correct": true
+      },
+      {
+        "text": "直接终止整个任务",
+        "correct": false
+      },
+      {
+        "text": "丢弃结果且不告知模型",
+        "correct": false
+      }
+    ],
+    "explanation": "超预算结果应压缩并保留状态、标识等元信息，让模型仍能推理；原样回填可能撑爆上下文，直接终止过于激进，静默丢弃会使模型基于错误前提继续。",
+    "id": "harness-023",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "运行循环设计"
+  },
+  {
+    "type": "single",
+    "question": "Harness 运行循环中，工具执行器完成一次工具调用后，运行循环通常首先做什么？",
+    "options": [
+      {
+        "text": "将工具返回结果作为新消息加入对话历史，进入下一轮迭代",
+        "correct": true
+      },
+      {
+        "text": "立即终止循环并返回工具结果给用户",
+        "correct": false
+      },
+      {
+        "text": "重新初始化模型上下文，丢弃之前的历史",
+        "correct": false
+      },
+      {
+        "text": "直接调用下一个工具，无需等待模型决策",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项是将工具结果回填到对话历史，让模型基于新观察继续决策。误区是误以为工具结果直接返回用户或跳过模型推理。运行循环的核心是模型驱动，工具结果必须反馈给模型。",
+    "id": "harness-024",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "运行循环设计"
+  },
+  {
+    "type": "single",
+    "question": "运行循环中，模型返回的文本消息不包含任何工具调用，且内容是一个明确的最终答案，此时循环应如何终止？",
+    "options": [
+      {
+        "text": "将最终答案作为输出返回，并正常结束循环",
+        "correct": true
+      },
+      {
+        "text": "继续循环，直到达到最大迭代次数",
+        "correct": false
+      },
+      {
+        "text": "忽略该消息，重新请求模型",
+        "correct": false
+      },
+      {
+        "text": "将该消息转为工具调用继续执行",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项是识别最终答案并正常结束。误区是认为必须达到最大迭代次数才停止。运行循环应在模型给出最终答复时终止，最大迭代次数是安全兜底而非正常终止条件。",
+    "id": "harness-025",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "运行循环设计"
+  },
+  {
+    "type": "single",
+    "question": "在 Harness 运行循环中，若模型返回的工具调用参数格式错误（如 JSON 解析失败），最合理的处理方式是？",
+    "options": [
+      {
+        "text": "将解析错误信息作为工具结果回填，让模型修正参数后重试",
+        "correct": true
+      },
+      {
+        "text": "直接丢弃该工具调用，继续下一轮",
+        "correct": false
+      },
+      {
+        "text": "终止整个运行循环并报错",
+        "correct": false
+      },
+      {
+        "text": "自动修正参数并执行工具",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项是将错误信息回填给模型，使其有机会修正。误区是直接丢弃或终止，这会使任务无法完成。自动修正参数可能引入不可控风险，应由模型决策。",
+    "id": "harness-026",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "运行循环设计"
+  },
+  {
+    "type": "single",
+    "question": "运行循环中，模型请求调用一个需要用户确认的高风险工具，此时循环最合理的做法是？",
+    "options": [
+      {
+        "text": "暂停循环，等待用户确认后再继续执行",
+        "correct": true
+      },
+      {
+        "text": "直接执行该工具，无需确认",
+        "correct": false
+      },
+      {
+        "text": "忽略该工具调用，继续下一轮",
+        "correct": false
+      },
+      {
+        "text": "终止循环并返回错误",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项是暂停循环等待用户确认。高风险工具需要人工介入，暂停是安全设计。误区是直接执行或忽略，前者有安全风险，后者无法完成任务。",
+    "id": "harness-027",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "运行循环设计"
+  },
+  {
+    "type": "single",
+    "question": "Harness 运行循环中，若模型在连续多轮中反复输出相同的工具调用且参数不变，最合理的处理是？",
+    "options": [
+      {
+        "text": "检测到重复循环，终止并提示模型或用户",
+        "correct": true
+      },
+      {
+        "text": "无限继续执行，直到模型自行改变",
+        "correct": false
+      },
+      {
+        "text": "自动修改工具参数后执行",
+        "correct": false
+      },
+      {
+        "text": "忽略重复调用，直接返回空结果",
+        "correct": false
+      }
+    ],
+    "explanation": "正确选项是检测重复并终止，避免资源浪费。误区是放任无限循环或擅自修改参数。运行循环应具备重复检测机制，并给出明确提示。",
+    "id": "harness-028",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "运行循环设计"
+  },
+  {
+    "type": "single",
+    "question": "Harness 运行循环中，每轮迭代开始时，为了提高后续决策质量，通常最先执行的操作是什么？",
+    "options": [
+      {
+        "text": "将上一轮的工具执行结果或模型输出追加到对话上下文中",
+        "correct": true
+      },
+      {
+        "text": "立即调用模型生成下一步工具调用",
+        "correct": false
+      },
+      {
+        "text": "重置整个运行状态并清空上下文",
+        "correct": false
+      },
+      {
+        "text": "先执行一个固定的默认工具以获取环境信息",
+        "correct": false
+      }
+    ],
+    "explanation": "运行循环每轮开始应先将上一轮的结果（如工具返回值或模型文本）合并到上下文，使模型基于完整信息决策。立即调用模型或固定执行工具都跳过状态更新，重置状态则丢失必要历史，均不合理。",
+    "id": "harness-029",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "运行循环设计"
+  },
+  {
+    "type": "multiple",
+    "question": "设计 Harness 运行循环的退出路径时，以下哪些情形应作为独立的终止或暂停状态返回给调用方？",
+    "options": [
+      {
+        "text": "模型明确给出最终答案，任务正常完成",
+        "correct": true
+      },
+      {
+        "text": "达到预设的最大迭代轮数，任务未完成",
+        "correct": true
+      },
+      {
+        "text": "工具执行器返回可恢复的临时错误，循环应继续重试而不终止",
+        "correct": false
+      },
+      {
+        "text": "等待用户对高风险工具调用进行确认，循环暂停",
+        "correct": true
+      }
+    ],
+    "explanation": "正常完成、达到迭代上限、等待人工确认分别对应成功、超限、挂起三种不同状态，应独立返回。可恢复的临时错误属于循环内部处理，不应作为终止状态返回，否则调用方无法区分可重试错误与最终失败。",
+    "id": "harness-030",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "运行循环设计"
+  },
+  {
+    "type": "single",
+    "question": "Harness 框架中，工具协议层的主要职责是？",
+    "options": [
+      {
+        "text": "统一描述工具的名称、参数与返回值，供模型调用与框架校验",
+        "correct": true
+      },
+      {
+        "text": "负责模型推理的 GPU 调度与显存分配",
+        "correct": false
+      },
+      {
+        "text": "直接实现业务数据库的事务提交逻辑",
+        "correct": false
+      },
+      {
+        "text": "替代前端完成页面渲染与样式计算",
+        "correct": false
+      }
+    ],
+    "explanation": "工具协议层关注工具契约的定义与校验，使模型调用与执行适配解耦。GPU 调度、事务提交、页面渲染分别属于运行时、业务代码和前端职责，不是协议层任务。",
+    "id": "harness-031",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "工具协议与适配"
+  },
+  {
+    "type": "single",
+    "question": "当 Harness 需要接入一个参数为嵌套对象的第三方 HTTP 工具时，适配层最应关注的是？",
+    "options": [
+      {
+        "text": "将嵌套结构映射为协议支持的 schema 并做序列化转换",
+        "correct": true
+      },
+      {
+        "text": "把请求全部改为 GET 以简化参数",
+        "correct": false
+      },
+      {
+        "text": "忽略嵌套字段只传顶层字符串",
+        "correct": false
+      },
+      {
+        "text": "要求第三方工具修改其所有接口定义",
+        "correct": false
+      }
+    ],
+    "explanation": "适配层的核心是结构映射与序列化，使既有工具满足协议 schema。改为 GET、丢弃字段都会破坏语义；要求第三方改接口则违背适配解耦的初衷。",
+    "id": "harness-032",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "工具协议与适配"
+  },
+  {
+    "type": "single",
+    "question": "工具调用返回结果中包含二进制文件时，适配层较合理的处理方式是？",
+    "options": [
+      {
+        "text": "以引用或编码形式返回，并在协议中声明内容类型",
+        "correct": true
+      },
+      {
+        "text": "直接把原始字节塞进纯文本字段",
+        "correct": false
+      },
+      {
+        "text": "静默丢弃二进制部分只返回状态码",
+        "correct": false
+      },
+      {
+        "text": "将文件永久写入模型上下文",
+        "correct": false
+      }
+    ],
+    "explanation": "协议应能表达内容类型与引用，避免污染文本通道。原始字节塞入文本、静默丢弃都会丢失信息；上下文不是持久存储，不应承载大文件。",
+    "id": "harness-033",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "工具协议与适配"
+  },
+  {
+    "type": "single",
+    "question": "关于工具协议中的参数校验，下列说法正确的是？",
+    "options": [
+      {
+        "text": "应在调用执行前校验，失败时返回结构化错误而非执行工具",
+        "correct": true
+      },
+      {
+        "text": "应等工具执行完再校验，以便获得真实结果",
+        "correct": false
+      },
+      {
+        "text": "校验只由模型自行保证，框架无需介入",
+        "correct": false
+      },
+      {
+        "text": "校验失败应直接抛出未捕获异常终止进程",
+        "correct": false
+      }
+    ],
+    "explanation": "前置校验可避免无效调用与副作用，并以结构化错误让模型修正。执行后校验已产生副作用；仅靠模型不可靠；未捕获异常会破坏会话稳定性。",
+    "id": "harness-034",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "工具协议与适配"
+  },
+  {
+    "type": "single",
+    "question": "工具名称在协议中发生冲突（两个工具同名）时，较稳妥的适配策略是？",
+    "options": [
+      {
+        "text": "在命名空间或注册表中消歧，并在协议描述中体现唯一标识",
+        "correct": true
+      },
+      {
+        "text": "随机选择其中一个工具执行",
+        "correct": false
+      },
+      {
+        "text": "让后注册的工具覆盖前者且不提示",
+        "correct": false
+      },
+      {
+        "text": "把所有同名工具合并为一个实现",
+        "correct": false
+      }
+    ],
+    "explanation": "命名空间或唯一标识能保证调用目标确定且可追溯。随机选择、静默覆盖会导致不可预测行为；合并实现会改变语义并可能引入错误。",
+    "id": "harness-035",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "工具协议与适配"
+  },
+  {
+    "type": "single",
+    "question": "Harness 中“工具适配器”与“工具实现”的关系，最准确的描述是？",
+    "options": [
+      {
+        "text": "适配器把工具实现包装成协议规定的调用形态，实现保持不变",
+        "correct": true
+      },
+      {
+        "text": "适配器必须重写工具的业务逻辑",
+        "correct": false
+      },
+      {
+        "text": "适配器就是工具实现本身，二者无区别",
+        "correct": false
+      },
+      {
+        "text": "适配器只能用于本地函数，不能用于远程服务",
+        "correct": false
+      }
+    ],
+    "explanation": "适配器是协议与实现之间的转换层，不应改写业务逻辑。它同样适用于远程服务；把适配器等同于实现会混淆关注点。",
+    "id": "harness-036",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "工具协议与适配"
+  },
+  {
+    "type": "single",
+    "question": "工具调用需要用户确认（如写操作）时，协议层面较合适的做法是？",
+    "options": [
+      {
+        "text": "在工具描述中声明需确认的语义，由框架在调用前介入",
+        "correct": true
+      },
+      {
+        "text": "由工具实现自行弹窗询问，协议不体现",
+        "correct": false
+      },
+      {
+        "text": "默认全部工具都需确认以简化设计",
+        "correct": false
+      },
+      {
+        "text": "让模型在文本中自行承诺已获授权",
+        "correct": false
+      }
+    ],
+    "explanation": "需确认属于调用策略，应在协议中声明并由框架统一介入，保证一致性与可审计。工具自行弹窗难以统一；全部确认降低效率；模型承诺不构成授权。",
+    "id": "harness-037",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "工具协议与适配"
+  },
+  {
+    "type": "single",
+    "question": "为工具协议设计错误返回时，下列哪个字段最有助于模型自我修正？",
+    "options": [
+      {
+        "text": "机器可读的错误码与针对参数的具体说明",
+        "correct": true
+      },
+      {
+        "text": "仅返回堆栈的完整文本",
+        "correct": false
+      },
+      {
+        "text": "仅返回空对象表示失败",
+        "correct": false
+      },
+      {
+        "text": "返回与错误无关的成功示例",
+        "correct": false
+      }
+    ],
+    "explanation": "错误码与针对性说明能让模型定位问题并调整参数。完整堆栈噪声大；空对象无信息；无关示例会误导模型，均不利于修正。",
+    "id": "harness-038",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "工具协议与适配"
+  },
+  {
+    "type": "single",
+    "question": "关于工具协议版本演进，较合理的兼容策略是？",
+    "options": [
+      {
+        "text": "新增可选字段保持向后兼容，破坏性变更走显式版本协商",
+        "correct": true
+      },
+      {
+        "text": "任意修改字段含义但沿用同一版本号",
+        "correct": false
+      },
+      {
+        "text": "每次改动都要求所有工具同步升级",
+        "correct": false
+      },
+      {
+        "text": "协议不设版本，靠文档口头约定",
+        "correct": false
+      }
+    ],
+    "explanation": "可选字段扩展可平滑兼容，破坏性变更需显式协商避免误解。随意改语义、强制全体同步、无版本约定都会造成适配混乱。",
+    "id": "harness-039",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "工具协议与适配"
+  },
+  {
+    "type": "single",
+    "question": "某工具耗时很长，Harness 适配层直接同步阻塞等待，最可能造成的问题是？",
+    "options": [
+      {
+        "text": "占用会话执行通道，影响其他工具调用与响应",
+        "correct": true
+      },
+      {
+        "text": "使工具参数自动变为只读",
+        "correct": false
+      },
+      {
+        "text": "导致协议 schema 无法解析",
+        "correct": false
+      },
+      {
+        "text": "使工具返回值必然为空",
+        "correct": false
+      }
+    ],
+    "explanation": "长任务同步阻塞会占住执行通道，降低并发与响应性，宜采用异步或超时机制。参数只读、schema 解析失败、返回为空均与阻塞无必然因果。",
+    "id": "harness-040",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "工具协议与适配"
+  },
+  {
+    "type": "multiple",
+    "question": "设计工具协议的工具描述时，通常应包含哪些信息？",
+    "options": [
+      {
+        "text": "工具用途与适用场景的简短说明",
+        "correct": true
+      },
+      {
+        "text": "参数的名称、类型与是否必填",
+        "correct": true
+      },
+      {
+        "text": "返回值的结构与含义",
+        "correct": true
+      },
+      {
+        "text": "工具内部所有私有变量名",
+        "correct": false
+      }
+    ],
+    "explanation": "用途、参数契约、返回结构是模型正确调用的必要信息。私有变量属于实现细节，暴露反而增加噪声且与调用契约无关。",
+    "id": "harness-041",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "工具协议与适配"
+  },
+  {
+    "type": "multiple",
+    "question": "工具适配层在调用远程服务时，较合理的职责包括？",
+    "options": [
+      {
+        "text": "将协议参数转换为远程请求所需格式",
+        "correct": true
+      },
+      {
+        "text": "处理超时、重试与错误映射",
+        "correct": true
+      },
+      {
+        "text": "把远程返回转换为协议约定的结果结构",
+        "correct": true
+      },
+      {
+        "text": "替远程服务实现其核心业务算法",
+        "correct": false
+      }
+    ],
+    "explanation": "适配层负责格式转换、可靠性处理与结果映射。核心业务算法属于远程服务自身，适配层不应越界实现，否则耦合且难维护。",
+    "id": "harness-042",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "工具协议与适配"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些做法有助于提升工具协议调用的可观测性？",
+    "options": [
+      {
+        "text": "记录调用参数摘要、耗时与结果状态",
+        "correct": true
+      },
+      {
+        "text": "为每次调用分配可关联的追踪标识",
+        "correct": true
+      },
+      {
+        "text": "对敏感参数做脱敏后再记录",
+        "correct": true
+      },
+      {
+        "text": "把全部原始密钥明文写入日志",
+        "correct": false
+      }
+    ],
+    "explanation": "摘要、追踪标识、脱敏能在可审计的同时保护敏感信息。明文写密钥会造成严重泄露，违背安全可观测性原则。",
+    "id": "harness-043",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "工具协议与适配"
+  },
+  {
+    "type": "multiple",
+    "question": "当模型生成的工具参数不符合 schema 时，框架较合理的处理包括？",
+    "options": [
+      {
+        "text": "拒绝执行并返回具体校验错误",
+        "correct": true
+      },
+      {
+        "text": "允许模型依据错误信息重新生成参数",
+        "correct": true
+      },
+      {
+        "text": "对可安全补全的缺省值按声明填充",
+        "correct": true
+      },
+      {
+        "text": "忽略 schema 强行执行以节省时间",
+        "correct": false
+      }
+    ],
+    "explanation": "拒绝并反馈错误、支持重试、按声明填充安全缺省值，都是可控的纠错手段。忽略 schema 强行执行可能触发副作用或错误结果。",
+    "id": "harness-044",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "工具协议与适配"
+  },
+  {
+    "type": "multiple",
+    "question": "关于工具协议中同步与异步调用的选择，下列说法合理的有？",
+    "options": [
+      {
+        "text": "短时只读工具可同步调用以简化流程",
+        "correct": true
+      },
+      {
+        "text": "长时任务宜采用异步并提供状态查询",
+        "correct": true
+      },
+      {
+        "text": "协议应明确区分调用完成与任务完成的状态",
+        "correct": true
+      },
+      {
+        "text": "所有工具都必须强制异步以统一实现",
+        "correct": false
+      }
+    ],
+    "explanation": "同步适合短任务，异步适合长任务，协议需区分“已受理”与“已完成”。强制全部异步会增加不必要复杂度，并非普适正确。",
+    "id": "harness-045",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "工具协议与适配"
+  },
+  {
+    "type": "single",
+    "question": "在 Harness 框架中设计工具协议时，为每个工具定义唯一的标识符（如 name 或 id）的主要目的是什么？",
+    "options": [
+      {
+        "text": "方便模型在自然语言中提及工具",
+        "correct": false
+      },
+      {
+        "text": "确保路由时能准确匹配到对应的工具实现",
+        "correct": true
+      },
+      {
+        "text": "减少协议传输的数据量",
+        "correct": false
+      },
+      {
+        "text": "满足日志格式的统一要求",
+        "correct": false
+      }
+    ],
+    "explanation": "唯一标识符的核心作用是让框架在模型请求调用时能无歧义地路由到正确的工具实现。其他选项虽可能带来便利，但并非主要目的；路由准确性是关键误区。",
+    "id": "harness-046",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "工具协议与适配"
+  },
+  {
+    "type": "single",
+    "question": "Harness 适配层将第三方工具的返回值转换为模型可理解的结构时，以下哪种做法最合理？",
+    "options": [
+      {
+        "text": "直接透传原始 JSON，由模型自行解析",
+        "correct": false
+      },
+      {
+        "text": "仅返回状态码和布尔成功标志",
+        "correct": false
+      },
+      {
+        "text": "提取关键字段并补充语义化的文本描述",
+        "correct": true
+      },
+      {
+        "text": "将整个响应序列化为字符串放入 error 字段",
+        "correct": false
+      }
+    ],
+    "explanation": "适配层应提取模型决策所需的关键信息，并补充语义化描述以降低理解成本。直接透传可能包含无关噪声，仅返回状态码信息不足，放入 error 字段则语义错误。",
+    "id": "harness-047",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "工具协议与适配"
+  },
+  {
+    "type": "single",
+    "question": "当工具协议中某个参数为枚举类型时，适配层在调用前校验的最合适时机是？",
+    "options": [
+      {
+        "text": "仅在工具返回错误后检查",
+        "correct": false
+      },
+      {
+        "text": "在模型生成参数后、实际调用工具前",
+        "correct": true
+      },
+      {
+        "text": "由工具实现内部自行校验，适配层不处理",
+        "correct": false
+      },
+      {
+        "text": "在日志记录阶段补充检查",
+        "correct": false
+      }
+    ],
+    "explanation": "适配层应在调用前校验枚举值，避免无效请求发往工具实现。事后检查无法阻止错误调用，工具内部校验虽可兜底但会增加无谓开销，日志阶段检查已太晚。",
+    "id": "harness-048",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "工具协议与适配"
+  },
+  {
+    "type": "single",
+    "question": "Harness 中工具适配器需要调用一个返回大量文本的远程 API，为控制上下文长度，较合理的策略是？",
+    "options": [
+      {
+        "text": "将全部文本原样返回给模型",
+        "correct": false
+      },
+      {
+        "text": "在适配层截断并附加截断提示",
+        "correct": true
+      },
+      {
+        "text": "丢弃全部文本仅返回长度",
+        "correct": false
+      },
+      {
+        "text": "让模型自行决定是否截断但 adapter 不干预",
+        "correct": false
+      }
+    ],
+    "explanation": "适配层可在返回前截断并明确提示，平衡信息量与上下文限制。原样返回可能超限，全部丢弃损失信息，让模型自行处理但适配层不干预则无法控制长度。",
+    "id": "harness-049",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "工具协议与适配"
+  },
+  {
+    "type": "single",
+    "question": "关于工具协议中的“幂等性标识”，以下说法正确的是？",
+    "options": [
+      {
+        "text": "幂等性标识用于区分不同用户的调用",
+        "correct": false
+      },
+      {
+        "text": "幂等性标识可帮助适配层在重试时避免重复副作用",
+        "correct": true
+      },
+      {
+        "text": "幂等性标识必须由模型生成",
+        "correct": false
+      },
+      {
+        "text": "幂等性标识仅用于日志追踪",
+        "correct": false
+      }
+    ],
+    "explanation": "幂等性标识的核心用途是让适配层在重试时能识别重复请求，避免重复执行有副作用的操作。它不用于区分用户，通常由框架生成而非模型，也不仅限于日志追踪。",
+    "id": "harness-050",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "工具协议与适配"
+  },
+  {
+    "type": "single",
+    "question": "Harness 适配层在调用一个可能返回多种错误类型的工具时，较合理的错误映射做法是？",
+    "options": [
+      {
+        "text": "将所有错误统一映射为“调用失败”",
+        "correct": false
+      },
+      {
+        "text": "按错误类别映射为协议定义的错误码并附带简短说明",
+        "correct": true
+      },
+      {
+        "text": "直接抛出原始异常给上层",
+        "correct": false
+      },
+      {
+        "text": "仅记录日志并返回空结果",
+        "correct": false
+      }
+    ],
+    "explanation": "按类别映射错误码并附说明，有助于模型理解错误性质并调整策略。统一为“调用失败”丢失信息，直接抛异常不利于模型处理，返回空结果会掩盖错误。",
+    "id": "harness-051",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "工具协议与适配"
+  },
+  {
+    "type": "single",
+    "question": "在工具协议中为工具参数设计默认值时，以下哪种情况最适合设置默认值？",
+    "options": [
+      {
+        "text": "参数对业务结果有重大影响且必须由用户明确选择",
+        "correct": false
+      },
+      {
+        "text": "参数为可选且存在安全合理的常用取值",
+        "correct": true
+      },
+      {
+        "text": "参数用于指定用户身份",
+        "correct": false
+      },
+      {
+        "text": "参数是文件上传内容",
+        "correct": false
+      }
+    ],
+    "explanation": "默认值应适用于可选且存在安全合理常用取值的参数，以简化调用。重大影响参数应要求显式指定，用户身份和文件内容不适合设默认值，否则可能引发安全问题。",
+    "id": "harness-052",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "工具协议与适配"
+  },
+  {
+    "type": "single",
+    "question": "当 Harness 需要同时接入多个提供相似功能的工具时，适配层较合理的做法是？",
+    "options": [
+      {
+        "text": "为每个工具维护独立的协议描述和适配逻辑",
+        "correct": true
+      },
+      {
+        "text": "强制所有工具使用完全相同的参数结构",
+        "correct": false
+      },
+      {
+        "text": "只接入其中一个并忽略其他",
+        "correct": false
+      },
+      {
+        "text": "要求模型自行区分不同工具的调用方式",
+        "correct": false
+      }
+    ],
+    "explanation": "为每个工具维护独立协议描述和适配逻辑，能保留各自特性并清晰路由。强制相同参数结构可能不可行，忽略其他工具会降低能力，要求模型自行区分会增加不确定性。",
+    "id": "harness-053",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "工具协议与适配"
+  },
+  {
+    "type": "single",
+    "question": "在工具协议中，为工具返回结果设计“内容类型”字段的主要作用是？",
+    "options": [
+      {
+        "text": "帮助适配层和模型正确解析结果",
+        "correct": true
+      },
+      {
+        "text": "用于计费统计",
+        "correct": false
+      },
+      {
+        "text": "替代 HTTP 状态码",
+        "correct": false
+      },
+      {
+        "text": "决定工具的调用权限",
+        "correct": false
+      }
+    ],
+    "explanation": "内容类型字段使适配层和模型知道如何解析返回数据（如文本、JSON、图片引用等）。它不用于计费、不替代状态码，也不决定调用权限。",
+    "id": "harness-054",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "工具协议与适配"
+  },
+  {
+    "type": "single",
+    "question": "Harness 适配层在调用工具前，按协议规定参数 schema 不允许未定义的额外字段，而模型生成的参数包含了未定义字段。较合理的处理是？",
+    "options": [
+      {
+        "text": "直接忽略额外字段并继续调用",
+        "correct": false
+      },
+      {
+        "text": "拒绝调用并返回结构化错误提示",
+        "correct": true
+      },
+      {
+        "text": "将额外字段原样传给工具实现",
+        "correct": false
+      },
+      {
+        "text": "自动删除额外字段且不提示模型",
+        "correct": false
+      }
+    ],
+    "explanation": "协议明确禁止额外字段时，忽略、静默删除或原样透传都会掩盖模型对参数结构的误解，并可能引入工具异常或安全风险；拒绝调用并返回结构化错误，能让模型明确问题并修正参数。",
+    "id": "harness-055",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "工具协议与适配"
+  },
+  {
+    "type": "single",
+    "question": "Harness 适配层在将工具结果返回给模型时，对结果进行脱敏处理的主要考虑是？",
+    "options": [
+      {
+        "text": "减少传输数据量",
+        "correct": false
+      },
+      {
+        "text": "防止敏感信息泄露给模型或日志",
+        "correct": true
+      },
+      {
+        "text": "提高工具调用速度",
+        "correct": false
+      },
+      {
+        "text": "满足模型上下文长度限制",
+        "correct": false
+      }
+    ],
+    "explanation": "脱敏的主要目的是防止密码、令牌等敏感信息泄露给模型或日志。减少数据量和上下文长度是附带效果而非主要目的，提高速度则无关。",
+    "id": "harness-056",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "工具协议与适配"
+  },
+  {
+    "type": "single",
+    "question": "Harness 的工具适配层需要将模型生成的参数转换为远程 HTTP 请求。当工具协议中某个参数定义为“可选字符串，但一旦提供必须为 URL 格式”时，最合理的实现方式是？",
+    "options": [
+      {
+        "text": "只要参数存在，就使用 URL 解析器校验，不合法则返回参数错误并提示格式要求",
+        "correct": true
+      },
+      {
+        "text": "只要参数存在，就一律追加到请求体，由远程服务自行判断是否合法",
+        "correct": false
+      },
+      {
+        "text": "因为参数可选，所以完全跳过校验，避免误拒合法请求",
+        "correct": false
+      },
+      {
+        "text": "在协议层将该参数强制改为必填，要求模型每次都必须生成",
+        "correct": false
+      }
+    ],
+    "explanation": "可选参数一旦出现仍需按协议校验格式，并在不合法时返回带提示的错误，便于模型修正。完全跳过会放过坏数据；依赖远程服务会浪费往返且错误不清晰；强制必填改变了协议语义。",
+    "id": "harness-057",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "工具协议与适配"
+  },
+  {
+    "type": "single",
+    "question": "工具协议中为某个工具声明了“只读”属性，但适配层在调用时发现该工具实际会写入数据库。从协议与适配的角度看，最应优先采取的措施是？",
+    "options": [
+      {
+        "text": "立即修正工具元数据中的只读声明，并评估是否需要在调用前增加用户确认",
+        "correct": true
+      },
+      {
+        "text": "保持只读声明不变，因为模型不会关心工具是否写入",
+        "correct": false
+      },
+      {
+        "text": "仅在日志中记录一条警告，继续按只读工具无确认调用",
+        "correct": false
+      },
+      {
+        "text": "删除该工具，不再接入 Harness",
+        "correct": false
+      }
+    ],
+    "explanation": "工具元数据必须真实反映副作用，否则框架无法正确触发确认或审批。修正声明并评估确认流程是首要动作；仅记日志会让写操作绕过保护；删除工具并非必要。",
+    "id": "harness-058",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "工具协议与适配"
+  },
+  {
+    "type": "multiple",
+    "question": "Harness 适配层在把工具返回结果交给模型前，进行“结果规范化”时，合理的做法包括哪些？",
+    "options": [
+      {
+        "text": "统一错误结构，使模型能区分参数错误、权限错误和临时故障",
+        "correct": true
+      },
+      {
+        "text": "对超大文本结果按协议约定截断，并保留截断标记和获取完整内容的方式",
+        "correct": true
+      },
+      {
+        "text": "将二进制内容直接以原始字节嵌入文本字段，确保不丢失信息",
+        "correct": false
+      },
+      {
+        "text": "把结构化数据序列化为稳定的 JSON 字符串，并附带内容类型说明",
+        "correct": true
+      }
+    ],
+    "explanation": "统一错误结构、可控截断并保留标记、结构化序列化加类型说明都有利于模型理解与后续处理。原始字节直接嵌入文本会破坏可读性，也不符合常见协议的内容类型约定。",
+    "id": "harness-059",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "工具协议与适配"
+  },
+  {
+    "type": "multiple",
+    "question": "关于 Harness 工具协议中“工具描述”与“参数 schema”的分工，下列说法合理的有哪些？",
+    "options": [
+      {
+        "text": "工具描述应说明用途、适用场景和重要限制，帮助模型判断何时调用",
+        "correct": true
+      },
+      {
+        "text": "参数 schema 应约束参数类型、必填性和取值范围，供适配层校验",
+        "correct": true
+      },
+      {
+        "text": "只要参数 schema 足够详细，工具描述可以省略，模型仍能准确选择工具",
+        "correct": false
+      },
+      {
+        "text": "工具描述可以替代参数校验，因为模型会按描述生成正确参数",
+        "correct": false
+      }
+    ],
+    "explanation": "描述面向模型选择与使用，schema 面向机器校验和约束，二者互补。schema 无法代替用途说明；描述也不能替代运行时校验。",
+    "id": "harness-060",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "工具协议与适配"
+  },
+  {
+    "type": "single",
+    "question": "在Harness框架的状态管理里，关于检查点（Checkpoint）的作用，以下哪项最准确？",
+    "options": [
+      {
+        "text": "用于记录应用启动时的命令行参数",
+        "correct": false
+      },
+      {
+        "text": "用于持久化执行过程中的关键状态，支持恢复或回滚",
+        "correct": true
+      },
+      {
+        "text": "用于存储用户界面的布局配置",
+        "correct": false
+      },
+      {
+        "text": "用于缓存数据库查询结果以提升性能",
+        "correct": false
+      }
+    ],
+    "explanation": "检查点核心是持久化执行状态，便于故障恢复或状态回滚。命令行参数、界面布局、查询缓存均非检查点的主要目的，属于混淆项。",
+    "id": "harness-061",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "状态与检查点"
+  },
+  {
+    "type": "single",
+    "question": "在Harness框架的状态管理中，关于“状态快照”和“检查点”的区别，以下哪项最准确？",
+    "options": [
+      {
+        "text": "状态快照只记录内存对象，检查点只记录磁盘文件",
+        "correct": false
+      },
+      {
+        "text": "状态快照侧重记录某一时刻的状态数据；检查点通常还包含恢复所需的元数据，并可据此继续执行",
+        "correct": true
+      },
+      {
+        "text": "状态快照只能由用户手动创建，检查点只能由系统自动创建",
+        "correct": false
+      },
+      {
+        "text": "状态快照用于回滚，检查点只用于监控",
+        "correct": false
+      }
+    ],
+    "explanation": "快照与检查点的核心差异在于检查点面向可恢复执行，通常包含状态数据及恢复元数据；创建方式和存储介质不是本质区别。",
+    "id": "harness-062",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "状态与检查点"
+  },
+  {
+    "type": "single",
+    "question": "使用Harness框架的检查点恢复功能时，通常至少需要满足什么条件？",
+    "options": [
+      {
+        "text": "必须能够定位到一个完整且与当前任务兼容的检查点",
+        "correct": true
+      },
+      {
+        "text": "必须删除所有旧检查点",
+        "correct": false
+      },
+      {
+        "text": "必须重新启动所有外部服务",
+        "correct": false
+      },
+      {
+        "text": "必须清空所有缓存",
+        "correct": false
+      }
+    ],
+    "explanation": "恢复的前提是能够找到可用检查点，并确认其完整性和与当前任务的兼容性；重启服务和清缓存不是通用必需步骤。",
+    "id": "harness-063",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "状态与检查点"
+  },
+  {
+    "type": "single",
+    "question": "在Harness框架中，状态持久化到外部存储时，以下哪种做法最有助于保证检查点的一致性？",
+    "options": [
+      {
+        "text": "异步写入且不等待确认",
+        "correct": false
+      },
+      {
+        "text": "使用事务或原子写操作",
+        "correct": true
+      },
+      {
+        "text": "直接覆盖原文件而不做备份",
+        "correct": false
+      },
+      {
+        "text": "仅在进程退出时写入",
+        "correct": false
+      }
+    ],
+    "explanation": "事务或原子写可避免检查点部分写入导致不一致。异步不确认、直接覆盖、仅退出时写入均可能丢失或损坏状态。",
+    "id": "harness-064",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "状态与检查点"
+  },
+  {
+    "type": "single",
+    "question": "Harness框架的检查点机制在以下哪个场景中最能体现其价值？",
+    "options": [
+      {
+        "text": "开发阶段频繁修改代码",
+        "correct": false
+      },
+      {
+        "text": "长时间运行的任务在故障后需要从最近状态继续",
+        "correct": true
+      },
+      {
+        "text": "单元测试中验证函数返回值",
+        "correct": false
+      },
+      {
+        "text": "静态代码分析",
+        "correct": false
+      }
+    ],
+    "explanation": "检查点核心价值在于长任务故障恢复，避免重头执行。开发修改、单元测试、静态分析通常不依赖检查点恢复。",
+    "id": "harness-065",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "状态与检查点"
+  },
+  {
+    "type": "single",
+    "question": "关于Harness框架中检查点的存储策略，以下描述正确的是？",
+    "options": [
+      {
+        "text": "检查点只能存储在本地文件系统",
+        "correct": false
+      },
+      {
+        "text": "检查点应存储在可靠且可访问的持久化介质中",
+        "correct": true
+      },
+      {
+        "text": "检查点必须存储在内存中以保证速度",
+        "correct": false
+      },
+      {
+        "text": "检查点不需要考虑存储容量",
+        "correct": false
+      }
+    ],
+    "explanation": "检查点需持久可靠以便恢复，存储介质可多样但必须可访问。本地文件系统只是选项之一；内存非持久；容量需考虑。",
+    "id": "harness-066",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "状态与检查点"
+  },
+  {
+    "type": "single",
+    "question": "在Harness框架中，创建检查点时若不包含足够的元数据，可能导致什么问题？",
+    "options": [
+      {
+        "text": "检查点文件体积变小",
+        "correct": false
+      },
+      {
+        "text": "恢复时无法确定检查点对应的执行上下文",
+        "correct": true
+      },
+      {
+        "text": "检查点自动加密",
+        "correct": false
+      },
+      {
+        "text": "检查点无法被删除",
+        "correct": false
+      }
+    ],
+    "explanation": "元数据缺失会使恢复时难以定位上下文，可能导致恢复失败或错误。体积、加密、删除权限与元数据无直接必然联系。",
+    "id": "harness-067",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "状态与检查点"
+  },
+  {
+    "type": "single",
+    "question": "Harness框架中，检查点的清理策略主要考虑以下哪项？",
+    "options": [
+      {
+        "text": "检查点的数量越少越好",
+        "correct": false
+      },
+      {
+        "text": "根据保留策略和存储成本平衡恢复需求",
+        "correct": true
+      },
+      {
+        "text": "每次创建新检查点立即删除所有旧检查点",
+        "correct": false
+      },
+      {
+        "text": "永不清理检查点",
+        "correct": false
+      }
+    ],
+    "explanation": "清理需平衡恢复点需求与存储成本。过少可能无法恢复；立即全删或永不清理都极端，不符合实际策略。",
+    "id": "harness-068",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "状态与检查点"
+  },
+  {
+    "type": "single",
+    "question": "在Harness框架中，状态回滚与检查点恢复的主要区别是什么？",
+    "options": [
+      {
+        "text": "回滚通常指撤销到之前的状态，恢复指从检查点继续执行",
+        "correct": true
+      },
+      {
+        "text": "回滚只能用于数据库，恢复只能用于文件",
+        "correct": false
+      },
+      {
+        "text": "回滚会删除检查点，恢复会创建检查点",
+        "correct": false
+      },
+      {
+        "text": "两者完全等价",
+        "correct": false
+      }
+    ],
+    "explanation": "回滚强调状态撤销，恢复强调从检查点继续执行。存储对象、对检查点的增删并非本质区别，两者不等价。",
+    "id": "harness-069",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "状态与检查点"
+  },
+  {
+    "type": "single",
+    "question": "Harness框架中，检查点与事务日志在状态一致性保障上的关系，以下说法正确的是？",
+    "options": [
+      {
+        "text": "检查点可以替代事务日志的所有功能",
+        "correct": false
+      },
+      {
+        "text": "事务日志记录变更，检查点提供状态基准，二者可配合使用",
+        "correct": true
+      },
+      {
+        "text": "事务日志和检查点不能同时使用",
+        "correct": false
+      },
+      {
+        "text": "检查点仅用于事务日志的回滚",
+        "correct": false
+      }
+    ],
+    "explanation": "事务日志记录增量变更，检查点提供状态基准，配合可加速恢复。检查点不能完全替代日志，二者可共存且非仅用于回滚。",
+    "id": "harness-070",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "状态与检查点"
+  },
+  {
+    "type": "single",
+    "question": "在Harness框架中，检查点机制主要用于什么目的？",
+    "options": [
+      {
+        "text": "记录所有用户操作日志以便审计",
+        "correct": false
+      },
+      {
+        "text": "在任务执行过程中保存状态，以便故障后恢复",
+        "correct": true
+      },
+      {
+        "text": "优化任务执行性能，减少资源消耗",
+        "correct": false
+      },
+      {
+        "text": "提供实时监控和告警功能",
+        "correct": false
+      }
+    ],
+    "explanation": "检查点的核心目的是持久化任务执行状态，以便在故障或中断后能够从保存点恢复，避免重新执行。其他选项描述的是日志审计、性能优化和监控功能，并非检查点的主要用途。",
+    "id": "harness-071",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "状态与检查点"
+  },
+  {
+    "type": "single",
+    "question": "Harness框架中，检查点数据通常存储在哪种介质中？",
+    "options": [
+      {
+        "text": "内存中，以保证快速访问",
+        "correct": false
+      },
+      {
+        "text": "本地文件系统，仅用于临时存储",
+        "correct": false
+      },
+      {
+        "text": "持久化存储如分布式文件系统或数据库",
+        "correct": true
+      },
+      {
+        "text": "网络缓存中，以便多个节点共享",
+        "correct": false
+      }
+    ],
+    "explanation": "检查点需要保证在故障后仍可访问，因此必须持久化到可靠的存储介质，如分布式文件系统或数据库。内存和缓存易失，本地文件系统可能不可靠，不适合作为检查点的主要存储。",
+    "id": "harness-072",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "状态与检查点"
+  },
+  {
+    "type": "single",
+    "question": "关于Harness框架中从检查点恢复的过程，以下描述正确的是？",
+    "options": [
+      {
+        "text": "只能从任务开始时的初始检查点恢复",
+        "correct": false
+      },
+      {
+        "text": "在检查点完整且与当前任务兼容的前提下，可以选择合适的有效检查点恢复",
+        "correct": true
+      },
+      {
+        "text": "恢复时不需要检查检查点完整性",
+        "correct": false
+      },
+      {
+        "text": "恢复时必须忽略比所选检查点更新的检查点",
+        "correct": false
+      }
+    ],
+    "explanation": "恢复的可行条件是检查点完整并与当前任务兼容；系统可在多个有效检查点中选择合适的一个，完整性校验是必要步骤。",
+    "id": "harness-073",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "状态与检查点"
+  },
+  {
+    "type": "single",
+    "question": "在Harness框架中，检查点相对于普通状态快照，通常额外包含什么？",
+    "options": [
+      {
+        "text": "仅包含状态数据，不含任何描述信息",
+        "correct": false
+      },
+      {
+        "text": "恢复所需的元数据（如版本、进度、校验信息）",
+        "correct": true
+      },
+      {
+        "text": "任务的全部历史日志",
+        "correct": false
+      },
+      {
+        "text": "用户界面的布局配置",
+        "correct": false
+      }
+    ],
+    "explanation": "检查点用于恢复，除状态数据外通常需要版本、进度、校验等元数据；历史日志由日志系统管理，界面布局与检查点无关。",
+    "id": "harness-074",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "状态与检查点"
+  },
+  {
+    "type": "single",
+    "question": "Harness框架中，检查点的元数据通常不包括以下哪项？",
+    "options": [
+      {
+        "text": "检查点创建的时间戳",
+        "correct": false
+      },
+      {
+        "text": "任务执行的进度信息",
+        "correct": false
+      },
+      {
+        "text": "检查点数据的校验和",
+        "correct": false
+      },
+      {
+        "text": "任务的所有历史日志",
+        "correct": true
+      }
+    ],
+    "explanation": "检查点元数据用于描述检查点本身，如时间戳、进度、校验和等，以支持恢复和一致性。历史日志通常由日志系统管理，不属于检查点元数据的一部分。",
+    "id": "harness-075",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "状态与检查点"
+  },
+  {
+    "type": "single",
+    "question": "以下哪种情况最可能导致Harness框架的检查点恢复失败？",
+    "options": [
+      {
+        "text": "检查点文件存储在可靠的分布式文件系统中",
+        "correct": false
+      },
+      {
+        "text": "检查点元数据中包含了任务进度信息",
+        "correct": false
+      },
+      {
+        "text": "检查点数据在存储过程中发生部分丢失",
+        "correct": true
+      },
+      {
+        "text": "检查点创建时记录了时间戳",
+        "correct": false
+      }
+    ],
+    "explanation": "检查点数据不完整或损坏会直接导致恢复失败。其他选项描述的是正常或有益的做法，不会导致恢复失败。",
+    "id": "harness-076",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "状态与检查点"
+  },
+  {
+    "type": "single",
+    "question": "在分布式多节点的Harness任务中，为保证一次检查点在全局范围内一致，最有效的做法是？",
+    "options": [
+      {
+        "text": "各节点完全独立地随时写入检查点，不做协调",
+        "correct": false
+      },
+      {
+        "text": "使用两阶段提交或分布式快照算法协调各节点的检查点创建",
+        "correct": true
+      },
+      {
+        "text": "只把检查点保存在各节点本地内存中",
+        "correct": false
+      },
+      {
+        "text": "忽略节点间状态依赖，只保存主节点状态",
+        "correct": false
+      }
+    ],
+    "explanation": "分布式检查点需要协调各节点状态，避免出现部分节点已保存、部分节点未保存的割裂状态；全局快照协议或两阶段提交可提供一致性。",
+    "id": "harness-077",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "状态与检查点"
+  },
+  {
+    "type": "single",
+    "question": "Harness框架中，检查点的清理策略主要依据什么？",
+    "options": [
+      {
+        "text": "检查点的创建时间，保留最新的几个",
+        "correct": false
+      },
+      {
+        "text": "检查点的大小，保留最小的几个",
+        "correct": false
+      },
+      {
+        "text": "恢复策略和存储容量，平衡恢复需求与存储成本",
+        "correct": true
+      },
+      {
+        "text": "检查点的数量，固定保留10个",
+        "correct": false
+      }
+    ],
+    "explanation": "检查点清理需要综合考虑恢复策略（如需要保留多久的历史）和存储容量，以平衡恢复灵活性与存储开销。仅基于时间、大小或固定数量可能无法满足需求。",
+    "id": "harness-078",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "状态与检查点"
+  },
+  {
+    "type": "single",
+    "question": "在Harness框架中，创建检查点时若未包含足够的元数据，可能导致什么问题？",
+    "options": [
+      {
+        "text": "检查点文件无法被存储",
+        "correct": false
+      },
+      {
+        "text": "恢复时无法准确定位状态或验证一致性",
+        "correct": true
+      },
+      {
+        "text": "检查点创建速度变慢",
+        "correct": false
+      },
+      {
+        "text": "任务执行会立即失败",
+        "correct": false
+      }
+    ],
+    "explanation": "元数据不足会使恢复过程难以确定检查点的版本、进度或完整性，从而无法准确恢复状态。元数据缺失通常不影响存储或导致立即失败，但会降低恢复的可靠性。",
+    "id": "harness-079",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "状态与检查点"
+  },
+  {
+    "type": "single",
+    "question": "以下哪个场景最能体现Harness框架检查点机制的价值？",
+    "options": [
+      {
+        "text": "任务执行时间很短，无需容错",
+        "correct": false
+      },
+      {
+        "text": "任务需要长时间运行，且可能因故障中断",
+        "correct": true
+      },
+      {
+        "text": "任务只读访问数据，不修改状态",
+        "correct": false
+      },
+      {
+        "text": "任务每次执行都从头开始，无需保存状态",
+        "correct": false
+      }
+    ],
+    "explanation": "检查点主要用于长时间运行的任务，在故障中断后可以从最近检查点恢复，避免重新执行全部工作。短任务或只读任务对检查点的需求较低。",
+    "id": "harness-080",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "状态与检查点"
+  },
+  {
+    "type": "single",
+    "question": "Harness框架中，检查点数据的存储策略以下描述正确的是？",
+    "options": [
+      {
+        "text": "检查点只能存储在本地磁盘，不能跨节点共享",
+        "correct": false
+      },
+      {
+        "text": "检查点应存储在可靠且可共享的存储中，以便故障转移",
+        "correct": true
+      },
+      {
+        "text": "检查点应存储在内存中以提高恢复速度",
+        "correct": false
+      },
+      {
+        "text": "检查点存储不需要考虑冗余",
+        "correct": false
+      }
+    ],
+    "explanation": "为了支持故障转移和分布式恢复，检查点需要存储在可靠且可共享的存储系统中，如分布式文件系统或对象存储。本地磁盘和内存不适合跨节点恢复。",
+    "id": "harness-081",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "状态与检查点"
+  },
+  {
+    "type": "single",
+    "question": "在Harness框架中，检查点的创建频率需要权衡什么？",
+    "options": [
+      {
+        "text": "恢复时间与存储开销",
+        "correct": true
+      },
+      {
+        "text": "任务优先级与用户数量",
+        "correct": false
+      },
+      {
+        "text": "网络带宽与CPU使用率",
+        "correct": false
+      },
+      {
+        "text": "检查点数量与日志大小",
+        "correct": false
+      }
+    ],
+    "explanation": "频繁创建检查点可以减少恢复时需要重放的数据量，从而缩短恢复时间，但会增加存储开销和运行时开销。因此需要在恢复时间与存储成本之间取得平衡。",
+    "id": "harness-082",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "状态与检查点"
+  },
+  {
+    "type": "single",
+    "question": "Harness框架中，检查点恢复时通常需要验证什么？",
+    "options": [
+      {
+        "text": "检查点文件的创建者权限",
+        "correct": false
+      },
+      {
+        "text": "检查点数据的完整性和版本兼容性",
+        "correct": true
+      },
+      {
+        "text": "检查点存储介质的品牌",
+        "correct": false
+      },
+      {
+        "text": "检查点创建时的网络状态",
+        "correct": false
+      }
+    ],
+    "explanation": "恢复前需要验证检查点数据的完整性（如校验和）以及版本兼容性，确保状态可以正确加载。其他选项与恢复的正确性无关。",
+    "id": "harness-083",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "状态与检查点"
+  },
+  {
+    "type": "single",
+    "question": "Harness 框架在运行过程中定期生成检查点。若某次检查点写入过程中进程被强制终止，未完成写入的检查点文件最应被如何处理？",
+    "options": [
+      {
+        "text": "恢复时直接加载该文件，依赖框架自动修复",
+        "correct": false
+      },
+      {
+        "text": "恢复时跳过该检查点，回退到最近一个完整检查点",
+        "correct": true
+      },
+      {
+        "text": "删除所有历史检查点并从头开始运行",
+        "correct": false
+      },
+      {
+        "text": "将其与最近一个完整检查点合并后加载",
+        "correct": false
+      }
+    ],
+    "explanation": "未完成写入的检查点可能缺失部分状态，不能直接加载或与旧检查点合并。正确做法是识别其不完整并回退到最近完整检查点。自动修复与合并都可能引入不一致状态，全部删除则损失可恢复能力。",
+    "id": "harness-084",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "状态与检查点"
+  },
+  {
+    "type": "single",
+    "question": "Harness 框架将检查点写入远程对象存储后，又更新本地状态索引。若在两者之间发生崩溃，恢复时应优先依据什么判断可用检查点？",
+    "options": [
+      {
+        "text": "本地状态索引中记录的检查点标识",
+        "correct": false
+      },
+      {
+        "text": "远程对象存储中实际存在且校验通过的检查点",
+        "correct": true
+      },
+      {
+        "text": "崩溃时刻内存中的最新状态",
+        "correct": false
+      },
+      {
+        "text": "最近一次日志输出中提到的检查点",
+        "correct": false
+      }
+    ],
+    "explanation": "本地索引可能尚未更新或已过期，远程存储中经校验的检查点才是可靠事实来源。以索引为准可能漏掉已写入检查点；内存状态随崩溃丢失；日志不是权威状态记录。",
+    "id": "harness-085",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "状态与检查点"
+  },
+  {
+    "type": "single",
+    "question": "某长流程任务运行数小时后需要支持人工暂停并从暂停点继续。Harness 框架中实现这一需求最合适的做法是？",
+    "options": [
+      {
+        "text": "仅在任务结束时保存一次最终状态",
+        "correct": false
+      },
+      {
+        "text": "暂停时创建检查点，恢复时从该检查点加载状态",
+        "correct": true
+      },
+      {
+        "text": "暂停时清空状态，恢复时重放全部外部输入",
+        "correct": false
+      },
+      {
+        "text": "暂停时只记录当前时间戳，恢复后从头执行",
+        "correct": false
+      }
+    ],
+    "explanation": "暂停与继续需要保存暂停时刻的完整状态，检查点正是为此设计。仅保存最终状态无法中途恢复；清空或只记时间戳都会导致重跑，代价高且可能产生重复副作用。",
+    "id": "harness-086",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "状态与检查点"
+  },
+  {
+    "type": "single",
+    "question": "Harness 框架中，检查点恢复后部分外部副作用（如已发送的消息）被再次触发。最合理的改进措施是？",
+    "options": [
+      {
+        "text": "禁止使用检查点，改为每次全量重跑",
+        "correct": false
+      },
+      {
+        "text": "在检查点中记录副作用去重标识，恢复后据此跳过已执行操作",
+        "correct": true
+      },
+      {
+        "text": "提高检查点创建频率以消除重复",
+        "correct": false
+      },
+      {
+        "text": "恢复时忽略所有外部系统状态",
+        "correct": false
+      }
+    ],
+    "explanation": "恢复可能重放检查点之后未记录的部分操作，需借助幂等键或去重标识避免重复副作用。提高频率不能根治；禁用检查点牺牲恢复能力；忽略外部状态会加剧不一致。",
+    "id": "harness-087",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "状态与检查点"
+  },
+  {
+    "type": "single",
+    "question": "Harness 框架中同一个检查点被多个恢复任务并发读取。为保障读取期间数据不被清理或覆盖，最恰当的策略是？",
+    "options": [
+      {
+        "text": "读取前直接删除旧检查点以释放空间",
+        "correct": false
+      },
+      {
+        "text": "对检查点加租约或引用计数，读取完成后再允许清理",
+        "correct": true
+      },
+      {
+        "text": "要求所有恢复任务串行执行且不允许并发",
+        "correct": false
+      },
+      {
+        "text": "读取时容忍数据被覆盖，失败后重试",
+        "correct": false
+      }
+    ],
+    "explanation": "租约或引用计数可标记正在使用的检查点，避免清理策略误删。直接删除会导致读取失败；强制串行限制过强；容忍覆盖并重试无法保证状态一致。",
+    "id": "harness-088",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "状态与检查点"
+  },
+  {
+    "type": "multiple",
+    "question": "在设计 Harness 框架检查点的保留与清理策略时，以下哪些因素是合理依据？",
+    "options": [
+      {
+        "text": "最近若干个检查点用于快速回退",
+        "correct": true
+      },
+      {
+        "text": "检查点占用的存储空间与成本",
+        "correct": true
+      },
+      {
+        "text": "当前是否有恢复任务正在引用该检查点",
+        "correct": true
+      },
+      {
+        "text": "检查点文件的创建者用户名长度",
+        "correct": false
+      }
+    ],
+    "explanation": "保留策略通常综合回退需求、存储成本和引用状态。最近检查点保证可回退，成本约束总量，引用状态防止误删。用户名长度与检查点价值和安全性无关。",
+    "id": "harness-089",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "状态与检查点"
+  },
+  {
+    "type": "multiple",
+    "question": "Harness 框架的检查点恢复流程中，以下哪些校验有助于避免加载损坏或不适配的状态？",
+    "options": [
+      {
+        "text": "校验检查点内容完整性（如哈希或校验和）",
+        "correct": true
+      },
+      {
+        "text": "确认检查点版本与当前恢复端兼容",
+        "correct": true
+      },
+      {
+        "text": "核对检查点所属任务标识与恢复目标一致",
+        "correct": true
+      },
+      {
+        "text": "比较检查点文件名长度是否符合规范",
+        "correct": false
+      }
+    ],
+    "explanation": "完整性校验防止内容损坏，版本兼容避免结构不匹配，任务标识核对防止张冠李戴。文件名长度不是状态正确性的有效判据，不能作为恢复校验条件。",
+    "id": "harness-090",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "状态与检查点"
+  },
+  {
+    "type": "single",
+    "question": "在 Harness 框架中，上下文压缩（Context Compression）的主要目的是什么？",
+    "options": [
+      {
+        "text": "减少内存占用以提高程序运行速度",
+        "correct": false
+      },
+      {
+        "text": "降低模型输入长度以适配上下文窗口限制",
+        "correct": true
+      },
+      {
+        "text": "加密上下文数据以增强安全性",
+        "correct": false
+      },
+      {
+        "text": "压缩模型权重以减少存储空间",
+        "correct": false
+      }
+    ],
+    "explanation": "上下文压缩旨在减少输入给模型的 token 数量，使其适应上下文窗口限制，而非内存或权重。其他选项混淆了压缩目的。",
+    "id": "harness-091",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "上下文压缩"
+  },
+  {
+    "type": "single",
+    "question": "Harness 框架中，上下文压缩策略通常针对以下哪部分内容进行处理？",
+    "options": [
+      {
+        "text": "用户输入的历史对话记录",
+        "correct": true
+      },
+      {
+        "text": "模型的内部参数",
+        "correct": false
+      },
+      {
+        "text": "框架的源代码",
+        "correct": false
+      },
+      {
+        "text": "系统环境变量",
+        "correct": false
+      }
+    ],
+    "explanation": "上下文压缩主要处理对话历史等文本内容，以缩减 token 数。模型参数、源码和环境变量不属于上下文范畴。",
+    "id": "harness-092",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "上下文压缩"
+  },
+  {
+    "type": "single",
+    "question": "以下哪项是 Harness 框架中常见的上下文压缩技术？",
+    "options": [
+      {
+        "text": "随机丢弃部分 token",
+        "correct": false
+      },
+      {
+        "text": "基于语义的摘要生成",
+        "correct": true
+      },
+      {
+        "text": "对 token 进行哈夫曼编码",
+        "correct": false
+      },
+      {
+        "text": "使用二进制压缩算法",
+        "correct": false
+      }
+    ],
+    "explanation": "语义摘要能保留关键信息并减少长度，是常见技术。随机丢弃会损失信息，编码和二进制压缩不适用于自然语言 token。",
+    "id": "harness-093",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "上下文压缩"
+  },
+  {
+    "type": "single",
+    "question": "在 Harness 框架中，上下文压缩可能引入的主要风险是什么？",
+    "options": [
+      {
+        "text": "增加模型推理时间",
+        "correct": false
+      },
+      {
+        "text": "丢失关键信息导致回答质量下降",
+        "correct": true
+      },
+      {
+        "text": "导致模型过拟合",
+        "correct": false
+      },
+      {
+        "text": "增加存储成本",
+        "correct": false
+      }
+    ],
+    "explanation": "压缩可能丢失细节，影响模型理解。推理时间可能减少，过拟合和存储成本与压缩无直接关系。",
+    "id": "harness-094",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "上下文压缩"
+  },
+  {
+    "type": "single",
+    "question": "Harness 框架中，上下文压缩与上下文窗口的关系是什么？",
+    "options": [
+      {
+        "text": "压缩是为了突破上下文窗口的硬性限制",
+        "correct": false
+      },
+      {
+        "text": "压缩用于在窗口限制内保留更多有效信息",
+        "correct": true
+      },
+      {
+        "text": "压缩可以完全消除窗口限制",
+        "correct": false
+      },
+      {
+        "text": "压缩与窗口限制无关",
+        "correct": false
+      }
+    ],
+    "explanation": "压缩不能突破硬性限制，而是优化窗口内信息密度。其他选项夸大或否定了关联。",
+    "id": "harness-095",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "上下文压缩"
+  },
+  {
+    "type": "single",
+    "question": "在 Harness 框架的对话系统中，当历史对话过长时，以下哪种压缩策略最可能保持对话连贯性？",
+    "options": [
+      {
+        "text": "直接截断最早的部分",
+        "correct": false
+      },
+      {
+        "text": "对早期对话生成摘要",
+        "correct": true
+      },
+      {
+        "text": "随机删除中间部分",
+        "correct": false
+      },
+      {
+        "text": "只保留最后一句",
+        "correct": false
+      }
+    ],
+    "explanation": "摘要能保留早期关键信息，维持连贯。截断和随机删除会丢失上下文，只留最后一句缺失历史。",
+    "id": "harness-096",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "上下文压缩"
+  },
+  {
+    "type": "single",
+    "question": "Harness 框架中，上下文压缩模块通常位于哪个处理阶段？",
+    "options": [
+      {
+        "text": "模型推理之后",
+        "correct": false
+      },
+      {
+        "text": "模型推理之前",
+        "correct": true
+      },
+      {
+        "text": "模型训练过程中",
+        "correct": false
+      },
+      {
+        "text": "数据预处理之前",
+        "correct": false
+      }
+    ],
+    "explanation": "压缩发生在构建模型输入之前，以减少 token 数。推理后和训练中不适用。",
+    "id": "harness-097",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "上下文压缩"
+  },
+  {
+    "type": "single",
+    "question": "以下哪项不是 Harness 框架上下文压缩的常用方法？",
+    "options": [
+      {
+        "text": "摘要生成",
+        "correct": false
+      },
+      {
+        "text": "关键信息提取",
+        "correct": false
+      },
+      {
+        "text": "词向量降维",
+        "correct": true
+      },
+      {
+        "text": "冗余去除",
+        "correct": false
+      }
+    ],
+    "explanation": "词向量降维是表示学习技术，不直接用于文本 token 压缩。摘要、提取和去冗余是常见方法。",
+    "id": "harness-098",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "上下文压缩"
+  },
+  {
+    "type": "single",
+    "question": "在 Harness 框架中，上下文压缩时保留最近对话轮次而压缩较早内容，主要基于什么考虑？",
+    "options": [
+      {
+        "text": "最近对话更短",
+        "correct": false
+      },
+      {
+        "text": "最近对话与当前问题更相关",
+        "correct": true
+      },
+      {
+        "text": "较早对话不重要",
+        "correct": false
+      },
+      {
+        "text": "压缩算法只能处理较早内容",
+        "correct": false
+      }
+    ],
+    "explanation": "最近对话通常与当前查询更相关，保留它们能提高回答准确性。其他选项不准确。",
+    "id": "harness-099",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "上下文压缩"
+  },
+  {
+    "type": "single",
+    "question": "Harness 框架中，上下文压缩后可能需要对压缩内容进行什么处理以保持模型理解？",
+    "options": [
+      {
+        "text": "添加特殊标记指示压缩部分",
+        "correct": true
+      },
+      {
+        "text": "将压缩内容转换为向量",
+        "correct": false
+      },
+      {
+        "text": "对压缩内容进行加密",
+        "correct": false
+      },
+      {
+        "text": "删除所有标点符号",
+        "correct": false
+      }
+    ],
+    "explanation": "添加标记有助于模型区分压缩内容，避免混淆。转换为向量和加密不必要，删除标点有害。",
+    "id": "harness-100",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "上下文压缩"
+  },
+  {
+    "type": "multiple",
+    "question": "Harness 框架中，上下文压缩可能采用哪些策略来减少 token 数量？",
+    "options": [
+      {
+        "text": "生成对话摘要",
+        "correct": true
+      },
+      {
+        "text": "移除停用词和冗余短语",
+        "correct": true
+      },
+      {
+        "text": "将整个对话翻译为另一种语言",
+        "correct": false
+      },
+      {
+        "text": "用代词替换实体名称",
+        "correct": true
+      }
+    ],
+    "explanation": "摘要、去冗余和代词化都能减少 token。翻译可能增加长度且不保证压缩。",
+    "id": "harness-101",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "上下文压缩"
+  },
+  {
+    "type": "multiple",
+    "question": "以下关于 Harness 框架上下文压缩的说法，哪些是正确的？",
+    "options": [
+      {
+        "text": "压缩可能减少模型响应时间",
+        "correct": true
+      },
+      {
+        "text": "压缩总是无损的",
+        "correct": false
+      },
+      {
+        "text": "压缩需要平衡信息保留与长度缩减",
+        "correct": true
+      },
+      {
+        "text": "压缩可以完全避免信息丢失",
+        "correct": false
+      }
+    ],
+    "explanation": "压缩通常减少输入长度从而加速推理，但可能丢失信息，需权衡。无损和完全避免丢失不现实。",
+    "id": "harness-102",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "上下文压缩"
+  },
+  {
+    "type": "multiple",
+    "question": "在 Harness 框架中，设计上下文压缩模块时需要考虑哪些因素？",
+    "options": [
+      {
+        "text": "压缩对下游任务性能的影响",
+        "correct": true
+      },
+      {
+        "text": "压缩算法的计算开销",
+        "correct": true
+      },
+      {
+        "text": "压缩后内容的可读性",
+        "correct": false
+      },
+      {
+        "text": "压缩率与信息保留的权衡",
+        "correct": true
+      }
+    ],
+    "explanation": "需考虑性能影响、计算开销和权衡；可读性主要对人，不是模型必需。",
+    "id": "harness-103",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "上下文压缩"
+  },
+  {
+    "type": "multiple",
+    "question": "Harness 框架中，上下文压缩可能应用于哪些场景？",
+    "options": [
+      {
+        "text": "长文档问答",
+        "correct": true
+      },
+      {
+        "text": "多轮对话系统",
+        "correct": true
+      },
+      {
+        "text": "实时语音识别",
+        "correct": false
+      },
+      {
+        "text": "代码生成中的长上下文",
+        "correct": true
+      }
+    ],
+    "explanation": "长文档、多轮对话和长代码上下文都需要压缩；实时语音识别通常不涉及文本上下文压缩。",
+    "id": "harness-104",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "上下文压缩"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些是评估 Harness 框架上下文压缩效果的有效指标？",
+    "options": [
+      {
+        "text": "压缩后 token 减少比例",
+        "correct": true
+      },
+      {
+        "text": "压缩后模型回答的准确率",
+        "correct": true
+      },
+      {
+        "text": "压缩算法的运行时间",
+        "correct": false
+      },
+      {
+        "text": "信息保留度（如关键实体保留率）",
+        "correct": true
+      }
+    ],
+    "explanation": "压缩率、回答准确率和信息保留度直接衡量效果；运行时间是效率指标而非效果指标。",
+    "id": "harness-105",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "上下文压缩"
+  },
+  {
+    "type": "single",
+    "question": "Harness 框架的上下文压缩模块在处理长期对话时，将较早的对话内容替换为简短的摘要。这种做法主要缓解了什么问题？",
+    "options": [
+      {
+        "text": "模型推理速度随上下文增长而线性下降",
+        "correct": false
+      },
+      {
+        "text": "上下文窗口的 token 容量限制",
+        "correct": true
+      },
+      {
+        "text": "对话历史中实体指代消解困难",
+        "correct": false
+      },
+      {
+        "text": "压缩后摘要与原文的语义偏差",
+        "correct": false
+      }
+    ],
+    "explanation": "压缩通过摘要替换旧内容，直接减少 token 占用，缓解窗口容量限制。推理速度下降并非 token 限制的核心问题；指代消解是语义问题，不是压缩的直接目标；语义偏差是压缩带来的风险而非被缓解的问题。",
+    "id": "harness-106",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "上下文压缩"
+  },
+  {
+    "type": "single",
+    "question": "在 Harness 框架中，若对上下文采用“滑动窗口”压缩，窗口大小设为 N 轮对话，则以下哪项描述最准确？",
+    "options": [
+      {
+        "text": "所有历史对话被永久丢弃，仅保留最近 N 轮",
+        "correct": false
+      },
+      {
+        "text": "最近 N 轮保持原文，更早内容可能被摘要或丢弃",
+        "correct": true
+      },
+      {
+        "text": "每轮对话被均匀压缩为原长度的 1/N",
+        "correct": false
+      },
+      {
+        "text": "窗口内对话被随机采样以降低 token 数",
+        "correct": false
+      }
+    ],
+    "explanation": "滑动窗口通常保留最近 N 轮原文以确保近期上下文完整，更早部分可摘要或丢弃。并非永久丢弃所有历史，也不是均匀压缩或随机采样，后两者会破坏对话结构。",
+    "id": "harness-107",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "上下文压缩"
+  },
+  {
+    "type": "single",
+    "question": "Harness 框架对上下文进行压缩后，为降低模型对摘要内容的理解偏差，以下哪种做法最合理？",
+    "options": [
+      {
+        "text": "在摘要前添加“以下是历史摘要”的标识",
+        "correct": true
+      },
+      {
+        "text": "将摘要与原文混合后随机打乱顺序",
+        "correct": false
+      },
+      {
+        "text": "删除所有摘要中的专有名词",
+        "correct": false
+      },
+      {
+        "text": "仅保留摘要中的动词和形容词",
+        "correct": false
+      }
+    ],
+    "explanation": "添加明确标识有助于模型区分摘要与当前输入，减少混淆。打乱顺序会破坏语义连贯性；删除专有名词或仅保留部分词性会丢失关键信息，加剧理解偏差。",
+    "id": "harness-108",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "上下文压缩"
+  },
+  {
+    "type": "single",
+    "question": "在 Harness 框架中，对多轮对话进行压缩时，以下哪项内容最应优先保留原文？",
+    "options": [
+      {
+        "text": "最早的寒暄与问候语",
+        "correct": false
+      },
+      {
+        "text": "用户最近一次提出的具体约束条件",
+        "correct": true
+      },
+      {
+        "text": "中间轮次的重复确认语句",
+        "correct": false
+      },
+      {
+        "text": "系统对已解决旧问题的详细解释",
+        "correct": false
+      }
+    ],
+    "explanation": "最近的具体约束条件直接影响当前任务执行，应优先保留原文。寒暄、重复确认和已解决旧问题的详细解释信息密度低，更适合压缩或丢弃。",
+    "id": "harness-109",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "上下文压缩"
+  },
+  {
+    "type": "single",
+    "question": "Harness 框架的压缩模块将一段长对话压缩为摘要后，模型在后续回答中出现了指代不明。以下哪项是最可能的原因？",
+    "options": [
+      {
+        "text": "摘要长度超过了原文长度",
+        "correct": false
+      },
+      {
+        "text": "摘要中丢失了关键实体及其指代关系",
+        "correct": true
+      },
+      {
+        "text": "压缩模块未调用任何 NLP 工具",
+        "correct": false
+      },
+      {
+        "text": "模型温度参数设置过低",
+        "correct": false
+      }
+    ],
+    "explanation": "指代不明通常因摘要丢失实体或指代链信息所致。摘要超长与指代无关；是否调用工具不决定指代保留；温度参数影响随机性而非指代理解。",
+    "id": "harness-110",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "上下文压缩"
+  },
+  {
+    "type": "single",
+    "question": "在 Harness 框架中，上下文压缩的触发时机通常依据什么条件？",
+    "options": [
+      {
+        "text": "每轮对话结束后无条件压缩",
+        "correct": false
+      },
+      {
+        "text": "当前上下文 token 数接近窗口上限时",
+        "correct": true
+      },
+      {
+        "text": "用户主动请求压缩时",
+        "correct": false
+      },
+      {
+        "text": "模型返回错误码时",
+        "correct": false
+      }
+    ],
+    "explanation": "压缩通常在 token 数接近窗口上限时触发，以平衡信息保留与容量限制。无条件压缩会增加开销并损失信息；用户请求和错误码并非典型触发条件。",
+    "id": "harness-111",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "上下文压缩"
+  },
+  {
+    "type": "single",
+    "question": "Harness 框架中，对上下文进行“抽取式压缩”与“生成式压缩”的主要区别是什么？",
+    "options": [
+      {
+        "text": "抽取式压缩只能处理英文，生成式可处理中文",
+        "correct": false
+      },
+      {
+        "text": "抽取式压缩保留原文片段，生成式压缩产生新文本",
+        "correct": true
+      },
+      {
+        "text": "抽取式压缩必须保留全部句子，生成式可删除句子",
+        "correct": false
+      },
+      {
+        "text": "抽取式压缩不减少 token 数，生成式才减少",
+        "correct": false
+      }
+    ],
+    "explanation": "抽取式压缩从原文中选择片段保留，生成式压缩则用模型生成新摘要文本。两者均可减少 token，语言支持并非区别，抽取式也可删除句子。",
+    "id": "harness-112",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "上下文压缩"
+  },
+  {
+    "type": "single",
+    "question": "在 Harness 框架的对话系统中，压缩模块将历史对话摘要后，以下哪项措施最有助于维持对话状态的一致性？",
+    "options": [
+      {
+        "text": "在摘要中显式记录已确认的关键状态",
+        "correct": true
+      },
+      {
+        "text": "每次压缩后清空所有状态变量",
+        "correct": false
+      },
+      {
+        "text": "仅压缩用户发言，保留系统发言原文",
+        "correct": false
+      },
+      {
+        "text": "压缩后禁止模型引用历史信息",
+        "correct": false
+      }
+    ],
+    "explanation": "在摘要中显式记录关键状态可弥补压缩导致的信息损失，维持一致性。清空状态会破坏一致性；仅压缩用户发言未必足够；禁止引用历史会削弱多轮能力。",
+    "id": "harness-113",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "上下文压缩"
+  },
+  {
+    "type": "single",
+    "question": "Harness 框架中，上下文压缩模块与检索增强生成（RAG）结合使用时，以下哪种做法最合理？",
+    "options": [
+      {
+        "text": "压缩后用检索结果完全替代摘要",
+        "correct": false
+      },
+      {
+        "text": "将压缩摘要作为检索查询的补充上下文",
+        "correct": true
+      },
+      {
+        "text": "压缩时删除所有可检索的外部知识标记",
+        "correct": false
+      },
+      {
+        "text": "RAG 与压缩互斥，不能同时启用",
+        "correct": false
+      }
+    ],
+    "explanation": "压缩摘要可作为检索查询的补充，帮助定位相关外部知识。完全替代摘要会丢失对话状态；删除知识标记会降低可检索性；两者可协同工作而非互斥。",
+    "id": "harness-114",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "上下文压缩"
+  },
+  {
+    "type": "single",
+    "question": "在 Harness 框架中，以下哪项最能说明上下文压缩可能降低模型回答的忠实度？",
+    "options": [
+      {
+        "text": "压缩后 token 数减少",
+        "correct": false
+      },
+      {
+        "text": "摘要省略了原文中的否定词导致语义反转",
+        "correct": true
+      },
+      {
+        "text": "压缩模块使用了外部模型",
+        "correct": false
+      },
+      {
+        "text": "压缩后上下文长度变短",
+        "correct": false
+      }
+    ],
+    "explanation": "省略否定词导致语义反转是压缩降低忠实度的典型表现。token 减少和长度变短是压缩的正常结果，不直接导致不忠实；使用外部模型不必然降低忠实度。",
+    "id": "harness-115",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "上下文压缩"
+  },
+  {
+    "type": "multiple",
+    "question": "Harness 框架中，上下文压缩可能采用以下哪些技术来减少 token 数量？",
+    "options": [
+      {
+        "text": "对历史对话进行抽象式摘要",
+        "correct": true
+      },
+      {
+        "text": "删除填充词和冗余重复内容",
+        "correct": true
+      },
+      {
+        "text": "将长文档切分为多个片段并全部保留",
+        "correct": false
+      },
+      {
+        "text": "用简短占位符替换已完成的旧任务描述",
+        "correct": true
+      }
+    ],
+    "explanation": "抽象摘要、删除冗余和占位符替换都可减少 token。将长文档切分后全部保留并不会减少总 token 数，反而可能增加。",
+    "id": "harness-116",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "上下文压缩"
+  },
+  {
+    "type": "multiple",
+    "question": "在 Harness 框架中设计上下文压缩策略时，以下哪些因素需要重点权衡？",
+    "options": [
+      {
+        "text": "压缩率与信息保留完整度",
+        "correct": true
+      },
+      {
+        "text": "压缩引入的额外计算开销",
+        "correct": true
+      },
+      {
+        "text": "压缩后内容的语义连贯性",
+        "correct": true
+      },
+      {
+        "text": "压缩模块的编程语言是否最新",
+        "correct": false
+      }
+    ],
+    "explanation": "压缩率与信息保留、计算开销、语义连贯性是核心权衡因素。编程语言是否最新与压缩策略效果无直接关系，不是设计时的重点因素。",
+    "id": "harness-117",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "上下文压缩"
+  },
+  {
+    "type": "multiple",
+    "question": "Harness 框架中，以下哪些场景适合启用上下文压缩？",
+    "options": [
+      {
+        "text": "多轮客服对话历史持续增长",
+        "correct": true
+      },
+      {
+        "text": "单轮短查询且无历史上下文",
+        "correct": false
+      },
+      {
+        "text": "需要长期记忆的个性化助手对话",
+        "correct": true
+      },
+      {
+        "text": "实时性要求极高且历史极短的场景",
+        "correct": false
+      }
+    ],
+    "explanation": "历史持续增长或需要长期记忆的场景适合压缩以控制窗口。单轮短查询和极短历史场景没有压缩必要，反而可能增加开销。",
+    "id": "harness-118",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "上下文压缩"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些指标可用于评估 Harness 框架上下文压缩的效果？",
+    "options": [
+      {
+        "text": "压缩后 token 减少比例",
+        "correct": true
+      },
+      {
+        "text": "压缩前后模型回答准确率的变化",
+        "correct": true
+      },
+      {
+        "text": "压缩模块源代码的行数",
+        "correct": false
+      },
+      {
+        "text": "关键信息在压缩后的保留率",
+        "correct": true
+      }
+    ],
+    "explanation": "token 减少比例、回答准确率变化和关键信息保留率都是有效评估指标。源代码行数不反映压缩效果，与质量无关。",
+    "id": "harness-119",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "上下文压缩"
+  },
+  {
+    "type": "multiple",
+    "question": "Harness 框架中，关于上下文压缩对模型推理影响的说法，以下哪些正确？",
+    "options": [
+      {
+        "text": "压缩可降低每次推理的输入 token 成本",
+        "correct": true
+      },
+      {
+        "text": "压缩可能丢失细粒度信息导致回答偏差",
+        "correct": true
+      },
+      {
+        "text": "压缩后模型一定比压缩前回答更准确",
+        "correct": false
+      },
+      {
+        "text": "压缩可让模型在相同窗口内容纳更多轮对话",
+        "correct": true
+      }
+    ],
+    "explanation": "压缩降低输入成本、可能丢失细粒度信息、并在相同窗口容纳更多轮次。但压缩不保证回答更准确，可能因信息损失而变差，故“一定更准确”错误。",
+    "id": "harness-120",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "上下文压缩"
+  },
+  {
+    "type": "single",
+    "question": "在 CI 中运行 Harness 流水线时，某步骤需要拉取私有仓库镜像，但报权限不足。最应优先检查哪项配置？",
+    "options": [
+      {
+        "text": "流水线 YAML 的 stages 名称是否拼写正确",
+        "correct": false
+      },
+      {
+        "text": "该步骤使用的 Harness Connector 是否绑定了具备镜像拉取权限的凭据",
+        "correct": true
+      },
+      {
+        "text": "Delegate 所在机器的 CPU 核数是否足够",
+        "correct": false
+      },
+      {
+        "text": "流水线触发方式是否为 Webhook",
+        "correct": false
+      }
+    ],
+    "explanation": "私有镜像拉取依赖 Connector 中的凭据与权限。应确认 Docker/镜像仓库 Connector 绑定账号或令牌具有拉取权限，并正确引用到步骤。CPU、触发方式与阶段命名不直接导致鉴权失败。",
+    "id": "harness-121",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "沙箱与权限"
+  },
+  {
+    "type": "single",
+    "question": "Harness 平台中，关于 Delegate 与权限边界的关系，下列说法正确的是？",
+    "options": [
+      {
+        "text": "Delegate 运行在用户基础设施中，因此可绕过平台 RBAC 访问所有资源",
+        "correct": false
+      },
+      {
+        "text": "Delegate 只需网络连通即可，不需要任何凭据即可执行任务",
+        "correct": false
+      },
+      {
+        "text": "Delegate 作为执行代理，其执行权限仍受平台下发的任务与连接凭据约束",
+        "correct": true
+      },
+      {
+        "text": "Delegate 的权限只由操作系统 root 决定，与 Harness 配置无关",
+        "correct": false
+      }
+    ],
+    "explanation": "Delegate 部署在用户环境，负责执行平台下发的任务，但任务访问目标系统时使用的是配置的 Connector 凭据，并受平台 RBAC 与范围约束。它不会因部署位置自动获得平台内全部权限。",
+    "id": "harness-122",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "沙箱与权限"
+  },
+  {
+    "type": "single",
+    "question": "团队希望流水线中某步骤使用的密钥只在运行时注入、不出现在日志中。Harness 的哪种做法最合适？",
+    "options": [
+      {
+        "text": "把密钥明文写入步骤的 command 字段",
+        "correct": false
+      },
+      {
+        "text": "使用 Harness Secret 引用并在步骤中以变量方式使用，避免打印",
+        "correct": true
+      },
+      {
+        "text": "将密钥写入流水线 YAML 注释中便于维护",
+        "correct": false
+      },
+      {
+        "text": "把密钥存到公开的 Git 仓库变量文件",
+        "correct": false
+      }
+    ],
+    "explanation": "应使用 Secret 管理敏感值，通过变量引用注入，Harness 会对已识别的 Secret 输出做遮蔽。明文写入命令、注释或公开仓库都会造成泄露风险，且不受 Secret 遮蔽保护。",
+    "id": "harness-123",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "沙箱与权限"
+  },
+  {
+    "type": "single",
+    "question": "某步骤需要在受限网络内访问内部数据库，但 Delegate 所在网络无法连通数据库。最合理的调整是？",
+    "options": [
+      {
+        "text": "给步骤增加更多超时时间",
+        "correct": false
+      },
+      {
+        "text": "把数据库密码改成明文以简化排查",
+        "correct": false
+      },
+      {
+        "text": "将任务调度到能访问该数据库网络区域的 Delegate（如选择器匹配）",
+        "correct": true
+      },
+      {
+        "text": "关闭流水线的审批环节",
+        "correct": false
+      }
+    ],
+    "explanation": "连通性由执行任务的 Delegate 网络位置决定。可通过 Delegate Selector 将步骤调度到处于目标网络区域的 Delegate。延长超时或改密码不能解决网络不可达，关闭审批也不相关。",
+    "id": "harness-124",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "沙箱与权限"
+  },
+  {
+    "type": "single",
+    "question": "Harness 中限制某用户只能查看和运行特定项目内的流水线，应主要依赖什么机制？",
+    "options": [
+      {
+        "text": "在流水线 YAML 中写 if 判断用户名",
+        "correct": false
+      },
+      {
+        "text": "平台 RBAC 将具备流水线查看/运行权限的角色绑定到该项目范围",
+        "correct": true
+      },
+      {
+        "text": "在 Delegate 主机上配置防火墙规则",
+        "correct": false
+      },
+      {
+        "text": "只在日志中隐藏该用户操作",
+        "correct": false
+      }
+    ],
+    "explanation": "平台 RBAC 决定账号对 Harness 对象的可见与可操作范围。要限制到特定项目，应把只包含所需流水线权限的角色绑定在项目范围；YAML 条件不是鉴权机制，主机防火墙与日志遮蔽不能限制平台内资源可见性。组织级绑定会覆盖组织下多个项目，不适合用于仅限单个项目的场景。",
+    "id": "harness-125",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "沙箱与权限"
+  },
+  {
+    "type": "single",
+    "question": "关于沙箱隔离在 Harness 流水线步骤执行中的作用，下列理解最准确的是？",
+    "options": [
+      {
+        "text": "沙箱保证步骤一定能访问外网",
+        "correct": false
+      },
+      {
+        "text": "沙箱通过隔离运行环境降低步骤间相互影响与越权访问风险",
+        "correct": true
+      },
+      {
+        "text": "沙箱会自动为步骤生成所有所需的云凭据",
+        "correct": false
+      },
+      {
+        "text": "沙箱会替代 RBAC 决定用户能否触发流水线",
+        "correct": false
+      }
+    ],
+    "explanation": "沙箱的核心是隔离执行环境，限制进程、文件与网络等相互影响，降低越权与污染风险。它不负责网络放通、凭据自动生成或用户级授权，这些分别由网络策略、Connector/Secret 与 RBAC 处理。",
+    "id": "harness-126",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "沙箱与权限"
+  },
+  {
+    "type": "single",
+    "question": "流水线运行日志中出现某个 Secret 值未被遮蔽。以下哪种处置最恰当？",
+    "options": [
+      {
+        "text": "忽略，因为日志只有管理员能看",
+        "correct": false
+      },
+      {
+        "text": "立即轮换该 Secret，并排查是否通过非 Secret 方式输出",
+        "correct": true
+      },
+      {
+        "text": "把日志下载后公开分享以便分析",
+        "correct": false
+      },
+      {
+        "text": "在流水线里再加一条同样明文的 echo",
+        "correct": false
+      }
+    ],
+    "explanation": "Secret 一旦出现在日志即视为泄露，应先轮换并追查来源，如命令拼接、异常打印或未按 Secret 引用。仅依赖查看权限不足，继续输出或公开传播会扩大风险。",
+    "id": "harness-127",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "沙箱与权限"
+  },
+  {
+    "type": "single",
+    "question": "Harness 中希望某个生产环境部署步骤必须经过人工审批后才能执行。应如何实现？",
+    "options": [
+      {
+        "text": "在部署步骤前加入 Approval 类型的步骤",
+        "correct": true
+      },
+      {
+        "text": "把部署步骤超时时间设为 0",
+        "correct": false
+      },
+      {
+        "text": "给 Delegate 加更多内存",
+        "correct": false
+      },
+      {
+        "text": "把流水线改为定时触发",
+        "correct": false
+      }
+    ],
+    "explanation": "应在需要卡点的位置加入人工审批步骤，使后续步骤在审批通过前不执行。超时、资源与触发方式都不能构成审批控制，定时触发反而可能绕过人工确认的意图。",
+    "id": "harness-128",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "沙箱与权限"
+  },
+  {
+    "type": "single",
+    "question": "某步骤需要临时访问对象存储，团队不想在 YAML 中长期保存访问密钥。Harness 中较合理的做法是？",
+    "options": [
+      {
+        "text": "使用配置了短期凭据或工作负载身份的 Connector/Secret 引用",
+        "correct": true
+      },
+      {
+        "text": "把访问密钥写进 Dockerfile 的 ENV",
+        "correct": false
+      },
+      {
+        "text": "将密钥粘贴到步骤名称中",
+        "correct": false
+      },
+      {
+        "text": "让所有用户共用同一个长期密钥",
+        "correct": false
+      }
+    ],
+    "explanation": "应优先使用短期凭据或工作负载身份，并通过 Connector 或 Secret 引用注入，减少长期密钥暴露。写入镜像、步骤名称或全员共用长期密钥都会扩大泄露面并难以轮换。",
+    "id": "harness-129",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "沙箱与权限"
+  },
+  {
+    "type": "single",
+    "question": "在 Harness 中给用户授权时，将角色绑定在 Organization 范围而非 Project 范围，通常意味着什么？",
+    "options": [
+      {
+        "text": "该授权只对某个具体流水线有效",
+        "correct": false
+      },
+      {
+        "text": "该授权覆盖该组织下符合角色的资源，范围通常大于单个项目",
+        "correct": true
+      },
+      {
+        "text": "该授权仅影响 Delegate 主机本地文件",
+        "correct": false
+      },
+      {
+        "text": "该授权等价于平台超级管理员",
+        "correct": false
+      }
+    ],
+    "explanation": "角色绑定范围决定授权边界。Organization 级绑定通常作用于该组织下资源，范围大于 Project 级，但并不自动等于平台级管理员。具体权限仍由角色内容决定。",
+    "id": "harness-130",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "沙箱与权限"
+  },
+  {
+    "type": "single",
+    "question": "关于在 Harness 流水线中使用容器化步骤的隔离，下列说法正确的是？",
+    "options": [
+      {
+        "text": "容器步骤天然可访问宿主机所有文件，因此无需隔离",
+        "correct": false
+      },
+      {
+        "text": "容器步骤仍可能通过挂载、特权模式或网络配置获得越权能力，应最小化授权",
+        "correct": true
+      },
+      {
+        "text": "只要用了容器，Secret 就绝不会泄露",
+        "correct": false
+      },
+      {
+        "text": "容器步骤不需要任何凭据即可访问私有仓库",
+        "correct": false
+      }
+    ],
+    "explanation": "容器提供一定隔离，但特权模式、宿主机挂载、网络访问等配置会削弱边界。应遵循最小权限，限制挂载与特权，并妥善管理 Secret。容器本身不提供凭据，也不能保证 Secret 不泄露。",
+    "id": "harness-131",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "沙箱与权限"
+  },
+  {
+    "type": "multiple",
+    "question": "在 Harness 中降低流水线凭据泄露风险，哪些做法是合理的？",
+    "options": [
+      {
+        "text": "使用 Secret 管理敏感值并以变量引用",
+        "correct": true
+      },
+      {
+        "text": "为不同环境使用不同且最小权限的 Connector 凭据",
+        "correct": true
+      },
+      {
+        "text": "把令牌直接写在步骤 command 中方便复用",
+        "correct": false
+      },
+      {
+        "text": "定期轮换凭据并限制可查看 Secret 的用户范围",
+        "correct": true
+      }
+    ],
+    "explanation": "Secret 管理、按环境分离最小权限凭据、轮换与限制可见范围都能降低泄露风险。把令牌明文写入命令会进入配置与日志，难以遮蔽和轮换，是高风险做法。",
+    "id": "harness-132",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "沙箱与权限"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些措施有助于降低 Harness 流水线步骤的权限与影响面？",
+    "options": [
+      {
+        "text": "为步骤使用只读或限定资源的凭据",
+        "correct": true
+      },
+      {
+        "text": "通过 Delegate Selector 将任务限定到特定执行环境，缩小可影响资源范围",
+        "correct": true
+      },
+      {
+        "text": "给所有步骤统一使用组织管理员凭据",
+        "correct": false
+      },
+      {
+        "text": "对生产部署增加审批并对角色做项目范围控制",
+        "correct": true
+      }
+    ],
+    "explanation": "最小权限凭据可直接收窄步骤可操作资源；Delegate Selector 限定执行环境可缩小影响面；审批结合项目范围 RBAC 可加强生产变更控制。统一使用组织管理员凭据会扩大权限，不符合最小权限原则。",
+    "id": "harness-133",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "沙箱与权限"
+  },
+  {
+    "type": "multiple",
+    "question": "关于 Harness 沙箱/隔离与网络访问，下列哪些说法正确？",
+    "options": [
+      {
+        "text": "隔离环境默认的网络可达性取决于平台与基础设施配置，不能假定可访问任意目标",
+        "correct": true
+      },
+      {
+        "text": "步骤访问内部服务前应确认 Delegate 网络路径与所需权限",
+        "correct": true
+      },
+      {
+        "text": "只要启用沙箱就无需配置任何网络策略",
+        "correct": false
+      },
+      {
+        "text": "限制出网可降低数据外泄风险",
+        "correct": true
+      }
+    ],
+    "explanation": "沙箱不等于自动放通或自动阻断所有网络，实际可达性取决于环境配置。应确认 Delegate 网络路径和权限，并可通过限制出网降低外泄风险。认为启用沙箱就无需网络策略是错误的。",
+    "id": "harness-134",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "沙箱与权限"
+  },
+  {
+    "type": "multiple",
+    "question": "某团队在 Harness 中排查“步骤无权限访问云资源”的问题，哪些检查项合理？",
+    "options": [
+      {
+        "text": "确认所用 Connector 绑定的凭据是否具备目标资源的最小所需权限",
+        "correct": true
+      },
+      {
+        "text": "确认步骤引用的 Connector 标识与预期环境一致",
+        "correct": true
+      },
+      {
+        "text": "确认执行该步骤的 Delegate 是否能到达云服务端点",
+        "correct": true
+      },
+      {
+        "text": "确认流水线名称是否包含环境关键字",
+        "correct": false
+      }
+    ],
+    "explanation": "云资源访问失败常见于凭据权限不足、引用了错误环境的 Connector、或 Delegate 网络不可达。流水线名称不参与鉴权与连通性判断，不能作为有效检查项。",
+    "id": "harness-135",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "沙箱与权限"
+  },
+  {
+    "type": "single",
+    "question": "在 Harness 中配置 Delegate 时，关于其权限的描述，正确的是？",
+    "options": [
+      {
+        "text": "Delegate 默认拥有所在账号的完全管理权限",
+        "correct": false
+      },
+      {
+        "text": "Delegate 的权限由绑定的服务账号或令牌决定，应遵循最小权限原则",
+        "correct": true
+      },
+      {
+        "text": "Delegate 无需任何权限即可执行所有流水线步骤",
+        "correct": false
+      },
+      {
+        "text": "Delegate 权限仅由用户角色决定，与服务账号无关",
+        "correct": false
+      }
+    ],
+    "explanation": "Delegate 通过绑定的服务账号或令牌与 Harness 通信并执行任务，其权限范围由该凭据决定。应遵循最小权限原则，避免过度授权。其他选项错误地认为 Delegate 有默认全权或无需权限。",
+    "id": "harness-136",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "沙箱与权限"
+  },
+  {
+    "type": "single",
+    "question": "Harness 流水线中，步骤需要访问外部 API 但不应暴露长期凭据。以下哪种方式最符合安全实践？",
+    "options": [
+      {
+        "text": "将凭据硬编码在流水线 YAML 中",
+        "correct": false
+      },
+      {
+        "text": "使用 Harness 的 Secret Manager 引用凭据，并在运行时注入",
+        "correct": true
+      },
+      {
+        "text": "将凭据明文存放在代码仓库的配置文件中",
+        "correct": false
+      },
+      {
+        "text": "通过环境变量在日志中打印凭据以便调试",
+        "correct": false
+      }
+    ],
+    "explanation": "使用 Secret Manager 管理凭据并在运行时注入，可避免凭据出现在 YAML 或日志中。硬编码、明文存放和日志打印都会增加泄露风险，不符合安全实践。",
+    "id": "harness-137",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "沙箱与权限"
+  },
+  {
+    "type": "single",
+    "question": "关于 Harness 沙箱隔离，以下说法最准确的是？",
+    "options": [
+      {
+        "text": "沙箱确保步骤之间完全无网络通信",
+        "correct": false
+      },
+      {
+        "text": "沙箱为步骤提供隔离的运行环境，限制其对主机资源的直接访问",
+        "correct": true
+      },
+      {
+        "text": "沙箱会自动提升步骤权限以访问所有资源",
+        "correct": false
+      },
+      {
+        "text": "沙箱仅用于日志隔离，不影响资源访问",
+        "correct": false
+      }
+    ],
+    "explanation": "沙箱通过隔离运行环境限制步骤对主机资源的直接访问，降低安全风险。它并不保证完全无网络通信，也不会提升权限或仅隔离日志。",
+    "id": "harness-138",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "沙箱与权限"
+  },
+  {
+    "type": "single",
+    "question": "在 Harness 中，若希望某步骤只能访问特定命名空间下的 Kubernetes 资源，应优先配置什么？",
+    "options": [
+      {
+        "text": "为步骤绑定具有集群管理员权限的 ServiceAccount",
+        "correct": false
+      },
+      {
+        "text": "使用限制命名空间访问的 RBAC 角色绑定",
+        "correct": true
+      },
+      {
+        "text": "关闭 Delegate 的网络隔离",
+        "correct": false
+      },
+      {
+        "text": "将步骤改为在主机上直接运行",
+        "correct": false
+      }
+    ],
+    "explanation": "通过 RBAC 将 ServiceAccount 的权限限制在特定命名空间，可实现最小权限访问。绑定集群管理员权限会扩大权限，关闭隔离或改为主机运行则降低安全性。",
+    "id": "harness-139",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "沙箱与权限"
+  },
+  {
+    "type": "single",
+    "question": "Harness 流水线中，某个步骤需要临时获取云资源访问令牌，以下哪种机制最合适？",
+    "options": [
+      {
+        "text": "在流水线中存储长期访问密钥",
+        "correct": false
+      },
+      {
+        "text": "使用云厂商的临时凭据或 OIDC 联合身份认证",
+        "correct": true
+      },
+      {
+        "text": "将密钥写入镜像层",
+        "correct": false
+      },
+      {
+        "text": "通过公开仓库分发密钥",
+        "correct": false
+      }
+    ],
+    "explanation": "临时凭据或 OIDC 联合身份认证可动态获取短期令牌，减少长期密钥泄露风险。存储长期密钥、写入镜像或公开分发都会带来严重安全风险。",
+    "id": "harness-140",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "沙箱与权限"
+  },
+  {
+    "type": "single",
+    "question": "在 Harness 中，关于项目级与组织级权限继承，以下说法正确的是？",
+    "options": [
+      {
+        "text": "项目级权限总是覆盖组织级权限，且组织级授权不会向下继承",
+        "correct": false
+      },
+      {
+        "text": "组织级角色绑定可向项目继承；项目级可额外授予更细粒度权限，但不能缩小已继承的权限",
+        "correct": true
+      },
+      {
+        "text": "组织级权限仅对账户管理员生效",
+        "correct": false
+      },
+      {
+        "text": "项目级权限完全独立于组织级配置，不受任何继承影响",
+        "correct": false
+      }
+    ],
+    "explanation": "Harness 的 RBAC 授权按作用域生效，组织级角色绑定可向下继承到项目。项目级可以增加更细粒度的授权，但权限通常是累加的，不能通过项目级配置缩小已继承的权限。",
+    "id": "harness-141",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "沙箱与权限"
+  },
+  {
+    "type": "single",
+    "question": "某步骤在 Harness 沙箱中运行时需要写入临时文件，但被拒绝。最可能的原因是？",
+    "options": [
+      {
+        "text": "沙箱文件系统为只读或未挂载可写卷",
+        "correct": true
+      },
+      {
+        "text": "Delegate 未安装",
+        "correct": false
+      },
+      {
+        "text": "流水线未设置人工审批",
+        "correct": false
+      },
+      {
+        "text": "Secret Manager 未配置",
+        "correct": false
+      }
+    ],
+    "explanation": "沙箱常以只读根文件系统运行，需显式挂载可写卷或临时目录。Delegate 未安装、审批缺失或 Secret Manager 未配置通常不会导致文件写入被拒。",
+    "id": "harness-142",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "沙箱与权限"
+  },
+  {
+    "type": "single",
+    "question": "在 Harness 中，为降低步骤权限，以下哪种做法最直接有效？",
+    "options": [
+      {
+        "text": "为步骤使用专用且权限最小的服务账号",
+        "correct": true
+      },
+      {
+        "text": "让所有步骤共享管理员账号",
+        "correct": false
+      },
+      {
+        "text": "禁用所有日志",
+        "correct": false
+      },
+      {
+        "text": "增加步骤超时时间",
+        "correct": false
+      }
+    ],
+    "explanation": "为步骤分配专用且权限最小的服务账号，可直接限制其可访问的资源。共享管理员账号会扩大权限，禁用日志和增加超时不影响权限范围。",
+    "id": "harness-143",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "沙箱与权限"
+  },
+  {
+    "type": "single",
+    "question": "Harness 中，若某用户只能查看流水线但不能执行，应通过什么控制？",
+    "options": [
+      {
+        "text": "角色绑定中的权限集（如仅查看权限）",
+        "correct": true
+      },
+      {
+        "text": "Delegate 的网络策略",
+        "correct": false
+      },
+      {
+        "text": "沙箱的只读文件系统",
+        "correct": false
+      },
+      {
+        "text": "Secret Manager 的访问策略",
+        "correct": false
+      }
+    ],
+    "explanation": "通过角色绑定授予仅查看权限，可限制用户只能查看而不能执行。Delegate 网络策略、沙箱文件系统和 Secret Manager 策略均不直接控制流水线执行权限。",
+    "id": "harness-144",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "沙箱与权限"
+  },
+  {
+    "type": "single",
+    "question": "关于 Harness 中步骤访问网络资源的隔离控制，以下说法正确的是？",
+    "options": [
+      {
+        "text": "只要步骤运行在沙箱中，出站网络就默认被完全拒绝，无需额外策略",
+        "correct": false
+      },
+      {
+        "text": "可通过网络策略或底层安全组限制步骤的出站访问",
+        "correct": true
+      },
+      {
+        "text": "网络隔离只能通过修改流水线 YAML 实现",
+        "correct": false
+      },
+      {
+        "text": "沙箱不支持任何网络访问，因此无需考虑出站策略",
+        "correct": false
+      }
+    ],
+    "explanation": "步骤的网络访问范围应由网络策略、安全组或运行环境配置显式约束。不能假定沙箱天然完全拒绝或完全允许出站访问，隔离控制也不限于修改流水线 YAML。",
+    "id": "harness-145",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "沙箱与权限"
+  },
+  {
+    "type": "single",
+    "question": "在 Harness 中，若步骤需要访问私有 Git 仓库，以下哪种权限配置最合适？",
+    "options": [
+      {
+        "text": "使用具有仓库只读权限的凭据",
+        "correct": true
+      },
+      {
+        "text": "使用具有仓库管理员权限的凭据",
+        "correct": false
+      },
+      {
+        "text": "将仓库设为公开",
+        "correct": false
+      },
+      {
+        "text": "在流水线中明文写入个人密码",
+        "correct": false
+      }
+    ],
+    "explanation": "应使用仅具只读权限的凭据访问私有仓库，遵循最小权限原则。管理员权限过大，公开仓库和明文密码都会带来安全风险。",
+    "id": "harness-146",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "沙箱与权限"
+  },
+  {
+    "type": "single",
+    "question": "Harness 中，关于 Secret 在沙箱步骤中的使用，以下说法正确的是？",
+    "options": [
+      {
+        "text": "Secret 会以明文形式出现在步骤环境变量中且不可遮蔽",
+        "correct": false
+      },
+      {
+        "text": "Secret 可在运行时注入，并默认在日志中遮蔽",
+        "correct": true
+      },
+      {
+        "text": "Secret 必须硬编码在镜像中",
+        "correct": false
+      },
+      {
+        "text": "Secret 无法在沙箱步骤中使用",
+        "correct": false
+      }
+    ],
+    "explanation": "Harness 支持在运行时注入 Secret，并默认在日志中遮蔽敏感值。Secret 不应硬编码在镜像中，且可在沙箱步骤中使用。",
+    "id": "harness-147",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "沙箱与权限"
+  },
+  {
+    "type": "single",
+    "question": "某团队发现 Harness 流水线步骤可以访问不应访问的内部服务。首先应检查什么？",
+    "options": [
+      {
+        "text": "步骤所在环境的网络策略和防火墙规则",
+        "correct": true
+      },
+      {
+        "text": "流水线的超时设置",
+        "correct": false
+      },
+      {
+        "text": "步骤的日志级别",
+        "correct": false
+      },
+      {
+        "text": "流水线的并发数",
+        "correct": false
+      }
+    ],
+    "explanation": "步骤能访问不应访问的服务，通常与网络策略或防火墙规则过宽有关。超时、日志级别和并发数不直接影响网络访问范围。",
+    "id": "harness-148",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "沙箱与权限"
+  },
+  {
+    "type": "single",
+    "question": "在 Harness 中，使用容器化步骤时，以下哪种做法有助于增强隔离？",
+    "options": [
+      {
+        "text": "以非 root 用户运行容器",
+        "correct": true
+      },
+      {
+        "text": "使用特权模式运行容器",
+        "correct": false
+      },
+      {
+        "text": "挂载主机根目录",
+        "correct": false
+      },
+      {
+        "text": "关闭所有命名空间隔离",
+        "correct": false
+      }
+    ],
+    "explanation": "以非 root 用户运行容器可降低容器逃逸后的影响。特权模式、挂载主机根目录和关闭命名空间隔离都会削弱隔离性。",
+    "id": "harness-149",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "沙箱与权限"
+  },
+  {
+    "type": "single",
+    "question": "Harness 中，若希望某步骤只能读取特定 Secret，应如何配置？",
+    "options": [
+      {
+        "text": "在步骤中引用该 Secret，并确保服务账号仅有该 Secret 的读取权限",
+        "correct": true
+      },
+      {
+        "text": "授予服务账号所有 Secret 的管理员权限",
+        "correct": false
+      },
+      {
+        "text": "将 Secret 以明文写入流水线",
+        "correct": false
+      },
+      {
+        "text": "关闭 Secret 遮蔽功能",
+        "correct": false
+      }
+    ],
+    "explanation": "通过步骤引用特定 Secret，并限制服务账号仅能读取该 Secret，可实现最小权限。授予全部权限、明文写入或关闭遮蔽都会增加风险。",
+    "id": "harness-150",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "沙箱与权限"
+  },
+  {
+    "type": "single",
+    "question": "在 Harness 框架中，关于停止条件与预算的关系，以下描述最准确的是？",
+    "options": [
+      {
+        "text": "预算仅指时间预算，停止条件与预算无关",
+        "correct": false
+      },
+      {
+        "text": "停止条件决定流程何时结束，预算限制资源消耗，二者共同约束流程运行",
+        "correct": true
+      },
+      {
+        "text": "停止条件与预算必须同时满足流程才会启动",
+        "correct": false
+      },
+      {
+        "text": "只要设置了预算，停止条件就不起作用",
+        "correct": false
+      }
+    ],
+    "explanation": "停止条件关注流程终止的判定依据，预算关注可消耗的资源上限，两者从不同维度共同约束运行，不是互斥或无关关系。误选A把预算窄化为时间，误选C混淆启动与终止条件。",
+    "id": "harness-151",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "停止条件与预算"
+  },
+  {
+    "type": "single",
+    "question": "某流水线设置了最大迭代次数为10的停止条件，同时设置了总 token 预算为5000。第8次迭代后已消耗4800个 token，且单次迭代至少需要300个 token，此时最合理的行为是？",
+    "options": [
+      {
+        "text": "继续执行直到第10次迭代，忽略预算",
+        "correct": false
+      },
+      {
+        "text": "在开始下一次迭代前触发预算收尾，返回当前结果或明确状态",
+        "correct": true
+      },
+      {
+        "text": "重置预算计数器继续执行",
+        "correct": false
+      },
+      {
+        "text": "将迭代上限提高到20以用完预算",
+        "correct": false
+      }
+    ],
+    "explanation": "剩余预算为200个 token，已不足以支撑至少需要300个 token 的下一次迭代，应在继续迭代前触发预算收尾。预算不是必须耗尽的配额，也不能通过重置计数器绕过约束。",
+    "id": "harness-152",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "停止条件与预算"
+  },
+  {
+    "type": "single",
+    "question": "关于Harness框架中“预算”的常见类型，以下哪项通常不属于运行预算的范畴？",
+    "options": [
+      {
+        "text": "token或调用次数预算",
+        "correct": false
+      },
+      {
+        "text": "时间预算",
+        "correct": false
+      },
+      {
+        "text": "迭代或步数预算",
+        "correct": false
+      },
+      {
+        "text": "源代码的字符编码格式",
+        "correct": true
+      }
+    ],
+    "explanation": "运行预算用于限制流程可消耗的资源，常见有token、调用次数、时间、迭代步数等。字符编码格式是代码存储属性，与运行资源消耗无关，不属于预算类型。",
+    "id": "harness-153",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "停止条件与预算"
+  },
+  {
+    "type": "single",
+    "question": "在设计停止条件时，若同时存在“成功判定”和“最大步数”两个条件，较合理的关系是？",
+    "options": [
+      {
+        "text": "只要成功判定成立就停止，最大步数作为兜底",
+        "correct": true
+      },
+      {
+        "text": "必须同时满足两者才停止",
+        "correct": false
+      },
+      {
+        "text": "最大步数优先，成功判定无效",
+        "correct": false
+      },
+      {
+        "text": "两者互斥，只能保留一个",
+        "correct": false
+      }
+    ],
+    "explanation": "成功判定用于达成目标时提前终止，最大步数是防止无限运行的兜底，二者是“或”的终止关系。误选B把终止条件当成合取，会导致达到目标仍不停止。",
+    "id": "harness-154",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "停止条件与预算"
+  },
+  {
+    "type": "single",
+    "question": "某任务在Harness框架中运行，预算设置为100次调用，停止条件为连续3次无有效输出。第20次调用后出现连续3次无有效输出，此时应？",
+    "options": [
+      {
+        "text": "因停止条件满足而终止，无需耗尽预算",
+        "correct": true
+      },
+      {
+        "text": "必须继续调用直到100次",
+        "correct": false
+      },
+      {
+        "text": "忽略停止条件，等待人工介入",
+        "correct": false
+      },
+      {
+        "text": "将停止条件改为连续5次再继续",
+        "correct": false
+      }
+    ],
+    "explanation": "停止条件是独立于预算的终止依据，满足即应终止，预算未耗尽不影响这一判定。误选B把预算当成必须用完的配额，属于常见误解。",
+    "id": "harness-155",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "停止条件与预算"
+  },
+  {
+    "type": "single",
+    "question": "在 Harness 框架中引入预算机制的主要目的不包括以下哪项？",
+    "options": [
+      {
+        "text": "防止流程无限运行造成资源浪费",
+        "correct": false
+      },
+      {
+        "text": "为成本控制提供可量化的上限",
+        "correct": false
+      },
+      {
+        "text": "保证输出结果一定正确",
+        "correct": true
+      },
+      {
+        "text": "在资源受限时促使流程收尾",
+        "correct": false
+      }
+    ],
+    "explanation": "预算机制用于限制资源消耗、提供成本上限，并在资源接近耗尽时促使流程收尾；它不能保证输出结果的正确性。",
+    "id": "harness-156",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "停止条件与预算"
+  },
+  {
+    "type": "single",
+    "question": "关于停止条件的判定时机，以下做法较合理的是？",
+    "options": [
+      {
+        "text": "仅在流程全部结束后检查一次",
+        "correct": false
+      },
+      {
+        "text": "在每个步骤或迭代结束时检查是否满足",
+        "correct": true
+      },
+      {
+        "text": "只在流程开始时检查",
+        "correct": false
+      },
+      {
+        "text": "由用户手动检查，框架不自动判定",
+        "correct": false
+      }
+    ],
+    "explanation": "停止条件需要在流程推进过程中及时判定，通常在每步或每轮迭代结束时检查，才能及时终止。只在结束时检查失去意义，只在开始时检查无法响应运行中状态。",
+    "id": "harness-157",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "停止条件与预算"
+  },
+  {
+    "type": "single",
+    "question": "若某Harness流程的预算为“最多30秒”，而停止条件是“找到答案”，在第10秒找到答案，合理行为是？",
+    "options": [
+      {
+        "text": "继续运行至30秒以用满预算",
+        "correct": false
+      },
+      {
+        "text": "立即停止并返回答案",
+        "correct": true
+      },
+      {
+        "text": "忽略停止条件继续搜索",
+        "correct": false
+      },
+      {
+        "text": "报错因为预算未耗尽",
+        "correct": false
+      }
+    ],
+    "explanation": "预算是上限而非必须用完的配额，停止条件满足时应立即终止。继续运行至30秒浪费资源且无必要。误选A把预算当成固定时长任务。",
+    "id": "harness-158",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "停止条件与预算"
+  },
+  {
+    "type": "single",
+    "question": "以下哪种情况最可能导致停止条件永远无法满足，从而必须依赖预算兜底？",
+    "options": [
+      {
+        "text": "目标判定标准明确且可达",
+        "correct": false
+      },
+      {
+        "text": "目标判定标准模糊，如“输出足够好”而无量化阈值",
+        "correct": true
+      },
+      {
+        "text": "每步都有确定输出",
+        "correct": false
+      },
+      {
+        "text": "迭代次数固定为5",
+        "correct": false
+      }
+    ],
+    "explanation": "停止条件依赖可判定的标准，若标准模糊无法客观判定，条件可能永远不满足，需要最大预算兜底。误选A、C、D都具备明确可判定性。",
+    "id": "harness-159",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "停止条件与预算"
+  },
+  {
+    "type": "single",
+    "question": "在Harness框架中，预算耗尽时的默认处理策略，以下较稳妥的是？",
+    "options": [
+      {
+        "text": "直接抛出未捕获异常使进程崩溃",
+        "correct": false
+      },
+      {
+        "text": "触发收尾流程并返回当前可用的部分结果或明确状态",
+        "correct": true
+      },
+      {
+        "text": "静默忽略预算继续运行",
+        "correct": false
+      },
+      {
+        "text": "自动将预算翻倍",
+        "correct": false
+      }
+    ],
+    "explanation": "预算耗尽属于预期内的终止情形，应触发收尾并返回当前结果或明确状态，便于上层处理。抛未捕获异常或静默忽略都不利于系统稳定与可观测性。",
+    "id": "harness-160",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "停止条件与预算"
+  },
+  {
+    "type": "single",
+    "question": "关于停止条件与预算在可观测性上的要求，以下说法正确的是？",
+    "options": [
+      {
+        "text": "无需记录终止原因",
+        "correct": false
+      },
+      {
+        "text": "应记录因哪个条件或预算触发终止，便于分析与调优",
+        "correct": true
+      },
+      {
+        "text": "只记录总耗时即可",
+        "correct": false
+      },
+      {
+        "text": "只在出错时记录",
+        "correct": false
+      }
+    ],
+    "explanation": "终止原因（停止条件满足还是预算耗尽、具体哪类预算）对调优和排障很重要，应显式记录。仅记录总耗时或仅在出错时记录都无法区分正常终止与资源耗尽。",
+    "id": "harness-161",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "停止条件与预算"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些通常可以作为Harness框架中的停止条件？",
+    "options": [
+      {
+        "text": "达到最大迭代次数",
+        "correct": true
+      },
+      {
+        "text": "检测到目标状态或成功标志",
+        "correct": true
+      },
+      {
+        "text": "连续若干次输出无变化",
+        "correct": true
+      },
+      {
+        "text": "操作系统的用户名长度",
+        "correct": false
+      }
+    ],
+    "explanation": "最大迭代次数、成功标志、连续无变化都是常见的终止判定依据；用户名长度与流程终止无关。本题正确项为前三者，属于停止条件的典型类型。",
+    "id": "harness-162",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "停止条件与预算"
+  },
+  {
+    "type": "multiple",
+    "question": "关于停止条件与预算同时配置，以下说法正确的有？",
+    "options": [
+      {
+        "text": "任一约束触发都应终止或转入收尾",
+        "correct": true
+      },
+      {
+        "text": "预算可以作为停止条件无法判定时的兜底",
+        "correct": true
+      },
+      {
+        "text": "停止条件满足后仍需耗尽预算才算正常结束",
+        "correct": false
+      },
+      {
+        "text": "两者应独立判定，互不替代",
+        "correct": true
+      }
+    ],
+    "explanation": "停止条件与预算各自独立判定，任一触发即终止或收尾；预算是停止条件失效时的兜底。误选C把预算当成必须用尽的配额，与预算作为上限的语义相悖。",
+    "id": "harness-163",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "停止条件与预算"
+  },
+  {
+    "type": "multiple",
+    "question": "设计预算机制时，以下哪些做法是合理的？",
+    "options": [
+      {
+        "text": "为不同资源类型分别设置预算上限",
+        "correct": true
+      },
+      {
+        "text": "预算耗尽时给出明确状态而非静默失败",
+        "correct": true
+      },
+      {
+        "text": "预算值设置得越大越好，无需考虑成本",
+        "correct": false
+      },
+      {
+        "text": "记录预算消耗用于后续分析与调优",
+        "correct": true
+      }
+    ],
+    "explanation": "分类型设置上限、耗尽时明确状态、记录消耗都符合预算机制的设计目标。预算并非越大越好，需结合成本与任务需求设定，否则失去控制意义。",
+    "id": "harness-164",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "停止条件与预算"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些情形说明停止条件设计存在缺陷？",
+    "options": [
+      {
+        "text": "条件依赖无法客观判定的主观描述",
+        "correct": true
+      },
+      {
+        "text": "停止条件在初始状态意外满足且缺少前置校验，导致本应执行的任务被跳过",
+        "correct": true
+      },
+      {
+        "text": "条件明确、可在每步客观判定",
+        "correct": false
+      },
+      {
+        "text": "多个停止条件的优先级未定义导致行为不确定",
+        "correct": true
+      }
+    ],
+    "explanation": "依赖主观描述会使停止时机不可靠；初始状态意外满足且无前置校验会跳过应执行的任务；多个停止条件优先级未定义会导致终止行为不确定。明确且可逐步客观判定的条件是良好设计，不属于缺陷。",
+    "id": "harness-165",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "停止条件与预算"
+  },
+  {
+    "type": "single",
+    "question": "Harness 框架为一次运行同时配置了步数预算和成功判定条件。运行到预算上限时任务仍未成功，最符合框架设计的处理方式是？",
+    "options": [
+      {
+        "text": "把步数预算自动加一倍继续运行",
+        "correct": false
+      },
+      {
+        "text": "忽略预算，直到成功判定成立",
+        "correct": false
+      },
+      {
+        "text": "以“预算耗尽且未成功”的终态结束并记录原因",
+        "correct": true
+      },
+      {
+        "text": "将成功判定改为真后正常结束",
+        "correct": false
+      }
+    ],
+    "explanation": "预算的意义是防止无限运行，耗尽时应结束并如实记录未达成目标，便于后续分析；擅自扩容或篡改判定会破坏预算约束和结果可信度。",
+    "id": "harness-166",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "停止条件与预算"
+  },
+  {
+    "type": "single",
+    "question": "某 Harness 任务以“连续两次无有效输出”为停止条件，某次迭代返回了格式正确但内容为空的结果。该结果应如何计入？",
+    "options": [
+      {
+        "text": "视为有效输出，计数清零",
+        "correct": false
+      },
+      {
+        "text": "视为无有效输出，计入连续计数",
+        "correct": true
+      },
+      {
+        "text": "既不计数也不清零，保持原计数",
+        "correct": false
+      },
+      {
+        "text": "直接触发成功停止",
+        "correct": false
+      }
+    ],
+    "explanation": "“有效输出”应指内容满足任务要求，空内容属于无有效输出，应累加连续无有效计数；把它当作有效输出会掩盖模型空转问题，延后应有的停止。",
+    "id": "harness-167",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "停止条件与预算"
+  },
+  {
+    "type": "single",
+    "question": "在 Harness 中把“最大迭代次数”和“最大 token 消耗”同时设为硬性预算。运行中 token 消耗增长远快于迭代次数时，哪项更能起到保护作用？",
+    "options": [
+      {
+        "text": "最大迭代次数",
+        "correct": false
+      },
+      {
+        "text": "最大 token 消耗",
+        "correct": true
+      },
+      {
+        "text": "两者完全等效",
+        "correct": false
+      },
+      {
+        "text": "成功判定条件",
+        "correct": false
+      }
+    ],
+    "explanation": "token 消耗与成本直接相关，增长快时 token 预算先触发；迭代次数只计轮次，无法约束单轮开销，因此此时 token 预算的保护作用更强。",
+    "id": "harness-168",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "停止条件与预算"
+  },
+  {
+    "type": "single",
+    "question": "某 Harness 流程的停止条件为“出现不可恢复错误即停止”，并配置了最多 50 步预算和瞬时错误重试策略。第 5 步检测到可恢复的瞬时错误。较合理的处理是？",
+    "options": [
+      {
+        "text": "立即终止整个流程",
+        "correct": false
+      },
+      {
+        "text": "先按重试策略处理，重试仍失败再停止",
+        "correct": true
+      },
+      {
+        "text": "忽略错误继续到第 50 步",
+        "correct": false
+      },
+      {
+        "text": "删除该错误记录",
+        "correct": false
+      }
+    ],
+    "explanation": "可恢复的瞬时错误不应触发针对不可恢复错误的停止条件；先按重试策略处理，重试失败后转为不可恢复错误再停止，并记录错误与重试结果。",
+    "id": "harness-169",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "停止条件与预算"
+  },
+  {
+    "type": "single",
+    "question": "关于 Harness 中“软预算”与“硬预算”的搭配，以下描述较合理的是？",
+    "options": [
+      {
+        "text": "软预算用于提前告警和收紧策略，硬预算用于强制终止",
+        "correct": true
+      },
+      {
+        "text": "软预算必须比硬预算更晚触发",
+        "correct": false
+      },
+      {
+        "text": "硬预算只用于记录日志，不终止运行",
+        "correct": false
+      },
+      {
+        "text": "两者不能同时配置",
+        "correct": false
+      }
+    ],
+    "explanation": "软预算通常设在硬预算之前，用于告警、降级或收紧策略；硬预算作为不可逾越的上限强制结束。软预算晚于硬预算则失去提前干预意义。",
+    "id": "harness-170",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "停止条件与预算"
+  },
+  {
+    "type": "single",
+    "question": "某 Harness 运行配置了“总时长 60 秒”的预算和“连续 3 次无进展”的停止条件。第 30 秒时连续无进展计数达到 3。此时应？",
+    "options": [
+      {
+        "text": "继续运行直到第 60 秒",
+        "correct": false
+      },
+      {
+        "text": "触发停止条件，提前结束",
+        "correct": true
+      },
+      {
+        "text": "清零计数后重跑",
+        "correct": false
+      },
+      {
+        "text": "把连续阈值改为 5",
+        "correct": false
+      }
+    ],
+    "explanation": "停止条件与预算互不排斥，任一满足即可结束；无进展条件先满足时应提前结束，节省剩余时间预算，无需等到时长上限。",
+    "id": "harness-171",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "停止条件与预算"
+  },
+  {
+    "type": "single",
+    "question": "在 Harness 中，若把停止条件仅设计为“模型自述已完成”，最主要的缺陷是？",
+    "options": [
+      {
+        "text": "运行速度会变慢",
+        "correct": false
+      },
+      {
+        "text": "自述可能不可靠，导致过早或过晚停止",
+        "correct": true
+      },
+      {
+        "text": "会绕过所有预算限制",
+        "correct": false
+      },
+      {
+        "text": "无法记录迭代次数",
+        "correct": false
+      }
+    ],
+    "explanation": "模型自述属于主观信号，缺乏客观校验时可能误判完成状态；应结合外部验证或客观指标，并以预算作为兜底，避免停止时机失控。",
+    "id": "harness-172",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "停止条件与预算"
+  },
+  {
+    "type": "single",
+    "question": "某 Harness 任务预算为“最多 200 次工具调用”，停止条件为“验证通过”。第 150 次调用时验证通过。合理行为是？",
+    "options": [
+      {
+        "text": "继续调用直到 200 次",
+        "correct": false
+      },
+      {
+        "text": "立即停止并保留预算余量记录",
+        "correct": true
+      },
+      {
+        "text": "把余量清零后继续",
+        "correct": false
+      },
+      {
+        "text": "重置调用计数",
+        "correct": false
+      }
+    ],
+    "explanation": "停止条件先于预算满足时应立即结束，预算只是上限而非必须用尽；保留余量信息有助于评估任务成本和后续预算设置。",
+    "id": "harness-173",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "停止条件与预算"
+  },
+  {
+    "type": "single",
+    "question": "以下哪种 Harness 停止条件最容易被“循环式空转”规避，通常需要额外兜底？",
+    "options": [
+      {
+        "text": "检测到输出与上次完全重复",
+        "correct": false
+      },
+      {
+        "text": "检测到连续多次无状态变化",
+        "correct": false
+      },
+      {
+        "text": "仅以输出长度是否超过固定阈值作为停止依据",
+        "correct": true
+      },
+      {
+        "text": "检测到外部验证通过",
+        "correct": false
+      }
+    ],
+    "explanation": "输出长度不能反映任务是否取得进展：空转可能持续输出较短或重复内容而不触发长度阈值，冗长但无进展又可能误触发停止。因此仅靠长度阈值不可靠，需要结合重复检测、状态变化检测和预算兜底。",
+    "id": "harness-174",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "停止条件与预算"
+  },
+  {
+    "type": "single",
+    "question": "Harness 框架在预算即将耗尽时，为提升产出质量，较稳妥的降级策略是？",
+    "options": [
+      {
+        "text": "切换到更耗资源的模型",
+        "correct": false
+      },
+      {
+        "text": "减少并行探索，聚焦当前最优候选",
+        "correct": true
+      },
+      {
+        "text": "删除已收集的中间结果",
+        "correct": false
+      },
+      {
+        "text": "重置预算计数",
+        "correct": false
+      }
+    ],
+    "explanation": "预算紧张时应收敛策略，减少探索开销、聚焦已有最优解，以在剩余预算内产出可用结果；加大开销或重置计数都违反预算约束。",
+    "id": "harness-175",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "停止条件与预算"
+  },
+  {
+    "type": "multiple",
+    "question": "设计 Harness 预算机制时，以下哪些做法是合理的？",
+    "options": [
+      {
+        "text": "按任务类型分别设置 token、调用次数和时长预算",
+        "correct": true
+      },
+      {
+        "text": "在软预算触发时告警并收紧策略",
+        "correct": true
+      },
+      {
+        "text": "预算耗尽时如实记录未达成目标",
+        "correct": true
+      },
+      {
+        "text": "为避免失败，预算耗尽后无限自动续期",
+        "correct": false
+      }
+    ],
+    "explanation": "多维度预算、软预算预警、耗尽后如实记录都是合理实践；无限续期会使预算失去约束意义，等同于没有上限。",
+    "id": "harness-176",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "停止条件与预算"
+  },
+  {
+    "type": "multiple",
+    "question": "在任务可完成且成功信号可观测的前提下，以下哪些情形说明 Harness 停止条件设计存在缺陷？",
+    "options": [
+      {
+        "text": "任务已成功但运行仍持续很久",
+        "correct": true
+      },
+      {
+        "text": "无进展状态反复出现却始终不触发停止",
+        "correct": true
+      },
+      {
+        "text": "每次运行都以预算耗尽结束且从未由成功条件触发",
+        "correct": true
+      },
+      {
+        "text": "记录中能区分条件触发与预算耗尽",
+        "correct": false
+      }
+    ],
+    "explanation": "成功不停、空转不停、成功信号可观测却从未触发成功停止，均指向停止条件失效或过弱；能区分终态类型说明可观测性良好，不属于缺陷。",
+    "id": "harness-177",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "停止条件与预算"
+  },
+  {
+    "type": "single",
+    "question": "Harness 中某任务同时设置了“最大迭代 20 次”和“总 token 预算 10000”。第 15 次迭代后已用 9800 token，且估算下一次迭代至少需要 500 token，任务尚未成功。此时最符合预算设计的处理是？",
+    "options": [
+      {
+        "text": "忽略 token 预算，继续运行直到 20 次迭代",
+        "correct": false
+      },
+      {
+        "text": "立即停止并返回未成功状态",
+        "correct": true
+      },
+      {
+        "text": "将迭代上限改为 15 次并继续",
+        "correct": false
+      },
+      {
+        "text": "清空已消耗 token 计数后继续",
+        "correct": false
+      }
+    ],
+    "explanation": "剩余 token 预算不足以完成下一次迭代，硬性 token 预算应优先阻止继续消耗；应停止并如实返回未成功。迭代上限是独立约束，不能替代 token 预算；篡改计数会破坏预算约束。",
+    "id": "harness-178",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "停止条件与预算"
+  },
+  {
+    "type": "multiple",
+    "question": "在 Harness 框架中设计停止条件与预算时，以下哪些做法是合理的？",
+    "options": [
+      {
+        "text": "为停止条件设置可观测的判定信号",
+        "correct": true
+      },
+      {
+        "text": "预算耗尽时记录原因并安全终止",
+        "correct": true
+      },
+      {
+        "text": "仅依赖模型自述“已完成”作为唯一停止条件",
+        "correct": false
+      },
+      {
+        "text": "同时设置步数预算和 token 预算作为兜底",
+        "correct": true
+      }
+    ],
+    "explanation": "停止条件需可观测、可判定；预算耗尽应安全终止并记录；多预算兜底能应对不同资源维度。仅依赖模型自述易误判，不是可靠停止条件。",
+    "id": "harness-179",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "停止条件与预算"
+  },
+  {
+    "type": "single",
+    "question": "Harness 中某流程的停止条件为“连续 2 次工具调用返回相同错误码”，预算为“最多 10 步”。第 3 步和第 4 步连续返回相同错误码。此时合理行为是？",
+    "options": [
+      {
+        "text": "继续运行至第 10 步，因为预算未耗尽",
+        "correct": false
+      },
+      {
+        "text": "停止条件已满足，应终止并报告错误",
+        "correct": true
+      },
+      {
+        "text": "重置连续错误计数后继续",
+        "correct": false
+      },
+      {
+        "text": "将预算改为 4 步后继续",
+        "correct": false
+      }
+    ],
+    "explanation": "停止条件与预算为并列约束，任一满足即应终止。连续相同错误码已触发停止条件，不应因预算未耗尽而继续，也不应篡改计数或预算。",
+    "id": "harness-180",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "停止条件与预算"
+  },
+  {
+    "type": "multiple",
+    "question": "关于评测 Harness 的指标计算，以下说法正确的有？",
+    "options": [
+      {
+        "text": "混淆矩阵可支撑准确率、召回率等多指标计算",
+        "correct": true
+      },
+      {
+        "text": "宏平均对类别等权，微平均按样本或频次加权",
+        "correct": true
+      },
+      {
+        "text": "所有任务都应只报告准确率",
+        "correct": false
+      },
+      {
+        "text": "多类任务可逐类报告指标以观察长尾表现",
+        "correct": true
+      }
+    ],
+    "explanation": "混淆矩阵是多指标基础，宏/微平均体现不同加权语义，逐类报告有助于发现长尾问题。单一准确率不足以覆盖所有任务需求。",
+    "id": "harness-181",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "评测Harness"
+  },
+  {
+    "type": "multiple",
+    "question": "评测 Harness 保障公平比较的常见措施包括？",
+    "options": [
+      {
+        "text": "固定数据划分与提示模板",
+        "correct": true
+      },
+      {
+        "text": "统一生成参数与解码策略",
+        "correct": true
+      },
+      {
+        "text": "为各模型选择最好的样本子集报告",
+        "correct": false
+      },
+      {
+        "text": "记录运行环境与随机种子",
+        "correct": true
+      }
+    ],
+    "explanation": "固定数据、提示、解码参数并记录环境种子能减少无关差异。为模型挑选最有利样本属于选择性报告，破坏公平性。",
+    "id": "harness-182",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "评测Harness"
+  },
+  {
+    "type": "multiple",
+    "question": "评测 Harness 中缓存与并发结合时，应关注的问题有？",
+    "options": [
+      {
+        "text": "缓存键需覆盖提示、参数与数据版本",
+        "correct": true
+      },
+      {
+        "text": "并发写入需保证线程或进程安全",
+        "correct": true
+      },
+      {
+        "text": "缓存命中后无需校验配置",
+        "correct": false
+      },
+      {
+        "text": "并发运行可能影响延迟指标的稳定性",
+        "correct": true
+      }
+    ],
+    "explanation": "缓存键不完整会命中旧结果，并发写缓存需原子性保证，并发度也会影响延迟测量。因此缓存命中后仍需按配置校验，不能完全跳过。",
+    "id": "harness-183",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "评测Harness"
+  },
+  {
+    "type": "multiple",
+    "question": "评测 Harness 报告结果时，为增强可信度可采取的做法有？",
+    "options": [
+      {
+        "text": "报告样本数量与关键运行配置",
+        "correct": true
+      },
+      {
+        "text": "给出置信区间或多次运行的波动",
+        "correct": true
+      },
+      {
+        "text": "只展示最佳一次运行结果",
+        "correct": false
+      },
+      {
+        "text": "说明数据来源与预处理方式",
+        "correct": true
+      }
+    ],
+    "explanation": "样本量、配置、波动区间和数据预处理是判断可信度的重要信息。只展示最佳结果会掩盖方差，属于选择性报告。",
+    "id": "harness-184",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "评测Harness"
+  },
+  {
+    "type": "multiple",
+    "question": "在评测 Harness 中处理模型生成失败或超时的样本，合理策略有？",
+    "options": [
+      {
+        "text": "明确记录失败类型并单独统计失败率",
+        "correct": true
+      },
+      {
+        "text": "按预先定义的规则决定计分或剔除",
+        "correct": true
+      },
+      {
+        "text": "静默删除失败样本使指标更好看",
+        "correct": false
+      },
+      {
+        "text": "在报告中区分失败与低质量输出",
+        "correct": true
+      }
+    ],
+    "explanation": "失败率本身是评测信号，应记录、按预定义规则处理并在报告中区分。静默删除会引入偏差且掩盖系统稳定性问题。",
+    "id": "harness-185",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "评测Harness"
+  },
+  {
+    "type": "multiple",
+    "question": "评测 Harness 对提示模板进行版本管理，主要好处有？",
+    "options": [
+      {
+        "text": "结果可追溯到具体模板版本",
+        "correct": true
+      },
+      {
+        "text": "模板变更对指标的影响可分析",
+        "correct": true
+      },
+      {
+        "text": "模板版本号能自动提升模型能力",
+        "correct": false
+      },
+      {
+        "text": "多模型比较时保证提示条件一致",
+        "correct": true
+      }
+    ],
+    "explanation": "模板版本化支撑追溯、变更影响分析与条件一致性。版本号只是管理标识，不会自动改变模型能力。",
+    "id": "harness-186",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "评测Harness"
+  },
+  {
+    "type": "single",
+    "question": "评测 Harness 在运行测试用例时，以下哪项最可能导致评测结果不可复现？",
+    "options": [
+      {
+        "text": "固定随机种子并记录环境信息",
+        "correct": false
+      },
+      {
+        "text": "每次运行前清理缓存并重新下载依赖",
+        "correct": false
+      },
+      {
+        "text": "使用未固定版本的评测框架和数据集",
+        "correct": true
+      },
+      {
+        "text": "在相同硬件配置上重复运行三次取平均",
+        "correct": false
+      }
+    ],
+    "explanation": "未固定版本的框架和数据集会引入行为变化，破坏可复现性。固定随机种子、记录环境、清理缓存均为保障可复现的正面措施，而重复运行取平均并不解决版本漂移问题。",
+    "id": "harness-187",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "评测Harness"
+  },
+  {
+    "type": "single",
+    "question": "关于评测 Harness 中“金标准答案”的使用，下列说法正确的是？",
+    "options": [
+      {
+        "text": "金标准答案必须由模型自动生成以保证一致性",
+        "correct": false
+      },
+      {
+        "text": "金标准答案应独立于被测模型，并由人工或可靠流程标注",
+        "correct": true
+      },
+      {
+        "text": "金标准答案可以直接使用模型输出以节省标注成本",
+        "correct": false
+      },
+      {
+        "text": "金标准答案一旦确定就永远不能修订",
+        "correct": false
+      }
+    ],
+    "explanation": "金标准是评测的基准，必须独立于被测模型以避免循环论证。人工或可靠流程标注能保证质量；使用模型输出会导致自我评价偏差，而金标准也应允许在发现错误时修订。",
+    "id": "harness-188",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "评测Harness"
+  },
+  {
+    "type": "single",
+    "question": "评测 Harness 对多个模型进行排名时，最推荐使用以下哪种统计量来减少偶然波动的影响？",
+    "options": [
+      {
+        "text": "单次运行的最高分",
+        "correct": false
+      },
+      {
+        "text": "多次独立运行的均值与置信区间",
+        "correct": true
+      },
+      {
+        "text": "第一次运行的结果",
+        "correct": false
+      },
+      {
+        "text": "运行时间最短的那次结果",
+        "correct": false
+      }
+    ],
+    "explanation": "多次独立运行的均值和置信区间能反映结果的稳定性与不确定性，是排名比较的推荐做法。单次运行或挑选最高分/最快结果会引入选择偏差，无法可靠反映模型真实水平。",
+    "id": "harness-189",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "评测Harness"
+  },
+  {
+    "type": "single",
+    "question": "在评测 Harness 中，若某个测试用例的评分函数对大小写敏感，但任务本身不区分大小写，这属于什么问题？",
+    "options": [
+      {
+        "text": "评分函数与任务定义不一致",
+        "correct": true
+      },
+      {
+        "text": "模型推理速度过慢",
+        "correct": false
+      },
+      {
+        "text": "数据集划分不合理",
+        "correct": false
+      },
+      {
+        "text": "硬件资源不足",
+        "correct": false
+      }
+    ],
+    "explanation": "评分函数应忠实反映任务定义。任务不区分大小写而评分函数敏感，会导致本应正确的答案被误判，属于评分逻辑与任务语义不一致的典型错误。",
+    "id": "harness-190",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "评测Harness"
+  },
+  {
+    "type": "single",
+    "question": "评测 Harness 在报告准确率时，若测试集中正类样本为少数类且正负样本极度不平衡，以下哪个指标更能反映模型对少数类的识别能力？",
+    "options": [
+      {
+        "text": "准确率（Accuracy）",
+        "correct": false
+      },
+      {
+        "text": "少数类召回率（Recall）",
+        "correct": true
+      },
+      {
+        "text": "总样本数",
+        "correct": false
+      },
+      {
+        "text": "运行耗时",
+        "correct": false
+      }
+    ],
+    "explanation": "类别不平衡时，准确率可能被多数类主导而虚高。明确以少数类为正类并计算其召回率，关注实际少数类样本中被正确识别的比例，能更好体现对少数类的识别能力；总样本数和运行耗时不反映分类能力。",
+    "id": "harness-191",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "评测Harness"
+  },
+  {
+    "type": "single",
+    "question": "评测 Harness 为保证不同模型比较的公平性，以下哪项做法最不恰当？",
+    "options": [
+      {
+        "text": "所有模型使用相同的提示模板和测试数据",
+        "correct": false
+      },
+      {
+        "text": "为每个模型单独调整提示模板直至最优",
+        "correct": true
+      },
+      {
+        "text": "在相同硬件和软件环境下运行",
+        "correct": false
+      },
+      {
+        "text": "记录并公开评测配置",
+        "correct": false
+      }
+    ],
+    "explanation": "为每个模型单独调优提示模板会引入额外人工干预，破坏比较的公平性。统一提示、统一数据、统一环境并公开配置才是公平比较的常见措施。",
+    "id": "harness-192",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "评测Harness"
+  },
+  {
+    "type": "single",
+    "question": "评测 Harness 中，缓存模型输出可能带来什么主要风险？",
+    "options": [
+      {
+        "text": "增加存储成本但无其他影响",
+        "correct": false
+      },
+      {
+        "text": "当输入或环境变化时，可能返回过时的结果",
+        "correct": true
+      },
+      {
+        "text": "缓存一定会降低评测准确性",
+        "correct": false
+      },
+      {
+        "text": "缓存只能用于图像任务",
+        "correct": false
+      }
+    ],
+    "explanation": "缓存基于键值匹配，若输入或运行环境变化而缓存未失效，会返回过时结果，导致评测失真。缓存本身不必然降低准确性，但需要设计合理的失效机制。",
+    "id": "harness-193",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "评测Harness"
+  },
+  {
+    "type": "single",
+    "question": "在评测 Harness 中，对模型生成失败样本的正确处理方式是？",
+    "options": [
+      {
+        "text": "直接丢弃失败样本，不记录",
+        "correct": false
+      },
+      {
+        "text": "将失败样本计为错误，并记录失败原因",
+        "correct": true
+      },
+      {
+        "text": "将失败样本自动替换为金标准答案",
+        "correct": false
+      },
+      {
+        "text": "忽略失败样本，只计算成功样本的准确率",
+        "correct": false
+      }
+    ],
+    "explanation": "失败样本应计为错误并记录原因，否则会高估模型性能。直接丢弃或替换为金标准会扭曲评测结果，忽略失败样本则导致指标偏乐观。",
+    "id": "harness-194",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "评测Harness"
+  },
+  {
+    "type": "single",
+    "question": "评测 Harness 中，混淆矩阵的主要作用是？",
+    "options": [
+      {
+        "text": "加速模型推理",
+        "correct": false
+      },
+      {
+        "text": "展示各类别被预测为各类别的样本数量",
+        "correct": true
+      },
+      {
+        "text": "自动调整模型超参数",
+        "correct": false
+      },
+      {
+        "text": "压缩测试数据集",
+        "correct": false
+      }
+    ],
+    "explanation": "混淆矩阵以表格形式展示真实类别与预测类别的交叉计数，是分析分类错误类型和计算精确率、召回率等指标的基础工具，不涉及推理加速或超参数调整。",
+    "id": "harness-195",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "评测Harness"
+  },
+  {
+    "type": "single",
+    "question": "评测 Harness 在计算平均指标时，若不同测试子集样本量差异很大，通常应优先采用？",
+    "options": [
+      {
+        "text": "简单平均（各子集权重相同）",
+        "correct": false
+      },
+      {
+        "text": "按样本量加权平均",
+        "correct": true
+      },
+      {
+        "text": "取各子集指标的最大值",
+        "correct": false
+      },
+      {
+        "text": "取各子集指标的最小值",
+        "correct": false
+      }
+    ],
+    "explanation": "按样本量加权平均能反映各子集对总体指标的实际贡献，避免小样本子集被过度代表。简单平均会扭曲总体性能，取最大或最小值则丢失整体信息。",
+    "id": "harness-196",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "评测Harness"
+  },
+  {
+    "type": "multiple",
+    "question": "评测 Harness 在扩展新任务类型时，通常需要同步更新哪些组件？",
+    "options": [
+      {
+        "text": "数据加载与解析逻辑",
+        "correct": true
+      },
+      {
+        "text": "评分函数或指标计算模块",
+        "correct": true
+      },
+      {
+        "text": "模型训练超参数",
+        "correct": false
+      },
+      {
+        "text": "结果报告与可视化格式",
+        "correct": true
+      }
+    ],
+    "explanation": "扩展新任务需适配数据加载、评分逻辑和结果展示。模型训练超参数属于建模环节，通常不由评测 Harness 统一管理，因此不是必须同步更新的组件。",
+    "id": "harness-197",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "评测Harness"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些措施有助于提升评测 Harness 结果的可信度？",
+    "options": [
+      {
+        "text": "公开评测代码和数据集版本",
+        "correct": true
+      },
+      {
+        "text": "在多个随机种子下重复运行并报告方差",
+        "correct": true
+      },
+      {
+        "text": "仅报告表现最好的一次运行结果",
+        "correct": false
+      },
+      {
+        "text": "对失败样本进行原因分类统计",
+        "correct": true
+      }
+    ],
+    "explanation": "公开代码数据、多随机种子重复并报告方差、统计失败原因都能增强可信度。仅报告最好一次结果属于选择性报告，会掩盖波动，降低可信度。",
+    "id": "harness-198",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "评测Harness"
+  },
+  {
+    "type": "multiple",
+    "question": "评测 Harness 中实现并行评测时，需要注意哪些问题？",
+    "options": [
+      {
+        "text": "确保各进程使用独立的随机种子或可复现的种子序列",
+        "correct": true
+      },
+      {
+        "text": "避免多个进程同时写同一个结果文件导致数据损坏",
+        "correct": true
+      },
+      {
+        "text": "并行度越高越好，无需考虑资源限制",
+        "correct": false
+      },
+      {
+        "text": "汇总结果时保持与串行执行一致的指标计算逻辑",
+        "correct": true
+      }
+    ],
+    "explanation": "并行评测需保证随机性可复现、结果写入安全、汇总逻辑一致。并行度并非越高越好，过高可能导致资源竞争和超时，反而影响评测稳定性与准确性。",
+    "id": "harness-199",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "评测Harness"
+  },
+  {
+    "type": "multiple",
+    "question": "关于评测 Harness 中的超时设置，以下说法正确的有？",
+    "options": [
+      {
+        "text": "超时时间应根据任务复杂度和硬件环境合理设定",
+        "correct": true
+      },
+      {
+        "text": "超时样本应记录并计入错误统计",
+        "correct": true
+      },
+      {
+        "text": "超时时间越短越能提高评测准确性",
+        "correct": false
+      },
+      {
+        "text": "统一超时时间有助于不同模型间的公平比较",
+        "correct": true
+      }
+    ],
+    "explanation": "超时应结合任务与硬件合理设定，超时样本需记录并计错，统一超时有利于公平比较。超时过短会误杀正常样本，反而降低评测准确性。",
+    "id": "harness-200",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "评测Harness"
+  },
+  {
+    "type": "multiple",
+    "question": "评测 Harness 在跨数据集比较模型时，以下哪些做法是合理的？",
+    "options": [
+      {
+        "text": "确认各数据集的标注标准和评测指标是否一致",
+        "correct": true
+      },
+      {
+        "text": "直接比较不同数据集上的准确率数值",
+        "correct": false
+      },
+      {
+        "text": "在报告结果时注明数据集名称和版本",
+        "correct": true
+      },
+      {
+        "text": "对指标定义不同的数据集进行归一化或分别报告",
+        "correct": true
+      }
+    ],
+    "explanation": "跨数据集比较需先确认标注标准和指标定义是否一致，报告时注明数据集信息，指标不同则应归一化或分别报告。直接比较不同数据集上的准确率容易产生误导。",
+    "id": "harness-201",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "评测Harness"
+  },
+  {
+    "type": "single",
+    "question": "评测 Harness 在运行测试用例前，对随机种子进行固定，主要目的是什么？",
+    "options": [
+      {
+        "text": "确保模型输出的确定性",
+        "correct": false
+      },
+      {
+        "text": "保证评测过程可复现",
+        "correct": true
+      },
+      {
+        "text": "提高模型推理速度",
+        "correct": false
+      },
+      {
+        "text": "减少测试用例数量",
+        "correct": false
+      }
+    ],
+    "explanation": "固定随机种子可减少评测中随机性来源（如数据打乱、采样），使结果可复现。模型输出确定性还受模型本身随机性影响，固定种子不能确保；推理速度和用例数量与种子无关。",
+    "id": "harness-202",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "评测Harness"
+  },
+  {
+    "type": "single",
+    "question": "评测 Harness 在计算分类任务准确率时，若测试集中各类别样本数量差异极大，以下哪种做法最可能掩盖模型在少数类上的缺陷？",
+    "options": [
+      {
+        "text": "使用宏平均召回率",
+        "correct": false
+      },
+      {
+        "text": "使用微平均准确率",
+        "correct": true
+      },
+      {
+        "text": "使用平衡准确率",
+        "correct": false
+      },
+      {
+        "text": "使用每类召回率并报告",
+        "correct": false
+      }
+    ],
+    "explanation": "微平均准确率受多数类主导，少数类表现差对整体影响小，容易掩盖缺陷。宏平均和平衡准确率对各类别等权，能暴露少数类问题；每类召回率直接展示各类表现。",
+    "id": "harness-203",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "评测Harness"
+  },
+  {
+    "type": "single",
+    "question": "评测 Harness 在运行测试用例时，若某条用例的评分函数抛出异常，以下哪种处理方式最符合评测严谨性？",
+    "options": [
+      {
+        "text": "将该用例得分记为0并继续",
+        "correct": false
+      },
+      {
+        "text": "跳过该用例且不记录",
+        "correct": false
+      },
+      {
+        "text": "标记该用例为错误并记录异常信息",
+        "correct": true
+      },
+      {
+        "text": "自动重试直到评分成功",
+        "correct": false
+      }
+    ],
+    "explanation": "评分异常应显式标记并记录，避免误判为模型失败或忽略问题。记0分可能混淆模型错误与评分错误；跳过不记录会丢失信息；无限重试可能掩盖系统性问题。",
+    "id": "harness-204",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "评测Harness"
+  },
+  {
+    "type": "single",
+    "question": "评测 Harness 在比较两个模型时，对每个测试用例分别运行并记录结果，以下哪种做法最有助于分析模型间的差异来源？",
+    "options": [
+      {
+        "text": "仅报告总体平均分",
+        "correct": false
+      },
+      {
+        "text": "保存每个用例的逐样本结果",
+        "correct": true
+      },
+      {
+        "text": "只报告胜出的模型",
+        "correct": false
+      },
+      {
+        "text": "合并两个模型的输出",
+        "correct": false
+      }
+    ],
+    "explanation": "逐样本结果支持配对比较和错误分析，能定位差异用例。仅报告总体平均分丢失细节；只报告胜者无法分析；合并输出破坏独立性。",
+    "id": "harness-205",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "评测Harness"
+  },
+  {
+    "type": "single",
+    "question": "评测 Harness 在跨多个数据集评估同一模型时，若直接对各个数据集的准确率取算术平均作为总体指标，可能忽略什么重要因素？",
+    "options": [
+      {
+        "text": "数据集的样本量差异",
+        "correct": true
+      },
+      {
+        "text": "模型的参数量",
+        "correct": false
+      },
+      {
+        "text": "评测的硬件配置",
+        "correct": false
+      },
+      {
+        "text": "提示模板的长度",
+        "correct": false
+      }
+    ],
+    "explanation": "算术平均赋予各数据集等权，忽略样本量差异，小数据集可能过度影响总体。模型参数量、硬件和模板长度不直接决定加权合理性。",
+    "id": "harness-206",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "评测Harness"
+  },
+  {
+    "type": "single",
+    "question": "评测 Harness 在记录模型生成结果时，同时保存原始输出和解析后的答案，主要好处是什么？",
+    "options": [
+      {
+        "text": "减少存储空间",
+        "correct": false
+      },
+      {
+        "text": "便于复查解析错误和重新评分",
+        "correct": true
+      },
+      {
+        "text": "加快模型推理",
+        "correct": false
+      },
+      {
+        "text": "自动提升模型准确率",
+        "correct": false
+      }
+    ],
+    "explanation": "保存原始输出可在解析或评分规则变更后重新处理，也便于人工复查解析错误。这会增加存储而非减少；不影响推理速度；不会自动提升准确率。",
+    "id": "harness-207",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "评测Harness"
+  },
+  {
+    "type": "single",
+    "question": "评测 Harness 在设计评分函数时，若任务要求答案格式为“数字+单位”，但评分函数仅提取数字进行比较，这最可能导致什么后果？",
+    "options": [
+      {
+        "text": "评分过于严格，误判格式正确但数字错误的答案",
+        "correct": false
+      },
+      {
+        "text": "评分过于宽松，忽略单位错误",
+        "correct": true
+      },
+      {
+        "text": "评分结果完全随机",
+        "correct": false
+      },
+      {
+        "text": "评分函数无法运行",
+        "correct": false
+      }
+    ],
+    "explanation": "仅提取数字会忽略单位，使单位错误的答案被误判正确，评分偏宽松。不会导致过于严格或随机；函数仍可运行。",
+    "id": "harness-208",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "评测Harness"
+  },
+  {
+    "type": "single",
+    "question": "评测Harness对同一模型分别使用原始提示模板和调整过语序的提示模板各跑一遍全部用例，正确做法是？",
+    "options": [
+      {
+        "text": "把两次结果合并计算平均分",
+        "correct": false
+      },
+      {
+        "text": "只报告分数较高的那次",
+        "correct": false
+      },
+      {
+        "text": "分别报告两组结果并注明模板差异",
+        "correct": true
+      },
+      {
+        "text": "取两次结果的较低值作为最终分",
+        "correct": false
+      }
+    ],
+    "explanation": "提示模板属于评测配置的一部分，语序变化可能影响生成，属于不同实验条件，应分别报告并说明差异。合并平均、只取高者或取低者都会掩盖条件差异，使结论不可追溯。",
+    "id": "harness-209",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "评测Harness"
+  },
+  {
+    "type": "multiple",
+    "question": "在评测Harness中，为支持同一模型在多个任务上评测，以下哪些设计是合理的？",
+    "options": [
+      {
+        "text": "任务定义包含数据加载、提示构造与评分函数",
+        "correct": true
+      },
+      {
+        "text": "各任务统一使用同一套提示模板以减少配置",
+        "correct": false
+      },
+      {
+        "text": "评测结果按任务维度分别汇总输出",
+        "correct": true
+      },
+      {
+        "text": "任务注册表允许按名称选择并加载任务",
+        "correct": true
+      }
+    ],
+    "explanation": "任务应封装自身数据、提示与评分逻辑，并通过注册机制被选取；结果应分任务汇总以便归因。统一提示模板不适配不同任务，会损害评测有效性，因此不应作为通用设计。",
+    "id": "harness-210",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "评测Harness"
+  },
+  {
+    "type": "single",
+    "question": "Harness 框架对模型接口做抽象的主要目的是什么？",
+    "options": [
+      {
+        "text": "让业务代码只依赖统一接口，从而可替换不同模型实现",
+        "correct": true
+      },
+      {
+        "text": "把所有模型调用都改成本地进程内函数调用",
+        "correct": false
+      },
+      {
+        "text": "为每种模型强制生成独立的编译产物",
+        "correct": false
+      },
+      {
+        "text": "减少模型参数数量以降低推理成本",
+        "correct": false
+      }
+    ],
+    "explanation": "接口抽象的核心是把调用约定收敛为统一契约，使上层不感知具体模型实现，便于替换与测试。它并不保证本地调用、不生成编译产物，也不改变模型参数规模，这些属于实现或优化层面。",
+    "id": "harness-211",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "模型接口抽象"
+  },
+  {
+    "type": "single",
+    "question": "在模型接口抽象中，描述一次请求的输入与输出通常应放在哪里？",
+    "options": [
+      {
+        "text": "集中定义在接口契约的数据结构中",
+        "correct": true
+      },
+      {
+        "text": "散落在各业务模块的全局变量里",
+        "correct": false
+      },
+      {
+        "text": "写死在模型提供方的私有配置文件中",
+        "correct": false
+      },
+      {
+        "text": "只通过日志字符串隐式传递",
+        "correct": false
+      }
+    ],
+    "explanation": "请求与响应应作为接口契约的一部分集中定义，保证各实现遵循同一形状，便于校验与替换。散落全局变量、私有配置或隐式日志都会破坏契约的稳定性与可测试性。",
+    "id": "harness-212",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "模型接口抽象"
+  },
+  {
+    "type": "single",
+    "question": "为模型接口定义一个统一的“生成”方法时，以下哪种做法最符合抽象原则？",
+    "options": [
+      {
+        "text": "方法接收通用请求对象，返回通用响应对象",
+        "correct": true
+      },
+      {
+        "text": "方法名和参数根据每家模型厂商分别变化",
+        "correct": false
+      },
+      {
+        "text": "方法内部直接读取环境变量决定返回类型",
+        "correct": false
+      },
+      {
+        "text": "方法只返回裸字符串，丢弃所有元信息",
+        "correct": false
+      }
+    ],
+    "explanation": "统一方法应使用通用请求/响应对象承载输入输出，使调用方不随厂商变化。按厂商改变签名会破坏抽象，环境变量隐式分支降低可预测性，丢弃元信息则削弱可用性与诊断能力。",
+    "id": "harness-213",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "模型接口抽象"
+  },
+  {
+    "type": "single",
+    "question": "模型接口抽象中引入适配器（Adapter）的主要作用是什么？",
+    "options": [
+      {
+        "text": "把统一接口调用翻译为特定模型SDK的调用",
+        "correct": true
+      },
+      {
+        "text": "替代模型完成全部推理计算",
+        "correct": false
+      },
+      {
+        "text": "统一所有模型的训练数据格式",
+        "correct": false
+      },
+      {
+        "text": "负责业务逻辑中的权限校验",
+        "correct": false
+      }
+    ],
+    "explanation": "适配器承担“翻译”职责，把统一契约映射到具体模型SDK的调用方式，从而隔离差异。它不替代推理计算，不负责训练数据格式，也不应承担业务权限校验等上层职责。",
+    "id": "harness-214",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "模型接口抽象"
+  },
+  {
+    "type": "single",
+    "question": "接口抽象中把“模型标识”和“调用参数”分开传递，主要好处是什么？",
+    "options": [
+      {
+        "text": "便于按模型路由并复用通用参数校验逻辑",
+        "correct": true
+      },
+      {
+        "text": "可以完全取消参数校验",
+        "correct": false
+      },
+      {
+        "text": "使模型标识不再需要唯一",
+        "correct": false
+      },
+      {
+        "text": "让所有模型共享同一组权重",
+        "correct": false
+      }
+    ],
+    "explanation": "分离模型标识与参数后，路由层可按标识选择实现，通用层可复用参数校验与默认值处理。它不免除校验，不取消标识唯一性，更不会让不同模型共享权重。",
+    "id": "harness-215",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "模型接口抽象"
+  },
+  {
+    "type": "single",
+    "question": "某个模型实现抛出厂商特有的异常，接口抽象层应如何处理才最合理？",
+    "options": [
+      {
+        "text": "转换为框架定义的统一异常类型后再向上抛出",
+        "correct": true
+      },
+      {
+        "text": "原样向上抛出，让调用方识别厂商异常",
+        "correct": false
+      },
+      {
+        "text": "吞掉异常并返回空字符串",
+        "correct": false
+      },
+      {
+        "text": "把异常信息拼进正常响应内容中",
+        "correct": false
+      }
+    ],
+    "explanation": "抽象层应屏蔽实现差异，把厂商异常归一为框架统一异常，调用方才能稳定处理。原样抛出会泄漏实现细节，吞异常掩盖故障，混入正常响应则破坏响应语义。",
+    "id": "harness-216",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "模型接口抽象"
+  },
+  {
+    "type": "single",
+    "question": "关于模型接口抽象中的流式输出，以下说法正确的是什么？",
+    "options": [
+      {
+        "text": "统一接口可用增量事件序列表达流式结果",
+        "correct": true
+      },
+      {
+        "text": "流式输出无法被抽象，只能由厂商直接暴露",
+        "correct": false
+      },
+      {
+        "text": "流式输出必须一次性缓冲完整结果再返回",
+        "correct": false
+      },
+      {
+        "text": "流式输出与元信息不能同时传递",
+        "correct": false
+      }
+    ],
+    "explanation": "流式能力可以通过统一的增量事件序列抽象，调用方按事件消费。说无法抽象过于绝对，强制缓冲会丧失流式意义，元信息也可随事件附带，并非互斥。",
+    "id": "harness-217",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "模型接口抽象"
+  },
+  {
+    "type": "single",
+    "question": "在接口抽象中为请求对象设置默认参数，最需要注意什么？",
+    "options": [
+      {
+        "text": "默认值应在统一层定义且不同实现保持一致语义",
+        "correct": true
+      },
+      {
+        "text": "默认值应由每个厂商适配器随意决定",
+        "correct": false
+      },
+      {
+        "text": "默认值只对第一个注册的模型生效",
+        "correct": false
+      },
+      {
+        "text": "默认值应写入响应对象而非请求对象",
+        "correct": false
+      }
+    ],
+    "explanation": "默认值属于契约语义，应在统一层定义并让各实现遵循，否则替换模型后行为漂移。由适配器各自决定会导致不一致，限定首个模型或写入响应对象都不符合职责划分。",
+    "id": "harness-218",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "模型接口抽象"
+  },
+  {
+    "type": "single",
+    "question": "框架需要支持多个模型实现共存并可按配置选择，最合适的组织方式是什么？",
+    "options": [
+      {
+        "text": "定义统一接口并由各实现注册，运行时按配置解析",
+        "correct": true
+      },
+      {
+        "text": "在调用处用大量if-else硬编码厂商分支",
+        "correct": false
+      },
+      {
+        "text": "每个模型单独复制一份业务代码",
+        "correct": false
+      },
+      {
+        "text": "只允许编译期绑定一个实现",
+        "correct": false
+      }
+    ],
+    "explanation": "统一接口加注册与配置解析可实现运行时选择与扩展，符合开闭原则。硬编码分支难扩展，复制业务代码造成重复，编译期单绑定则无法共存切换。",
+    "id": "harness-219",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "模型接口抽象"
+  },
+  {
+    "type": "single",
+    "question": "模型接口抽象层对请求参数做校验，最重要的收益是什么？",
+    "options": [
+      {
+        "text": "在进入具体实现前尽早暴露不合法的调用",
+        "correct": true
+      },
+      {
+        "text": "可以保证模型输出内容绝对正确",
+        "correct": false
+      },
+      {
+        "text": "可以省去适配器的翻译工作",
+        "correct": false
+      },
+      {
+        "text": "能自动提升模型推理速度",
+        "correct": false
+      }
+    ],
+    "explanation": "统一校验能在调用前拦截不合法参数，减少各适配器重复检查并快速失败。它不能保证生成内容正确，不能替代适配器翻译，也不会直接提升推理速度。",
+    "id": "harness-220",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "模型接口抽象"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些属于模型接口抽象应承担的职责？",
+    "options": [
+      {
+        "text": "定义统一的请求与响应数据结构",
+        "correct": true
+      },
+      {
+        "text": "归一化各实现的错误类型",
+        "correct": true
+      },
+      {
+        "text": "规定业务层的促销规则",
+        "correct": false
+      },
+      {
+        "text": "屏蔽不同模型SDK的调用差异",
+        "correct": true
+      }
+    ],
+    "explanation": "定义统一数据结构、归一化错误、屏蔽SDK差异都是接口抽象的职责。业务促销规则属于业务逻辑，不应下沉到模型接口抽象层，否则会造成职责混淆。",
+    "id": "harness-221",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "模型接口抽象"
+  },
+  {
+    "type": "multiple",
+    "question": "设计统一模型接口时，以下哪些做法有助于提高可替换性？",
+    "options": [
+      {
+        "text": "调用方只依赖接口而不依赖具体实现类",
+        "correct": true
+      },
+      {
+        "text": "请求响应字段使用与厂商无关的通用语义",
+        "correct": true
+      },
+      {
+        "text": "在接口中暴露某厂商独有的内部句柄",
+        "correct": false
+      },
+      {
+        "text": "通过配置或注册机制选择实现",
+        "correct": true
+      }
+    ],
+    "explanation": "依赖接口、使用通用语义字段、通过注册配置选择实现，都能降低耦合、提升可替换性。暴露厂商独有句柄会让调用方绑定该厂商，破坏可替换性。",
+    "id": "harness-222",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "模型接口抽象"
+  },
+  {
+    "type": "multiple",
+    "question": "关于接口抽象中的元信息（如耗时、用量），以下哪些说法合理？",
+    "options": [
+      {
+        "text": "可放在统一响应对象中供上层统一读取",
+        "correct": true
+      },
+      {
+        "text": "应尽量与生成内容分离表达",
+        "correct": true
+      },
+      {
+        "text": "必须拼接进生成文本中才能传递",
+        "correct": false
+      },
+      {
+        "text": "不同实现应返回形状一致的结构",
+        "correct": true
+      }
+    ],
+    "explanation": "元信息宜作为响应对象的结构化部分，与生成内容分离并保持各实现形状一致，便于统一消费。拼进文本会污染内容且难以解析，不是合理做法。",
+    "id": "harness-223",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "模型接口抽象"
+  },
+  {
+    "type": "multiple",
+    "question": "在模型接口抽象层处理超时与重试，以下哪些设计是合理的？",
+    "options": [
+      {
+        "text": "超时参数作为统一请求配置的一部分",
+        "correct": true
+      },
+      {
+        "text": "重试策略在统一层可配置并作用于各实现",
+        "correct": true
+      },
+      {
+        "text": "对不可重试的错误也一律无限重试",
+        "correct": false
+      },
+      {
+        "text": "向调用方暴露统一的超时异常",
+        "correct": true
+      }
+    ],
+    "explanation": "超时作为统一配置、重试策略可配置、超时异常归一，都是合理设计。对不可重试错误无限重试会放大故障并浪费资源，明显不合理。",
+    "id": "harness-224",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "模型接口抽象"
+  },
+  {
+    "type": "single",
+    "question": "某团队新增一个模型厂商支持时，只编写了适配器而无需修改业务代码，这最能说明什么？",
+    "options": [
+      {
+        "text": "接口抽象有效隔离了实现变化",
+        "correct": true
+      },
+      {
+        "text": "该厂商模型推理能力更强",
+        "correct": false
+      },
+      {
+        "text": "业务代码已被删除",
+        "correct": false
+      },
+      {
+        "text": "适配器自动修改了业务逻辑",
+        "correct": false
+      }
+    ],
+    "explanation": "新增实现仅需适配器而不动业务代码，说明上层依赖的是稳定接口，实现变化被隔离，这正是抽象的价值。它与模型能力、删除代码或自动改业务逻辑无关。",
+    "id": "harness-225",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "模型接口抽象"
+  },
+  {
+    "type": "single",
+    "question": "在Harness框架的模型接口抽象中，对请求参数进行标准化处理的主要目的是什么？",
+    "options": [
+      {
+        "text": "确保不同模型实现能接收统一格式的参数",
+        "correct": true
+      },
+      {
+        "text": "减少模型调用时的网络延迟",
+        "correct": false
+      },
+      {
+        "text": "自动提升模型生成的准确性",
+        "correct": false
+      },
+      {
+        "text": "替代厂商SDK的认证机制",
+        "correct": false
+      }
+    ],
+    "explanation": "标准化参数是为了让业务层以统一方式传递请求，适配器再转换为厂商所需格式，从而支持可替换性。网络延迟、生成准确性和认证机制不由参数标准化直接决定。",
+    "id": "harness-226",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "模型接口抽象"
+  },
+  {
+    "type": "single",
+    "question": "当业务代码需要调用模型但不想依赖具体厂商SDK时，最合适的做法是什么？",
+    "options": [
+      {
+        "text": "直接导入厂商SDK并调用其客户端",
+        "correct": false
+      },
+      {
+        "text": "通过抽象层定义的接口进行调用",
+        "correct": true
+      },
+      {
+        "text": "在业务代码中编写条件分支判断厂商",
+        "correct": false
+      },
+      {
+        "text": "将厂商SDK的类名硬编码到配置中",
+        "correct": false
+      }
+    ],
+    "explanation": "通过抽象接口调用可以隔离厂商差异，业务代码只依赖稳定契约。直接依赖SDK或硬编码厂商信息会破坏可替换性。",
+    "id": "harness-227",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "模型接口抽象"
+  },
+  {
+    "type": "single",
+    "question": "模型接口抽象中，将请求构造与执行分离的主要好处是什么？",
+    "options": [
+      {
+        "text": "便于对请求进行复用、校验和测试",
+        "correct": true
+      },
+      {
+        "text": "可以省略对模型响应的解析",
+        "correct": false
+      },
+      {
+        "text": "自动消除模型调用的所有错误",
+        "correct": false
+      },
+      {
+        "text": "让模型厂商负责业务逻辑",
+        "correct": false
+      }
+    ],
+    "explanation": "分离构造与执行使请求对象可独立校验、复用和单元测试，执行部分专注通信。它不能省略响应解析或消除错误。",
+    "id": "harness-228",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "模型接口抽象"
+  },
+  {
+    "type": "single",
+    "question": "在模型接口抽象中，统一返回结构通常应包含哪些核心信息？",
+    "options": [
+      {
+        "text": "仅包含生成的文本内容",
+        "correct": false
+      },
+      {
+        "text": "生成内容、结束原因和用量元数据",
+        "correct": true
+      },
+      {
+        "text": "厂商的原始HTTP响应对象",
+        "correct": false
+      },
+      {
+        "text": "业务数据库的连接信息",
+        "correct": false
+      }
+    ],
+    "explanation": "统一返回结构应包含业务需要的内容、结束原因和用量等元数据，便于上层处理。暴露原始HTTP响应或无关信息会破坏抽象。",
+    "id": "harness-229",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "模型接口抽象"
+  },
+  {
+    "type": "single",
+    "question": "为模型接口设计能力发现机制（如是否支持流式、函数调用）的主要目的是什么？",
+    "options": [
+      {
+        "text": "让业务代码根据能力动态选择调用方式",
+        "correct": true
+      },
+      {
+        "text": "强制所有模型实现支持全部能力",
+        "correct": false
+      },
+      {
+        "text": "替代运行时配置加载",
+        "correct": false
+      },
+      {
+        "text": "自动升级模型版本",
+        "correct": false
+      }
+    ],
+    "explanation": "能力发现让上层在运行时了解实现支持的特性，从而安全选择调用方式或降级。它不强制统一能力，也不替代配置或升级。",
+    "id": "harness-230",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "模型接口抽象"
+  },
+  {
+    "type": "single",
+    "question": "在模型接口抽象层对响应进行统一后处理（如提取文本、统计用量）的主要意义是什么？",
+    "options": [
+      {
+        "text": "减少业务层重复解析不同厂商响应",
+        "correct": true
+      },
+      {
+        "text": "改变模型生成内容的语义",
+        "correct": false
+      },
+      {
+        "text": "绕过厂商的计费系统",
+        "correct": false
+      },
+      {
+        "text": "替代网络传输层",
+        "correct": false
+      }
+    ],
+    "explanation": "统一后处理将厂商差异收敛到抽象层，业务层无需重复解析。它不改变生成语义，也不涉及计费绕过或传输层。",
+    "id": "harness-231",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "模型接口抽象"
+  },
+  {
+    "type": "single",
+    "question": "模型接口抽象中，将配置（如端点、密钥）与代码分离的主要好处是什么？",
+    "options": [
+      {
+        "text": "便于在不同环境切换而无需修改代码",
+        "correct": true
+      },
+      {
+        "text": "提高模型推理速度",
+        "correct": false
+      },
+      {
+        "text": "自动加密所有网络流量",
+        "correct": false
+      },
+      {
+        "text": "消除对适配器的需要",
+        "correct": false
+      }
+    ],
+    "explanation": "配置与代码分离支持环境差异化部署和密钥管理，不改变推理性能或传输加密，适配器仍是必要的。",
+    "id": "harness-232",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "模型接口抽象"
+  },
+  {
+    "type": "single",
+    "question": "当模型接口抽象层需要支持同步和异步两种调用模式时，最合理的设计是什么？",
+    "options": [
+      {
+        "text": "定义两套完全独立的接口且互不相关",
+        "correct": false
+      },
+      {
+        "text": "在统一接口中提供同步与异步方法或分离契约",
+        "correct": true
+      },
+      {
+        "text": "只保留同步调用，异步由业务层自行包装",
+        "correct": false
+      },
+      {
+        "text": "强制所有实现只支持异步",
+        "correct": false
+      }
+    ],
+    "explanation": "可在统一抽象下提供两种调用方式或分离接口契约，保持一致性。完全独立或强制单一模式会降低可替换性。",
+    "id": "harness-233",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "模型接口抽象"
+  },
+  {
+    "type": "single",
+    "question": "在模型接口抽象中，对输入内容进行敏感信息过滤的主要目的是什么？",
+    "options": [
+      {
+        "text": "防止敏感数据被发送到外部模型服务",
+        "correct": true
+      },
+      {
+        "text": "提高模型输出的创造性",
+        "correct": false
+      },
+      {
+        "text": "减少令牌用量",
+        "correct": false
+      },
+      {
+        "text": "替代用户身份认证",
+        "correct": false
+      }
+    ],
+    "explanation": "过滤敏感信息是安全合规要求，避免数据外泄。它不直接提升创造性、减少用量或替代认证。",
+    "id": "harness-234",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "模型接口抽象"
+  },
+  {
+    "type": "single",
+    "question": "模型接口抽象层记录调用日志时，以下哪种做法最恰当？",
+    "options": [
+      {
+        "text": "记录完整请求和响应原文以便排查",
+        "correct": false
+      },
+      {
+        "text": "记录元数据并避免泄露敏感内容",
+        "correct": true
+      },
+      {
+        "text": "不记录任何信息以保护隐私",
+        "correct": false
+      },
+      {
+        "text": "只记录错误日志",
+        "correct": false
+      }
+    ],
+    "explanation": "日志应平衡可观测性与隐私安全，记录耗时、用量等元数据，避免明文敏感内容。完整原文或不记录都不可取。",
+    "id": "harness-235",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "模型接口抽象"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些属于模型接口抽象层应提供的通用能力？",
+    "options": [
+      {
+        "text": "统一请求与响应格式",
+        "correct": true
+      },
+      {
+        "text": "厂商差异的适配转换",
+        "correct": true
+      },
+      {
+        "text": "业务领域逻辑的实现",
+        "correct": false
+      },
+      {
+        "text": "调用元数据采集",
+        "correct": true
+      }
+    ],
+    "explanation": "抽象层负责统一格式、适配差异和采集元数据，业务领域逻辑应由业务层实现，不应下沉到模型接口抽象层。",
+    "id": "harness-236",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "模型接口抽象"
+  },
+  {
+    "type": "multiple",
+    "question": "设计可替换的模型接口时，以下哪些做法是合理的？",
+    "options": [
+      {
+        "text": "接口方法参数使用通用数据结构",
+        "correct": true
+      },
+      {
+        "text": "在接口中暴露厂商特有类型",
+        "correct": false
+      },
+      {
+        "text": "通过适配器转换厂商异常",
+        "correct": true
+      },
+      {
+        "text": "定义清晰的能力契约",
+        "correct": true
+      }
+    ],
+    "explanation": "通用数据结构、异常转换和能力契约有助于隔离厂商差异。暴露厂商特有类型会使业务代码绑定具体实现，破坏可替换性。",
+    "id": "harness-237",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "模型接口抽象"
+  },
+  {
+    "type": "multiple",
+    "question": "关于模型接口抽象中的超时与重试，以下哪些设计是合理的？",
+    "options": [
+      {
+        "text": "为不同调用设置可配置的超时",
+        "correct": true
+      },
+      {
+        "text": "对所有错误无条件重试",
+        "correct": false
+      },
+      {
+        "text": "对可重试错误采用退避策略",
+        "correct": true
+      },
+      {
+        "text": "将重试策略与业务逻辑分离",
+        "correct": true
+      }
+    ],
+    "explanation": "可配置超时、退避重试和策略分离是合理设计。对所有错误无条件重试可能加重故障或重复副作用，应区分错误类型。",
+    "id": "harness-238",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "模型接口抽象"
+  },
+  {
+    "type": "multiple",
+    "question": "模型接口抽象层在支持流式输出时，以下哪些做法是恰当的？",
+    "options": [
+      {
+        "text": "定义统一的流式事件类型",
+        "correct": true
+      },
+      {
+        "text": "将厂商原始数据块直接暴露给业务",
+        "correct": false
+      },
+      {
+        "text": "处理流结束和错误事件",
+        "correct": true
+      },
+      {
+        "text": "支持背压或取消机制",
+        "correct": true
+      }
+    ],
+    "explanation": "统一事件类型、处理结束错误和背压取消能保证流式接口的健壮性。直接暴露厂商原始数据块会破坏抽象隔离。",
+    "id": "harness-239",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "模型接口抽象"
+  },
+  {
+    "type": "single",
+    "question": "某业务代码直接实例化某厂商的模型客户端并调用其专有方法。后来需要更换厂商，业务代码必须重写。为提高可替换性，最应引入的抽象是？",
+    "options": [
+      {
+        "text": "在业务代码中为每个厂商写条件分支",
+        "correct": false
+      },
+      {
+        "text": "定义统一的模型接口，由适配器实现厂商细节",
+        "correct": true
+      },
+      {
+        "text": "把厂商客户端的初始化代码封装成工具函数",
+        "correct": false
+      },
+      {
+        "text": "将厂商专有方法名改为常量引用",
+        "correct": false
+      }
+    ],
+    "explanation": "正确项是定义统一接口并由适配器隔离厂商细节，使业务只依赖抽象。误区在于仅封装初始化或改常量仍让业务依赖厂商专有方法，条件分支则把变化扩散到业务层。",
+    "id": "harness-240",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "模型接口抽象"
+  },
+  {
+    "type": "single",
+    "question": "Harness 框架记录执行轨迹以实现可观测性时，下列哪类信息最有助于事后还原一次流水线运行的决策路径？",
+    "options": [
+      {
+        "text": "每个阶段的输入输出快照与分支条件判定结果",
+        "correct": true
+      },
+      {
+        "text": "仅流水线最终成功或失败的状态码",
+        "correct": false
+      },
+      {
+        "text": "仅运行开始与结束的时间戳",
+        "correct": false
+      },
+      {
+        "text": "仅部署环境的机器规格列表",
+        "correct": false
+      }
+    ],
+    "explanation": "还原决策路径需要阶段级输入输出快照和分支条件判定结果，才能知道为何走某条路径。仅有状态码、时间戳或机器规格都无法重建中间决策，这是可观测性记录粒度的关键误区。",
+    "id": "harness-241",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "可观测性与回放"
+  },
+  {
+    "type": "single",
+    "question": "对 Harness 流水线执行进行回放时，最需要保证的是什么？",
+    "options": [
+      {
+        "text": "回放使用与原始执行一致或被明确记录的输入与配置版本",
+        "correct": true
+      },
+      {
+        "text": "回放必须比原始执行更快完成",
+        "correct": false
+      },
+      {
+        "text": "回放时自动忽略所有人工审批记录",
+        "correct": false
+      },
+      {
+        "text": "回放必须重新拉取最新代码覆盖原输入",
+        "correct": false
+      }
+    ],
+    "explanation": "回放的可比性依赖输入与配置版本一致或可追溯；若用最新代码覆盖原输入，回放的是另一条执行而非原执行。回放速度与审批记录处理不是正确性核心，忽略审批还会破坏还原。",
+    "id": "harness-242",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "可观测性与回放"
+  },
+  {
+    "type": "single",
+    "question": "Harness 的日志与指标在可观测性中承担的角色，下列描述最准确的是？",
+    "options": [
+      {
+        "text": "日志提供事件细节，指标提供趋势与聚合，两者互补",
+        "correct": true
+      },
+      {
+        "text": "指标可以完全替代日志定位单次异常请求",
+        "correct": false
+      },
+      {
+        "text": "日志只用于计费，指标只用于审计",
+        "correct": false
+      },
+      {
+        "text": "两者都只保存最终结果，不保留中间信息",
+        "correct": false
+      }
+    ],
+    "explanation": "日志擅长记录离散事件细节，指标擅长聚合趋势和告警，二者在不同维度互补。指标聚合后丢失单请求细节，不能替代日志；日志与指标也并非只服务计费审计或只存结果。",
+    "id": "harness-243",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "可观测性与回放"
+  },
+  {
+    "type": "single",
+    "question": "为一次 Harness 部署流水线启用执行轨迹保留策略时，下列哪种做法最合理？",
+    "options": [
+      {
+        "text": "按合规与排障需求设置分级保留期，并区分成功与失败执行的保留时长",
+        "correct": true
+      },
+      {
+        "text": "所有执行轨迹永久保留且不设清理",
+        "correct": false
+      },
+      {
+        "text": "只保留成功执行，失败执行立即删除",
+        "correct": false
+      },
+      {
+        "text": "只保留最近一分钟的执行轨迹",
+        "correct": false
+      }
+    ],
+    "explanation": "分级保留兼顾成本与排障需求，失败执行往往更需要保留。永久保留成本不可控；只保留成功会丢掉最有价值的失败证据；仅保留一分钟则几乎无法回放，都不可取。",
+    "id": "harness-244",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "可观测性与回放"
+  },
+  {
+    "type": "single",
+    "question": "在 Harness 回放中需要重放一个外部系统调用时，正确的做法是？",
+    "options": [
+      {
+        "text": "用录制时的响应桩替代真实调用，或在受控环境重放并标注差异",
+        "correct": true
+      },
+      {
+        "text": "直接调用生产外部系统，确保真实",
+        "correct": false
+      },
+      {
+        "text": "删除该步骤，因为它不影响结果",
+        "correct": false
+      },
+      {
+        "text": "把响应改为固定成功值，忽略原始结果",
+        "correct": false
+      }
+    ],
+    "explanation": "回放应隔离外部副作用，常用录制响应桩或受控环境重放并标注差异。直接打生产有副作用风险；删除步骤会改变执行语义；固定成功值会掩盖原始失败，使回放失真。",
+    "id": "harness-245",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "可观测性与回放"
+  },
+  {
+    "type": "single",
+    "question": "某团队发现 Harness 流水线回放结果与原始执行不一致，首先应检查什么？",
+    "options": [
+      {
+        "text": "回放时注入的输入、变量与配置版本是否与原始执行记录一致",
+        "correct": true
+      },
+      {
+        "text": "回放服务器的 CPU 型号是否相同",
+        "correct": false
+      },
+      {
+        "text": "流水线名称是否完全一致",
+        "correct": false
+      },
+      {
+        "text": "操作者是否使用同一浏览器",
+        "correct": false
+      }
+    ],
+    "explanation": "回放不一致最常见根因是输入、变量或配置版本漂移，应先核对这些被记录要素。CPU 型号、流水线名称或浏览器一般不影响业务结果，属于排查优先级误区。",
+    "id": "harness-246",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "可观测性与回放"
+  },
+  {
+    "type": "single",
+    "question": "Harness 执行轨迹中记录时间戳与阶段耗时，主要用于哪类可观测性分析？",
+    "options": [
+      {
+        "text": "定位瓶颈阶段与评估排队、执行时间的变化趋势",
+        "correct": true
+      },
+      {
+        "text": "判断代码是否符合编码规范",
+        "correct": false
+      },
+      {
+        "text": "决定生产数据库的分片键",
+        "correct": false
+      },
+      {
+        "text": "替代安全漏洞扫描",
+        "correct": false
+      }
+    ],
+    "explanation": "时间戳与阶段耗时用于瓶颈定位和耗时趋势分析。代码规范靠静态检查，分片键靠数据设计，安全漏洞靠扫描，均非耗时记录的主要用途，这是用途边界误区。",
+    "id": "harness-247",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "可观测性与回放"
+  },
+  {
+    "type": "single",
+    "question": "关于 Harness 回放的副作用隔离，下列说法正确的是？",
+    "options": [
+      {
+        "text": "回放应尽量在沙箱或隔离环境中进行，避免再次修改生产状态",
+        "correct": true
+      },
+      {
+        "text": "回放天然只读，不会产生任何副作用",
+        "correct": false
+      },
+      {
+        "text": "回放必须连接生产数据库才能准确",
+        "correct": false
+      },
+      {
+        "text": "回放不需要记录任何环境差异",
+        "correct": false
+      }
+    ],
+    "explanation": "回放可能重复执行写操作，故应在沙箱或隔离环境并记录环境差异。认为回放天然只读是常见误区；强制连接生产数据库会引入风险，且不记录差异会削弱结论可信度。",
+    "id": "harness-248",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "可观测性与回放"
+  },
+  {
+    "type": "single",
+    "question": "Harness 可观测性中，为执行轨迹建立关联标识（如执行 ID），最重要的价值是？",
+    "options": [
+      {
+        "text": "将日志、指标、阶段记录与同一次执行关联起来便于追踪",
+        "correct": true
+      },
+      {
+        "text": "让流水线运行速度提升一倍",
+        "correct": false
+      },
+      {
+        "text": "替代所有鉴权机制",
+        "correct": false
+      },
+      {
+        "text": "保证代码编译一定成功",
+        "correct": false
+      }
+    ],
+    "explanation": "执行 ID 作为关联键把分散的日志、指标和阶段记录串成一次执行视图。它不提升运行速度、不替代鉴权、也不保证编译成功，这些是把标识误当功能实现。",
+    "id": "harness-249",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "可观测性与回放"
+  },
+  {
+    "type": "single",
+    "question": "在 Harness 回放报告里标注“与原始执行的差异”，最合适的差异类型是？",
+    "options": [
+      {
+        "text": "外部依赖响应变化、配置漂移与人工干预差异",
+        "correct": true
+      },
+      {
+        "text": "操作者头像颜色差异",
+        "correct": false
+      },
+      {
+        "text": "流水线图标尺寸差异",
+        "correct": false
+      },
+      {
+        "text": "浏览器标签页顺序差异",
+        "correct": false
+      }
+    ],
+    "explanation": "回放差异应聚焦影响执行语义的要素，如外部响应、配置漂移和人工干预。头像、图标尺寸或标签页顺序与执行逻辑无关，记录它们会稀释有效信息。",
+    "id": "harness-250",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "可观测性与回放"
+  },
+  {
+    "type": "multiple",
+    "question": "下列哪些属于 Harness 执行轨迹中应记录、以支撑回放的关键要素？",
+    "options": [
+      {
+        "text": "阶段输入参数与变量取值",
+        "correct": true
+      },
+      {
+        "text": "分支条件判定结果",
+        "correct": true
+      },
+      {
+        "text": "外部调用的请求与响应摘要",
+        "correct": true
+      },
+      {
+        "text": "操作者桌面的壁纸图片",
+        "correct": false
+      }
+    ],
+    "explanation": "输入变量、分支判定和外部调用摘要决定执行走向与结果，是回放关键要素。桌面壁纸与执行语义无关，记录它既无助于回放也增加存储负担。",
+    "id": "harness-251",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "可观测性与回放"
+  },
+  {
+    "type": "multiple",
+    "question": "Harness 可观测性建设中使用日志时，下列做法合理的有？",
+    "options": [
+      {
+        "text": "为日志附加执行 ID 与阶段信息以支持关联检索",
+        "correct": true
+      },
+      {
+        "text": "对敏感信息脱敏后再写入日志",
+        "correct": true
+      },
+      {
+        "text": "为日志设置合理的保留期与索引策略",
+        "correct": true
+      },
+      {
+        "text": "把数据库密码明文写入日志方便排障",
+        "correct": false
+      }
+    ],
+    "explanation": "关联标识、脱敏和保留索引策略都是日志可观测性的合理实践。明文写入数据库密码会造成严重泄露，属于必须避免的反模式。",
+    "id": "harness-252",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "可观测性与回放"
+  },
+  {
+    "type": "multiple",
+    "question": "关于 Harness 回放结果的正确解读，下列说法正确的有？",
+    "options": [
+      {
+        "text": "回放一致可增强对原执行逻辑的信任",
+        "correct": true
+      },
+      {
+        "text": "回放不一致时应分析环境与输入差异而非直接判定原执行错误",
+        "correct": true
+      },
+      {
+        "text": "回放应记录所用输入版本以便复现",
+        "correct": true
+      },
+      {
+        "text": "回放一致就证明生产环境永远无故障",
+        "correct": false
+      }
+    ],
+    "explanation": "回放一致提升信任，不一致应先归因于环境与输入差异，并记录输入版本以保证复现。回放一致只说明特定条件下的行为，不能证明生产永久无故障。",
+    "id": "harness-253",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "可观测性与回放"
+  },
+  {
+    "type": "multiple",
+    "question": "为控制 Harness 执行轨迹的存储成本，可采取的措施有？",
+    "options": [
+      {
+        "text": "对成功执行采用较短保留期，失败执行保留更久",
+        "correct": true
+      },
+      {
+        "text": "对大体量日志做采样或分层存储",
+        "correct": true
+      },
+      {
+        "text": "按合规要求归档而非全部热存",
+        "correct": true
+      },
+      {
+        "text": "关闭所有指标采集以节省空间",
+        "correct": false
+      }
+    ],
+    "explanation": "分级保留、采样分层和归档热存分离都是控成本手段。关闭全部指标采集虽省空间，却会丧失可观测能力，属于过度削减的误区。",
+    "id": "harness-254",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "可观测性与回放"
+  },
+  {
+    "type": "multiple",
+    "question": "在受控环境回放 Harness 流水线时，需要显式声明或记录的内容有？",
+    "options": [
+      {
+        "text": "回放所用的配置与代码版本",
+        "correct": true
+      },
+      {
+        "text": "被替换的外部依赖桩及其行为",
+        "correct": true
+      },
+      {
+        "text": "回放环境与原环境的已知差异",
+        "correct": true
+      },
+      {
+        "text": "回放服务器的机房温度曲线",
+        "correct": false
+      }
+    ],
+    "explanation": "配置代码版本、外部桩行为和环境差异都直接影响回放可比性，必须声明记录。机房温度曲线与业务执行语义无关，不应作为回放必要记录项。",
+    "id": "harness-255",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "可观测性与回放"
+  },
+  {
+    "type": "single",
+    "question": "Harness 执行轨迹中，记录每一步输入参数快照的主要目的是什么？",
+    "options": [
+      {
+        "text": "便于事后复现该步骤在原始数据下的行为",
+        "correct": true
+      },
+      {
+        "text": "压缩轨迹文件体积",
+        "correct": false
+      },
+      {
+        "text": "替代流水线配置文件",
+        "correct": false
+      },
+      {
+        "text": "加快流水线执行速度",
+        "correct": false
+      }
+    ],
+    "explanation": "输入参数快照是复现步骤行为的关键依据。正确项保证回放时使用原始输入而非当前默认值；压缩体积、替代配置与加速执行均非记录参数快照的目的，属于常见误解。",
+    "id": "harness-256",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "可观测性与回放"
+  },
+  {
+    "type": "single",
+    "question": "Harness 中用于串联一次执行内各步骤日志、指标与轨迹的标识是？",
+    "options": [
+      {
+        "text": "执行 ID",
+        "correct": true
+      },
+      {
+        "text": "分支名称",
+        "correct": false
+      },
+      {
+        "text": "仓库地址",
+        "correct": false
+      },
+      {
+        "text": "制品版本标签",
+        "correct": false
+      }
+    ],
+    "explanation": "执行 ID 唯一标识一次流水线运行，是关联日志、指标、轨迹的核心键。分支名、仓库地址、制品标签可能跨多次执行重复出现，无法唯一定位单次执行，是常见混淆点。",
+    "id": "harness-257",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "可观测性与回放"
+  },
+  {
+    "type": "single",
+    "question": "回放 Harness 流水线时，若某步骤调用生产数据库写入，最安全的处理方式是？",
+    "options": [
+      {
+        "text": "重定向到隔离的测试数据库或使用桩",
+        "correct": true
+      },
+      {
+        "text": "直接重放以验证真实效果",
+        "correct": false
+      },
+      {
+        "text": "跳过该步骤并标记成功",
+        "correct": false
+      },
+      {
+        "text": "提高该步骤超时时间",
+        "correct": false
+      }
+    ],
+    "explanation": "回放必须隔离副作用，避免污染生产数据。正确项通过测试库或桩替换真实写入；直接重放会破坏生产数据，跳过会缺失验证，超时设置与副作用隔离无关。",
+    "id": "harness-258",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "可观测性与回放"
+  },
+  {
+    "type": "single",
+    "question": "Harness 执行轨迹中记录的外部调用请求与响应，在回放时主要用于？",
+    "options": [
+      {
+        "text": "以录制响应替代真实外部依赖，保证可重复",
+        "correct": true
+      },
+      {
+        "text": "证明外部服务始终可用",
+        "correct": false
+      },
+      {
+        "text": "减少流水线配置项数量",
+        "correct": false
+      },
+      {
+        "text": "自动修复外部服务故障",
+        "correct": false
+      }
+    ],
+    "explanation": "录制的请求响应可在回放时充当桩，使外部依赖可重复且隔离。它并不能证明服务可用性或修复故障，也不以减少配置为目标，这些是常见误区。",
+    "id": "harness-259",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "可观测性与回放"
+  },
+  {
+    "type": "single",
+    "question": "分析 Harness 流水线阶段耗时异常的波动来源，最适合结合哪类数据？",
+    "options": [
+      {
+        "text": "时间戳序列与各阶段耗时指标",
+        "correct": true
+      },
+      {
+        "text": "仅看最终成功状态",
+        "correct": false
+      },
+      {
+        "text": "仅看仓库提交信息",
+        "correct": false
+      },
+      {
+        "text": "仅看制品大小",
+        "correct": false
+      }
+    ],
+    "explanation": "时间戳与阶段耗时指标能定位耗时瓶颈和波动区间。只看成功状态无法体现耗时分布，提交信息与制品大小只是可能的影响因素，不能单独支撑耗时分析。",
+    "id": "harness-260",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "可观测性与回放"
+  },
+  {
+    "type": "single",
+    "question": "在 Harness 中为回放设置受控环境时，以下哪项最需要显式声明？",
+    "options": [
+      {
+        "text": "外部依赖的桩或替代地址",
+        "correct": true
+      },
+      {
+        "text": "开发者本地用户名",
+        "correct": false
+      },
+      {
+        "text": "IDE 主题配色",
+        "correct": false
+      },
+      {
+        "text": "代码注释风格",
+        "correct": false
+      }
+    ],
+    "explanation": "受控回放环境必须明确外部依赖如何被替换，否则可能触达真实系统。用户名、主题配色、注释风格与执行环境隔离无关，属于干扰项。",
+    "id": "harness-261",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "可观测性与回放"
+  },
+  {
+    "type": "single",
+    "question": "Harness 回放与原执行出现差异时，跟踪差异来源最有效的做法是？",
+    "options": [
+      {
+        "text": "按执行 ID 对比各步骤输入输出快照",
+        "correct": true
+      },
+      {
+        "text": "直接重跑全流水线多次",
+        "correct": false
+      },
+      {
+        "text": "删除原轨迹后重新采集",
+        "correct": false
+      },
+      {
+        "text": "仅对比最终部署状态",
+        "correct": false
+      }
+    ],
+    "explanation": "通过执行 ID 关联并逐步对比输入输出快照，可精确定位分歧步骤。多次重跑无法定位原因，删除轨迹丢失证据，只看最终状态会掩盖中间差异。",
+    "id": "harness-262",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "可观测性与回放"
+  },
+  {
+    "type": "single",
+    "question": "Harness 执行轨迹保留策略中，对敏感信息字段应如何处理？",
+    "options": [
+      {
+        "text": "脱敏或加密后存储",
+        "correct": true
+      },
+      {
+        "text": "原样明文长期保存",
+        "correct": false
+      },
+      {
+        "text": "全部删除导致无法回放",
+        "correct": false
+      },
+      {
+        "text": "仅在 UI 隐藏但仍明文落盘",
+        "correct": false
+      }
+    ],
+    "explanation": "轨迹可能含凭据等敏感数据，应脱敏或加密存储以兼顾安全与回放。明文长期保存有泄露风险，全部删除会破坏回放价值，仅 UI 隐藏并不能保护落盘数据。",
+    "id": "harness-263",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "可观测性与回放"
+  },
+  {
+    "type": "single",
+    "question": "Harness 可观测性中，将指标与执行轨迹按同一执行 ID 关联，最直接的好处是？",
+    "options": [
+      {
+        "text": "可从异常指标下钻到对应执行步骤",
+        "correct": true
+      },
+      {
+        "text": "自动降低存储成本",
+        "correct": false
+      },
+      {
+        "text": "自动生成流水线配置",
+        "correct": false
+      },
+      {
+        "text": "替代所有日志采集",
+        "correct": false
+      }
+    ],
+    "explanation": "统一执行 ID 让指标异常能关联到具体执行与步骤，加速定位。它不会自动降低成本、生成配置，也不能替代日志，因为日志提供细粒度上下文。",
+    "id": "harness-264",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "可观测性与回放"
+  },
+  {
+    "type": "single",
+    "question": "Harness 回放报告标注差异类型时，下列哪项最适合归类为环境差异？",
+    "options": [
+      {
+        "text": "回放使用桩服务而原执行调用真实服务",
+        "correct": true
+      },
+      {
+        "text": "步骤名称拼写不同",
+        "correct": false
+      },
+      {
+        "text": "报告页面语言不同",
+        "correct": false
+      },
+      {
+        "text": "执行 ID 格式不同",
+        "correct": false
+      }
+    ],
+    "explanation": "环境差异指执行所依赖的外部条件变化，桩替换真实服务是典型例子。步骤命名、页面语言、ID 格式属于展示或标识层面差异，不影响执行行为。",
+    "id": "harness-265",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "可观测性与回放"
+  },
+  {
+    "type": "multiple",
+    "question": "Harness 执行轨迹中应记录以支撑回放的关键要素包括哪些？",
+    "options": [
+      {
+        "text": "各步骤的输入参数快照",
+        "correct": true
+      },
+      {
+        "text": "外部调用的请求与响应",
+        "correct": true
+      },
+      {
+        "text": "步骤开始与结束时间戳",
+        "correct": true
+      },
+      {
+        "text": "开发者桌面壁纸",
+        "correct": false
+      }
+    ],
+    "explanation": "输入参数、外部调用录制、时间戳都是复现与定位的关键。桌面壁纸与执行行为无关。注意并非所有现场信息都需记录，应聚焦影响执行结果的要素。",
+    "id": "harness-266",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "可观测性与回放"
+  },
+  {
+    "type": "multiple",
+    "question": "使用 Harness 日志支撑可观测性时，下列做法合理的有？",
+    "options": [
+      {
+        "text": "日志中携带执行 ID 与步骤标识",
+        "correct": true
+      },
+      {
+        "text": "对日志中的凭据进行脱敏",
+        "correct": true
+      },
+      {
+        "text": "为日志设置与轨迹一致的保留周期",
+        "correct": true
+      },
+      {
+        "text": "将所有日志级别统一设为调试并永久保存",
+        "correct": false
+      }
+    ],
+    "explanation": "关联标识便于检索，脱敏保护敏感信息，保留周期一致利于联合分析。全量调试日志永久保存会造成成本与噪声膨胀，不是合理做法。",
+    "id": "harness-267",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "可观测性与回放"
+  },
+  {
+    "type": "multiple",
+    "question": "关于 Harness 回放结果的解读，下列说法正确的有？",
+    "options": [
+      {
+        "text": "回放成功仅说明在受控条件下可重复",
+        "correct": true
+      },
+      {
+        "text": "需关注与原执行的差异报告",
+        "correct": true
+      },
+      {
+        "text": "回放不能完全证明生产环境行为",
+        "correct": true
+      },
+      {
+        "text": "回放通过即可忽略原执行失败原因",
+        "correct": false
+      }
+    ],
+    "explanation": "回放是在受控环境下的重复验证，成功不代表生产等价，必须结合差异报告解读。原执行失败原因仍需分析，回放通过不能替代根因排查。",
+    "id": "harness-268",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "可观测性与回放"
+  },
+  {
+    "type": "multiple",
+    "question": "为控制 Harness 执行轨迹存储成本，可采取的措施有？",
+    "options": [
+      {
+        "text": "按执行重要性设置分级保留策略",
+        "correct": true
+      },
+      {
+        "text": "对历史轨迹进行压缩归档",
+        "correct": true
+      },
+      {
+        "text": "对大体量输出做采样或摘要存储",
+        "correct": true
+      },
+      {
+        "text": "删除所有失败执行轨迹",
+        "correct": false
+      }
+    ],
+    "explanation": "分级保留、压缩归档、采样摘要都能在保留可观测价值的同时控成本。删除全部失败轨迹会丢失最有排查价值的信息，是常见错误做法。",
+    "id": "harness-269",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "可观测性与回放"
+  },
+  {
+    "type": "single",
+    "question": "在 Harness 中为流水线回放设计执行轨迹时，以下哪项最能保证回放时环境依赖的可复现性？",
+    "options": [
+      {
+        "text": "记录每个步骤的输入参数和输出结果",
+        "correct": false
+      },
+      {
+        "text": "记录流水线执行时使用的基础设施规格、环境变量和外部服务版本",
+        "correct": true
+      },
+      {
+        "text": "记录执行人的身份和审批记录",
+        "correct": false
+      },
+      {
+        "text": "记录每个步骤的开始和结束时间戳",
+        "correct": false
+      }
+    ],
+    "explanation": "回放要复现环境依赖，关键是把运行时基础设施规格、环境变量和外部服务版本固化到轨迹中，使回放能重建相同运行条件；仅记录输入输出只覆盖数据流，身份审批用于审计，时间戳用于耗时分析，都不能单独保证环境可复现。",
+    "id": "harness-270",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "可观测性与回放"
+  },
+  {
+    "type": "single",
+    "question": "在Harness框架中，插件系统的主要目的是什么？",
+    "options": [
+      {
+        "text": "让开发者编写插件来扩展框架功能",
+        "correct": true
+      },
+      {
+        "text": "替代框架的核心模块",
+        "correct": false
+      },
+      {
+        "text": "仅用于调试目的",
+        "correct": false
+      },
+      {
+        "text": "限制框架的灵活性",
+        "correct": false
+      }
+    ],
+    "explanation": "插件系统通过受控扩展点让开发者在不修改核心代码的前提下增加功能，从而提升可扩展性；插件不应替代核心模块，也不只服务于调试，更不是限制灵活性。",
+    "id": "harness-271",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "插件与扩展设计"
+  },
+  {
+    "type": "single",
+    "question": "关于Harness框架插件的生命周期，以下哪个阶段通常用于初始化插件所需的资源？",
+    "options": [
+      {
+        "text": "加载阶段",
+        "correct": false
+      },
+      {
+        "text": "初始化阶段",
+        "correct": true
+      },
+      {
+        "text": "运行阶段",
+        "correct": false
+      },
+      {
+        "text": "卸载阶段",
+        "correct": false
+      }
+    ],
+    "explanation": "插件生命周期中，初始化阶段在实例化后负责创建连接、读取配置、准备资源等；加载阶段侧重发现与注册，运行阶段执行功能，卸载阶段负责清理。",
+    "id": "harness-272",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "插件与扩展设计"
+  },
+  {
+    "type": "single",
+    "question": "Harness框架的插件依赖管理通常通过什么机制实现？",
+    "options": [
+      {
+        "text": "硬编码依赖路径",
+        "correct": false
+      },
+      {
+        "text": "声明式依赖描述",
+        "correct": true
+      },
+      {
+        "text": "动态随机加载",
+        "correct": false
+      },
+      {
+        "text": "手动顺序控制",
+        "correct": false
+      }
+    ],
+    "explanation": "插件依赖通常以声明式描述交给框架解析，框架据此确定加载顺序和依赖满足关系；硬编码路径、随机加载或纯手工顺序控制都缺乏可维护性与自动化。",
+    "id": "harness-273",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "插件与扩展设计"
+  },
+  {
+    "type": "single",
+    "question": "在Harness框架中设计插件扩展点时，以下哪项是保证扩展点稳定性的关键？",
+    "options": [
+      {
+        "text": "频繁修改扩展点接口",
+        "correct": false
+      },
+      {
+        "text": "使用版本化接口并保持向后兼容",
+        "correct": true
+      },
+      {
+        "text": "隐藏所有扩展点文档",
+        "correct": false
+      },
+      {
+        "text": "限制每个扩展点只能有一个实现",
+        "correct": false
+      }
+    ],
+    "explanation": "扩展点稳定性依赖版本化接口和向后兼容策略，使旧插件在新框架版本下仍可工作；频繁改接口会破坏兼容，隐藏文档妨碍使用，限制单一实现会削弱扩展能力。",
+    "id": "harness-274",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "插件与扩展设计"
+  },
+  {
+    "type": "single",
+    "question": "以下关于Harness插件隔离性的描述，哪项是正确的？",
+    "options": [
+      {
+        "text": "插件必须共享同一全局状态以确保通信",
+        "correct": false
+      },
+      {
+        "text": "插件应运行在独立上下文以避免冲突",
+        "correct": true
+      },
+      {
+        "text": "隔离性会降低性能，因此不应使用",
+        "correct": false
+      },
+      {
+        "text": "隔离性仅通过进程实现",
+        "correct": false
+      }
+    ],
+    "explanation": "插件隔离的核心是让插件运行在独立上下文（如类加载器或沙箱）中，避免依赖、资源和全局状态冲突；共享全局状态会引入耦合，隔离并非只有进程一种实现，也不能因性能顾虑放弃必要的隔离。",
+    "id": "harness-275",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "插件与扩展设计"
+  },
+  {
+    "type": "single",
+    "question": "Harness框架中，插件发现机制常用的方式是什么？",
+    "options": [
+      {
+        "text": "扫描特定目录或使用服务加载器",
+        "correct": true
+      },
+      {
+        "text": "通过用户手动输入插件URL",
+        "correct": false
+      },
+      {
+        "text": "只能通过硬编码列表",
+        "correct": false
+      },
+      {
+        "text": "随机选择文件",
+        "correct": false
+      }
+    ],
+    "explanation": "插件发现常用扫描约定目录、使用服务加载器或注册表等自动机制；让用户手动输入 URL、硬编码列表或随机选文件都不具备可维护的自动发现能力。",
+    "id": "harness-276",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "插件与扩展设计"
+  },
+  {
+    "type": "single",
+    "question": "关于Harness插件的版本兼容性，以下做法正确的是？",
+    "options": [
+      {
+        "text": "插件无需声明所兼容的框架版本",
+        "correct": false
+      },
+      {
+        "text": "框架应强制所有插件使用相同版本",
+        "correct": false
+      },
+      {
+        "text": "插件应声明兼容的框架版本范围",
+        "correct": true
+      },
+      {
+        "text": "版本不兼容时框架应静默忽略",
+        "correct": false
+      }
+    ],
+    "explanation": "插件应声明兼容的框架版本范围，框架加载时校验，避免运行期不兼容；不声明版本、强制所有插件同版本、静默忽略不兼容都会造成不可控行为。",
+    "id": "harness-277",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "插件与扩展设计"
+  },
+  {
+    "type": "single",
+    "question": "在Harness框架中，插件配置通常如何传递给插件？",
+    "options": [
+      {
+        "text": "通过全局变量硬编码",
+        "correct": false
+      },
+      {
+        "text": "通过框架提供的配置接口或上下文",
+        "correct": true
+      },
+      {
+        "text": "通过命令行参数直接修改代码",
+        "correct": false
+      },
+      {
+        "text": "插件自行读取所有系统环境",
+        "correct": false
+      }
+    ],
+    "explanation": "框架通过配置接口或上下文对象把配置传给插件，便于统一校验、注入和隔离；全局变量硬编码、命令行改代码、让插件自行扫描所有环境变量都会破坏可控性与可测试性。",
+    "id": "harness-278",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "插件与扩展设计"
+  },
+  {
+    "type": "single",
+    "question": "设计Harness插件时，以下哪项是避免插件冲突的有效策略？",
+    "options": [
+      {
+        "text": "所有插件使用相同的类名",
+        "correct": false
+      },
+      {
+        "text": "使用唯一的插件标识符和命名空间",
+        "correct": true
+      },
+      {
+        "text": "忽略插件间的依赖关系",
+        "correct": false
+      },
+      {
+        "text": "强制插件按加载顺序执行",
+        "correct": false
+      }
+    ],
+    "explanation": "使用唯一插件标识符和命名空间可避免类名、资源名和注册项冲突；相同类名会增加冲突，忽略依赖或强制加载顺序不能从根本上解决命名与资源隔离问题。",
+    "id": "harness-279",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "插件与扩展设计"
+  },
+  {
+    "type": "single",
+    "question": "Harness框架的扩展设计应遵循哪个原则以降低耦合？",
+    "options": [
+      {
+        "text": "依赖倒置原则",
+        "correct": true
+      },
+      {
+        "text": "重复代码原则",
+        "correct": false
+      },
+      {
+        "text": "硬编码原则",
+        "correct": false
+      },
+      {
+        "text": "紧耦合原则",
+        "correct": false
+      }
+    ],
+    "explanation": "依赖倒置原则让框架和插件都依赖抽象接口而非具体实现，从而降低耦合、便于替换和扩展；重复代码、硬编码和紧耦合都会削弱扩展设计。",
+    "id": "harness-280",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "插件与扩展设计"
+  },
+  {
+    "type": "multiple",
+    "question": "在Harness框架中，插件注册表可能负责哪些功能？",
+    "options": [
+      {
+        "text": "记录插件元数据",
+        "correct": true
+      },
+      {
+        "text": "管理插件生命周期状态",
+        "correct": true
+      },
+      {
+        "text": "直接执行插件业务逻辑",
+        "correct": false
+      },
+      {
+        "text": "提供插件查找接口",
+        "correct": true
+      }
+    ],
+    "explanation": "正确选项是A、B、D。注册表通常存储元数据、跟踪状态并提供查找。C错误，业务逻辑由插件自身执行，注册表不直接参与。",
+    "id": "harness-281",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "插件与扩展设计"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些是Harness插件安全防护的常见措施？",
+    "options": [
+      {
+        "text": "使用沙箱限制资源访问",
+        "correct": true
+      },
+      {
+        "text": "对插件代码进行签名验证",
+        "correct": true
+      },
+      {
+        "text": "允许插件访问所有系统文件",
+        "correct": false
+      },
+      {
+        "text": "通过权限模型控制插件操作",
+        "correct": true
+      }
+    ],
+    "explanation": "沙箱限制插件可访问的资源和系统调用，签名验证保证插件来源与完整性，权限模型按最小权限约束操作；允许插件访问所有系统文件会扩大攻击面并破坏安全边界。",
+    "id": "harness-282",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "插件与扩展设计"
+  },
+  {
+    "type": "multiple",
+    "question": "设计Harness插件接口时，应考虑哪些因素以保证可扩展性？",
+    "options": [
+      {
+        "text": "接口应稳定且版本化",
+        "correct": true
+      },
+      {
+        "text": "提供默认实现以减少插件负担",
+        "correct": true
+      },
+      {
+        "text": "接口方法应尽可能多且复杂",
+        "correct": false
+      },
+      {
+        "text": "文档清晰说明扩展点契约",
+        "correct": true
+      }
+    ],
+    "explanation": "正确选项是A、B、D。稳定版本化接口、默认实现和清晰文档有助于插件开发。C错误，复杂接口会增加实现难度且不易维护。",
+    "id": "harness-283",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "插件与扩展设计"
+  },
+  {
+    "type": "multiple",
+    "question": "在Harness插件加载过程中，可能涉及哪些步骤？",
+    "options": [
+      {
+        "text": "发现插件（扫描或配置）",
+        "correct": true
+      },
+      {
+        "text": "解析插件依赖关系",
+        "correct": true
+      },
+      {
+        "text": "直接运行插件主函数",
+        "correct": false
+      },
+      {
+        "text": "实例化插件并调用初始化",
+        "correct": true
+      }
+    ],
+    "explanation": "正确选项是A、B、D。加载通常包括发现、依赖解析、实例化和初始化。C错误，运行主函数是后续阶段，不是加载步骤。",
+    "id": "harness-284",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "插件与扩展设计"
+  },
+  {
+    "type": "multiple",
+    "question": "以下哪些做法有助于Harness插件的可维护性？",
+    "options": [
+      {
+        "text": "为插件编写单元测试",
+        "correct": true
+      },
+      {
+        "text": "遵循框架的日志规范",
+        "correct": true
+      },
+      {
+        "text": "将所有配置硬编码在插件中",
+        "correct": false
+      },
+      {
+        "text": "使用清晰的插件元数据描述",
+        "correct": true
+      }
+    ],
+    "explanation": "正确选项是A、B、D。测试、规范日志和清晰元数据提升可维护性。C错误，硬编码配置降低灵活性和可维护性。",
+    "id": "harness-285",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "插件与扩展设计"
+  },
+  {
+    "type": "single",
+    "question": "在Harness框架的插件扩展设计中，引入扩展点（Extension Point）的主要目的是什么？",
+    "options": [
+      {
+        "text": "让插件直接修改框架核心代码以增加功能",
+        "correct": false
+      },
+      {
+        "text": "定义一个稳定的契约，允许插件在特定位置注入行为而不改动框架核心",
+        "correct": true
+      },
+      {
+        "text": "强制所有插件使用相同的实现语言",
+        "correct": false
+      },
+      {
+        "text": "替代框架的配置管理模块",
+        "correct": false
+      }
+    ],
+    "explanation": "扩展点提供稳定契约，插件通过实现契约在指定位置扩展行为，框架核心无需修改。直接改核心会破坏封装与升级能力；扩展点不限定语言，也不替代配置管理。",
+    "id": "harness-286",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "插件与扩展设计"
+  },
+  {
+    "type": "single",
+    "question": "当Harness框架需要支持同一扩展点的多个插件同时生效时，以下哪种设计最有助于避免行为覆盖混乱？",
+    "options": [
+      {
+        "text": "让最后加载的插件完全覆盖之前插件的行为",
+        "correct": false
+      },
+      {
+        "text": "为扩展点定义明确的执行顺序策略（如优先级或链式处理）",
+        "correct": true
+      },
+      {
+        "text": "禁止同一扩展点注册多个插件",
+        "correct": false
+      },
+      {
+        "text": "要求所有插件实现完全相同的逻辑",
+        "correct": false
+      }
+    ],
+    "explanation": "多插件共存时，明确优先级或链式处理可预测地组合行为。简单覆盖会丢失功能且结果依赖加载顺序；禁止多插件限制扩展性；要求逻辑相同不现实。",
+    "id": "harness-287",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "插件与扩展设计"
+  },
+  {
+    "type": "single",
+    "question": "关于Harness框架插件接口的向后兼容设计，以下做法最恰当的是？",
+    "options": [
+      {
+        "text": "每次新增功能都直接修改已有接口方法签名",
+        "correct": false
+      },
+      {
+        "text": "通过新增可选方法或默认实现来扩展接口，避免破坏已有插件",
+        "correct": true
+      },
+      {
+        "text": "要求所有插件在框架升级时立即重写",
+        "correct": false
+      },
+      {
+        "text": "删除旧接口并强制插件迁移到新接口",
+        "correct": false
+      }
+    ],
+    "explanation": "新增可选方法或提供默认实现可保持已有插件可用，是向后兼容的常见手段。直接改签名、强制重写或删除旧接口都会破坏现有插件，增加升级成本。",
+    "id": "harness-288",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "插件与扩展设计"
+  },
+  {
+    "type": "single",
+    "question": "在Harness框架中，插件配置热更新时，以下哪种处理方式最稳妥？",
+    "options": [
+      {
+        "text": "直接替换配置对象，运行中的插件立即读取新值，无需同步",
+        "correct": false
+      },
+      {
+        "text": "先校验新配置，再以原子方式切换并通知插件重新初始化相关资源",
+        "correct": true
+      },
+      {
+        "text": "停止整个框架进程后再更新配置",
+        "correct": false
+      },
+      {
+        "text": "忽略热更新，要求重启才能生效",
+        "correct": false
+      }
+    ],
+    "explanation": "热更新需先校验配置合法性，原子切换避免中间状态，通知插件重新初始化资源可防止使用过期配置。直接替换可能引发并发问题；停进程或忽略热更新则牺牲可用性。",
+    "id": "harness-289",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "插件与扩展设计"
+  },
+  {
+    "type": "single",
+    "question": "Harness框架的插件在运行期抛出未捕获异常时，以下哪种框架级策略最有利于整体稳定性？",
+    "options": [
+      {
+        "text": "让异常向上传播并终止整个框架进程",
+        "correct": false
+      },
+      {
+        "text": "捕获异常、隔离故障插件并按策略降级或禁用该插件",
+        "correct": true
+      },
+      {
+        "text": "忽略所有插件异常，不做任何记录",
+        "correct": false
+      },
+      {
+        "text": "自动重启所有插件而不记录原因",
+        "correct": false
+      }
+    ],
+    "explanation": "捕获并隔离故障插件可防止单点故障扩散，降级或禁用可维持核心功能。放任异常终止进程影响面过大；忽略异常或盲目重启不利于定位与恢复。",
+    "id": "harness-290",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "插件与扩展设计"
+  },
+  {
+    "type": "single",
+    "question": "设计Harness插件元数据（如名称、版本、依赖）时，以下哪项最有助于运行期依赖解析？",
+    "options": [
+      {
+        "text": "仅记录插件显示名称",
+        "correct": false
+      },
+      {
+        "text": "以机器可读格式声明插件标识、版本范围及依赖关系",
+        "correct": true
+      },
+      {
+        "text": "将依赖信息写在插件源码注释中",
+        "correct": false
+      },
+      {
+        "text": "依赖信息由用户手工记忆并在启动时输入",
+        "correct": false
+      }
+    ],
+    "explanation": "机器可读的元数据可供框架自动解析依赖与版本范围，减少人工错误。仅记录名称信息不足；注释和手工输入无法可靠自动化，易出错。",
+    "id": "harness-291",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "插件与扩展设计"
+  },
+  {
+    "type": "single",
+    "question": "在Harness框架中，插件需要获取其他组件依赖时，以下哪种做法更利于可测试性？",
+    "options": [
+      {
+        "text": "插件内部直接调用全局单例获取依赖",
+        "correct": false
+      },
+      {
+        "text": "通过构造函数或初始化接口显式注入依赖",
+        "correct": true
+      },
+      {
+        "text": "在插件代码中硬编码其他插件的类名",
+        "correct": false
+      },
+      {
+        "text": "运行时通过反射扫描所有类来查找依赖",
+        "correct": false
+      }
+    ],
+    "explanation": "显式注入依赖使测试可以替换为模拟对象，降低插件与具体组件的耦合；全局单例、硬编码类名和反射扫描都会增加隐藏依赖或运行期不确定性，不利于隔离测试。",
+    "id": "harness-292",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "插件与扩展设计"
+  },
+  {
+    "type": "single",
+    "question": "Harness框架允许插件注册自定义资源清理逻辑，以下哪个时机最合适执行清理？",
+    "options": [
+      {
+        "text": "插件初始化完成后立即执行",
+        "correct": false
+      },
+      {
+        "text": "框架关闭或插件被卸载时，按注册逆序执行",
+        "correct": true
+      },
+      {
+        "text": "每次请求处理前执行",
+        "correct": false
+      },
+      {
+        "text": "插件首次被调用时执行",
+        "correct": false
+      }
+    ],
+    "explanation": "清理逻辑应在插件生命周期结束（框架关闭或卸载）时执行，逆序可处理依赖关系。初始化后、每请求前或首次调用时执行会过早释放资源或造成重复清理。",
+    "id": "harness-293",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "插件与扩展设计"
+  },
+  {
+    "type": "single",
+    "question": "在Harness框架中，为防止恶意插件读取其他插件的敏感配置，以下哪项措施最直接有效？",
+    "options": [
+      {
+        "text": "将所有插件配置合并为全局可读对象",
+        "correct": false
+      },
+      {
+        "text": "按插件隔离配置访问权限，仅暴露该插件自身的配置视图",
+        "correct": true
+      },
+      {
+        "text": "在文档中要求插件不要读取他人配置",
+        "correct": false
+      },
+      {
+        "text": "使用明文配置文件并依赖操作系统权限",
+        "correct": false
+      }
+    ],
+    "explanation": "按插件隔离配置视图可从机制上限制越权访问。全局可读对象扩大暴露面；文档约束无强制力；明文配置加系统权限不足以防止同进程插件越权。",
+    "id": "harness-294",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "插件与扩展设计"
+  },
+  {
+    "type": "single",
+    "question": "Harness框架插件系统引入“能力声明”机制，插件在元数据中声明所需权限，其主要作用是？",
+    "options": [
+      {
+        "text": "让插件自动获得所有系统权限",
+        "correct": false
+      },
+      {
+        "text": "使框架能在加载前校验并最小化授予插件所需权限",
+        "correct": true
+      },
+      {
+        "text": "替代插件的版本管理",
+        "correct": false
+      },
+      {
+        "text": "强制插件使用特定编程语言",
+        "correct": false
+      }
+    ],
+    "explanation": "能力声明让框架在加载前校验权限并按最小权限原则授予，降低安全风险。自动获得全部权限违背最小权限；能力声明不替代版本管理，也不限定语言。",
+    "id": "harness-295",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "插件与扩展设计"
+  },
+  {
+    "type": "single",
+    "question": "在Harness框架中，插件加载失败时，以下哪种恢复策略最合理？",
+    "options": [
+      {
+        "text": "静默忽略失败，不记录任何信息",
+        "correct": false
+      },
+      {
+        "text": "记录详细错误，隔离失败插件，并允许其他插件继续加载",
+        "correct": true
+      },
+      {
+        "text": "终止整个框架启动过程",
+        "correct": false
+      },
+      {
+        "text": "自动删除失败插件的所有文件",
+        "correct": false
+      }
+    ],
+    "explanation": "记录错误便于诊断，隔离失败插件并继续加载可保证其他功能可用。静默忽略掩盖问题；终止启动影响面过大；自动删除文件具有破坏性且不可逆。",
+    "id": "harness-296",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "插件与扩展设计"
+  },
+  {
+    "type": "single",
+    "question": "Harness框架的插件扩展点采用事件总线模式时，以下哪项设计最有助于控制事件处理顺序？",
+    "options": [
+      {
+        "text": "所有监听器并发执行且不保证顺序",
+        "correct": false
+      },
+      {
+        "text": "为监听器定义优先级并在派发时按优先级顺序执行",
+        "correct": true
+      },
+      {
+        "text": "随机选择监听器执行",
+        "correct": false
+      },
+      {
+        "text": "仅允许一个监听器注册",
+        "correct": false
+      }
+    ],
+    "explanation": "优先级机制使监听器执行顺序可预测，便于组合行为。并发不保证顺序可能导致竞态；随机或仅允许单监听器则牺牲扩展性与确定性。",
+    "id": "harness-297",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "插件与扩展设计"
+  },
+  {
+    "type": "single",
+    "question": "在Harness框架中，插件需要与其他插件通信但不应形成硬依赖，以下哪种方式最合适？",
+    "options": [
+      {
+        "text": "直接导入其他插件的具体实现类",
+        "correct": false
+      },
+      {
+        "text": "通过框架提供的消息通道或抽象事件进行解耦通信",
+        "correct": true
+      },
+      {
+        "text": "使用全局变量传递数据",
+        "correct": false
+      },
+      {
+        "text": "在配置文件中硬编码对方插件的类路径",
+        "correct": false
+      }
+    ],
+    "explanation": "消息通道或抽象事件使插件间通信不依赖具体实现，降低耦合。直接导入类、全局变量或硬编码类路径都会形成硬依赖，不利于替换与独立演进。",
+    "id": "harness-298",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "插件与扩展设计"
+  },
+  {
+    "type": "single",
+    "question": "关于Harness框架插件文档与示例代码的作用，以下描述最准确的是？",
+    "options": [
+      {
+        "text": "文档和示例仅用于宣传，不影响插件质量",
+        "correct": false
+      },
+      {
+        "text": "清晰的扩展点文档与可运行示例能降低插件开发门槛并减少误用",
+        "correct": true
+      },
+      {
+        "text": "示例代码应尽量复杂以展示框架全部能力",
+        "correct": false
+      },
+      {
+        "text": "插件开发者无需阅读文档即可正确实现扩展",
+        "correct": false
+      }
+    ],
+    "explanation": "清晰的文档与可运行示例帮助开发者正确理解扩展点契约，降低门槛并减少误用。宣传论低估文档价值；复杂示例增加理解成本；不读文档易误用接口。",
+    "id": "harness-299",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "插件与扩展设计"
+  },
+  {
+    "type": "single",
+    "question": "在Harness框架中实现插件灰度发布时，以下哪种做法最符合渐进式验证原则？",
+    "options": [
+      {
+        "text": "一次性全量启用新插件并观察整体指标",
+        "correct": false
+      },
+      {
+        "text": "按流量比例或用户分组逐步启用新插件，并对比关键指标",
+        "correct": true
+      },
+      {
+        "text": "先删除旧插件再启用新插件",
+        "correct": false
+      },
+      {
+        "text": "仅在开发环境验证后直接全量上线",
+        "correct": false
+      }
+    ],
+    "explanation": "灰度发布通过小比例流量或分组逐步验证，对比指标可及早发现问题并控制影响面。全量启用风险集中；先删旧插件失去回退能力；仅开发环境验证不足。",
+    "id": "harness-300",
+    "tags": [
+      "Harness 框架"
+    ],
+    "section": "插件与扩展设计"
+  }
+]
