@@ -1,6 +1,6 @@
 {
   "name": "choice-practice",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "main": "index.ts",
   "dependencies": {
     "@react-native-async-storage/async-storage": "2.2.0",
@@ -14,13 +14,17 @@
     "expo-splash-screen": "~57.0.9",
     "expo-status-bar": "~57.0.1",
     "expo-system-ui": "~57.0.4",
+    "markdown-it": "^14.3.3",
+    "markdown-it-cjk-friendly": "^3.0.0",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-native": "0.86.3",
+    "react-native-markdown-display": "^7.0.2",
     "react-native-safe-area-context": "~5.7.0",
     "react-native-web": "^0.21.2"
   },
   "devDependencies": {
+    "@types/markdown-it": "^14.2.0",
     "@types/react": "~19.2.2",
     "typescript": "~6.0.3"
   },
@@ -33,11 +37,16 @@
     "api": "node scripts/api.mjs",
     "generate:bank": "python3 scripts/generate.py",
     "check:bank": "node scripts/check-bank.mjs",
-    "test": "node scripts/test-domain.mjs && node scripts/test-tutor.mjs && node scripts/test-android-back.mjs && node scripts/test-bank-policy.mjs",
+    "test": "node scripts/test-domain.mjs && node scripts/test-tutor.mjs && node scripts/test-android-back.mjs && node scripts/test-bank-policy.mjs && node scripts/test-markdown.mjs",
     "review:bank": "python3 scripts/review.py",
     "postinstall": "node scripts/provision-local-key.mjs",
     "provision:key": "node scripts/provision-local-key.mjs",
     "provision:public": "node scripts/provision-local-key.mjs --public"
   },
-  "private": true
+  "private": true,
+  "overrides": {
+    "react-native-markdown-display": {
+      "markdown-it": "$markdown-it"
+    }
+  }
 }

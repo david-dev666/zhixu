@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import {answerMarkdown as md,isWebLink} from '../src/markdown.mjs';
+for(const value of ['**重点**','** 重点 **','**中文（说明）**内容','__重点__'])assert.match(md.render(value),/<strong>.*?<\/strong>/s,value);
+assert.match(md.render('*倾斜* ~~过时~~'),/<em>倾斜<\/em> <s>过时<\/s>/);
+assert.match(md.render('# 标题\n\n- 要点一\n- 要点二\n\n3. 步骤\n\n> 引用'),/<h1>标题<\/h1>/);
+assert.match(md.render('| A | B |\n|---|---|\n| 1 | 2 |'),/<table>/);
+assert.match(md.render('第一行\n第二行'),/<br>/);
+assert.match(md.render('`** 保留 **`'),/<code>\*\* 保留 \*\*<\/code>/);
+assert.match(md.render('```python\n  x = "** 保留 **"\n```'),/<code class="language-python">  x = &quot;\*\* 保留 \*\*&quot;/);
+assert.doesNotMatch(md.render('\\*\\* 保留 \\*\\*'),/<strong>/);
+assert.doesNotMatch(md.render('**\n跨行\n**'),/<strong>/);
+assert.doesNotMatch(md.render('<script>alert(1)</script>'),/<script>/);
+assert.doesNotMatch(md.render('[危险](javascript:alert(1))'),/<a /);
+assert.equal(isWebLink('https://example.com'),true);assert.equal(isWebLink('file:///etc/passwd'),false);assert.equal(isWebLink('javascript:alert(1)'),false);
+console.log('PASS: bold, Chinese punctuation, spaced emphasis, lists, tables, line breaks, code preservation and safe links');
